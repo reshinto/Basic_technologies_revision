@@ -13,7 +13,7 @@
     * usually limited to the capacity of a single server
     * scaling beyong the capacity often involves downtime and comes with an upper limit
     * e.g.: MySQL (allow easy way to scale vertically by switching from smaller to bigger machines, however, this process often involves downtime)
-![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/verticalScaling_vs_horizontalScaling.png "Vertical scaling vs. Horizontal scaling")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/verticalScaling_vs_horizontalScaling.png "Vertical scaling vs. Horizontal scaling")
 ## Reliability
 * It is the probability a system will fail in a given period
     * meaning: a distributed system is considered reliable if it keeps delivering its services even when one or several of its software or hardware components fail
