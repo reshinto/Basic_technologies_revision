@@ -21,7 +21,7 @@
 * It allows us to distribute data across a cluster in such a way
   * that will minimize reorganization when nodes are added or removed
   * Hence, the caching system will be easier to scale up or scale down
-* In Consistent Hashing, when the hash table is resized 
+* In Consistent Hashing, when the hash table is resized
   * (e.g. a new cache host is added to the system)
   * only ‘k/n’ keys need to be remapped where ‘k’ is the total number of keys
     * and ‘n’ is the total number of servers
@@ -38,4 +38,9 @@
   2. To map a key to a server
       * Hash it to a single integer
       * Move clockwise on the ring until finding the first cache it encounters
-      * That cache is the one that contains the key. 
+      * That cache is the one that contains the key.
+![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/consistentHashingPt1.png "Consistent Hashing pt1")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/consistentHashingPt2.png "Consistent Hashing pt2")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/consistentHashingPt3.png "Consistent Hashing pt3")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/consistentHashingPt4.png "Consistent Hashing pt4")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/consistentHashingPt5.png "Consistent Hashing pt5")

@@ -8,12 +8,12 @@
 
 ## Example: A library catalog
 * A library catalog is a register that contains the list of books found in a library
-* The catalog is organized like a database table generally with 4 columns: 
+* The catalog is organized like a database table generally with 4 columns:
   1. book title
   2. writer
   3. subject
   4. date of publication
-* There are usually 2 such catalogs: 
+* There are usually 2 such catalogs:
   1. sorted by the book title
   2. sorted by the writer name
 * can either think of a writer you want to read
@@ -35,7 +35,7 @@
 * it is very likely that such a large data set is spread over several physical devices
   * this means we need some way to find the correct physical location of the desired data
   * Indexes are the best way to do this
-  
+![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/indexes.png "Indexes")
 ## How do Indexes decrease write performance?
 * An index can dramatically speed up data retrieval
   * but may itself be large due to the additional keys

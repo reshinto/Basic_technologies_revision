@@ -9,7 +9,7 @@
 * It helps to spread the traffic across a cluster of servers
     * to improve responsiveness and availability of applications, websites or databases
 * keeps track of the status of all the resources while distributing requests
-* LB will stop sending traffic to such a server if 
+* LB will stop sending traffic to such a server if
     * a server is not available to take new requests
     * is not responding or has elevated error rate
 * Typically
@@ -20,11 +20,13 @@
         * LB reduces individual server load
         * LB prevents any one application server from becoming a single point of failure
         * thus improving overall application availability and responsiveness
+![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/loadBalancer.png "Load Balancer")
 * To utilize full scalability and redundancy
     * can try to balance the load at each layer of the system at 3 places
         1. Between the user (client) and the web server
         2. Between web servers and an internal platform layer, like application servers or cache servers
         3. Between internal platform layer and database
+![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/LB_3places.png "LB 3 places")
 ## Benefits of Load Balancing
 * Users experience faster, uninterrupted service
     * Users won’t have to wait for a single struggling server to finish its previous tasks
@@ -78,6 +80,7 @@
     * Each LB monitors the health of the other
     * both of them are equally capable of serving traffic and failure detection
         * in the event the main load balancer fails, the second load balancer takes over
+![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/redundantLoadBalancers.png "Redundant Load Balancers")
 ## Types of Load Balancing
 * SDN (software-defined networking)
     * separates the control plane from the data plane for application delivery
