@@ -9,7 +9,7 @@
   * provides backups if needed in a crisis
   * e.g. if we have two instances of a service running in production and one fails
     * the system can failover to the other one
-![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/redundancy.png "Redundancy")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/redundancy.png "Redundancy")
 * Replication means sharing information to ensure consistency between redundant resources
   * such as software or hardware components, to improve reliability, fault-tolerance, or accessibility
 * Replication is widely used in many database management systems (DBMS)
