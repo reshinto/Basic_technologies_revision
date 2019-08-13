@@ -35,7 +35,7 @@
 * it is very likely that such a large data set is spread over several physical devices
   * this means we need some way to find the correct physical location of the desired data
   * Indexes are the best way to do this
-![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/indexes.png "Indexes")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/indexes.png "Indexes")
 ## How do Indexes decrease write performance?
 * An index can dramatically speed up data retrieval
   * but may itself be large due to the additional keys
