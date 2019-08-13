@@ -16,7 +16,7 @@
         * that doesn’t result in a failure of the entire network
       * Data is sufficiently replicated across combinations of nodes
         * and networks to keep the system up through intermittent outages
-![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/cap_theorem.png "CAP Theorem")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/cap_theorem.png "CAP Theorem")
 * We cannot build a general data store that is
   * continually available, sequentially consistent, and tolerant to any partition failures
   * We can only build a system that has any 2 of these three properties
