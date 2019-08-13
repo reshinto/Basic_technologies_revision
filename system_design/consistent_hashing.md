@@ -39,8 +39,8 @@
       * Hash it to a single integer
       * Move clockwise on the ring until finding the first cache it encounters
       * That cache is the one that contains the key.
-![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/consistentHashingPt1.png "Consistent Hashing pt1")
-![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/consistentHashingPt2.png "Consistent Hashing pt2")
-![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/consistentHashingPt3.png "Consistent Hashing pt3")
-![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/consistentHashingPt4.png "Consistent Hashing pt4")
-![alt text](https://github.com/reshinto/Basic_technologies_revision/system_design/images/consistentHashingPt5.png "Consistent Hashing pt5")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/consistentHashingPt1.png "Consistent Hashing pt1")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/consistentHashingPt2.png "Consistent Hashing pt2")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/consistentHashingPt3.png "Consistent Hashing pt3")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/consistentHashingPt4.png "Consistent Hashing pt4")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/consistentHashingPt5.png "Consistent Hashing pt5")
