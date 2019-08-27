@@ -62,7 +62,7 @@
 14. Push to heroku
     > git push heroku master
 15. Setup database if required (TO BE UPDATED)
-16. User heroku BASH to create superuser and migrate
+16. Use heroku BASH to create superuser and migrate
     * Run bash
     > heroku run bash
     * Migrate
