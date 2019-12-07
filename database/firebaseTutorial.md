@@ -25,10 +25,10 @@ cd new_project_name
 5. Initialize project
 ```
 firebase init
-yes (to proceed)
-select Functions by pressing space
-select Use an existing project (created at firebase website)
 ```
+* yes (to proceed)
+* select Functions by pressing space
+* select Use an existing project (created at firebase website)
 4. Deploy project
 ```
 firebase deploy
