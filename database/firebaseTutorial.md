@@ -33,6 +33,10 @@ firebase init
 ```
 firebase deploy
 ```
+## Run server locally
+```
+firebase serve
+```
 ## Create database
 1. click on "Database" -> click on "Create database" button
 2. select "Start in test mode" -> select region for cloud firebase locatoin -> click "Done"
