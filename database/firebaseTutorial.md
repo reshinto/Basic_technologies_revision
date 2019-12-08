@@ -131,3 +131,14 @@ exports.api = functions.https.onRequest(app);
 // change region with the following
 // exports.api = functions.region("asia-east2").https.onRequest(app);
 ```
+## Enable Authentication
+1. click on "Authentication"
+2. under "Users" tab, click on "Set up sign-in method" button
+3. For default, enable the Email/Password, then click "Save" button
+4. Go to project Overview -> click on "Project settings"
+5. under "Your apps", click on "</>"
+6. Create a new web app if none is available, enter app name -> click on "Register app"
+7. Install firebase (a client library) in functions folder to enable authentication
+```
+npm i firebase
+```
