@@ -94,4 +94,6 @@ app.get("/data", (req, res) => {
 
 // enable multiple routes at 1 end point
 exports.api = functions.https.onRequest(app);
+// change region with the following
+// exports.api = functions.region("asia-east2").https.onRequest(app);
 ```
