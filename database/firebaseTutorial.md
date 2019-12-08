@@ -36,3 +36,7 @@ firebase deploy
 ## Create database
 1. click on "Database" -> click on "Create database" button
 2. select "Start in test mode" -> select region for cloud firebase locatoin -> click "Done"
+## Create collection (similar to table)
+1. At database, click on "Start collection"
+2. Enter the name of the new collection
+* objects are maps, nested maps and arrays are possible
