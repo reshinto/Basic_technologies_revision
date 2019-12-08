@@ -47,8 +47,9 @@ firebase serve
 ## Create endpoints
 ```javascript
 const admin = require("firebase-admin");
-
 admin.initializeApp();
+
+// Use express for the following instead
 
 // Read
 exports.getData = functions.https.onRequest((req, res) => {
@@ -71,8 +72,25 @@ exports.getData = functions.https.onRequest((req, res) => {
 ```
 ## Use express to manage routes
 ```javascript
+const admin = require("firebase-admin");
+admin.initializeApp();
 const express = require("express");
 const app = express();
+
+app.get("/data", (req, res) => {
+  admin.firestore().collection("nameOfCollection").get()
+    .then(datas => {
+      // let dataArr = [];
+      let dataObj;
+      datas.forEach(eachData => {
+        // dataArr.push(eachData.data());
+        dataObj = eachData.data();
+      });
+      // return res.json(dataArr);
+      return res.json(dataObj)
+    })
+    .catch(err => console.error(err));
+});
 
 // enable multiple routes at 1 end point
 exports.api = functions.https.onRequest(app);
