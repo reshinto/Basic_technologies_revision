@@ -69,6 +69,24 @@ exports.getData = functions.https.onRequest((req, res) => {
     })
     .catch(err => console.error(err));
 });
+
+// Create
+exports.createData = functions.https.onRequest((req, res) => {
+  if (req.method !== "POST") {
+    return res.status(400).json({error: "Invalid request method!"});
+  }
+  const newData = req.body;
+  admin.firestore()
+    .collection("nameOfCollection")
+    .add(newData)
+    .then(data => {
+      return res.json({message: `Document ${data.id} created successfully!`});
+    })
+    .catch(err => {
+      res.status(500).json({error: "New project category creation failed!"});
+      console.error(err);
+    });
+});
 ```
 ## Use express to manage routes
 ```javascript
@@ -77,6 +95,7 @@ admin.initializeApp();
 const express = require("express");
 const app = express();
 
+// Read
 app.get("/data", (req, res) => {
   admin.firestore().collection("nameOfCollection").get()
     .then(datas => {
@@ -90,6 +109,21 @@ app.get("/data", (req, res) => {
       return res.json(dataObj)
     })
     .catch(err => console.error(err));
+});
+
+// Create
+app.post("/data", (req, res) => {
+  const newData = req.body;
+  admin.firestore()
+    .collection("nameOfCollection")
+    .add(newData)
+    .then(data => {
+      return res.json({message: `Document ${data.id} created successfully!`});
+    })
+    .catch(err => {
+      res.status(500).json({error: "New document creation failed!"});
+      console.error(err);
+    });
 });
 
 // enable multiple routes at 1 end point
