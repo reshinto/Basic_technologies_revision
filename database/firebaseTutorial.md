@@ -44,3 +44,36 @@ firebase serve
 1. At database, click on "Start collection"
 2. Enter the name of the new collection
 * objects are maps, nested maps and arrays are possible
+## Create endpoints
+```javascript
+const admin = require("firebase-admin");
+
+admin.initializeApp();
+
+// Read
+exports.getData = functions.https.onRequest((req, res) => {
+  if (req.method !== "GET") {
+    return res.status(400).json({error: "Invalid request method!"});
+  }
+  admin.firestore().collection("nameOfCollection").get()
+    .then(datas => {
+      // let dataArr = [];
+      let dataObj;
+      datas.forEach(eachData => {
+        // dataArr.push(eachData.data());
+        dataObj = eachData.data();
+      });
+      // return res.json(dataArr);
+      return res.json(dataObj)
+    })
+    .catch(err => console.error(err));
+});
+```
+## Use express to manage routes
+```javascript
+const express = require("express");
+const app = express();
+
+// enable multiple routes at 1 end point
+exports.api = functions.https.onRequest(app);
+```
