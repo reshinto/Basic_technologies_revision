@@ -138,7 +138,60 @@ exports.api = functions.https.onRequest(app);
 4. Go to project Overview -> click on "Project settings"
 5. under "Your apps", click on "</>"
 6. Create a new web app if none is available, enter app name -> click on "Register app"
-7. Install firebase (a client library) in functions folder to enable authentication
+7. Copy the config settings and save it in a .env file
+```
+api_key = "zfdbzdfbz"
+auth_domain = "some-server-4q4t.firebaseapp.com"
+database_url = "https=//some-server-4q4t.firebaseio.com"
+project_id = "some-server-4q4t"
+storage_bucket = "some-server-4q4t.appspot.com"
+messaging_sender_id = "q4tq43t3543t"
+app_id = "1=140213q43rq34r=web=8q4rq34rq34r43"
+measurement_id = "G-6GVNEGSG43"
+```
+* retrieve env variables in config.js
+```javascript
+module.exports = {
+  apiKey: process.env.api_key,
+  authDomain: process.env.auth_domain,
+  databaseURL: process.env.database_url,
+  projectId: process.env.project_id,
+  storageBucket: process.env.storage_bucket,
+  messagingSenderId: process.env.messaging_sender_id,
+  appId: process.env.app_id,
+  measurementId: process.env.measurement_id
+};
+```
+* import and initialize firebase app in index.js
+```javascript
+// use dotenv for localhost
+// require('dotenv').config()
+const firebase = require("firebase");
+const config = require("./config");
+firebase.initializeApp(config);
+```
+8. Install firebase (a client library) in functions folder to enable authentication
 ```
 npm i firebase
+```
+9. Create signup route
+```javascript
+app.post("/signup", (req, res) => {
+  const newUser = {
+    email: req.body.email,
+    password: req.body.password,
+    confirmPassword: req.body.confirmPassword,
+    username: req.body.username
+  };
+  firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password)
+    .then(data => {
+      return res.status(201).json({
+        message: `User ${data.user.uid} signed up successfully!`
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({error: err.code});
+    });
+});
 ```
