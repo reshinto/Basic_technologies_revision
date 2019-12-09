@@ -162,6 +162,10 @@ module.exports = {
   measurementId: process.env.measurement_id
 };
 ```
+* setup env variables in firebase
+```
+firebase functions:config:set obj_name.key_name="key_value"
+```
 * import and initialize firebase app in index.js
 ```javascript
 // use dotenv for localhost
