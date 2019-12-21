@@ -8,3 +8,10 @@
 # for debugging
 * open a new terminal and open a mongo shell
 * run: mongo
+* or run : mongo --host localhost:27017
+    * 27017 is the default port mongodb uses
+
+# for graphical interface
+* open MongoDB Compass Community
+* ensure server is already run with mongod (refer to the above)
+* no settings is required, just click the connect button
