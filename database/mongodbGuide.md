@@ -16,7 +16,8 @@
 * ensure server is already run with mongod (refer to the above)
 * no settings is required, just click the connect button
 
-## mongo uses the language called BSON (Binary JavaScript Object Notation)
+# Mongo shell basics
+* mongo uses the language called BSON (Binary JavaScript Object Notation)
 
 ### help
 * display a list of basic features
