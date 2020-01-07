@@ -3,7 +3,7 @@
 * C# is a programming language
 * .NET is a framework
   * It consists of a run-time environment (CLR) and a class library that we use for building applications
-### CLR
+### Common Language Runtime (CLR)
 * When you compile an application, C# compiler compiles your code to IL (Intermediate Language) code
 * IL code is platform agnostics, which makes it possible to a take a C# program on a different computer with different hardware architecture and operating system and run it
   * For this to happen, we need CLR
