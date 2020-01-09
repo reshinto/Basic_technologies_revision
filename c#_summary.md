@@ -23,3 +23,33 @@
   * An assembly is a file (DLL or EXE) that contains one or more namespaces and classes
     * An EXE file represents a program that can be executed
     * A DLL is a file that includes code that can be re-used across different programs
+### Classes vs Structs
+1. type
+  * Struct (structure) is a value type
+  * Class is a reference type
+2. Storage
+  * Struct are stored on stack
+  * Classes are stored on heap
+3. Memory
+  * Value types hold their value in memory where they are declared
+  * Reference types hold a reference to an object in memory
+4. Destroy
+  * Value types are destroyed immediately after the scope is lost
+  * Only reference variables in reference types are destroyed after the scope is lost
+    * the object is later destroyed by garbage collector
+5. Copy
+  * When a struct is copied into another struct, a new copy of that struct gets created & modifications on 1 struct will not affect the values contained by the other struct
+  * When a class is copied into another class, only get a copy of the reference variable
+    * both the reference variables point to the same object on the heap
+    * operations on 1 variable will affect the values contained by the other reference variable
+6. Destructors
+  * Structs can't have destructors
+  * Classes can have destructors
+7. Explicit parameter
+  * Structs cannot have explicit parameter & constructor
+  * Classes can have explicit parameter & constructor
+8. Inheritance
+  * Structs can't inherit from another class
+  * Class can inherit from another class
+  * Both structs and classes can inherit from an interface
+  * Both structs and classes cannot inherit from another struct (Struct are sealed types)
