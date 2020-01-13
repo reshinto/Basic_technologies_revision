@@ -23,7 +23,10 @@
   * An assembly is a file (DLL or EXE) that contains one or more namespaces and classes
     * An EXE file represents a program that can be executed
     * A DLL is a file that includes code that can be re-used across different programs
-### Classes vs Structs
+### Types
+#### Structures
+#### Classes
+### Classes vs Structures
 * Use struct instead of class if instances of type are small & commonly short-lived / are commonly embedded in other objects
 * Avoid defining a struct unless the type has all of the following characteristics
     1. it logically represents a single value, similar to primitive types (int, double, etc.)
@@ -32,16 +35,70 @@
     4. it will not have to be boxed frequently
 1. type
     * Struct (structure) is a value type
+      * All primitive types are structures (int, char, bool, etc.)
+      ```c#
+      // example 1
+      // since a and b are value types, they are independent of each other
+      int a = 10;
+      int b = a;
+      b++;
+      System.Console.WriteLine($"{a}, {b}");  // 10, 11
+      
+      
+      // example 2
+      public class Program {
+        public static void Main() {
+          int number = 1;
+          Increment(number);
+          System.Console.WriteLine(number);  // value will still be 1
+        }
+
+        public static void increment(int number) {
+          number += 10;
+        }
+      }
+      ```
     * Class is a reference type
+      * Non primitive types are classes (Arrays, Strings, etc.)
+      ```c#
+      // example 1
+      // since array1 & array2 is a reference of the heap, when either 1 is modified, the rest will be affected
+      int[] array1 = new int[3] {1, 2, 3};
+      int[] array2 = array1;
+      array2[0] = 0;
+      System.Console.WriteLine($"{array1}, {array2}");  // [0, 2, 3], [0, 2, 3]
+      
+      
+      // example 2
+      public class Person {
+        public int Age;
+      }
+
+      public class Program {
+        public static void Main() {
+          Person person = new Person() {Age=20};
+          increment(person);
+          System.Console.WriteLine(person.Age);  // 30
+        }
+
+        public static void increment(Person person) {
+          person.Age += 10;
+        }
+      }
+      ```
 2. Storage
-    * Struct are stored on stack
-    * Classes are stored on heap
+    * Memory of Structs are stored on stack
+    * Memory of Classes are stored on heap
 3. Memory
     * Value types hold their value in memory where they are declared
+      * memory is allocated on stack and is done automatically
     * Reference types hold a reference to an object in memory
+      * Need to allocate memory
 4. Destroy
     * Value types are destroyed immediately after the scope is lost
+      * Data will be immediately removed when out of scope
     * Only reference variables in reference types are destroyed after the scope is lost
+      * data will remain in the memory temporary
       * the object is later destroyed by garbage collector
 5. Copy
     * When a struct is copied into another struct, a new copy of that struct gets created & modifications on 1 struct will not affect the values contained by the other struct
