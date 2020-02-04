@@ -18,3 +18,5 @@
     > dotnet ef migrations add MigrationName
 * remove migration
     > dotnet ef migrations remove MigrationName
+## Apply Migration
+> dotnet ef database update
