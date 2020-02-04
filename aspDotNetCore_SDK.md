@@ -5,3 +5,16 @@
 > dotnet run
 ## Run project with auto update
 > dotnet watch run
+## Connect and Manage database
+* requires installation of "dotnet-ef"
+    > dotnet tool install --global dotnet-ef
+* view help
+    > dotnet ef -h
+* add migration
+    * requires installation of nuget packages, install via nuget in project
+        * "Microsoft.EntityFrameworkCore"
+        * "Microsoft.EntityFrameworkCore.Design"
+        * "Microsoft.EntityFrameworkCore.NameOfSqlDatabase" -> eg "Microsoft.EntityFrameworkCore.Sqlite"
+    > dotnet ef migrations add MigrationName
+* remove migration
+    > dotnet ef migrations remove MigrationName
