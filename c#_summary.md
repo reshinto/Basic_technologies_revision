@@ -23,9 +23,6 @@
   * An assembly is a file (DLL or EXE) that contains one or more namespaces and classes
     * An EXE file represents a program that can be executed
     * A DLL is a file that includes code that can be re-used across different programs
-### Types
-#### Structures
-#### Classes
 ### Classes vs Structures
 * Use struct instead of class if instances of type are small & commonly short-lived / are commonly embedded in other objects
 * Avoid defining a struct unless the type has all of the following characteristics
@@ -116,3 +113,14 @@
     * Class can inherit from another class
     * Both structs and classes can inherit from an interface
     * Both structs and classes cannot inherit from another struct (Struct are sealed types)
+### Abstract classes vs Interfaces
+* abstract classes can have implementations for some of its methods
+  * interfaces cannot have any implementations for all of its methods
+* abstract classes can have fields (variable declared outside of a method)
+  * interfaces cannot have fields
+* abstract classes can inherit from another abstract class or another interface
+  * interface can only inherit from another interface
+* abstract classes can only inherit from 1 class or multiple interfaces at the same time
+  * interface can only inherit from 1 or multiple interfaces at the same time
+* abstract class members can have access modifiers (public, private, protected, etc)
+  * interface cannot have access modifiers
