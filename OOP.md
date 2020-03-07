@@ -21,7 +21,7 @@
     }
     getWage(baseSalary, overtime, rate);
     
-    // OOP - this is better because getWage method does not requires any parameters
+    // encapsulation - this is better because getWage method does not requires any parameters
     // the fewer the number of parameters, the easier it is to use and maintain that function
     let employee = {
       baseSalary: 30000,
