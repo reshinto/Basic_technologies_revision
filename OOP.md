@@ -98,6 +98,14 @@
     ```
 4. Polymorphism - literally means many forms
     * it is a technique that allows you to get rid of long if and else or switch and case conditional statements
+    * has 2 types
+        1. Compile time polymorphism (static binding)
+            * e.g.: method overloading
+                * having several methods present in a class with the same name but different types/order/number of parameters
+        2. Runtime polymorphism (dynamic binding)
+            * e.g.: method overriding
+                * means changing the implementation of an inherited method
+                * Overriding is about same method, same signature but different classes connected through inheritance
     ```javascript
     class Animal {
       constructor(name) {
