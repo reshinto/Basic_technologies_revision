@@ -11,6 +11,7 @@
 1. Encapsulation
     * group related variables and functions that operate on them into objects
       * thus reduce complexity and increase reusability
+    * (summary) hiding the code and data into a single unit
     ```javascript
     // procedural programming
     let baseSalary = 30000;
