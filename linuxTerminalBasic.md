@@ -39,10 +39,13 @@
 * ```grep "<text>" <filename>```
 ### Append the output of a command to a file (file will be created if it does not exist)
 * ```<cmd> >> <filename>```
-### Overwrite output of a command to a file (file will be created if it does not exist)
+### Overwrite output of a command to a file (Output redirection, file will be created if it does not exist)
 * ```<cmd> > <filename>```
 ### Direct output of a command to another command
 * ```<cmd1> | <cmd2>``` cmd2 will use cmd1 output to execute
+### Input redirection
+* ```<cmd> < <file>``` file will be fed into the command and then runned
+  * ex: ```<sendingEmailCommand> < <fileToBeAttached>```
 ### Sort text in a file
 * ```sort <file>``` sort by ascending order
 * ```sort -r <file>``` sort by descending order
