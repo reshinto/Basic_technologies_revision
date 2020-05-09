@@ -46,6 +46,7 @@
 * ```git rm --cached <filename>``` stages the file's removal from the staging area
   * ```git rm <filename>``` WARNING: this will actually delete the file from the system and stage the file's removal
 * ```git reset``` remove all files from staging area
+* ```git reset --hard <shortRepoName>/<branchName>``` discards all history and changes back to the specified commit ```git reset --hard origin/master```
 ### Rename or move file then add to the "Staging area"
 * ```git mv <oldFilenameOrWithPath> <newFilenameOrWithPath>```
 ### Unmodify file
@@ -56,6 +57,8 @@
 * ```git commit --amend``` undo and recommit new changes (ex: add forgotten files, modify commit messages)
 ### Add and commit
 * ```git commit -a``` "-a" adds all new and modified files
+### Undo commit
+* ```git revert [saved hash]``` git will create a new commit that undoes that commit
 ### View git history
 * ```git log```
 * ```git log --pretty=oneline``` or ```git log --oneline``` display one line logs
