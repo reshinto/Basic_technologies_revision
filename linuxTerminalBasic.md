@@ -22,7 +22,8 @@
 * ```rmdir folderName```
 ### Remove file and/or folder
 * ```rm filename``` only for files
-* ```rm -r folderName``` remove folder with files and folders inside
+* ```rm -r folderName``` remove current and nested folders
+* ```rm -rf folderName``` remove current and nested folders and files
 ### Copy file and/or folder
 * ```cp filename``` only for 1 file
 * ```cp -r folderName``` for folders, nested folders and files
