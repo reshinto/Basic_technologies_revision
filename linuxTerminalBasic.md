@@ -49,7 +49,7 @@
 ### Sort text in a file
 * ```sort <file>``` sort by ascending order
 * ```sort -r <file>``` sort by descending order
-### Print unique text in a file
+### Print unique text in a file (file contents must be sorted first)
 * ```uniq <file>```
 ### Temporarily replace or substitute string in a file and prints the file contents
 * ```sed "s/<oldString>/<newString>/" <file>```
