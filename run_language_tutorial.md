@@ -35,14 +35,22 @@
 > mono xxx.exe
 
 # Run Java files
-### .java file name must be the same as public class name
+### xxx.java file name must be the same as public class name
 * note: it is case sensitive
-## compile .java file with javac in terminal
+## compile xxx.java file with javac in terminal
 > javac xxx.java
 ## java class will be created, run class file with java
 > java xxx
 ## compile and run at the same time
 javac xxx.java && java xxx
+
+# Run Typescript files
+## run typescript files without compiling with ts-node in terminal (no javascript created)
+> ts-node xxx.ts
+## compile xxx.ts file with tsc in terminal
+> tsc ./xxx.ts
+## javascript file will be created, run file with node
+> node xxx.js
 
 # Run Javascript files
 ## run with nodeJS
