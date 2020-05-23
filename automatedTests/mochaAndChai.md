@@ -1,4 +1,4 @@
-# Mocha and Chai unit testing
+# [Mocha](https://mochajs.org/) and [Chai](https://www.chaijs.com/) unit testing
 ## Basic setup
 ### Installation
 > npm i --save-dev mocha chai
@@ -6,7 +6,7 @@
 - if the file you wanna test is named as abc.js, create the same file but ends with test.js
 - save all test files into a test folder
 > abc.test.js
-### Enable ES6 support and to ensure it is transpiled correctly by installing babel
+### Enable ES6 support and to ensure it is transpiled correctly by installing [babel](https://babeljs.io/)
 - not required if not using import and export from ES6
 >npm i --save-dev @babel/core @babel/preset-env @babel/register
 #### Create a .babelrc file
@@ -85,8 +85,8 @@
         });
         ```
 ## Chai keywords
-### expect
-- to.deep.equal
+### [expect](https://www.chaijs.com/api/bdd/)
+- to.[deep](https://www.chaijs.com/api/bdd/#method_deep).equal
   - compare 2 different objects
     - set actual to store the actual value of the return value of the function we want to test
     - set expected as the value we expect the actual variable to be
@@ -101,9 +101,8 @@
   ```javascript
   expect(actual).to.equal(expected);
   ```
-- to.be.a
+- to.be.[a](https://www.chaijs.com/api/bdd/#method_a)
   - check type ("function", "string", "object", "array", "null", "undefined", "error", "promise", etc.)
   ```javascript
   expect(actual).to.be.a("function");
   ```
-  
