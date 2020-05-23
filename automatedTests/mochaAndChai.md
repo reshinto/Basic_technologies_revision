@@ -28,6 +28,13 @@
 },
 ```
 - run test with ```npm test```
+### run test automatically
+- add ```-watch``` into the script in the package.json file
+```
+"scripts": {
+  "test": "npx mocha 'test/**/*.test.js' --recursive --require @babel/register -watch"
+},
+```
 ## Mocha Keywords
 ### describe
 - Use to group similar tests together
