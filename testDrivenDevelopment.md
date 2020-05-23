@@ -43,6 +43,12 @@ test(inchesToCentimeters(196) === 497.84);
     - There should be no shared state between components, nothing hidden, everything involved in getting to the final result should be clear & obvious
 ## 3 types of tests
 1. Unit Tests: test very specific, low level pieces of functionality (end users won't really notice or think about directly)
+    - Need to have 3 things: A testing environment / test runner, A testing framework, An assertion library
+    - tools:
+      - Mocha: serves as a test runner and a testing framework
+      - Chai: serves as an assertion library
+      - Jasmine: serves all
+      - Jest: serves all
 2. Integration Tests: ensures that the individual pieces of the application work together correctly (e.g. testing if app communicates correctly with a database or api)
 3. End-to-End (E2E) Tests: ensure the entire app works as seen from the viewpoint of a user
     - tools: [selenium](https://www.selenium.dev/documentation/en/), [puppeteer](https://github.com/puppeteer/puppeteer), [cypress](https://www.cypress.io/)
