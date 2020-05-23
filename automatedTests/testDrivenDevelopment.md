@@ -50,6 +50,15 @@ test(inchesToCentimeters(196) === 497.84);
       - Jasmine: serves all
       - Jest: serves all
 2. Integration Tests: ensures that the individual pieces of the application work together correctly (e.g. testing if app communicates correctly with a database or api)
+    - tools:
+      - Mocha & Chai
+      - Sinon js:
+        - use for creating test doubles
+        - provides different functions for creating mocks, stubs, and other test doubles that allow effective integration tests
+        - help to verify how something works in isolation
+      - Supertest: allows us to run integration tests on our node server without actually starting up the server
+        - this is helpful because waiting for a server to start up can dramatically slow down our development
+        - it allows us to query our server and get results as if the server was actually running
 3. End-to-End (E2E) Tests: ensure the entire app works as seen from the viewpoint of a user
     - tools: [selenium](https://www.selenium.dev/documentation/en/), [puppeteer](https://github.com/puppeteer/puppeteer), [cypress](https://www.cypress.io/)
     
