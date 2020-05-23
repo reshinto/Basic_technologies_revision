@@ -104,5 +104,6 @@
 - to.be.[a](https://www.chaijs.com/api/bdd/#method_a)
   - check type ("function", "string", "object", "array", "null", "undefined", "error", "promise", etc.)
   ```javascript
-  expect(actual).to.be.a("function");
+  expect(actual).to.be.a("function");  // words not starting with a vowel uses "a"
+  expect([]).to.be.an("array");  // object, array, undefined, error uses "an"
   ```
