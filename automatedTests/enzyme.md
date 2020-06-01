@@ -58,6 +58,12 @@ const findByTestAttr = (wrapper, val) => {
   "presets": ["react-app"]
 }
 ```
+- build production
+> npm run build
+- install a static server to run the production code
+> npm i -g serve
+- run server
+> serve -s build
 ## Tests
 - shallow rendering
   - useful to constrain yourself to testing a component as a unit
