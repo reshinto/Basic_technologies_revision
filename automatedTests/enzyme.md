@@ -15,7 +15,7 @@
 ## Setup
 ### installation (does not include in the create-react-app)
 - install the enzyme-adapter-react-version based on the react version you are using
-> npm i --save-dev enzyme jest-enzyme enzyme-adapter-react-16
+> npm i --save-dev check-prop-types enzyme jest-enzyme enzyme-adapter-react-16 
 ### file setup in xxx.test.js
 - remove the ```import {render} from "@testing-library/react";```
   - this is because we will be using enzyme instead
@@ -23,6 +23,7 @@
 ```javascript
 import Enzyme, {shallow} from "enzyme";
 import EnzymeAdapter from "enzyme-adapter-react-16";  // version depends on react version
+import checkPropTypes from "check-prop-types";  // only required if checking prop types
 ```
 - Configure enzyme
 ```javascript
@@ -98,7 +99,7 @@ test("counter starts at 0", () => {
   expect(initialCounterState).toBe(0);
 });
 ```
-- test clicking of button
+- test clicking of button & state change
 ```javascript
 test("clicking button increments counter display", () => {
   const counter = 7;
@@ -111,5 +112,49 @@ test("clicking button increments counter display", () => {
   // find display and test value
   const counterDisplay = findByTestAttr(wrapper, "counter-display");
   expect(counterDisplay.text()).toContain(counter + 1);
+});
+```
+- test props
+```javascript
+test("renders no text when 'success' prop is false", () => {
+  const wrapper = setup({ success: false });
+  const component = findByTestAttr(wrapper, "component-app");
+  expect(component.text()).toBe("");
+});
+
+test("renders non-empty message when 'success' prop is true", () => {
+  const wrapper = setup({ success: false });
+  const message = findByTestAttr(wrapper, "component-message");
+  expect(message.text().length).not.toBe(0);
+});
+```
+- test prop types
+```javascript
+test("does not throw warning with expected props", () -> {
+  const exprectedProps = {success: false};
+  // replace ComponentName to the name of the component you are testing
+  const propError = checkPropTypes(ComponentName.propTypes, expectedProps, "prop", ComponentName.name);
+  expect(propError).toBeUndefined();
+});
+```
+```javascript
+// can be refactored
+import checkPropTypes from "check-prop-types"
+  
+export const checkProps = (component, conformingProps) => {
+  const propError = checkPropTypes(
+    component.propTypes,
+    conformingProps,
+    "prop",
+    component.name
+  );
+  expect(propError).toBeUndefined();
+};
+```
+```javascript
+// refactored to
+test("does not throw warning with expected props", () -> {
+  const exprectedProps = {success: false};
+  checkProps(Congrats, expectedProps);
 });
 ```
