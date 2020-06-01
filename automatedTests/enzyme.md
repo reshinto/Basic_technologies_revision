@@ -1,4 +1,4 @@
-# Enzyme
+# [Enzyme](https://enzymejs.github.io/enzyme/)
 - Creates virtual DOM for testing
 - Allows testing without a browser
 - Can search through DOM
@@ -15,7 +15,7 @@
 ## Setup
 ### installation (does not include in the create-react-app)
 - install the enzyme-adapter-react-version based on the react version you are using
-> npm i --save-dev check-prop-types enzyme jest-enzyme enzyme-adapter-react-16 
+> npm i --save-dev [check-prop-types](https://github.com/ratehub/check-prop-types#readme) enzyme [jest-enzyme](https://github.com/FormidableLabs/enzyme-matchers/tree/master/packages/jest-enzyme#readme) enzyme-adapter-react-16 
 ### file setup in xxx.test.js
 - remove the ```import {render} from "@testing-library/react";```
   - this is because we will be using enzyme instead
@@ -67,7 +67,7 @@ export const findByTestAttr = (wrapper, val) => {
 ```
 ### prevent data-test attribute from displaying in production
 - install the required library
-> npm i --save-dev babel-plugin-react-remove-properties
+> npm i --save-dev [babel-plugin-react-remove-properties](https://www.npmjs.com/package/babel-plugin-react-remove-properties)
 - enable modifying of React settings
 > npm run eject
 - edit the babel settings in the package.json file
