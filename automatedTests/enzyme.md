@@ -21,23 +21,47 @@
   - this is because we will be using enzyme instead
 - import the following
 ```javascript
-import Enzyme, {shallow} from "enzyme";
-import EnzymeAdapter from "enzyme-adapter-react-16";  // version depends on react version
+import Enzyme, {shallow} from "enzyme";  // Enzyme not required if configured in setupTests.js
+import EnzymeAdapter from "enzyme-adapter-react-16";  // version depends on react version, only required if setupTests.js is not created
 import checkPropTypes from "check-prop-types";  // only required if checking prop types
 ```
 - Configure enzyme
+  - doing this requires the following to be written in every test file
 ```javascript
+Enzyme.configure({ adapter: new EnzymeAdapter() });
+```
+- create a ```setupTests.js``` file in the src directory to enable auto configuration
+  - non create-react-apps must create a ```jest.config.js``` file with the following configuration
+    ```
+    module.exports = {
+      setupFilesAfterEnv: ["<rootDir>/src/setupTests.js"]
+    }
+    ```
+  - once the following file has been configured, this fill will always run first before running the tests
+```javascript
+import Enzyme from "enzyme";
+import EnzymeAdapter from "enzyme-adapter-react-16";
+
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 ```
 - Create a setup function to enable shallow rendering
 ```javascript
 const setup = (props={}, state=null) => {
-  return shallow(<App {...props});
+  return shallow(<App {...props} />);
+};
+```
+- Enable default props and overriding
+```javascript
+const defaultProps = { success: false };
+
+const setup = (props={}, state=null) => {
+  const setupProps = {...defaultProps, ...props};  // ...props will overwrite defaultProps
+  return shallow(<App {...setupProps} />);
 };
 ```
 - Create a function to find the component
 ```javascript
-const findByTestAttr = (wrapper, val) => {
+export default findByTestAttr = (wrapper, val) => {
   return wrapper.find(`[data-test=${val}]`);
 };
 ```
@@ -89,6 +113,19 @@ test("renders without error", () => {
   const wrapper = setup();
   const appComponent = findByTestAttr(wrapper, "component-app");
   expect(appComponent.length).toBe(1);
+});
+```
+- using beforeEach to reuse code for all tests inside a describe
+```javascript
+describe("describe the tests purpose", () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = setup();
+  });
+  test("test something", () => {
+    const appComponent = findByTestAttr(wrapper, "component-app");
+    expect(appComponent.length).toBe(1);
+  });
 });
 ```
 - test initial state value
