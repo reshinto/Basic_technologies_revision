@@ -167,7 +167,7 @@ test("renders non-empty message when 'success' prop is true", () => {
 ```
 - test prop types
 ```javascript
-test("does not throw warning with expected props", () -> {
+test("does not throw warning with expected props", () => {
   const exprectedProps = {success: false};
   // replace ComponentName to the name of the component you are testing
   const propError = checkPropTypes(ComponentName.propTypes, expectedProps, "prop", ComponentName.name);
@@ -190,7 +190,7 @@ export const checkProps = (component, conformingProps) => {
 ```
 ```javascript
 // refactored to
-test("does not throw warning with expected props", () -> {
+test("does not throw warning with expected props", () => {
   const exprectedProps = {success: false};
   checkProps(Congrats, expectedProps);
 });
