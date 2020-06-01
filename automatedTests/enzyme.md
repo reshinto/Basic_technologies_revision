@@ -28,6 +28,36 @@ import EnzymeAdapter from "enzyme-adapter-react-16";  // version depends on reac
 ```javascript
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 ```
+- Create a setup function to enable shallow rendering
+```javascript
+const setup = (props={}, state=null) => {
+  return shallow(<App {...props});
+};
+```
+- Create a function to find the component
+```javascript
+const findByTestAttr = (wrapper, val) => {
+  return wrapper.find(`[data-test=${val}]`);
+};
+```
+### prevent data-test attribute from displaying in production
+- install the required library
+> npm i --save-dev babel-plugin-react-remove-properties
+- enable modifying of React settings
+> npm run eject
+- edit the babel settings in the package.json file
+```javascript
+"babel": {
+  "env": {
+    "production": {
+      "plugins": [
+        ["react-remove-properties", {"properties": ["data-test"]}]
+      ]
+    }
+  },
+  "presets": ["react-app"]
+}
+```
 ## Tests
 - shallow rendering
   - useful to constrain yourself to testing a component as a unit
@@ -44,5 +74,13 @@ test("renders without crashing", () => {
 test("renders without crashing", () => {
   const wrapper = shallow(<App />);  // test fails if error is thrown
   console.log(wrapper.debug());
+});
+```
+- render without error
+```javascript
+test("renders without error", () => {
+  const wrapper = setup();
+  const appComponent = findByTestAttr(wrapper, "component-app");
+  expect(appComponent.length).toBe(1);
 });
 ```
