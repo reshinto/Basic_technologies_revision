@@ -62,7 +62,7 @@ const setup = (props={}, state=null) => {
 - Create a function to find the component
 ```javascript
 export const findByTestAttr = (wrapper, val) => {
-  return wrapper.find(`[data-test=${val}]`);
+  return wrapper.find(`[data-test="${val}"]`);
 };
 ```
 ### prevent data-test attribute from displaying in production
