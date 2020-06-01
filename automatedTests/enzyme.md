@@ -90,3 +90,26 @@ test("renders without error", () => {
   expect(appComponent.length).toBe(1);
 });
 ```
+- test initial state value
+```javascript
+test("counter starts at 0", () => {
+  const wrapper = setup();
+  const initialCounterState = wrapper.state("counter");  // counter is the variable in the state
+  expect(initialCounterState).toBe(0);
+});
+```
+- test clicking of button
+```javascript
+test("clicking button increments counter display", () => {
+  const counter = 7;
+  const wrapper = setup(null, {counter});
+  
+  // find button and click
+  const button = findByTestAttr(wrapper, "increment-button");
+  button.simulate("click");
+  
+  // find display and test value
+  const counterDisplay = findByTestAttr(wrapper, "counter-display");
+  expect(counterDisplay.text()).toContain(counter + 1);
+});
+```
