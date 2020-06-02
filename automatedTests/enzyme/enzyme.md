@@ -15,7 +15,9 @@
 ## Setup
 ### installation (does not include in the create-react-app)
 - install the enzyme-adapter-react-version based on the react version you are using
-> npm i --save-dev [check-prop-types](https://github.com/ratehub/check-prop-types#readme) enzyme [jest-enzyme](https://github.com/FormidableLabs/enzyme-matchers/tree/master/packages/jest-enzyme#readme) enzyme-adapter-react-16 
+> npm i --save-dev [check-prop-types](https://github.com/ratehub/check-prop-types#readme) enzyme [jest-enzyme](https://github.com/FormidableLabs/enzyme-matchers/tree/master/packages/jest-enzyme#readme) enzyme-adapter-react-16
+- or
+> yarn add --dev [check-prop-types](https://github.com/ratehub/check-prop-types#readme) enzyme [jest-enzyme](https://github.com/FormidableLabs/enzyme-matchers/tree/master/packages/jest-enzyme#readme) enzyme-adapter-react-16
 ### file setup in xxx.test.js
 - remove the ```import {render} from "@testing-library/react";```
   - this is because we will be using enzyme instead
