@@ -22,7 +22,7 @@ export default class App extends React.Component {
 ```javascript
 import React, {useState} from "react";
   
-export default function App(props) {
+export default function App() {
   const [count, setCount] = useState(0);  // 0 = initial state
   handleClick = () => {
     setCount(count + 1);
@@ -77,7 +77,8 @@ export default class App extends React.Component {
   }
   
   render() {
-    return (<div></div>);
+    const {something} = this.props
+    return (<div>{something}</div>);
   }
 }
 ```
@@ -85,11 +86,13 @@ export default class App extends React.Component {
 import React, {useEffect} from "react";
 
 export default function App(props) {
+  const {something} = props;
+  
   useEffect(() => {
     doSomething();
-  }, [props.something]);
+  }, [something]);
   
-  return (<div></div>);
+  return (<div>{something}</div>);
 }
 ```
 ### ComponentWillUnmount
