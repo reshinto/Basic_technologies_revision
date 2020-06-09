@@ -30,15 +30,83 @@ export default function App() {
   return (<div onClick={handleClick}>{count}</div>);
 }
 ```
-#### setState examples
-- ```javascript
-  onChange = e => {
+#### handle multiple states
+- example 1
+```javascript
+import React from "react";
+
+export default class App extends React.Component {
+  state = {
+    name1: "",
+    name2: ""
+  }
+  
+  handleChange = e => {
     this.setState({ [e.target.name ]: e.target.value });  // requires the name attribute to be declared at the html tag
   }
-  ```
-- ```javascript
-  onChange = prop => e => this.setState({ [prop]: e.target.value });
-  ```
+  
+  render() {
+    const {name1} = this.state;
+    return (<input onChange={this.handleChange} name={name1} value={name1} />);
+  }
+}
+```
+```javascript
+import React, {useState} from "react";
+  
+export default function App() {
+  const [state, setState] = useState({
+    name1: "",
+    name2: "",
+  });
+  
+  handleChange = e => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value
+    });
+  }
+  
+  return (<input onChange={handleChange} value={state.name1} name={state.name1} />);
+}
+```
+- example 2
+```javascript
+import React from "react";
+
+export default class App extends React.Component {
+  state = {
+    name1: "",
+    name2: ""
+  }
+  
+  handleChange = prop => e => this.setState({ [prop]: e.target.value });
+  
+  render() {
+    const {name1} = this.state;
+    return (<input onChange={this.handleChange("name1")} value={name1} />);
+  }
+}
+```
+```javascript
+import React, {useState} from "react";
+  
+export default function App() {
+  const [state, setState] = useState({
+    name1: "",
+    name2: "",
+  });
+  
+  handleChange = prop => e => {
+    setState({
+      ...state,
+      [prop]: e.target.value
+    });
+  }
+  
+  return (<input onChange={handleChange("name1")} value={state.name1} />);
+}
+```
 ## Lifecycle vs Hooks
 ### ComponentDidMount
 ```javascript
