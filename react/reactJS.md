@@ -192,7 +192,7 @@ export default function App(props) {
 ```javascript
 import {useState, useEffect} from "react";
 
-export default function UseCount(props) {
+export default function UseCount() {
   const [count, setCount] = useState(0);
   
   useEffect(() => {
