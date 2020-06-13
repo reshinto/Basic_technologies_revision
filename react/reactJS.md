@@ -9,8 +9,12 @@ export default class App extends React.Component {
   }
   
   handleClick = () => {
+    // method 1
     const {count} = this.state;
     this.setState({count: count + 1});
+    
+    // method 2
+    this.setState(prevState => ({count: prevState.count + 1}));
   }
   
   render() {
