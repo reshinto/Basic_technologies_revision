@@ -221,3 +221,99 @@ export default function App() {
   return (<div onClick={handleClick}>{count}</div>);
 };
 ```
+## Forms
+### Uncontrolled form
+```javascript
+import React from "react";
+
+export default class App extends React.Component {
+  constructor() {
+    super();
+    this.name = React.createRef();
+  }
+  
+  handleSubmit = e => {
+    e.preventDefault();
+    console.log(this.name.current.value);
+  }
+  
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input ref={this.name} />
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+```
+```javascript
+import React, {useRef} from "react";
+
+export default function App() => {
+  const name = useRef();
+  
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log(name.current.value);
+  };
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      <input ref={name} />
+      <input type="submit" value="Submit" />
+    </form>
+  );
+}
+```
+### Controlled form
+```javascript
+import React from "react";
+
+export default class App extends React.Component {
+  state = {
+    name: "",
+  }
+  
+  handleChange = e => {
+    this.setState({name: e.target.value});
+  }
+  
+  handleSubmit = e => {
+    e.preventDefault();
+    console.log(this.state.name);
+  }
+  
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input onChange={this.handleChange} value={this.state.name} />
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+```
+```javascript
+import React, {useState} from "react";
+
+export default function App() => {
+  const [name, setName] = useState("");
+  
+  const handleChange = e => {
+    setName(e.target.value);
+  }
+  
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log(name);
+  };
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      <input onChange={handleChange} value={name} />
+      <input type="submit" value="Submit" />
+    </form>
+  );
+}
+```
