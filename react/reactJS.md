@@ -192,6 +192,108 @@ export default function App(props) {
   return (<div></div>);
 }
 ```
+### ShouldComponentUpdate
+#### Should be used if a function renders the same result given the same props and states
+- method 1: declaring in the shouldComponentUpdate method
+```javascript
+import React from "react";
+
+export default class App extends React.Component {
+  state = {
+    name: "",
+  }
+  
+  shouldComponentUpdate(nextProps, nextStates) {
+    if (nextProps.something !== this.props.something) {
+      return true;  // allow rerendering
+    }
+    if (nextStates.name !== this.state.name) {
+      return true;
+    }
+    return false;  // do not allow rerendering
+  }
+  
+  handleChange = e => {
+    this.setState({name: e.target.value});
+  }
+  
+  handleSubmit = e => {
+    e.preventDefault();
+    console.log(this.state.name);
+  }
+  
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input onChange={this.handleChange} value={this.state.name} />
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+```
+- method 2: use PureComponent (preferred method)
+```javascript
+import React from "react";
+
+export default class App extends React.PureComponent {
+  state = {
+    name: "",
+  }
+  
+  handleChange = e => {
+    this.setState({name: e.target.value});
+  }
+  
+  handleSubmit = e => {
+    e.preventDefault();
+    console.log(this.state.name);
+  }
+  
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input onChange={this.handleChange} value={this.state.name} />
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+```
+- method 3: use memo for functional components
+```javascript
+import React, {useState, memo} from "react";
+
+function App() => {
+  const [name, setName] = useState("");
+  
+  const handleChange = e => {
+    setName(e.target.value);
+  }
+  
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log(name);
+  };
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      <input onChange={handleChange} value={name} />
+      <input type="submit" value="Submit" />
+    </form>
+  );
+}
+
+// return value is the inverse of shouldComponentUpdate
+function areEqual(prevProps, nextProps) {
+  if (nextProps.name !== prevProps.name) {
+    return false;  // allow rerendering
+  }
+  return true;  // do not allow rerendering
+}
+
+export default memo(App, areEqual);
+```
 ### Custom Hooks
 ```javascript
 import {useState, useEffect} from "react";
