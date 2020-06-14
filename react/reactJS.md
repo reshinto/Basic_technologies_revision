@@ -193,7 +193,7 @@ export default function App(props) {
 }
 ```
 ### ShouldComponentUpdate
-#### Should be used if a function renders the same result given the same props and states
+#### Should be used if a function renders the same result given the same props and states (mainly for performance optimization)
 - method 1: declaring in the shouldComponentUpdate method
 ```javascript
 import React from "react";
