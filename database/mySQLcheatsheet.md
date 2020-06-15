@@ -108,6 +108,42 @@
 - allow them to update table rows
 ### DESCRIBE
 - see description of table created
+## foreign key
+- used to make references to the primary key of another table
+- can have a different name from the primary key name
+- value can have NULL
+- does not have to be unique
+## Built-in numeric functions
+### ABS()
+### ACOS()
+### ASIN()
+### ATAN()
+### ATAN2()
+### COS()
+### SIN()
+### TAN()
+### AVG()
+### CEILING()
+### COUNT()
+### DEGREES()
+### EXP()
+### FLOOR()
+### LOG()
+### MAX()
+### MIN()
+### MOD()
+### PI()
+### POWER()
+### RADIANS()
+### RAND()
+### ROUND()
+### SQRT()
+### STD()
+### SUM()
+### TRUNCATE
+## Special functions to get values
+### NOW()
+- get current time, when data is entered to database
 ## Query example
 ### Insert values to table
 > INSERT INTO tablename VALUE (column1, column2, ...);
@@ -117,9 +153,30 @@
 ```mysql
 CREATE TABLE tablename(
    columnname1 VARCHAR(30) NOT NULL,
+   id_name INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
+);
+```
+#### ENUM
+```mysql
+CREATE TABLE tablename(
+   columnname1 VARCHAR(30) NOT NULL,
+   type ENUM('A', 'B') NOT NULL,
+   id_name INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
+);
+```
+#### Foreign key
+```mysql
+CREATE TABLE tablename(
+   columnname1 VARCHAR(30) NOT NULL,
+   foreign_key_name INT UNSIGNED NOT NULL,
+   id_name INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
+);
+```
+#### Date
+```mysql
+CREATE TABLE tablename(
+   columnname1 VARCHAR(30) NOT NULL,
+   date DATE NOT NULL,
    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
 );
 ```
-## Special functions to get values
-### NOW()
-- get current time, when data is entered to database
