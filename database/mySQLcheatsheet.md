@@ -63,7 +63,7 @@
 #### Singe line
 ```mysql
 # comment 1
--- comment 2 --
+-- comment 2
 ```
 #### multi line
 ```mysql
@@ -90,6 +90,15 @@ multi-line
 - e.g.: if there are two tables, one listing all Employees by ID,
   - and another listing their payroll information,
   - the `FOREIGN KEY` can ensure that every row in the payroll table corresponds to a valid employee in the master Employee list
+```mysql
+CREATE TABLE IF NOT EXISTS `table1_table2` (  -- many-to-many
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `table1_id` INT UNSIGNED NOT NULL,
+  `table2_id` INT UNSIGNED NOT NULL,
+  FOREIGN KEY (table1_id) REFERENCES table1(id),
+  FOREIGN KEY (table2_id) REFERENCES table2(id)
+);
+```
 ### Operator types
 #### =, !=, <, <=, >, >=
 - standard numerical operators
