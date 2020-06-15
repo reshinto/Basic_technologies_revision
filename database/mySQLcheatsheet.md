@@ -181,6 +181,7 @@ CREATE TABLE tablename(
 );
 ```
 #### Unique id
+```mysql
 CREATE TABLE tablename(
    table1_id INT UNSIGNED NOT NULL,
    table2_id INT UNSIGNED NOT NULL,
