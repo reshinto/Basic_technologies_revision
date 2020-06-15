@@ -1,16 +1,18 @@
 # To create MySQL database and users, follow these steps:
 1. At the command line, log in to MySQL as the root user:
 > mysql -u root -p
-2. Create new user within the MySQL shell
+2. List all users
+> SELECT host, user, FROM mysql.user;
+3. Create new user within the MySQL shell
 > CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
-3. Grant privileges
-* To grant ALL privileges
-> GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
-4. Reload privilegers for changes to take effect
+4. Grant privileges
+    * To grant ALL privileges
+        > GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
+5. Reload privilegers for changes to take effect
 > FLUSH PRIVILEGES;
-5. Logout
+6. Logout
 > quit
-6. Relog in to new user
+7. Relog in to new user
 > mysql -u [username] -p
 
 * Revoke permission
