@@ -111,6 +111,15 @@
 ## Query example
 ### Insert values to table
 > INSERT INTO tablename VALUE (column1, column2, ...);
+### Show all columns in table
+> SELECT * FROM tablename;
+### Create new table
+```mysql
+CREATE TABLE tablename(
+   columnname1 VARCHAR(30) NOT NULL,
+   id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
+);
+```
 ## Special functions to get values
 ### NOW()
 - get current time, when data is entered to database
