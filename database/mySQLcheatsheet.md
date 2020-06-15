@@ -71,6 +71,25 @@
 multi-line
 */
 ```
+### Constraint
+#### PRIMARY KEY
+- values in this column are unique, and each value can be used to identify a single row in this table
+#### AUTOINCREMENT
+- For integer values, this means that the value is automatically filled in and incremented with each row insertion
+- Not supported in all databases
+#### UNIQUE
+- values in this column have to be unique, can't insert another row with the same value in this column as another row in the table
+- Differs from the `PRIMARY KEY` in that it doesn't have to be a key for a row in the table.
+#### NOT NULL
+- inserted value can not be NULL
+#### CHECK (expression)
+- allows runing of complex expression to test whether the values inserted are valid
+- e.g.: check that values are positive, or greater than a specific size, or start with a certain prefix, etc.
+#### FOREIGN KEY
+-  a consistency check which ensures that each value in this column corresponds to another value in a column in another table
+- e.g.: if there are two tables, one listing all Employees by ID,
+  - and another listing their payroll information,
+  - the `FOREIGN KEY` can ensure that every row in the payroll table corresponds to a valid employee in the master Employee list
 ### Operator types
 #### =, !=, <, <=, >, >=
 - standard numerical operators
@@ -92,6 +111,8 @@ multi-line
    > columnname LIKE "%AT"
 - eg: match any string that contains "AT"
    > columnname LIKE "%AT%"
+### Boolean types
+- represented as integer values of 0 and 1
 ### Numeric types
 #### TINYINT
 - 127 to -128
@@ -107,6 +128,7 @@ multi-line
 - decimal spaces, 1.1E38 to -1.1E38
 #### DOUBLE
 - decimal spaces, 1.7E308 to -1.7E308
+#### REAL
 ### String types
 #### CHAR
 - a character string with a fixed length
@@ -133,6 +155,7 @@ multi-line
 - YYYY
 ### Null types
 #### NULL
+- should reduce NULL values as they require special attention when constructing queries, constraints, and when processing the results
 ## Keywords
 ### SIGNED
 - allow positive and negative values
@@ -142,6 +165,21 @@ multi-line
 - blindly remove duplicate rows (better to use GROUP BY)
 ```mysql
 SELECT DISTINCT cdolumnname;
+```
+### GROUP BY
+- grouping rows that have the same value in the column specified
+```mysql
+SELECT * FROM table GROUP BY columnname1;
+```
+### WHERE
+- set conditions for rows yet to be grouped
+```mysql
+SELECT * FROM table WHERE columnname1 = "some value";
+```
+### HAVING
+- set conditions for grouped rows
+```mysql
+SELECT * FROM table GROUP BY columnname1 HAVING columnname1 = "some value";
 ```
 ### ORDER BY
 - sort rows by alpha-numeric
@@ -157,66 +195,40 @@ SELECT * FROM table ORDER BY columnname DESC;
 ```mysql
 SELECT * FROM table LIMIT 5 OFFSET 3;
 ```
+### IS
+### AS
+### DEFAULT
+- set default value
+```mysql
+ALTER TABLE table1 ADD COLUMN columnname2 TEXT DEFAULT "some value";
+```
+## JOINs
+- combine row data across 2 separate tables using unique key
+### INNER JOIN (same as JOIN)
+- matches rows from the 1st table and the 2nd table, which have the same key to create a result row with the combined columns from both table
+```mysql
+# INNER JOIN
+SELECT * FROM table1 INNER JOIN table2 ON table1.id = table2.id;
+
+# JOIN
+SELECT * FROM table1 JOIN table2 ON table1.id = table2.id;
+```
+### OUTER JOINs
+- use if 2 tables have asymmetric data
+- need to write additional logic to deal with NULLs in the result and constraints
+- OUTER is used to enable SQL-92 compatibility
+#### LEFT JOIN (same as LEFT OUTER JOIN)
+- includes rows from table1 regardless of whether a matching row is found in table2
+```mysql
+SELECT * FROM table1 LEFT JOIN table2 ON columnname1 = columnname2;
+```
+#### RIGHT JOIN (same as RIGHT OUTER JOIN)
+- includes rows from table2 regardless of whether a matching row is found in table1
+#### FULL JOIN (same as FULL OUTER JOIN)
+- rows from both tables are kept, regardless of whether a matching row exists in the outer table
 ## Commands
 ### CREATE
 - allows them to create new tables or databases
-### DROP
-- allows them to them to delete tables or databases
-### DELETE
--allows them to delete rows from tables
-### INSERT
-- allows them to insert rows into tables
-### SELECT
-- allows them to use the SELECT command to read through databases
-### UPDATE
-- allow them to update table rows
-### DESCRIBE
-- see description of table created
-## foreign key
-- used to make references to the primary key of another table
-- can have a different name from the primary key name
-- value can have NULL
-- does not have to be unique
-## Built-in numeric functions
-### ABS()
-### ACOS()
-### ASIN()
-### ATAN()
-### ATAN2()
-### COS()
-### SIN()
-### TAN()
-### AVG()
-### CEILING()
-### COUNT()
-### DEGREES()
-### EXP()
-### FLOOR()
-### LOG()
-### MAX()
-### MIN()
-### MOD()
-### PI()
-### POWER()
-### RADIANS()
-### RAND()
-### ROUND()
-### SQRT()
-### STD()
-### SUM()
-### TRUNCATE
-## Special functions to get values
-### NOW()
-- get current time, when data is entered to database
-## Query example
-### Insert values to table
-```mysql
-INSERT INTO tablename (columnname1, columnname2) VALUE (valueforcolumn1, valueforcolumn2, ...);
-```
-### Show all columns in table
-```mysql
-SELECT * FROM tablename;
-```
 ### Create new table
 ```mysql
 CREATE TABLE tablename(
@@ -262,7 +274,47 @@ CREATE TABLE tablename(
    PRIMARY KEY(table1_id, table2_id)
 );
 ```
-### Update row
+### DROP
+- allows them to them to delete tables or databases
+#### Delete table
+```mysql
+DROP TABLE tablename;
+```
+### DELETE
+- allows them to delete rows from tables
+#### Delete row
+```mysql
+DELETE FROM tablename WHERE condition;
+
+# example
+DELETE FROM todos WHERE todo_id=2;
+```
+### INSERT
+- allows them to insert rows into tables
+### Insert values to table
+```mysql
+# Insert statement with values for ALL columns
+INSERT INTO mytable
+VALUES (value1, value2, …),
+       (anothervalue1, anothervalue2, …),
+       …;
+       
+# Insert statement with specific columns
+INSERT INTO mytable
+(column, another_column, …)
+VALUES (value1, value2, …),
+      (anothervalue1, anothervalue2, …),
+      …;
+```
+### SELECT
+- allows them to use the SELECT command to read through databases
+#### Show all columns in table
+```mysql
+SELECT * FROM tablename;
+```
+### UPDATE
+- allow them to update table rows
+#### Update row
 ```mysql
 # Single update
 UPDATE tablename SET columnname=value WHERE condition;
@@ -276,14 +328,52 @@ SET columnname1=value,
     columnname2=value
 WHERE condition;
 ```
-### Delete row
-```mysql
-DELETE FROM tablename WHERE condition;
-
-# example
-DELETE FROM todos WHERE todo_id=2;
-```
-### Modify table
+### DESCRIBE
+- see description of table created
+## foreign key
+- used to make references to the primary key of another table
+- can have a different name from the primary key name
+- value can have NULL
+- does not have to be unique
+## Built-in numeric functions
+### ABS()
+### ACOS()
+### ASIN()
+### ATAN()
+### ATAN2()
+### COS()
+### SIN()
+### TAN()
+### AVG(column)
+- Finds the average numerical value in the specified column for all rows in the group
+### CEILING()
+### COUNT(column)
+- counts the number of rows in the group if no column name is specified
+- Otherwise, count the number of rows in the group with non-NULL values in the specified column
+### DEGREES()
+### EXP()
+### FLOOR()
+### LOG()
+### MAX(column)
+- 	Finds the largest numerical value in the specified column for all rows in the group
+### MIN(column)
+- Finds the smallest numerical value in the specified column for all rows in the group
+### MOD()
+### PI()
+### POWER()
+### RADIANS()
+### RAND()
+### ROUND()
+### SQRT()
+### STD()
+### SUM(column)
+- Finds the sum of all numerical values in the specified column for the rows in the group
+### TRUNCATE
+## Special functions to get values
+### NOW()
+- get current time, when data is entered to database
+## Query example
+### Alter table
 #### Rename table
 ```mysql
 # rename 1 table
@@ -319,8 +409,4 @@ ALTER TABLE tablename DROP columnname1;
 
 # Drop 1 or more columns
 ALTER TABLE tablename DROP COLUMN columnname1;
-```
-### Delete table
-```mysql
-DROP TABLE tablename;
 ```
