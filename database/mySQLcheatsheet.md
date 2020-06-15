@@ -244,6 +244,16 @@ DELETE FROM tablename WHERE condition;
 DELETE FROM todos WHERE todo_id=2;
 ```
 ### Modify table
+#### Rename table
+```mysql
+# rename 1 table
+RENAME TABLE oldtablename to newtablename;
+
+# rename multiple tables
+RENAME TABLE
+tablename1 to newtablename1,
+tablename2 to newtablename2;
+```
 #### Add column
 ```mysql
 ALTER TABLE tablename 
