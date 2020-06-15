@@ -15,6 +15,11 @@
 > quit
 7. Relog in to new user
 > mysql -u [username] -p
+8. Run SQL file
+- from terminal (ignore sudo if not required)
+> sudo mysql < sqlscript.sql
+- from mysql
+> source path/sqlscript.sql;
 ## Grant Different User Permissions
 ### Types of permissions
 * ALL PRIVILEGES- as we saw previously, this would allow a MySQL user full access to a designated database (or if no database is selected, global access across the system)
@@ -54,6 +59,18 @@
 * Delete database
 > DROP DATABASE dbname;
 ## Data types
+### Comments
+#### Singe line
+```mysql
+# comment 1
+-- comment 2 --
+```
+#### multi line
+```mysql
+/*
+multi-line
+*/
+```
 ### Numeric types
 #### TINYINT
 - 127 to -128
@@ -153,12 +170,22 @@
 - get current time, when data is entered to database
 ## Query example
 ### Insert values to table
-> INSERT INTO tablename VALUE (column1, column2, ...);
+```mysql
+INSERT INTO tablename (columnname1, columnname2) VALUE (valueforcolumn1, valueforcolumn2, ...);
+```
 ### Show all columns in table
-> SELECT * FROM tablename;
+```mysql
+SELECT * FROM tablename;
+```
 ### Create new table
 ```mysql
 CREATE TABLE tablename(
+   columnname1 VARCHAR(30) NOT NULL,
+   id_name INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
+);
+
+# Check if table exist
+CREATE TABLE IF NOT EXISTS tablename(
    columnname1 VARCHAR(30) NOT NULL,
    id_name INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
 );
@@ -195,5 +222,34 @@ CREATE TABLE tablename(
    PRIMARY KEY(table1_id, table2_id)
 );
 ```
-#### Modify table
-> ALTER TABLE tablename ADD columnname INT NOT NULL AFTER columnname1;
+### Modify table
+#### Add column
+```mysql
+ALTER TABLE tablename 
+ADD columnname2 INT NOT NULL AFTER columnname1,
+ADD columnname3 INT NOT NULL AFTER columnname1;
+```
+#### Modify column data definition
+```mysql
+ALTER TABLE tablename MODIFY columnname newdatatype;
+```
+#### Rename column and / or modify data definition
+```mysql
+# Rename column AND modify data definition
+ALTER TABLE tablename CHANGE columnname newcolumnname newdatatype;
+
+# Rename column
+ALTER TABLE tablename CHANGE columnname newcolumnname null;
+```
+#### Delete column
+```mysql
+# Drop 1 column
+ALTER TABLE tablename DROP columnname1;
+
+# Drop 1 or more columns
+ALTER TABLE tablename DROP COLUMN columnname1;
+```
+### Delete table
+```mysql
+DROP TABLE tablename;
+```
