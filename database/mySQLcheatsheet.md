@@ -1,4 +1,20 @@
 # MySQL Cheats
+## Starting and Stopping the MySQL Server
+### View server status
+- linux
+> sudo service mysql status
+- mac
+> brew services list
+### Start MySQL Server
+- linux
+> sudo service mysql start
+- mac
+> brew services start mysql
+### Stop MySQL Server
+- linux
+> sudo service mysql stop
+- mac
+> brew services stop mysql
 ## To create MySQL database and users, follow these steps:
 1. At the command line, log in to MySQL as the root user:
 > mysql -u root -p
