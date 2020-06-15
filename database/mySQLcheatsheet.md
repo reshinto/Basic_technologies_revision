@@ -180,3 +180,10 @@ CREATE TABLE tablename(
    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
 );
 ```
+#### Unique id
+CREATE TABLE tablename(
+   table1_id INT UNSIGNED NOT NULL,
+   table2_id INT UNSIGNED NOT NULL,
+   PRIMARY KEY(table1_id, table2_id)
+);
+```
