@@ -15,8 +15,6 @@
 > quit
 7. Relog in to new user
 > mysql -u [username] -p
-* Revoke permission
-> REVOKE type_of_permission ON database_name.table_name FROM ‘username’@‘localhost’;
 ## Grant Different User Permissions
 ### Types of permissions
 * ALL PRIVILEGES- as we saw previously, this would allow a MySQL user full access to a designated database (or if no database is selected, global access across the system)
@@ -27,6 +25,8 @@
 > SHOW GRANTS username;
 * Delete a user
 > DROP USER ‘username’@‘localhost’;
+### Revoke permission
+> REVOKE type_of_permission ON database_name.table_name FROM ‘username’@‘localhost’;
 ## Change password
 > mysqladmin -u myUsername password 'yourNewPassword'
 ## Enable use of Authentication via password for nodejs with MySql
