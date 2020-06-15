@@ -2,7 +2,7 @@
 1. At the command line, log in to MySQL as the root user:
 > mysql -u root -p
 2. List all users
-> SELECT host, user, FROM mysql.user;
+> SELECT host, user FROM mysql.user;
 3. Create new user within the MySQL shell
 > CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
 4. Grant privileges
