@@ -222,6 +222,27 @@ CREATE TABLE tablename(
    PRIMARY KEY(table1_id, table2_id)
 );
 ```
+### Update row
+```mysql
+# Single update
+UPDATE tablename SET columnname=value WHERE condition;
+
+# example
+UPDATE todos SET todo="study programming" WHERE todo_id=3;
+
+# Mutiple updates
+UPDATE tablename
+SET columnname1=value,
+    columnname2=value
+WHERE condition;
+```
+### Delete row
+```mysql
+DELETE FROM tablename WHERE condition;
+
+# example
+DELETE FROM todos WHERE todo_id=2;
+```
 ### Modify table
 #### Add column
 ```mysql
