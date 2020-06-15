@@ -71,6 +71,27 @@
 multi-line
 */
 ```
+### Operator types
+#### =, !=, <, <=, >, >=
+- standard numerical operators
+#### BETWEEN...AND...
+- number is within range of 2 values (inclusive)
+- eg: columnname BETWEEN 1 AND 10
+#### NOT
+- inverse the value
+#### IN
+- number exists in a list
+- eg: columnname IN (1,5,8)
+#### AND
+#### OR
+#### LIKE
+- case insensitive exact string comparison
+#### %
+- used anywhere in a string to match a sequence of 0 or more characters
+- eg: match any string that ends with "AT"
+   > columnname LIKE "%AT"
+- eg: match any string that contains "AT"
+   > columnname LIKE "%AT%"
 ### Numeric types
 #### TINYINT
 - 127 to -128
@@ -112,11 +133,30 @@ multi-line
 - YYYY
 ### Null types
 #### NULL
-### Other types
-#### SIGNED
+## Keywords
+### SIGNED
 - allow positive and negative values
 #### UNSIGNED
 - allow only positive values
+### DISTINCT
+- blindly remove duplicate rows (better to use GROUP BY)
+```mysql
+SELECT DISTINCT cdolumnname;
+```
+### ORDER BY
+- sort rows by alpha-numeric
+#### ASC
+#### DESC
+```mysql
+SELECT * FROM table ORDER BY columnname DESC;
+```
+### LIMIT
+- reduce the number of rows to return
+### OFFSET
+- specify where to begin counting the number of rows from
+```mysql
+SELECT * FROM table LIMIT 5 OFFSET 3;
+```
 ## Commands
 ### CREATE
 - allows them to create new tables or databases
