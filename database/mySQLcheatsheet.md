@@ -188,3 +188,5 @@ CREATE TABLE tablename(
    PRIMARY KEY(table1_id, table2_id)
 );
 ```
+#### Modify table
+> ALTER TABLE tablename ADD columnname INT NOT NULL AFTER columnname1;
