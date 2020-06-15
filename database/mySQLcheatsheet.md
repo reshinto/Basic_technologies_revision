@@ -96,13 +96,16 @@ multi-line
 #### BETWEEN...AND...
 - number is within range of 2 values (inclusive)
 - eg: columnname BETWEEN 1 AND 10
-#### NOT
+#### NOT, !
 - inverse the value
 #### IN
 - number exists in a list
 - eg: columnname IN (1,5,8)
-#### AND
-#### OR
+#### AND, &&
+```mysql
+SELECT * FROM table WHERE columnname1 = "something" && (columnname2="something1" || columnname2="something2");
+````
+#### OR, &&
 #### LIKE
 - case insensitive exact string comparison
 #### %
