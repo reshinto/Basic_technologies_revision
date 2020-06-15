@@ -95,6 +95,11 @@
 - YYYY
 ### Null types
 #### NULL
+### Other types
+#### SIGNED
+- allow positive and negative values
+#### UNSIGNED
+- allow only positive values
 ## Commands
 ### CREATE
 - allows them to create new tables or databases
