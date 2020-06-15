@@ -74,6 +74,8 @@
 - a character string with a fixed length
 #### VARCHAR
 - a character string with a length that's variable
+#### TEXT
+- for strings that we do not know the length
 #### BLOB
 - can contain 2^16 bytes of data
 #### ENUM
