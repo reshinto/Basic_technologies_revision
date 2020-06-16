@@ -21,7 +21,7 @@
 2. List all users
 > SELECT host, user FROM mysql.user;
 3. Create new user within the MySQL shell
-> CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
+> CREATE USER 'newuser'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 4. Grant privileges
     * To grant ALL privileges
         > GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
