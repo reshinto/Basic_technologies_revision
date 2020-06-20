@@ -47,6 +47,7 @@
     1. ```docker exec -it mysql-docker mysql -u root -p```
     2. ```ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';```
 3. Set host as ```127.0.0.1``` in the app
+4. if running on PORT other than ```3306```, need to set PORT in the app (ignore if using default mysql PORT)
 ## Grant Different User Permissions
 ### Types of permissions
 * ALL PRIVILEGES- as we saw previously, this would allow a MySQL user full access to a designated database (or if no database is selected, global access across the system)
