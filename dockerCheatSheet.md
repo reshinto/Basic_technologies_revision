@@ -108,8 +108,8 @@
 1. create a ```Dockerfile``` with the same name
 2. write a set of instructions in the Dockerfile
     - everything on the left in caps is an instruction, everything on the right is an argument
-      - ```FROM [app]```
-        - app can be the OS or other apps like node
+      - ```FROM [imageName]```
+        - docker image can be the OS or other apps like node
         - e.g.: latest ubuntu image
           > FROM Ubuntu
         - e.g.: specific ubuntu version image
