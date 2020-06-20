@@ -153,7 +153,12 @@
       COPY . /opt/source-code
       ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run
       ```
-3. build image
+3. create a .dockerignore file (ignore if not required)
+    ```
+    node_modules
+    npm-debug.log
+    ```
+4. build image
     > docker build Dockerfile -t imageName/appName
-4. push to docker hub registry to make image public
+5. push to docker hub registry to make image public
     > docker push imageName/appName
