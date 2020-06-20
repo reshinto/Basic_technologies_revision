@@ -118,26 +118,42 @@
         - use to install and update dependencies
         - e.g.
           > RUN apt update
-      - ```VOLUME ["/path1", "/path2", ...]```
-        - define mountable directories
+      - ```VOLUME ["/host/path/", "/container/path"]```
+        - defines shared or ephemeral mountable directories
+        - shared data (avoid defining shared folders in Dockerfiles)
+          > VOLUME ["/shared-data"]
       - ```ADD file toThisFileAtThisDirectory```
-        - add files
+        - add local files
           > ADD notes.txt /notes.txt
+        - adds the contents of tar archives by uncompressing the archives and pasting the contents into the directory
+          > ADD project.tar.gz /install/
+        - adds the file downloaded from a URL to a directory
+          > ADD https://project.example.com/download/1.0/project.rpm /project/
       - ```ENV VARIABLE_NAME value```
         - set environment variables
-          > ENV HOME /root
+          > ENV DB_PORT=5432
       - ```WORKDIR /path```
-        - define working directory
+        - sets the directory the container starts in
           > WORKDIR /root
+      - ```USER someValue```
+        - sets which user the container will run as
+          > USER arthur
       - ```COPY host/path to/path```
         > COPY . /opt/source-code
       - ```ENTRYPOINT VAR_NAME=/app/path/with/filename [command]```
+        - specifies the start of the command to run
+        - use this if container acts like a command-line program
+        - can be combined together with ```CMD```
         > ENTRYPOINT EXPRESS_APP=/opt/source-code/index.js node start
       - ```HEALTHCHECK```
+      - ```MAINTAINER Firstname Lastname <email@example.com>
+        - defines the author of this Dockerfile
       - ```EXPOSE```
-        - normally use to expose PORT
+        - maps a port into the container
+          > EXPOSE 8080
       - ```CMD command param1``` or ```CMD ["command", "param1"]```
-        - define default command
+        - specifies the whole command to run
+        - use this if unsure
           - e.g.:
             > CMD ["sleep", "5"]
         - parameters are optional
