@@ -26,11 +26,13 @@
         - contains only the contents of the request
     - PUT: update an existing singleton resource based on ID
       - use to update an existing resource by replacing some or all of its contents with the request contents
+        - modified contents MUST be sent together with contents that were not modified, else will be removed
       - requires authorization header
         - contains ID of a resource and request contents to be added
       - contents will be added or replaced
     - PATCH: modify an existing singleton resource based on ID
       - carries instructions on how to modify the existing resource without necessarily replacing data
+        - ONLY modified contents will be modified, contents that were not modified will remain
       - requires authorization header
     - DELETE: delete a singleton resource based on ID
       - must contain the ID for the resource and an authorization header
