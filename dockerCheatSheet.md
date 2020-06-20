@@ -81,6 +81,8 @@
 > docker run -d [imageName]
 #### Set Environment variables in the container with -e option
 > docker run -e VARIABLE_NAME=value [imageName]
+#### Delete container when the container has stop running with --rm option
+> docker run --rm [imageName]
 ### Execute a command externally
 > docker exec [commands]
 #### Use -i option to enable interactive mode
