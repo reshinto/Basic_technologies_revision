@@ -44,7 +44,7 @@
 > docker images
 ### Remove images
 - ensure that no containers are running before removing
-  > docker rmi [imageName]
+  > docker rmi [imageNameOrImageID]
 ### List all running containers
 > docker ps
 - list all containers including those that are not running
@@ -169,6 +169,6 @@
     npm-debug.log
     ```
 4. build image
-    > docker build Dockerfile -t imageName/appName
+    > docker build -t imageName/appName .
 5. push to docker hub registry to make image public
     > docker push imageName/appName
