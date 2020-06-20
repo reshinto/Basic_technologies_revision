@@ -120,8 +120,9 @@
           > RUN apt update
       - ```VOLUME ["/path1", "/path2", ...]```
         - define mountable directories
-      - ```ADD fileToAdd```
+      - ```ADD file toThisFileAtThisDirectory```
         - add files
+          > ADD notes.txt /notes.txt
       - ```ENV VARIABLE_NAME value```
         - set environment variables
           > ENV HOME /root
