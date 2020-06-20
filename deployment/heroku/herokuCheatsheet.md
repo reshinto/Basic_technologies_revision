@@ -15,7 +15,7 @@
       "start": "node app.js"
     }
     ```
-  * if the start script is not included, heroku will not run, and return an application error
+    * if the start script is not included, heroku will not run, and return an application error
 
 4. if using Node js
     * make sure app.listen is properly configured
