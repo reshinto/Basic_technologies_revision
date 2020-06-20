@@ -36,6 +36,17 @@
 > sudo mysql < sqlscript.sql
 - from mysql
 > source path/sqlscript.sql;
+## Connect app to mysql
+1. Set native password
+    1. ```mysql -u root -p```
+    2. ```ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';```
+## Connect app to docker mysql
+1. run docker container if not runned
+    > docker run --name=mysql-docker -e MYSQL_ROOT_PASSWORD=password -d -p 3306:3306 mysql
+2. Set native password
+    1. ```docker exec -it mysql-docker mysql -u root -p```
+    2. ```ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';```
+3. Set host as ```127.0.0.1``` in the app
 ## Grant Different User Permissions
 ### Types of permissions
 * ALL PRIVILEGES- as we saw previously, this would allow a MySQL user full access to a designated database (or if no database is selected, global access across the system)
