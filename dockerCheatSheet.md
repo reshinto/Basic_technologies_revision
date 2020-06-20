@@ -106,9 +106,8 @@
 1. create a ```Dockerfile``` with the same name
 2. write a set of instructions in the Dockerfile
     - everything on the left in caps is an instruction, everything on the right is an argument
-    - must be written in the following order
-      - ```FROM OS_name```
-        - states the OS
+      - ```FROM [app]```
+        - app can be the OS or other apps like node
         - e.g.: latest ubuntu image
           > FROM Ubuntu
         - e.g.: specific ubuntu version image
@@ -133,6 +132,7 @@
         > ENTRYPOINT EXPRESS_APP=/opt/source-code/index.js node start
       - ```HEALTHCHECK```
       - ```EXPOSE```
+        - normally use to expose PORT
       - ```CMD command param1``` or ```CMD ["command", "param1"]```
         - define default command
           - e.g.:
@@ -152,6 +152,16 @@
       RUN pip install flask flask-mysql
       COPY . /opt/source-code
       ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run
+      ```
+    - basic app architecture
+      ```
+      FROM node
+      WORKDIR /usr/src/app
+      COPY package*.json ./
+      RUN npm install
+      COPY . .
+      EXPOSE 4000
+      CMD ["npm", "start"]
       ```
 3. create a .dockerignore file (ignore if not required)
     ```
