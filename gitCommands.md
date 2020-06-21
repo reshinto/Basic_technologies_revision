@@ -56,7 +56,8 @@
 * ```git commit -m "message about the changes made"``` write the commit changes message directly in the terminal
 * ```git commit --amend``` undo and recommit new changes (ex: add forgotten files, modify commit messages)
 ### Add and commit
-* ```git commit -a``` "-a" adds all new and modified files
+* ```git commit -a``` "-a" adds all new and modified files and open an editor for comments
+* ```git commit -am "message about the changes made"``` adds all new and modified files with comments on 1 line
 ### Undo commit
 * ```git revert [saved hash]``` git will create a new commit that undoes that commit
 ### View git history
