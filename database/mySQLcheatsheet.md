@@ -48,6 +48,11 @@
     2. ```ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';```
 3. Set host as ```127.0.0.1``` in the app
 4. if running on PORT other than ```3306```, need to set PORT in the app (ignore if using default mysql PORT)
+## Run query on command line
+- creating database
+  - ```mysql -h 127.0.0.1 -u root -p -e "CREATE DATABASE databaseName;";```
+- Use database and run query
+  - ```mysql -h 127.0.0.1 -u root -p databaseName -e "SELECT * FROM tableName;"```
 ## Grant Different User Permissions
 ### Types of permissions
 * ALL PRIVILEGES- as we saw previously, this would allow a MySQL user full access to a designated database (or if no database is selected, global access across the system)
