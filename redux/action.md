@@ -62,7 +62,7 @@ export const getAction = () => (dispatch, state) => {
 };
 ```
 ### have argument to set value (asynchronous)
-- fetch
+- fetch post
 ```javascript
 import * as actionTypes from "./types";
 
@@ -95,7 +95,7 @@ export const postAction = (value, token) => async (dispatch, getState) => {
   }
 };
 ```
-- axios
+- axios post
 ```javascript
 export const postAction = (value, token) => (dispatch, state) => {
   const URL = "http://www.someurl.com";
@@ -123,5 +123,49 @@ export const postAction = (value, token) => (dispatch, state) => {
     .catch(err => {
       doSomething();
     });
+};
+```
+- fetch put
+```javascript
+export const editData = (user, somethingToEdit) => async (dispatch) => {
+  const URL = "http://www.someurl.com";
+  const queryURL = `user/${user}`;
+  const data = {
+    somethingToEdit,
+  };
+  const config = {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+  try {
+    await fetch(`${URL}${queryURL}`, config);
+    dispatch({
+      type: types.EDIT_DATA,
+    });
+  } catch (error) {
+    dispatch(fail(error.message));
+  }
+};
+```
+- fetch delete
+```javascript
+export const deleteData = (data_id) => async (dispatch) => {
+  const URL = "http://www.someurl.com";
+  const queryURL = `todo/${todo_id}`;
+  const config = {
+    method: "DELETE",
+  };
+  try {
+    await fetch(`${URL}${queryURL}`, config);
+    dispatch({
+      type: types.DELETE_DATA,
+    });
+  } catch (error) {
+    dispatch(fail(error.message));
+  }
 };
 ```
