@@ -450,3 +450,28 @@ ALTER TABLE tablename DROP columnname1;
 # Drop 1 or more columns
 ALTER TABLE tablename DROP COLUMN columnname1;
 ```
+## NodeJS configuration
+- install mysql with promise support
+> yarn add promise-mysql
+```javascript
+import mysql from "promise-mysql";
+
+const db = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+});
+
+export default async function query(queryStatement, arrValues) => {
+  let conn;
+  try {
+    conn = await db;
+    return await conn.query(queryStatement, arrValues);
+  } catch (e) {
+    throw new Error(`db error: ${e}`);
+  } finally {
+    await conn.end();
+  }
+}
+```
