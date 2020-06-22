@@ -48,7 +48,7 @@
     2. ```ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';```
 3. Set host as ```127.0.0.1``` in the app
 4. if running on PORT other than ```3306```, need to set PORT in the app (ignore if using default mysql PORT)
-## Run query on command line
+## Run query on command line (remove -h 127.0.0.1 if not using docker)
 - creating database
   - ```mysql -h 127.0.0.1 -u root -p -e "CREATE DATABASE databaseName;";```
 - Use database and run query
