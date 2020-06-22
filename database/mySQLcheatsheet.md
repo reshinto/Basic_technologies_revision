@@ -468,7 +468,7 @@ const db = mysql.createConnection({
   database: process.env.DB_DATABASE,
 });
 
-export default async function query(queryStatement, arrValues) => {
+export default async function query(queryStatement, arrValues) {
   let conn;
   try {
     conn = await db;
