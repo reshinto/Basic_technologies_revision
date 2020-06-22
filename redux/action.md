@@ -129,7 +129,7 @@ export const postAction = (value, token) => (dispatch, state) => {
 ```javascript
 export const editData = (user, somethingToEdit) => async (dispatch) => {
   const URL = "http://www.someurl.com";
-  const queryURL = `user/${user}`;
+  const queryURL = `/${user}`;
   const data = {
     somethingToEdit,
   };
@@ -155,7 +155,7 @@ export const editData = (user, somethingToEdit) => async (dispatch) => {
 ```javascript
 export const deleteData = (data_id) => async (dispatch) => {
   const URL = "http://www.someurl.com";
-  const queryURL = `todo/${todo_id}`;
+  const queryURL = `/${data_id}`;
   const config = {
     method: "DELETE",
   };
