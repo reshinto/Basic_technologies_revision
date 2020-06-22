@@ -46,6 +46,8 @@
 2. Set native password
     1. ```docker exec -it mysql-docker mysql -u root -p``` or ```mysql -h 127.0.0.1 -u root -p``` (needs mysql-client)
     2. ```ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';```
+    - One liner
+      - ```docker exec -it mysql-docker mysql -u root -p  -e "ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';"``` or ```mysql -h 127.0.0.1 -u root -p -e "ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';"```
 3. Set host as ```127.0.0.1``` in the app
 4. if running on PORT other than ```3306```, need to set PORT in the app (ignore if using default mysql PORT)
 ## Grant Different User Permissions
