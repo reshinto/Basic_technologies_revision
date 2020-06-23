@@ -90,7 +90,6 @@ import { name1Action } from './nameAction';
 export default () => {
   const count = useSelector((state) => state.counterReducer.count);  // get props from reducer
   const dispatch = useDispatch();  // enable dispatch for actions
-  );
   
   return (
     <>
