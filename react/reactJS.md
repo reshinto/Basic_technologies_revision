@@ -449,8 +449,7 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps)(PrivateRoute);
 ```
 ```javascript
-// using
-
+// using private route
 import React from "react";
 import { Route } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
