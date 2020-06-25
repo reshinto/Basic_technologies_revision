@@ -423,3 +423,44 @@ export default function App() => {
   );
 }
 ```
+## Containers
+### Private route
+```javascript
+// creating a private route
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+
+const PrivateRoute = ({ component: Component, auth, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => {
+      if (auth.loading) return <div>loading...</div>
+      else if (!auth.isAuthenticated) return <Redirect to="/dashboard" />;
+      else return <Component {...props} />;
+    }}
+  />
+);
+
+const mapStateToProps = state => ({
+  auth: state.authReducer
+});
+
+export default connect(mapStateToProps)(PrivateRoute);
+```
+```javascript
+// using
+
+import React from "react";
+import { Route } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
+import ComponentName from "../pages/ComponentName";
+
+const BaseRouter = () => (
+  <div>
+    <PrivateRoute exact path="/profile" component={ComponentName} />
+  </div>
+);
+
+export default BaseRouter;
+```
