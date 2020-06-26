@@ -147,7 +147,7 @@ import Component from "./Component";
 
 export default () => (
   <div>
-    <PrivateRoute exact path="/profile" component={Component} redirectPath="/redirectpath" />
+    <PrivateRoute exact path="/path" component={Component} redirectPath="/redirectpath" />
   </div>
 );
 ```
