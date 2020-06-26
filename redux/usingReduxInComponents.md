@@ -2,9 +2,9 @@
 ## Old method (works for class or functional components)
 - everything in 1 file
 ```javascript
-import React from 'react';
-import { connect } from 'react-redux';
-import { name1Action } from './nameAction';
+import React from "react";
+import { connect } from "react-redux";
+import { name1Action } from "./nameAction";
 
 function App({ count }) {
   return (
@@ -41,7 +41,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 - using containers
   - component
   ```javascript
-  import React from 'react';
+  import React from "react";
 
   export default function App({ count }) {
     return (
@@ -54,9 +54,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
   ```
   - container
   ```javascript
-  import { connect } from 'react-redux';
-  import App from './App';
-  import { name1Action } from './nameAction';
+  import React from "react";
+  import { connect } from "react-redux";
+  import App from "./App";
+  import { name1Action } from "./nameAction";
 
   function mapStateToProps(state) {
     return {
@@ -84,11 +85,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 ## New method, using hooks from react-redux library
 ```javascript
 import React from "react";
-import {useSelector, useDispatch} from "react-redux";
-import { name1Action } from './nameAction';
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { name1Action } from "./nameAction";
 
 export default () => {
   const count = useSelector((state) => state.counterReducer.count);  // get props from reducer
+  const count2 = useSelector((state) => state.counterReducer.count2, shallowEqual);  // get and compare current value with previous value
   const dispatch = useDispatch();  // enable dispatch for actions
   
   return (
