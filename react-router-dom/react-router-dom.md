@@ -111,7 +111,7 @@ const PrivateRoute = ({ component: Component, redirectPath, auth, ...rest }) => 
 );
 
 const mapStateToProps = state => ({
-  auth: state.authReducer
+  auth: state.reducer
 });
 
 export default connect(mapStateToProps)(PrivateRoute);
