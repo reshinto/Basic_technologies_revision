@@ -6,7 +6,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { name1Action } from "./nameAction";
 
-function App({ count }) {
+function App({ count, doAction }) {
   return (
     <>
       <button onClick={doAction}>DoSomething</button>
@@ -43,7 +43,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
   ```javascript
   import React from "react";
 
-  export default function App({ count }) {
+  export default function App({ count, doAction }) {
     return (
       <>
         <button onClick={doAction}>DoSomething</button>
