@@ -166,7 +166,7 @@
             > docker run imageName newParam1Value
     - basic architecture
       ```
-      FROMT Ubuntu
+      FROM Ubuntu
       RUN apt-get update && apt-get -y install python
       RUN pip install flask flask-mysql
       COPY . /opt/source-code
