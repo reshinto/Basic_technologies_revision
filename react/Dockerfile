@@ -1,5 +1,7 @@
 FROM node
 
+RUN apt-get update && apt-get install -y vim git
+
 WORKDIR /usr/src
 
 RUN npx create-react-app app
