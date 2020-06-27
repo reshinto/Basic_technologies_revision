@@ -1,4 +1,9 @@
 # React js
+## using docker
+- run using docker
+> docker run -it --name appName -p 3000:3000 -d imageName
+- open bash in docker
+> docker exec -it appName bash
 ## setState
 ```javascript
 import React from "react";
