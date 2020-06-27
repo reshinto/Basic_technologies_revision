@@ -45,6 +45,9 @@
 ### Remove images
 - ensure that no containers are running before removing
   > docker rmi [imageNameOrImageID]
+### Update image
+- updates the image after modifying a container
+> docker commit [containerName] [imageNamge]
 ### List all running containers
 > docker ps
 - list all containers including those that are not running
