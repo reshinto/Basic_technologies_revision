@@ -37,7 +37,7 @@ export const getAction = () => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    doSomething();
+    doSomething(error);
   }
 };
 ```
@@ -56,8 +56,8 @@ export const getAction = () => (dispatch, state) => {
         payload: res.data,
       });
     })
-    .catch(err => {
-      doSomething();
+    .catch(error => {
+      doSomething(error);
     }
 };
 ```
@@ -68,11 +68,9 @@ import * as actionTypes from "./types";
 
 export const postAction = (value, token) => async (dispatch, getState) => {
   const URL = "http://www.someurl.com";
-  
   const postData = {
     value,
   };
-  
   const config = {
     method: "POST",
     headers: {
@@ -82,54 +80,55 @@ export const postAction = (value, token) => async (dispatch, getState) => {
     },
     body: JSON.stringify(postData),
   };
-  
   try {
     const res = await fetch(URL, config);
     const data = await res.JSON();
     dispatch({
-      type: actionTypes.POST_SOMETHING,
+      type: actionTypes.POST_DATA,
       payload: data,
     });
   } catch (error) {
-    doSomething();
+    doSomething(error);
   }
 };
 ```
 - axios post
 ```javascript
-export const postAction = (value, token) => (dispatch, state) => {
+import axios from "axios";
+import * as actionTypes from "../types";
+
+export const postAction = (value, token) => (dispatch, getState) => {
   const URL = "http://www.someurl.com";
-  
   const postData = {
     value,
   };
-  
   const config = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": token,  // only required if needs token for authentication
+      "Authorization": token,  // only required if need token for authentication
     },
   };
-  
   axios
     .post(URL, postData, config))
     .then(res => {
       dispatch({
-        type: actionTypes.POST_SOMETHING,
+        type: actionTypes.POST_DATA,
         payload: res.data,
       });
     })
-    .catch(err => {
-      doSomething();
+    .catch(error => {
+      doSomething(error);
     });
 };
 ```
 - fetch put
 ```javascript
-export const editData = (user, somethingToEdit) => async (dispatch) => {
+import * as actionTypes from "../types";
+
+export const editData = (id, somethingToEdit) => async (dispatch) => {
   const URL = "http://www.someurl.com";
-  const queryURL = `/${user}`;
+  const queryURL = `/${id}`;
   const data = {
     somethingToEdit,
   };
@@ -144,28 +143,175 @@ export const editData = (user, somethingToEdit) => async (dispatch) => {
   try {
     await fetch(`${URL}${queryURL}`, config);
     dispatch({
-      type: types.EDIT_DATA,
+      type: actionTypes.EDIT_DATA,
     });
   } catch (error) {
-    dispatch(fail(error.message));
+    doSomething(error);
+  };
+};
+```
+- axios put
+```javascript
+import axios from "axios";
+import * as actionTypes from "../types";
+
+export const editData = (id, somethingToEdit) => (dispatch, getState) => {
+  const URL = "http://www.someurl.com";
+  const config = {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
+  const token = getState().reducer.token;
+  if (token) {
+    config.headers["Authorization"] = `Bearer ${token}`;
   }
+  axios
+    .put(`${URL}/${id}`, {id, somethingToEdit}, config)
+    .then(res => {
+      dispatch({
+        type: actionTypes.EDIT_DATA,
+        payload: res.data
+      });
+    })
+    .catch(error => {
+      doSomething(error);
+    });
 };
 ```
 - fetch delete
 ```javascript
-export const deleteData = (data_id) => async (dispatch) => {
+import * as actionTypes from "../types";
+
+export const deleteData = (data_id) => async (dispatch, getState) => {
   const URL = "http://www.someurl.com";
   const queryURL = `/${data_id}`;
   const config = {
     method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    }
   };
+  const token = getState().reducer.token;
+  if (token) {
+    config.headers["Authorization"] = `Bearer ${token}`;
+  }
   try {
     await fetch(`${URL}${queryURL}`, config);
     dispatch({
-      type: types.DELETE_DATA,
+      type: actionTypes.DELETE_DATA,
     });
   } catch (error) {
-    dispatch(fail(error.message));
+    doSomething(error);
   }
+};
+```
+- axios delete
+```javascript
+import axios from "axios";
+import * as actionTypes from "../types";
+
+export const deleteData = (data_id) => (dispatch, getState) => {
+  const URL = "http://www.someurl.com";
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  const token = getState().reducer.token;
+  if (token) {
+    config.headers["Authorization"] = `Bearer ${token}`;
+  }
+  axios
+    .delete(`${URL}/${data_id}`, config))
+    .then(res => {
+      dispatch({
+        type: actionTypes.DELETE_DATA,
+        payload: data_id
+      });
+    })
+    .catch(error => {
+      doSomething(error);
+    });
+};
+```
+## refactored actions
+### reusable api call
+- fetch
+```javascript
+// data is an object
+const fetchCall = (url, method, data, actionType) => async (dispatch, getState) => {
+  const getToken = getState().reducer.token;  // modify this to get stored token
+  const config = {
+    method,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Authorization": getToken ? `Bearer ${getToken}` : "",
+    },
+    body: JSON.stringify(data),
+  };
+  try {
+    const res = await fetch(`${url}`, config);
+    const _data = await res.json();
+    dispatch({
+      type: actionType,
+      payload: _data,
+    });
+  } catch (error) {
+    doSomething(error);
+  };
+};
+```
+- axios
+```javascript
+import axios from "axios";
+
+// data is an object
+const axiosCall = (url, method, data, actionType) => (dispatch, getState) => {
+  const getToken = getState().reducer.token;  // modify this to get stored token
+  axios({ 
+    method, 
+    url, 
+    data,
+    headers: { 
+      "Content-Type": "application/json",
+      "Authorization": getToken ? `Bearer ${getToken}` : "",
+    }
+  })
+    .then(res => {
+      if (res.status !== 200 && res.status !== 201 && res.status !== 204) {
+        throw new Error(`Something went wrong with ${methodName}`);
+      }
+      dispatch({
+        type: actionType,
+        payload: res.data,
+      });
+    })
+    .catch(error => {
+      doSomething(error);
+    });
+};
+```
+- using refactored api calls
+```javascript
+import * as actionTypes from "./actionTypes";
+
+const URL = "http://www.someurl.com";
+
+export getData = () => {
+  // method 1
+  fetchCall(`${URL}`, "GET", null, actionTypes.GET_DATA);
+  // method 2
+  axiosCall(`${URL}`, "GET", null, actionTypes.GET_DATA);
+};
+
+export postData = (data) => {
+  // method 1
+  fetchCall(`${URL}`, "POST", {data}, actionTypes.GET_DATA);
+  // method 2
+  axiosCall(`${URL}`, "POST", {data}, actionTypes.GET_DATA);
 };
 ```
