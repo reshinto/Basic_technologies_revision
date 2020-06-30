@@ -315,3 +315,85 @@ export postData = (data) => {
   axiosCall(`${URL}`, "POST", {data}, actionTypes.GET_DATA);
 };
 ```
+- fetch v2
+```javascript
+/**
+ * setup config for api request
+ *
+ * @name setupConfig
+ * @function
+ * @param {string} method http request method
+ * @param {object} bodyData data to be parsed to the server
+ * @param {object} getState token value stored in a reducer state, modify if using different reducer for token
+ * @param {object} restHeaders add additional headers, ignore if not in use
+ * @returns {object} returns the entire config file required for http request
+ */
+const setupConfig = (method, getState, bodyData, restHeaders) => {
+  const config = {
+    method,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      ...restHeaders,
+    },
+    body: bodyData,
+  };
+  // modify reducer if different
+  let token = '';
+  if (getState().authReducer) {
+    token = getState().authReducer.token;
+  }
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+};
+
+/**
+ * Enable CORS during API request
+ *
+ * @name enableCORS
+ * @function
+ * @param {string} url api URL address
+ * @returns {string} returns the proxy url to prevent CORS error
+ */
+const enableCORS = (url) => {
+  return `https://cors-anywhere.herokuapp.com/${url}`;
+};
+
+/**
+ * execute API request
+ *
+ * @name fetchCall
+ * @function
+ * @param {string} url api url address
+ * @param {string} method http request method
+ * @param {string} actionType redux types
+ * @param {object} bodyData parse data to server, ignore if not in use
+ * @param {object} restHeaders add addition headers, ignore if not in use
+ */
+export default function fetchCall(
+  url,
+  method,
+  actionType,
+  bodyData,
+  restHeaders,
+) {
+  return async (dispatch, getState) => {
+    const URL = enableCORS(url);
+    const config = setupConfig(method, getState, bodyData, restHeaders);
+    try {
+      const res = await fetch(URL, config);
+      if (res.status >= 200 && res.status < 300) {
+        const data = await res.json();
+        dispatch({
+          type: actionType,
+          payload: data,
+        });
+      }
+    } catch (error) {
+      // handle error
+    }
+  };
+}
+```
