@@ -25,7 +25,7 @@
     * the same request will go to different nodes
       * thus increasing cache misses
       * 2 choices for overcoming this hurdle: 1) global caches 2) distributed caches
-## Content Distribution Network (CDN)
+## Content Distribution Network / Content Delivery Network (CDN)
 * a kind of cache that comes into play for sites serving large amounts of static media
 * In a typical CDN setup
   * a request will first ask the CDN for a piece of static media
