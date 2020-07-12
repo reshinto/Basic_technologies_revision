@@ -47,6 +47,8 @@
   * ```git rm <filename>``` WARNING: this will actually delete the file from the system and stage the file's removal
 * ```git reset``` remove all files from staging area
 * ```git reset --hard <shortRepoName>/<branchName>``` discards all history and changes back to the specified commit ```git reset --hard origin/master```
+### Reference branch HEAD to different commit
+* ```git branch -f <branchName> <commitT>
 ### Rename or move file then add to the "Staging area"
 * ```git mv <oldFilenameOrWithPath> <newFilenameOrWithPath>```
 ### Unmodify file
@@ -105,3 +107,5 @@
 ![rebaseMaster](./images/rebaseMaster.png)
 * ```git rebase <branchName>``` when this is called at master, it will merge the branch commits as new commits
 ![rebaseBranch](./images/rebaseBranch.png)
+* AFTER rebasing, must do a ```git push -f```
+  * do NOT do just ```git push```
