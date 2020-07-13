@@ -48,7 +48,7 @@
 * ```git reset``` remove all files from staging area
 * ```git reset --hard <shortRepoName>/<branchName>``` discards all history and changes back to the specified commit ```git reset --hard origin/master```
 ### Reference branch HEAD to different commit
-* ```git branch -f <branchName> <commitT>
+* ```git branch -f <branchName> <commitT>```
 ### Rename or move file then add to the "Staging area"
 * ```git mv <oldFilenameOrWithPath> <newFilenameOrWithPath>```
 ### Unmodify file
