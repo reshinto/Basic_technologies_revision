@@ -48,7 +48,7 @@
 * ```git reset``` remove all files from staging area
 * ```git reset --hard <shortRepoName>/<branchName>``` discards all history and changes back to the specified commit ```git reset --hard origin/master```
 ### Reference branch HEAD to different commit
-* ```git branch -f <branchName> <commitT>```
+* ```git branch -f <branchName> <commit>```
 ### Rename or move file then add to the "Staging area"
 * ```git mv <oldFilenameOrWithPath> <newFilenameOrWithPath>```
 ### Unmodify file
@@ -57,6 +57,10 @@
 * ```git commit``` an editor will open to allow you to write the commit changes message
 * ```git commit -m "message about the changes made"``` write the commit changes message directly in the terminal
 * ```git commit --amend``` undo and recommit new changes (ex: add forgotten files, modify commit messages)
+### Edit specific commit contents and message
+* ```git rebase -i '<commit>^'
+  * the ^ will ensure the latest commit will be taken into consideration
+  * after entering the command, a help menu will be displayed in the text editor and you need to change the specific commits to the desired command
 ### Add and commit
 * ```git commit -a``` "-a" adds all new and modified files and open an editor for comments
 * ```git commit -am "message about the changes made"``` adds all new and modified files with comments on 1 line
@@ -66,6 +70,11 @@
 * ```git log```
 * ```git log --pretty=oneline``` or ```git log --oneline``` display one line logs
 * ```git log --graph``` display logs with ASCII graph showing the branch and merge history
+### Stashing to put untracked or staged files into a temporary space
+* remove from current commit and store at a temporary space
+  ```git stash```
+* put back untracked or staged files to commit
+  ```git stash pop```
 ### Cloning a remote repository
 * ```git clone <gitURL> <whereToClone>```
 ### View remote information about the repository
