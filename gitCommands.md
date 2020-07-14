@@ -58,7 +58,7 @@
 * ```git commit -m "message about the changes made"``` write the commit changes message directly in the terminal
 * ```git commit --amend``` undo and recommit new changes (ex: add forgotten files, modify commit messages)
 ### Edit specific commit contents and message
-* ```git rebase -i '<commit>^'
+* ```git rebase -i '<commit>^'```
   * the ^ will ensure the latest commit will be taken into consideration
   * after entering the command, a help menu will be displayed in the text editor and you need to change the specific commits to the desired command
 ### Add and commit
