@@ -72,9 +72,9 @@
 * ```git log --graph``` display logs with ASCII graph showing the branch and merge history
 ### Stashing to put untracked or staged files into a temporary space
 * remove from current commit and store at a temporary space
-  ```git stash```
+  * ```git stash```
 * put back untracked or staged files to commit
-  ```git stash pop```
+  * ```git stash pop```
 ### Cloning a remote repository
 * ```git clone <gitURL> <whereToClone>```
 ### View remote information about the repository
