@@ -6,7 +6,12 @@
 * -o: is an output file
 * output file name: zzz
 * .cpp and .h files
+* old method of building
 > g++ -Wall -o zzz xxx.cpp abc.h
+* new method of building
+> g++ -Wall -o zzz xxx.cpp
+* run built file
+> ./zzz
 
 # Run C files
 ## same as above but add -x c when compiling
