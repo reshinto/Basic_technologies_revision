@@ -33,7 +33,7 @@ import React, {useState} from "react";
   
 export default function App() {
   const [count, setCount] = useState(0);  // 0 = initial state
-  handleClick = () => {
+  const handleClick = () => {
     setCount(count + 1);
   }
   return (<div onClick={handleClick}>{count}</div>);
@@ -69,7 +69,7 @@ export default function App() {
     name2: "",
   });
   
-  handleChange = e => {
+  const handleChange = e => {
     setState({
       ...state,
       [e.target.name]: e.target.value
@@ -106,7 +106,7 @@ export default function App() {
     name2: "",
   });
   
-  handleChange = prop => e => {
+  const handleChange = prop => e => {
     setState({
       ...state,
       [prop]: e.target.value
