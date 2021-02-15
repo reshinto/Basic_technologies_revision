@@ -62,3 +62,17 @@
 - Click on the ```Build Now``` button
 - A job build history will be generated
 - To get the console output, click on the ```blue ball``` at the history row
+### Create View
+- Display jobs that meet a criteria
+- Views are like a filter
+- Deleting a view will only delete the view, however, jobs will not be deleted
+- New folders will not be able to be create inside except for All view
+### Create Folder
+- Folders group things together
+  - contain jobs, views, and other folders
+- Provides a namespace that is separate from other folders in Jenkins
+  - it is isolated and can contain items/jobs that have the same name as items/job in other folders
+- Create a new folder
+  - select ```New Item``` button then select ```Folder```
+- Can contain jobs, views, and folders
+- Deleting a folder will delete all jobs, views, and folders inside
