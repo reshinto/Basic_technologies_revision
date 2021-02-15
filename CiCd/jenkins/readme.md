@@ -41,11 +41,11 @@
           ```
       - Boolean parameter
         - set variable name
-        - check default_value to set it as true, uncheck as false
+        - check default_value to set it as ```true```, uncheck as ```false```
 5. At the ```Build Triggers``` tab
     - Build periodically option
       - Jenkins scheduler format
-        - ```* * * * *``` is ```min(0 - 59) hour(0 - 23) dayOfMonth(1 - 31) month(1 - 12) dayOfWeek(0 - 7)(Sunday=0 or 7)
+        - ```* * * * *``` is ```min(0 - 59) hour(0 - 23) dayOfMonth(1 - 31) month(1 - 12) dayOfWeek(0 - 7)(Sunday=0 or 7)```
           - use ```*``` for all range values e.g. all days of the week
       - Use ```H``` for hashed values to spread out jobs around the desired time
         - ```H 0 * * *```
