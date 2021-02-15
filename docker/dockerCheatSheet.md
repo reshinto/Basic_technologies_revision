@@ -96,6 +96,8 @@
 #### Use bash terminal
 - -it option must be used together
   > docker exec -it [containerName] bash
+##### Execute 1 bash command
+> docker exec [containerName] [command]
 ### Copy files from host to container
 > docker cp filename [containerName]:pathToCopyTo
 - e.g.: saving a file to the root directory in the container
