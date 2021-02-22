@@ -92,3 +92,13 @@ javac xxx.java && java xxx
   > nasm -f macho64 xxx64.asm && ld -macosx_version_min 10.7.0 -lSystem -o xxx64 xxx64.o
 ### run
   > ./xxx64
+
+# Run Groovy
+## Open GroovyShell to use the dynamic interpreter on the terminal
+- in the command line type ```groovysh```
+## Open GroovyConsole to open an external UI interface editor
+- in the command line type ```groovyConsole```
+## Execute groovy code on the command line
+- ```groovy -e "println 'Hello, World!'"```
+## Run groovy file
+- ```groovy hello.groovy``` or ```groovy hello```
