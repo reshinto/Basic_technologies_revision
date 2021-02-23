@@ -470,8 +470,14 @@ export default class App extends React.Component {
   }
 }
 ```
+#### using ```useRef```
+- allows you to create a mutable object that keeps the same reference between renders
+- can be used when there is a value that changes similar to setState
+  - however, it does not trigger a re-render if the value changes
+- common use is to grab native HTML elements from the DOM
+- this hook should be used when you need to grab an element from the DOM 
 ```javascript
-import React, {useRef} from "react";
+import React, { useRef } from "react";
 
 export default function App() => {
   const name = useRef();
