@@ -131,6 +131,7 @@ export default class App extends React.Component {
   }
 }
 ```
+#### useEffect
 ```javascript
 import React, {useEffect} from "react";
 
@@ -159,6 +160,7 @@ export default class App extends React.Component {
   }
 }
 ```
+#### useEffect
 ```javascript
 import React, {useEffect} from "react";
 
@@ -186,6 +188,7 @@ export default class App extends React.Component {
   }
 }
 ```
+#### useEffect
 ```javascript
 import React, {useEffect} from "react";
 
@@ -198,8 +201,10 @@ export default function App(props) {
 }
 ```
 ### ShouldComponentUpdate
-#### Should be used if a function renders the same result given the same props and states (mainly for performance optimization)
-- method 1: declaring in the shouldComponentUpdate method
+- Should be used if a function renders the same result given the same props and states (mainly for performance optimization)
+- Memoization: cache result of function call
+- Warning: do not prematurely optimize performance, use only as needed for expensive calculations
+#### method 1: declaring in the shouldComponentUpdate method
 ```javascript
 import React from "react";
 
@@ -237,7 +242,7 @@ export default class App extends React.Component {
   }
 }
 ```
-- method 2: use PureComponent (preferred method)
+#### method 2: use PureComponent (preferred method)
 ```javascript
 import React from "react";
 
@@ -265,7 +270,9 @@ export default class App extends React.PureComponent {
   }
 }
 ```
-- method 3: use memo for functional components
+#### method 3: use memo for functional components
+- gives you referential equality between renders for values
+- calls its function and returns the result
 ```javascript
 import React, {useState, memo} from "react";
 
@@ -299,6 +306,48 @@ function areEqual(prevProps, nextProps) {
 
 export default memo(App, areEqual);
 ```
+#### method 4: use callback for functional methods
+- gives you referential equality between renders for functions
+- returns its function when the dependencies change
+- helps prevent uneccessary renders of the children because the children will always be using the same function object
+```javascript
+import React, {useState, useCallback} from "react";
+
+function App() => {
+  const [name, setName] = useState("");
+  
+  const handleChange = e => {
+    setName(e.target.value);
+  }
+  
+  const handleSubmit = useCallback((e) => {
+    e.preventDefault();
+    console.log(name);
+  }, [name]);
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      <input onChange={handleChange} value={name} />
+      <input type="submit" value="Submit" />
+    </form>
+  );
+}
+
+// return value is the inverse of shouldComponentUpdate
+function areEqual(prevProps, nextProps) {
+  if (nextProps.name !== prevProps.name) {
+    return false;  // allow rerendering
+  }
+  return true;  // do not allow rerendering
+}
+
+export default memo(App, areEqual);
+```
+### useContext
+### useRef
+### useReducer
+### useImperativeHandle
+### useLayoutEffect
 ### Custom Hooks
 ```javascript
 import {useState, useEffect} from "react";
