@@ -202,8 +202,6 @@ export default function App(props) {
 ```
 ### ShouldComponentUpdate
 - Should be used if a function renders the same result given the same props and states (mainly for performance optimization)
-- Memoization: cache result of function call
-- Warning: do not prematurely optimize performance, use only as needed for expensive calculations
 #### method 1: declaring in the shouldComponentUpdate method
 ```javascript
 import React from "react";
@@ -305,6 +303,8 @@ function areEqual(prevProps, nextProps) {
 export default memo(App, areEqual);
 ```
 ### useMemo
+- Memoization: cache result of function call
+- Warning: do not prematurely optimize performance, use only as needed for expensive calculations
 - gives you referential equality between renders for values
 - calls its function and returns the result
 ```javascript
@@ -327,6 +327,8 @@ const App = () => {
 export default App;
 ```
 ### useCallback for functional methods
+- Memoization: cache result of function call
+- Warning: do not prematurely optimize performance, use only as needed for expensive calculations
 - gives you referential equality between renders for functions
 - returns its function when the dependencies change
 - helps prevent uneccessary renders of the children because the children will always be using the same function object
