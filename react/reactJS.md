@@ -271,12 +271,10 @@ export default class App extends React.PureComponent {
 }
 ```
 #### method 3: use memo for functional components
-- gives you referential equality between renders for values
-- calls its function and returns the result
 ```javascript
 import React, {useState, memo} from "react";
 
-function App() => {
+function App() {
   const [name, setName] = useState("");
   
   const handleChange = e => {
@@ -306,42 +304,49 @@ function areEqual(prevProps, nextProps) {
 
 export default memo(App, areEqual);
 ```
-#### method 4: use callback for functional methods
+### useMemo
+- gives you referential equality between renders for values
+- calls its function and returns the result
+```javascript
+import React, {useState, useMemo } from "react";
+
+const App = () => {
+  const [count, setCount] = useState(0);
+  
+  const expensiveCount = useMemo(() => {
+    return count ** 2;
+  }, [count]);
+
+  return (
+    <>
+      {count}
+    </>
+  );
+};
+
+export default App;
+```
+### useCallback for functional methods
 - gives you referential equality between renders for functions
 - returns its function when the dependencies change
 - helps prevent uneccessary renders of the children because the children will always be using the same function object
 ```javascript
-import React, {useState, useCallback} from "react";
+import React, {useState, useCallback } from "react";
+import DisplayCount from "./DisplayCount";
 
-function App() => {
-  const [name, setName] = useState("");
+const App = () => {
+  const [count, setCount] = useState(0);
   
-  const handleChange = e => {
-    setName(e.target.value);
-  }
-  
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    console.log(name);
-  }, [name]);
-  
+  const showCount = useCallback(() => alert(`Count ${count}`)), [count]);
+
   return (
-    <form onSubmit={handleSubmit}>
-      <input onChange={handleChange} value={name} />
-      <input type="submit" value="Submit" />
-    </form>
+    <>
+      <DisplayCount handleDisplay={showCount} />
+    </>
   );
-}
+};
 
-// return value is the inverse of shouldComponentUpdate
-function areEqual(prevProps, nextProps) {
-  if (nextProps.name !== prevProps.name) {
-    return false;  // allow rerendering
-  }
-  return true;  // do not allow rerendering
-}
-
-export default memo(App, areEqual);
+export default App;
 ```
 ### useContext
 - allows us to work with react context api, which allows us to share data without passing props
@@ -511,7 +516,7 @@ export default class App extends React.Component {
 }
 ```
 ```javascript
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 export default function App() => {
   const [name, setName] = useState("");
