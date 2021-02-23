@@ -407,7 +407,6 @@ export default function MoodEmoji() {
   );
 };
 ```
-### useRef
 ### useReducer
 ### useImperativeHandle
 ### useLayoutEffect
