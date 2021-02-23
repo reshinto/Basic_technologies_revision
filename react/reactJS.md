@@ -344,6 +344,62 @@ function areEqual(prevProps, nextProps) {
 export default memo(App, areEqual);
 ```
 ### useContext
+- allows us to work with react context api, which allows us to share data without passing props
+#### set state
+```javascript
+import { createContext } from "react";
+
+export default MoodContext = createContext(null);
+```
+#### share state
+```javascript
+import React, { useState } from "react";
+import MoodContext from "./MoodContext";
+import MoodEmoji from "./MoodEmoji";
+  
+export default function App() {
+  const [moodState] = useState({
+    happy: "happy",
+    sad: "sad",
+  });
+  
+
+  return (
+    <MoodContext.Provider value={moodState}>
+      <MoodEmoji />
+    </MoodContext.Provider>
+  );
+}
+```
+#### use state
+- using ```XxxContext.Consumer```
+```javascript
+import React from "react";
+import MoodContext from "./MoodContext";
+  
+export default function MoodEmoji() {
+  return (
+    <MoodContext.Consumer>
+      {mood => <p>{mood.happy}</p>}
+    </MoodContext.Consumer>
+  );
+};
+```
+- using ```useContext```
+```javascript
+import React, { useContext } from "react";
+import MoodContext from "./MoodContext";
+  
+export default function MoodEmoji() {
+  const mood = useContext(MoodContext);
+  
+  return (
+    <p>
+      { mood.happy }
+    </p>
+  );
+};
+```
 ### useRef
 ### useReducer
 ### useImperativeHandle
