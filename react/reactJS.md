@@ -609,11 +609,13 @@ function App() {
 export default App;
 ```
 ### Custom Hooks
+#### useDebugValue
+- used to display a label for custom hooks in React DevTools
 ```javascript
-import {useState, useEffect} from "react";
+import { useState, useEffect, useDebugValue } from "react";
 
-export default function UseCount() {
-  const [count, setCount] = useState(0);
+export default function useCount() {
+  const [count, setCount] = useState();
   
   useEffect(() => {
     doSomething();
@@ -622,8 +624,14 @@ export default function UseCount() {
   }, [count]);
   
   const handleClick = () => {
-    setCount(count + 1);
+    if (count === undefined) {
+      setCount(0);
+    } else {
+      setCount(count + 1);
+    }
   }
+  
+  useDebugValue(count ?? "haven't started counting");
   
   return {
     count,
@@ -633,12 +641,12 @@ export default function UseCount() {
 ```
 ```javascript
 import React from "react";
-import UseCount from "./UseCount";
+import useCount from "./useCount";
 
 export default function App() {
   const {count, handleClick} = useCount();
   
-  return (<div onClick={handleClick}>{count}</div>);
+  return (<div onClick={handleClick}>count {count}</div>);
 };
 ```
 ## Forms
