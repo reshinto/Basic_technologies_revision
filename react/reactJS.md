@@ -306,7 +306,10 @@ export default memo(App, areEqual);
 - Memoization: cache result of function call
 - Warning: do not prematurely optimize performance, use only as needed for expensive calculations
 - gives you referential equality between renders for values
-- calls its function and returns the result
+- will only recompute the memoized value when 1 of the dependencies has changed
+- help to avoid expensive calculations on every render
+- if no dependency array is provided, a new value will be computed on every render
+- calls its function and returns the result value
 ```javascript
 import React, {useState, useMemo } from "react";
 
@@ -330,8 +333,9 @@ export default App;
 - Memoization: cache result of function call
 - Warning: do not prematurely optimize performance, use only as needed for expensive calculations
 - gives you referential equality between renders for functions
-- returns its function when the dependencies change
+- returns its memoized function when the dependencies change
 - helps prevent uneccessary renders of the children because the children will always be using the same function object
+  - e.g. shouldComponentUpdate
 ```javascript
 import React, {useState, useCallback } from "react";
 import DisplayCount from "./DisplayCount";
@@ -352,6 +356,8 @@ export default App;
 ```
 ### useContext
 - allows us to work with react context api, which allows us to share data without passing props
+- A component calling useContext will always re-render when the context value changes
+  - optimize with memoization if component computation is expensive
 #### set state
 ```javascript
 import { createContext } from "react";
@@ -408,6 +414,115 @@ export default function MoodEmoji() {
 };
 ```
 ### useReducer
+- an alternative to useState
+  - returns an array of 2 values
+    - first value is the state, second value is dispatch function
+- it uses the redux pattern and has a different way to manage state
+  - instead of updating the state directly, action is dispatched that goes to the reducer
+  - the reducer determines how to compute the next state
+- useReducer is usually preferable to useState when you have complex state logic that involves multiple sub-values
+  - or when the next state depends on the previous one
+- useReducer also lets you optimize performance for components that trigger deep updates
+  - because you can pass dispatch down instead of callbacks
+- React guarantees that dispatch function identity is stable and won’t change on re-renders
+  - This is why it’s safe to omit from the useEffect or useCallback dependency list
+#### Single state
+```javascript
+import React, { useReducer } from "react";
+
+const initialState = 0;
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "increment":
+      return state + 1;
+    case "decrement":
+      return state - 1;
+    default:
+      throw new Error();
+  };
+};
+  
+export default function App() {
+  const [count, dispatch] = useReducer(reducer, initialState);
+  
+  const handleDecrement = () => dispatch({ type: "decrement" });
+  
+  return (
+    <>
+      Count: { count }
+      <button onClick={handleDecrement}>-</button>
+    </>
+  );
+};
+```
+#### Multiple states
+```javascript
+import React, { useReducer } from "react";
+
+const initialState = { count: 0 };
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "increment":
+      return state + 1;
+    case "decrement":
+      return state - 1;
+    default:
+      throw new Error();
+  };
+};
+  
+export default function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  
+  const handleDecrement = () => dispatch({ type: "decrement" });
+  
+  return (
+    <>
+      Count: { state.count }
+      <button onClick={handleDecrement}>-</button>
+    </>
+  );
+};
+```
+#### Lazy initialization
+```javascript
+import React, { useReducer } from "react";
+
+function init(initialCount) {
+  return {count: initialCount};
+}
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return {count: state.count + 1};
+    case 'decrement':
+      return {count: state.count - 1};
+    case 'reset':
+      return init(action.payload);
+    default:
+      throw new Error();
+  }
+}
+  
+export default function App() {
+  const [state, dispatch] = useReducer(reducer, initialCount, init);
+  
+  return (
+    <>
+      Count: { state.count }
+      <button
+        onClick={() => dispatch({type: 'reset', payload: initialCount})}>
+        Reset
+      </button>
+      <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+      <button onClick={() => dispatch({type: 'increment'})}>+</button>
+    </>
+  );
+};
+```
 ### useImperativeHandle
 ### useLayoutEffect
 ### Custom Hooks
@@ -470,7 +585,7 @@ export default class App extends React.Component {
 }
 ```
 #### using ```useRef```
-- allows you to create a mutable object that keeps the same reference between renders
+- allows you to create a mutable plain javascript object that keeps the same reference between renders
 - can be used when there is a value that changes similar to setState
   - however, it does not trigger a re-render if the value changes
 - common use is to grab native HTML elements from the DOM
