@@ -524,6 +524,60 @@ export default function App() {
 };
 ```
 ### useImperativeHandle
+- customizes the instance value that is exposed to the parent components when using ref
+  - imperative code using refs should be avoided in most cases
+- ```useImperativeHandle``` should be used with forwardRef
+- it is mainly used to change the behavior of the exposed ref, which is a rare use case
+- use cases
+  - if you build a reusable component library, you may need to get access to the underlying DOM element
+    - and then forward it so that it can be accessed by the consumers of the component library
+```javascript
+import React, { forwardRef, useRef } from "react";
+
+const FancyInput = forwardRef((props, ref) => {
+  const inputRef = useRef();
+  
+  const activateFocus = () => {
+    console.log("focused")
+    inputRef.current.focus()
+  };
+  
+  React.useImperativeHandle(ref, () => ({
+    activateFocus,
+  }));
+
+  return (
+    <div>
+      <input ref={inputRef} />
+      <button onClick={activateFocus}>
+        Focus from children
+      </button>
+    </div>
+  );
+});
+
+export default FancyInput;
+```
+```javascript
+import React, { useRef } from "react";
+import FancyInput from "./FancyInput";
+
+
+function App() {
+  const inputRef = useRef();
+  
+  return (
+    <div className="App">
+      <FancyInput ref={inputRef} />
+      <button onClick={() => inputRef.current.activateFocus()}>
+        Focus from parent
+      </button>
+    </div>
+  );
+}
+
+export default App;
+```
 ### useLayoutEffect
 ### Custom Hooks
 ```javascript
