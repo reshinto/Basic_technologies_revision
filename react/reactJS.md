@@ -579,6 +579,35 @@ function App() {
 export default App;
 ```
 ### useLayoutEffect
+- identical to useEffect, but it fires synchronously after all DOM mutations
+  - difference is that the callback will run after render but before the actual updates have been displayed to the screen
+- it will block visual UI updates until callback is completed
+- use cases
+  - situations when you need to calculate something in the UI before the DOM is visually updated
+- If you’re migrating code from a class component
+  - useLayoutEffect fires in the same phase as componentDidMount and componentDidUpdate
+- If you use server rendering
+  - neither useLayoutEffect nor useEffect can run until the JavaScript is downloaded
+    - To fix this, either move that logic to useEffect (if it isn’t necessary for the first render)
+    - or delay showing that component until after the client renders (if the HTML looks broken until useLayoutEffect runs)
+```javascript
+import React, { useRef, useLayoutEffect } from "react";
+
+function App() {
+  const myBtn = useRef(null);
+
+  useLayoutEffect(() => {
+    const rect = myBtn.current.getBoundingClientRect();
+    console.log(rect.height);
+  })
+  
+  return (
+    <button ref={myBtn}>button</button>
+  );
+}
+
+export default App;
+```
 ### Custom Hooks
 ```javascript
 import {useState, useEffect} from "react";
