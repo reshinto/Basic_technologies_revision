@@ -24,7 +24,7 @@ class ApiClient {
   }
 
   async request(url, body, options, method) {
-    const token = "123";
+    const token = "123";  // modify this in accordance to how token is retrieved
 
     const headers = new Headers({
       "Content-Type": "application/json",
