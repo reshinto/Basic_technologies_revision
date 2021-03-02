@@ -1,0 +1,38 @@
+body {
+  background: #f4f4f4;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+  margin: 0;
+}
+
+header {
+  background: #333;
+  color: #fff;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+main {
+  padding: 2rem;
+}
+
+nav {
+  background: #444;
+  padding: 0.2rem 2rem;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+}
+
+nav a {
+  padding: 10px;
+  color: #fff;
+  text-decoration: none;
+}
+
+nav .current > a {
+  color: yellow;
+}
