@@ -3,7 +3,7 @@
   - it was most likely due to a combination of high latency and low throughput
 - Latency and Throughput are the 2 most important measures of the performance of a system
 ## Terms used
-### Latency
+### Latency (lower is better)
 - it is basically how long it takes for data to traverse a system
   - and more specifically, how long does it take for data to get from 1 point in a system, to another point in the system
 - in other words, it is the time it takes for a certain operation to complete in a system
@@ -35,7 +35,7 @@
   - sending a packet (1,000 or 1,500 bytes) over a network to a different country on a round trip: 150,000 µs (150 ms)
     - why does it take that long?
       - electricity has to travel, and it takes some time when it has to travel halfway across the world
-### Throughput
+### Throughput (higher is better)
 - how much work can a machine perform in a given period of time
   - throughput in this context normally refer to the amount of work that a computer or machine can perform in a given amount of time
     - this usually refers to how much data can be transferred from 1 point in a system to another point in a system in a given amount of time
