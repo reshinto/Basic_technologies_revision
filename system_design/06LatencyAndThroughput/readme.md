@@ -53,8 +53,8 @@
         - just trying to blindly increase throughput on this network won't make sense
           - because you will still eventually have some sort of bottleneck
 - better solution
- - is to have multiple servers to handle all of the requests
-   - therefore, instead of multiple request going through the same pipeline same bottleneck, they might go to different servers instead
+  - is to have multiple servers to handle all of the requests
+    - therefore, instead of multiple request going through the same pipeline same bottleneck, they might go to different servers instead
 ## Latency and Throughput are not neccessarily correlated
 - e.g.: you might have a system, or parts of a system, smaller parts of a system,
   - that have very low latency, which supports really fast data transfers
