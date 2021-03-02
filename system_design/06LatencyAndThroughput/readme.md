@@ -59,5 +59,5 @@
 - e.g.: you might have a system, or parts of a system, smaller parts of a system,
   - that have very low latency, which supports really fast data transfers
   - might also have another part of a system that has very low throughput
-    - that ends up meaning that the low latency data transfers or operations that the system had are kind of canceled out
+    - that ends up with the low latency data transfers or operations that the system had to be canceled out
 - in summary, you cannot make assumptions about latency or throughput based on the other
