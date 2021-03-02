@@ -1,4 +1,6 @@
-# System Design Basics
+# Introduction
+- System interviews require the interviewee to have a lot of knowledge about systems, and about how to build robust, functional, and scalable systems
+## System Design Basics
 * Consider 3 things when designing a large system
     1. What are the different architectural pieces that can be used?
     2. How do these pieces work with each other?
