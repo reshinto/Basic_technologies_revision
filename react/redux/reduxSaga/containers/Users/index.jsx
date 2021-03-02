@@ -7,7 +7,7 @@ import {
   selector,
 } from "./reducer";
 
-const userId = 1;
+const userId = 1; // for illustration purpose
 
 export const UsersPage = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ export const UsersPage = () => {
 
   useEffect(() => {
     dispatch(fetchUsers.request());
-    dispatch(fetchUser.request(userId));
+    dispatch(fetchUser.request(userId));  // for illustration purpose, don't do it here
   }, [userId, dispatch]);
 
   return (
