@@ -21,6 +21,8 @@ export const DEFAULT_PAGINATION_PARAMS = {
 
 export function* fetchUsersSaga() {
   errorHandler.closeAllErrors(); // if using toast
+  
+  // if requires sort
   const { sortBy } = yield select(selector);
   const { orderBy, orderDir } = getColumnOrder(sortBy);
 
