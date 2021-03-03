@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import React from "react";
 
 import routes from "../../../routes";
 
@@ -13,20 +12,10 @@ export const isAccessToPortalGranted = (permissions) =>
 const permissions = ["ACCESS_CODE"]; // for example only
 
 const ProtectedApp = () => {
-  const scrollRef = useRef();
-
-  const { pathname } = useLocation();
-
   /*const dispatch = useDispatch();
 
   const { userInfo = {}, isUserInfoLoading } = useSelector((state) => state[protectedAppId]);
   const { permissions } = userInfo;*/
-
-  useEffect(() => {
-    if (scrollRef && scrollRef.current) {
-      scrollRef.current.scrollTop = 0;
-    }
-  }, [scrollRef, pathname]);
 
   /*useEffect(() => {
     dispatch(fetchUserInfo.request());
