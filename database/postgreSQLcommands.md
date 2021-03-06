@@ -28,6 +28,8 @@
   > psql -d database_name
 * Connect using a specific user
   > psql -d database_name -U username
+## Run sql file in command line
+> psql -d myDataBase -a -f myInsertFile
 ## After connecting to database
 ### View command help
 > \\?
