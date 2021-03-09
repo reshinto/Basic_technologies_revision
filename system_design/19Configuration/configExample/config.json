@@ -1,0 +1,17 @@
+{
+  "apiKey": "abcdef_123456",
+  "showSystemsExpert": false,
+  "supportedLanguages": [
+    "cpp",
+    "csharp",
+    "go",
+    "java",
+    "javascript",
+    "python",
+    "swift"
+  ],
+  "version": {
+    "number": 0,
+    "releaseData": "2020-02-20"
+  }
+}
