@@ -1,0 +1,15 @@
+{
+  "name": "symmetricEncryptionExample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "encryption.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aes256": "^1.1.0"
+  }
+}
