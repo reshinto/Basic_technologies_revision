@@ -1,0 +1,52 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Eample Stripe API"
+  },
+  "host": "api.stripe.com",
+  "basePath": "/v1",
+  "schemes": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/charges": {
+      "get": {
+        "summary": "List all charges",
+        "operationId": "listCharges",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "How many items to skip in the",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "How many items to return at",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "response": {
+          "200": {
+            "description": "A paginated array of charges",
+            "schema": {
+              "$ref": "#/definitions/Charges"
+            }
+          }
+        }
+      }
+    }
+  }
+}

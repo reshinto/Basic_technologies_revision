@@ -1,0 +1,43 @@
+# API Definition
+
+## Entity Definition
+### Charge:
+- id: uuid
+- customer_id: uuid
+- amount: integer
+- currency: string (or currency-code enum)
+- status: enum ["succended", "pending", "failed"]
+
+### Customer:
+- id: uuid
+- name: string
+- address: string
+- email: string
+- card: Card
+
+### Card
+
+## Endpoint Definitions
+### Charges
+CreateCharge(charge: Charge)
+  => Charge
+GetCharge(id: uuid)
+  => Charge
+UpdateCharge(id: uuid, updateCharge: Charge)
+  => Charge
+ListCharge(offset: integer, limit: integer)
+  => Charge[]
+CaptureCharge(id: uuid)
+  => Charge
+
+### Customers
+CreateCustomer(customer: Customer)
+  => Customer
+GetCustomer(id: uuid)
+  => Customer
+UpdateCustomer(id: uuid, updateCustomer: Customer)
+  => Customer
+DeleteCustomer(id: uuid)
+  => Customer
+ListCustomers(offset: integer, limit: integer)
+  => Customer[]

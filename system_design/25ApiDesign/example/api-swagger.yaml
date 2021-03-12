@@ -1,0 +1,44 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Example Stripe API
+host: api.stripe.com
+basePath: /v1
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /v1/charges:
+    get:
+      summary: List all charges
+      operationId: listCharges
+      parameters:
+        - name: offset
+          in: query
+          description: How many items to skip in the dataset
+          required: false
+          type: integer
+          format: int32
+        - name: limit
+          in: query
+          description: How many items to return at one request
+          required: false
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: A paginated array of charges
+          schema:
+            $ref: '#/definitions/Charges'
+    post:
+      summary: Create a charge
+      operationId: createCharge
+      responses:
+        "201":
+          description: Null response
+  /charges/{id}:
+    get:
