@@ -35,9 +35,21 @@ if __name__ == "__main__":
 > python app.py
 ## Get parameter data from url
 ```python
+from flask import Flask, jsonify
+
+app = Flask(__name__)
+
+
+# method 1
 @app.route("/get/<id>")
 def get_data(id):
-    return f"param id is {id}"
+    return jsonify({"id": id})
+    
+
+# method 2
+@app.route("/gets/<id>", methods=["GET"])
+def gets_data(id):
+    return jsonify({"id": id})
 ```
 ## Post data
 ```python
