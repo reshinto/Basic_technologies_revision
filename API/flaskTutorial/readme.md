@@ -39,3 +39,21 @@ if __name__ == "__main__":
 def get_data(id):
     return f"param id is {id}"
 ```
+## Post data
+```python
+from flask import Flask, request
+
+app = Flask(__name__)
+
+
+class Model():
+    def __init__(self, name):
+        self.id = 1
+        self.name = name
+
+
+@app.route("/post", methods=["POST"])
+def post_data():
+    new_item = Model(request.json["name"])
+    return { "id": new_item.id }
+```
