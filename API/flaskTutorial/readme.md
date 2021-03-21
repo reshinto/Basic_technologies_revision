@@ -33,3 +33,9 @@ if __name__ == "__main__":
 > python3 app.py
 - windows
 > python app.py
+## Get parameter data from url
+```python
+@app.route("/get/<id>")
+def get_data(id):
+    return f"param id is {id}"
+```
