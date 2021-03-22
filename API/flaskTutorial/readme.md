@@ -16,7 +16,7 @@ def index():
 - windows
 > cmd /C "set FLASK_ENV=development && set FLASK_APP=app && flask run"
 ### method 2
-- app/__init__.py file
+- app/\_\_init\_\_.py file
 ```python
 from flask import Flask
 
