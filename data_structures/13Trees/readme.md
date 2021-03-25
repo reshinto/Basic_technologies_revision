@@ -119,6 +119,19 @@ class BinaryTree:
 - if the tree is skewed, it becomes O(N) time on worst
 ## Binary Search
 ```python
+def binary_search(current, target):
+  if current is None:
+    return None
+	if current.value == target:
+     return current.value
+	if target > current.value:
+		return binary_search(current.right, target, result)
+	elif target < current.value:
+		return binary_search(current.left, target, result)
+	else:
+		return None
+```
+```python
 def binary_search(tree, target):
   current = tree
   while current:
