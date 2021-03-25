@@ -17,6 +17,13 @@
 - the root node has 2 child nodes
 - every other nodes have up to 2 child nodes
 - the structure of a binary tree is such that many of its operations have a logarithmic time complexity, making binary tree a commonly used data structure
+```python
+class BinaryTree:
+  def __init__(self, value):
+    self.value = value
+    self.left = None
+    self.right = None
+```
 #### K-ary Tree
 - a tree where every node (including the root) have up to k child nodes
   - e.g.: a binary tree is a k-ary tree where k == 2
@@ -110,3 +117,111 @@
 ### Traversing through the entire tree: O(N) time
 ### Traversing 1 subtree at every step for a balance binary tree: O(log N) time on average
 - if the tree is skewed, it becomes O(N) time on worst
+## Binary Search
+```python
+def binary_search(tree, target):
+  current = tree
+  while current:
+    if current.value == target:
+      return current.value
+    if target > current.value:
+      current = current.right
+    elif target < current.value:
+      current = current.left
+    else:
+      break
+  return None
+```
+## Traversal Types
+### Breath First Traversal
+### Depth First Traversal
+#### Inorder (Left, Root, Right)
+1. Traverse the left subtree, i.e., call Inorder(left-subtree)
+2. Visit the root.
+3. Traverse the right subtree, i.e., call Inorder(right-subtree)
+```python
+def dfs(current_node):
+	if current_node:
+  	dfs(current_node.left)
+    print(current_node.value)
+	  dfs(current_node.right)
+```
+```python
+def dfs(root):
+  if root is None:
+    return
+ 
+  node_stack = []
+  node_stack.append(root)
+ 
+  while(len(node_stack) > 0):
+    current = node_stack.pop()
+         
+    # Note that right child is pushed first so that left is processed first
+    if current.right:
+      node_stack.append(current.right)
+    
+    print(current.value)
+        
+    if current.left:
+      node_stack.append(current.left)
+```
+#### Preorder (Root, Left, Right)
+1. Visit the root.
+2. Traverse the left subtree, i.e., call Preorder(left-subtree)
+3. Traverse the right subtree, i.e., call Preorder(right-subtree)
+```python
+def dfs(current_node):
+	if current_node:
+    print(current_node.value)
+	  dfs(current_node.left)
+	  dfs(current_node.right)
+```
+```python
+def dfs(root):
+  if root is None:
+    return
+ 
+  node_stack = []
+  node_stack.append(root)
+ 
+  while(len(node_stack) > 0):
+    current = node_stack.pop()
+    print(current.value)
+         
+    # Note that right child is pushed first so that left is processed first
+    if current.right:
+      node_stack.append(current.right)  
+    if current.left:
+      node_stack.append(current.left)
+```
+#### Postorder (Left, Right, Root)
+1. Traverse the left subtree, i.e., call Postorder(left-subtree)
+2. Traverse the right subtree, i.e., call Postorder(right-subtree)
+3. Visit the root.
+```python
+def dfs(current_node):
+	if current_node:
+  	dfs(current_node.left)
+	  dfs(current_node.right)
+    print(current_node.value)
+```
+```python
+def dfs(root):
+  if root is None:
+    return
+ 
+  node_stack = []
+  node_stack.append(root)
+ 
+  while(len(node_stack) > 0):
+    current = node_stack.pop()
+         
+    # Note that right child is pushed first so that left is processed first
+    if current.right:
+      node_stack.append(current.right)  
+    if current.left:
+      node_stack.append(current.left)
+      
+    print(current.value)
+```
