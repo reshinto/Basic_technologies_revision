@@ -122,14 +122,14 @@ class BinaryTree:
 def binary_search(current, target):
   if current is None:
     return None
-	if current.value == target:
-     return current.value
-	if target > current.value:
-		return binary_search(current.right, target, result)
-	elif target < current.value:
-		return binary_search(current.left, target, result)
-	else:
-		return None
+  if current.value == target:
+    return current.value
+  if target > current.value:
+    return binary_search(current.right, target, result)
+  elif target < current.value:
+    return binary_search(current.left, target, result)
+  else:
+    return None
 ```
 ```python
 def binary_search(tree, target):
@@ -154,10 +154,10 @@ def binary_search(tree, target):
 3. Traverse the right subtree, i.e., call Inorder(right-subtree)
 ```python
 def dfs(current_node):
-	if current_node:
-  	dfs(current_node.left)
+  if current_node:
+    dfs(current_node.left)
     print(current_node.value)
-	  dfs(current_node.right)
+    dfs(current_node.right)
 ```
 ```python
 def dfs(root):
@@ -185,10 +185,10 @@ def dfs(root):
 3. Traverse the right subtree, i.e., call Preorder(right-subtree)
 ```python
 def dfs(current_node):
-	if current_node:
+  if current_node:
     print(current_node.value)
-	  dfs(current_node.left)
-	  dfs(current_node.right)
+    dfs(current_node.left)
+    dfs(current_node.right)
 ```
 ```python
 def dfs(root):
@@ -214,9 +214,9 @@ def dfs(root):
 3. Visit the root.
 ```python
 def dfs(current_node):
-	if current_node:
-  	dfs(current_node.left)
-	  dfs(current_node.right)
+  if current_node:
+    dfs(current_node.left)
+    dfs(current_node.right)
     print(current_node.value)
 ```
 ```python
