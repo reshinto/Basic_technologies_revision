@@ -413,6 +413,66 @@ export default function MoodEmoji() {
   );
 };
 ```
+#### use generic context
+- GenericContext file
+```typescript
+import React, { Dispatch, createContext, SetStateAction, useState, PropsWithChildren } from "react;
+
+export default function createCtx<A>(defaultValue: A) {
+  type UpdateType = Dispatch<
+    SetStateAction<typeof defaultValue>
+  >;
+  
+  const defaultUpdate: UpdateType = () => defaultValue;
+  
+  const ctx = createContext({
+    state: defaultValue,
+    update: defaultUpdate,
+  });
+  
+  function Provider(props: PropsWithChildren<{}>) {
+    const [state, update] = useState(defaultValue);
+    return <ctx.Provider value={{ state, update }} {...props} />;
+  }
+  
+  return [ctx, Provider] as const;
+}
+```
+- set state with SampleContext file
+```typescript
+import createCtx from "./GenericContext";
+
+export const [SampleContext, SampleProvider] = createCtx("default value");
+```
+- share state
+```typescript
+import React from "react";
+import { SampleProvider } from "./SampleContext";
+import SampleFeature from "./SampleFeature";
+  
+export default function App() {
+  return (
+    <SampleProvider>
+      <SampleFeature />
+    </SampleProvider>
+  );
+}
+```
+- use state with useContext
+```typescript
+import React, { useContext } from "react";
+import SampleContext from "./SampleContext";
+  
+export default function SomeFeature() {
+  const { state: myStateName, update: handleUpdate } = useContext(SampleContext);
+  
+  return (
+    <p onClick={() => handleUpdate("test")}>
+      { myStateName }
+    </p>
+  );
+};
+```
 ### useReducer
 - an alternative to useState
   - returns an array of 2 values
