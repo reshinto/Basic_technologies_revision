@@ -80,7 +80,7 @@
 - any database that supports SQL
 - this term is often used synonymously with relational databse
 - in practice, not every relational database supports SQL
-### NoSQL Databse
+### NoSQL Database
 - any databse that is not SQL compatible is called NoSQL
 - usually comes with their own special querying language
   - usually does not support complex queries
