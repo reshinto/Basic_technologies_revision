@@ -46,8 +46,8 @@
   ```
 ```python
 def tournamentWinner(competitions, results):
-    # Write your code here.
-    scores = {}
+	# Write your code here.
+	scores = {}
 	winner = ""
 	topScore = 0
 	for i, v in enumerate(results):
@@ -63,8 +63,8 @@ def tournamentWinner(competitions, results):
 ```
 ```javascript
 function tournamentWinner(competitions, results) {
-  // Write your code here.
-  const scores = {};
+	// Write your code here.
+	const scores = {};
 	let winner = "";
 	let topScore = 0;
 	for (let i=0; i<results.length; i++) {
