@@ -17,8 +17,8 @@
 ```python
 # solution 1
 def caesarCipherEncryptor(string, key):
-    # Write your code here.
-    aValue = ord("a")
+  # Write your code here.
+  aValue = ord("a")
   zValue = ord("z")
   newStr = []
   for i in range(len(string)):
@@ -31,8 +31,8 @@ def caesarCipherEncryptor(string, key):
 
 # solution 2
 def caesarCipherEncryptor(string, key):
-    # Write your code here.
-    aValue = ord("a")
+  # Write your code here.
+  aValue = ord("a")
   zValue = ord("z")
   newStr = []
   newKey = key % 26
