@@ -23,25 +23,25 @@
 ```python
 def productSum(array, depth=1):
     # Write your code here.
-	sum = 0
-	for v in array:
-		if type(v) == list:
-			sum += productSum(v, depth + 1)
-		else:
-			sum += v
-	return sum * depth
+  sum = 0
+  for v in array:
+    if type(v) == list:
+      sum += productSum(v, depth + 1)
+    else:
+      sum += v
+  return sum * depth
 ```
 ```javascript
 function productSum(array, depth=1) {
   // Write your code here.
-	let sum = 0;
-	for (let v of array) {
-		if (Array.isArray(v)) {
-			sum += productSum(v, depth + 1);
-		} else {
-			sum += v;
-		}
-	}
-	return sum * depth;
+  let sum = 0;
+  for (let v of array) {
+    if (Array.isArray(v)) {
+      sum += productSum(v, depth + 1);
+    } else {
+      sum += v;
+    }
+  }
+  return sum * depth;
 }
 ```
