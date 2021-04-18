@@ -11,7 +11,7 @@
   
 ```python
 def sortedSquaredArray(array):
-    # Write your code here.
+	# Write your code here.
 	newArr = []
 	for v in array:
 		newArr.append(v**2)
@@ -19,7 +19,7 @@ def sortedSquaredArray(array):
    
    
 def sortedSquaredArray(array):
-    # Write your code here.
+	# Write your code here.
 	newArr = [0 for _ in array]
 	leftIdx = 0
 	rightIdx = len(array) - 1
@@ -34,7 +34,7 @@ def sortedSquaredArray(array):
 ```
 ```javascript
 function sortedSquaredArray(array) {
-  // Write your code here.
+	// Write your code here.
 	const newArray = [];
 	for (let v of array) {
 		newArray.push((v)**2);
@@ -43,8 +43,8 @@ function sortedSquaredArray(array) {
 }
 
 function sortedSquaredArray(array) {
-  // Write your code here.
-  let leftIdx = 0;
+	// Write your code here.
+	let leftIdx = 0;
 	let rightIdx = array.length - 1;
 	const newArr = new Array(array.length);
 	for (let i=array.length-1; i>=0; i--) {
