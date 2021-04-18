@@ -37,10 +37,10 @@ class Node:
         return self
 
     def depthFirstSearch(self, array):
-		array.append(self.name)
-		for child in self.children:
-			child.depthFirstSearch(array)
-		return array
+    array.append(self.name)
+    for child in self.children:
+      child.depthFirstSearch(array)
+    return array
 ```
 ```javascript
 class Node {
@@ -56,11 +56,11 @@ class Node {
 
   depthFirstSearch(array) {
     // Write your code here.
-		array.push(this.name);
-		for (const child of this.children) {
-			child.depthFirstSearch(array);
-		}
-		return array;
+    array.push(this.name);
+    for (const child of this.children) {
+      child.depthFirstSearch(array);
+    }
+    return array;
   }
 }
 ```
