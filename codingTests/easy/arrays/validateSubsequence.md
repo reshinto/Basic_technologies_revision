@@ -20,24 +20,24 @@
 ```python
 # Solution 1
 def isValidSubsequence(array, sequence):
-	# Write your code here.
-	j = 0
-	sequenceLength = len(sequence)
-	for v in array:
-		if j == sequenceLength:
-			break
-		if v in sequence and sequence[j] == v:
-			j += 1
-	return j == sequenceLength
+  # Write your code here.
+  j = 0
+  sequenceLength = len(sequence)
+  for v in array:
+    if j == sequenceLength:
+      break
+    if v in sequence and sequence[j] == v:
+      j += 1
+  return j == sequenceLength
 ```
 ```javascript
 function isValidSubsequence(array, sequence) {
-	// Write your code here.
-	let seqIdx = 0;
-	for (let i=0; i<array.length; i++) {
-		if (seqIdx === sequence.length) break;
-		if (array[i] === sequence[seqIdx]) seqIdx++;
-	}
-	return seqIdx === sequence.length;
+  // Write your code here.
+  let seqIdx = 0;
+  for (let i=0; i<array.length; i++) {
+    if (seqIdx === sequence.length) break;
+    if (array[i] === sequence[seqIdx]) seqIdx++;
+  }
+  return seqIdx === sequence.length;
  }
  ```
