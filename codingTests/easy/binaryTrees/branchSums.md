@@ -42,7 +42,7 @@ class BinaryTree:
        
 # solution 1
 def branchSums(root):
-    # Write your code here.
+	# Write your code here.
 	if root is None:
 		return []
 	sums = []
@@ -69,8 +69,8 @@ def branchSums(root):
 
 # solution 2
 def branchSums(root):
-    # Write your code here.
-    sums = []
+	# Write your code here.
+	sums = []
 	dfs(root, 0, sums)
 	return sums
 	
@@ -97,7 +97,7 @@ class BinaryTree {
 
 // solution 1
 function branchSums(root) {
-  // Write your code here.
+	// Write your code here.
 	const sums = [];
 	dfs(root, 0, sums);
 	return sums;
