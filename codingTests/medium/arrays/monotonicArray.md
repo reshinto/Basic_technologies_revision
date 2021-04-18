@@ -20,41 +20,41 @@
   
 ```python
 def isMonotonic(array):
-	# Write your code here.
-	length = len(array)
-	if length <= 2:
-		return True
-	isEqual = True if array[0] == array[length - 1] else False
-	isIncrease = True if array[0] < array[length - 1] else False
-	isDecrease = True if array[0] > array[length - 1] else False
-	for i in range(1, length):
-		if isIncrease and array[i-1] > array[i]:
-			return False
-		elif isDecrease and array[i-1] < array[i]:
-			return False
-		elif isEqual and array[i-1] != array[i]:
-			return False
-	return True
+  # Write your code here.
+  length = len(array)
+  if length <= 2:
+    return True
+  isEqual = True if array[0] == array[length - 1] else False
+  isIncrease = True if array[0] < array[length - 1] else False
+  isDecrease = True if array[0] > array[length - 1] else False
+  for i in range(1, length):
+    if isIncrease and array[i-1] > array[i]:
+      return False
+    elif isDecrease and array[i-1] < array[i]:
+      return False
+    elif isEqual and array[i-1] != array[i]:
+      return False
+  return True
 ```
 ```javascript
 function isMonotonic(array) {
-	// Write your code here.
-	const len = array.length;
-	if (len <= 2) {
-		return true;
-	}
-	let isEqual = array[0] === array[len - 1] ? true : false;
-	let isIncrease = array[0] < array[len - 1] ? true : false;
-	let isDecrease = array[0] > array[len - 1] ? true : false;
-	for (let i=1; i<len; i++) {
-		if (isIncrease && array[i-1] > array[i]) {
-			return false;
-		} else if (isDecrease && array[i-1] < array[i]) {
-			return false;
-		} else if (isEqual && array[i-1] !== array[i]) {
-			return false;
-		}
-	}
-	return true;
+  // Write your code here.
+  const len = array.length;
+  if (len <= 2) {
+    return true;
+  }
+  let isEqual = array[0] === array[len - 1] ? true : false;
+  let isIncrease = array[0] < array[len - 1] ? true : false;
+  let isDecrease = array[0] > array[len - 1] ? true : false;
+  for (let i=1; i<len; i++) {
+    if (isIncrease && array[i-1] > array[i]) {
+      return false;
+    } else if (isDecrease && array[i-1] < array[i]) {
+      return false;
+    } else if (isEqual && array[i-1] !== array[i]) {
+      return false;
+    }
+  }
+  return true;
 }
 ```
