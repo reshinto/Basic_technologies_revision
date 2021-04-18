@@ -12,8 +12,8 @@
   true
 ```python
 def isPalindrome(string):
-    # Write your code here.
-    lastIdx = len(string) - 1
+  # Write your code here.
+  lastIdx = len(string) - 1
   for i in range(len(string)):
     if lastIdx <= i:
       return True
