@@ -20,7 +20,7 @@
 ```python
 # solution 1
 def smallestDifference(arrayOne, arrayTwo):
-    # Write your code here.
+	# Write your code here.
 	result = []
 	diff = None
 	for v1 in arrayOne:
@@ -34,8 +34,8 @@ def smallestDifference(arrayOne, arrayTwo):
 
 # solution 2
 def smallestDifference(arrayOne, arrayTwo):
-    # Write your code here.
-    arrayOne.sort()
+	# Write your code here.
+	arrayOne.sort()
 	arrayTwo.sort()
 	L1 = 0
 	L2 = 0
@@ -60,7 +60,7 @@ def smallestDifference(arrayOne, arrayTwo):
 ```
 ```javascript
 function smallestDifference(arrayOne, arrayTwo) {
-  // Write your code here.
+	// Write your code here.
 	arrayOne.sort((a, b) => a - b);
 	arrayTwo.sort((a, b) => a - b);
 	let L1 = 0;
