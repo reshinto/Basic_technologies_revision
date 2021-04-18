@@ -19,14 +19,14 @@
 ```python
 # This is an input class. Do not edit.
 class LinkedList:
-    def __init__(self, value):
-        self.value = value
-        self.next = None
+  def __init__(self, value):
+    self.value = value
+    self.next = None
 
 
 def removeDuplicatesFromLinkedList(linkedList):
-    # Write your code here.
-    current = linkedList
+  # Write your code here.
+  current = linkedList
   while current:
     while current.next and current.value == current.next.value:
       current.next = current.next.next
