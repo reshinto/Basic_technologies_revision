@@ -17,7 +17,7 @@
   
 ```python
 def nonConstructibleChange(coins):
-    # Write your code here.
+	# Write your code here.
 	coins.sort()
 	if 1 not in coins:
 		return 1
@@ -33,11 +33,11 @@ def nonConstructibleChange(coins):
 
 
 def nonConstructibleChange(coins):
-    # Write your code here.
+	# Write your code here.
 	coins.sort()
 	
 	min = 0
-    for coin in coins:
+	for coin in coins:
 		if coin > min + 1:
 			return min + 1
 		min += coin
@@ -45,8 +45,8 @@ def nonConstructibleChange(coins):
 ```
 ```javascript
 function nonConstructibleChange(coins) {
-  // Write your code here.
-  coins.sort((a, b) => a - b);
+	// Write your code here.
+	coins.sort((a, b) => a - b);
 	let min = 0;
 	for (let coin of coins) {
 		if (coin > min + 1) {
