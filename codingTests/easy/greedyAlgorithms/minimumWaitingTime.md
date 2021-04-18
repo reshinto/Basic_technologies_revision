@@ -32,8 +32,8 @@
 ```python
 # solution 1
 def minimumWaitingTime(queries):
-    # Write your code here.
-    queries.sort()
+  # Write your code here.
+  queries.sort()
   totalTime = 0
   tempTime = 0
   for i in range(len(queries) - 1):
@@ -44,8 +44,8 @@ def minimumWaitingTime(queries):
 
 # solution 2
 def minimumWaitingTime(queries):
-    # Write your code here.
-    queries.sort()
+  # Write your code here.
+  queries.sort()
   totalTime = 0
   for i,v in enumerate(queries):
     totalTime += (len(queries) - (i+1)) * v
