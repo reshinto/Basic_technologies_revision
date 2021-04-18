@@ -5,7 +5,7 @@ Sample Output
 ```[2, 3, 5, 5, 6, 8, 9]```
 ```python
 def bubbleSort(array):
-    # Write your code here.
+  # Write your code here.
   isSorted = False
   counter = 0
   while not isSorted:
