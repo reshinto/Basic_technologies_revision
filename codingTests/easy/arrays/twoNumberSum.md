@@ -21,7 +21,7 @@ Sample Output
 ```python
 # solution 1
 def twoNumberSum(array, targetSum):
-    # Write your code here.
+	# Write your code here.
 	arrLength = len(array)
 	for i in range(arrLength - 1):
 		firstNum = array[i]
@@ -34,8 +34,8 @@ def twoNumberSum(array, targetSum):
 
 # solution 2
 def twoNumberSum(array, targetSum):
-    # Write your code here.
-    nums = {}
+	# Write your code here.
+	nums = {}
 	for num in array:
 		potentialNum = targetSum - num
 		if potentialNum in nums:
@@ -46,8 +46,8 @@ def twoNumberSum(array, targetSum):
  
 # solution 3
 def twoNumberSum(array, targetSum):
-    # Write your code here.
-    array.sort()
+	# Write your code here.
+	array.sort()
 	left = 0
 	right = len(array) - 1
 	while left < right:
@@ -63,7 +63,7 @@ def twoNumberSum(array, targetSum):
 ```javascript
 // solution 1
 function twoNumberSum(array, targetSum) {
-  // Write your code here.
+	// Write your code here.
 	for (let i=0; i<array.length-1; i++) {
 		const firstNum = array[i];
 		for (let j=i+1; j<array.length; j++) {
@@ -78,7 +78,7 @@ function twoNumberSum(array, targetSum) {
 
 // solution 2
 function twoNumberSum(array, targetSum) {
-  // Write your code here.
+	// Write your code here.
 	const nums = {};
 	for (let i=0; i<array.length; i++) {
 		let potentialNum = targetSum - array[i];
@@ -92,7 +92,7 @@ function twoNumberSum(array, targetSum) {
 
 // solution 3
 function twoNumberSum(array, targetSum) {
-  // Write your code here.
+	// Write your code here.
 	array.sort((a,b) => a - b);
 	let left = 0;
 	let right = array.length - 1;
