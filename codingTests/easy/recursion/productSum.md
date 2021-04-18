@@ -22,7 +22,7 @@
   ```// calculated as: 5 + 2 + 2 * (7 - 1) + 3 + 2 * (6 + 3 * (-13 + 8) + 4)```
 ```python
 def productSum(array, depth=1):
-    # Write your code here.
+  # Write your code here.
   sum = 0
   for v in array:
     if type(v) == list:
