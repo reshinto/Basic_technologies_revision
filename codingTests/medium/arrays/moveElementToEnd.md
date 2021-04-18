@@ -16,38 +16,38 @@
   
 ```python
 def moveElementToEnd(array, toMove):
-	# Write your code here.
-	L = 0
-	R = len(array) - 1
-	while L < R:
-		v1 = array[L]
-		v2 = array[R]
-		if v1 == toMove and v2 != toMove:
-			array[L], array[R] = array[R], array[L]
-		if v1 != toMove:
-			L += 1
-		if v2 == toMove:
-			R -= 1
-	return array
+  # Write your code here.
+  L = 0
+  R = len(array) - 1
+  while L < R:
+    v1 = array[L]
+    v2 = array[R]
+    if v1 == toMove and v2 != toMove:
+      array[L], array[R] = array[R], array[L]
+    if v1 != toMove:
+      L += 1
+    if v2 == toMove:
+      R -= 1
+  return array
 ```
 ```javascript
 function moveElementToEnd(array, toMove) {
-	// Write your code here.
-	let L = 0;
-	let R = array.length - 1;
-	while (L < R) {
-		const v1 = array[L];
-		const v2 = array[R];
-		if (v1 === toMove && v2 !== toMove) {
-			[array[L], array[R]] = [array[R], array[L]];
-		}
-		if (v1 !== toMove) {
-			L += 1;
-		}
-		if (v2 === toMove) {
-			R -= 1;
-		}
-	}
-	return array;
+  // Write your code here.
+  let L = 0;
+  let R = array.length - 1;
+  while (L < R) {
+    const v1 = array[L];
+    const v2 = array[R];
+    if (v1 === toMove && v2 !== toMove) {
+      [array[L], array[R]] = [array[R], array[L]];
+    }
+    if (v1 !== toMove) {
+      L += 1;
+    }
+    if (v2 === toMove) {
+      R -= 1;
+    }
+  }
+  return array;
 }
 ```
