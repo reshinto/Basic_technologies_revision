@@ -34,39 +34,39 @@
 def classPhotos(redShirtHeights, blueShirtHeights):
     # Write your code here.
     redShirtHeights.sort()
-	blueShirtHeights.sort()
-	checkR = 0
-	checkB = 0
-	for i in range(len(redShirtHeights)):
-		if checkR and checkB:
-			return False
-		if redShirtHeights[i] > blueShirtHeights[i]:
-			checkR += 1
-		elif redShirtHeights[i] < blueShirtHeights[i]:
-			checkB += 1
-		elif redShirtHeights[i] == blueShirtHeights[i]:
-			return False
-	return True
+  blueShirtHeights.sort()
+  checkR = 0
+  checkB = 0
+  for i in range(len(redShirtHeights)):
+    if checkR and checkB:
+      return False
+    if redShirtHeights[i] > blueShirtHeights[i]:
+      checkR += 1
+    elif redShirtHeights[i] < blueShirtHeights[i]:
+      checkB += 1
+    elif redShirtHeights[i] == blueShirtHeights[i]:
+      return False
+  return True
 ```
 ```javascript
 function classPhotos(redShirtHeights, blueShirtHeights) {
   // Write your code here.
   redShirtHeights.sort((a, b) => a - b);
-	blueShirtHeights.sort((a, b) => a - b);
-	let checkR = 0;
-	let checkB = 0;
-	for (let i=0; i<redShirtHeights.length; i++) {
-		if (checkR && checkB) {
-			return false;
-		}
-		if (redShirtHeights[i] === blueShirtHeights[i]) {
-			return false;
-		} else if (redShirtHeights[i] > blueShirtHeights[i]) {
-			checkR += 1;
-		} else if (redShirtHeights[i] < blueShirtHeights[i]) {
-			checkB += 1;
-		}
-	}
-	return true;
+  blueShirtHeights.sort((a, b) => a - b);
+  let checkR = 0;
+  let checkB = 0;
+  for (let i=0; i<redShirtHeights.length; i++) {
+    if (checkR && checkB) {
+      return false;
+    }
+    if (redShirtHeights[i] === blueShirtHeights[i]) {
+      return false;
+    } else if (redShirtHeights[i] > blueShirtHeights[i]) {
+      checkR += 1;
+    } else if (redShirtHeights[i] < blueShirtHeights[i]) {
+      checkB += 1;
+    }
+  }
+  return true;
 }
 ```
