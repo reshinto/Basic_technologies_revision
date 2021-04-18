@@ -26,8 +26,8 @@
 ```python
 # solution 1
 def generateDocument(characters, document):
-    # Write your code here.
-    result = False
+  # Write your code here.
+  result = False
   newChars = list(characters)
   if document == "":
     return True
@@ -42,8 +42,8 @@ def generateDocument(characters, document):
 
 # solution 2
 def generateDocument(characters, document):
-    # Write your code here.
-    memo = {}
+  # Write your code here.
+  memo = {}
   
   for v in characters:
     if v not in memo:
@@ -59,12 +59,12 @@ def generateDocument(characters, document):
 
 # solution 3
 def generateDocument(characters, document):
-    # Write your code here.
-    for v in document:
-    charF = charFreq(v, characters)
-    docF = charFreq(v, document)
-    if docF > charF:
-      return False
+  # Write your code here.
+  for v in document:
+  charF = charFreq(v, characters)
+  docF = charFreq(v, document)
+  if docF > charF:
+    return False
   return True
 
 
