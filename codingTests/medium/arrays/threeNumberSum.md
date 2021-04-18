@@ -19,46 +19,46 @@
   
 ```python
 def threeNumberSum(array, targetSum):
-	# Write your code here.
-	array.sort()
-	result = []
-	for i in range(len(array) - 2):
-		left = i + 1
-		right = len(array) - 1
-		while left < right:
-			sum = array[i] + array[left] + array[right]
-			if sum == targetSum:
-				result.append([array[i], array[left], array[right]])
-				newArr = []
-				left += 1
-				right -= 1
-			elif sum > targetSum:
-				right -= 1
-			elif sum < targetSum:
-				left += 1
-	return result
+  # Write your code here.
+  array.sort()
+  result = []
+  for i in range(len(array) - 2):
+    left = i + 1
+    right = len(array) - 1
+    while left < right:
+      sum = array[i] + array[left] + array[right]
+      if sum == targetSum:
+        result.append([array[i], array[left], array[right]])
+        newArr = []
+        left += 1
+        right -= 1
+      elif sum > targetSum:
+        right -= 1
+      elif sum < targetSum:
+        left += 1
+  return result
 ```
 ```javascript
 function threeNumberSum(array, targetSum) {
-	// Write your code here.
-	array.sort((a, b) => a - b);
-	const result = [];
-	for (let i=0; i<array.length - 2; i++) {
-		let left = i + 1;
-		let right = array.length - 1;
-		while (left < right) {
-			const sum = array[i] + array[left] + array[right];
-			if (sum === targetSum) {
-				result.push([array[i], array[left], array[right]]);
-				left++;
-				right--;
-			} else if (sum > targetSum) {
-				right--;
-			} else if (sum < targetSum) {
-				left++;
-			}
-		}
-	}
-	return result;
+  // Write your code here.
+  array.sort((a, b) => a - b);
+  const result = [];
+  for (let i=0; i<array.length - 2; i++) {
+    let left = i + 1;
+    let right = array.length - 1;
+    while (left < right) {
+      const sum = array[i] + array[left] + array[right];
+      if (sum === targetSum) {
+        result.push([array[i], array[left], array[right]]);
+        left++;
+        right--;
+      } else if (sum > targetSum) {
+        right--;
+      } else if (sum < targetSum) {
+        left++;
+      }
+    }
+  }
+  return result;
 }
 ```
