@@ -16,8 +16,8 @@
   
 ```python
 def moveElementToEnd(array, toMove):
-    # Write your code here.
-    L = 0
+	# Write your code here.
+	L = 0
 	R = len(array) - 1
 	while L < R:
 		v1 = array[L]
@@ -32,7 +32,7 @@ def moveElementToEnd(array, toMove):
 ```
 ```javascript
 function moveElementToEnd(array, toMove) {
-  // Write your code here.
+	// Write your code here.
 	let L = 0;
 	let R = array.length - 1;
 	while (L < R) {
