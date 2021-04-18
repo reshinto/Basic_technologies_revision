@@ -20,8 +20,8 @@
 ```python
 # Solution 1
 def isValidSubsequence(array, sequence):
-    # Write your code here.
-    j = 0
+	# Write your code here.
+	j = 0
 	sequenceLength = len(sequence)
 	for v in array:
 		if j == sequenceLength:
@@ -32,7 +32,7 @@ def isValidSubsequence(array, sequence):
 ```
 ```javascript
 function isValidSubsequence(array, sequence) {
-  // Write your code here.
+	// Write your code here.
 	let seqIdx = 0;
 	for (let i=0; i<array.length; i++) {
 		if (seqIdx === sequence.length) break;
