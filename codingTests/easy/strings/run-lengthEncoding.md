@@ -25,8 +25,8 @@
 ```python
 # solution 1
 def runLengthEncoding(string):
-    # Write your code here.
-    newStr = []
+  # Write your code here.
+  newStr = []
   count = 0
   previous = None
   for i in range(len(string)):
@@ -51,8 +51,8 @@ def runLengthEncoding(string):
 
 # solution 2
 def runLengthEncoding(string):
-    # Write your code here.
-    newStr = []
+  # Write your code here.
+  newStr = []
   count = 1
   for i in range(1, len(string)):
     current = string[i]
