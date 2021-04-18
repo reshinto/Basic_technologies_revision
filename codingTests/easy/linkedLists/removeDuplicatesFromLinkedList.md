@@ -27,11 +27,11 @@ class LinkedList:
 def removeDuplicatesFromLinkedList(linkedList):
     # Write your code here.
     current = linkedList
-	while current:
-		while current.next and current.value == current.next.value:
-			current.next = current.next.next
-		current = current.next
-	return linkedList
+  while current:
+    while current.next and current.value == current.next.value:
+      current.next = current.next.next
+    current = current.next
+  return linkedList
 ```
 ```javascript
 // This is an input class. Do not edit.
@@ -45,12 +45,12 @@ class LinkedList {
 function removeDuplicatesFromLinkedList(linkedList) {
   // Write your code here.
   let current = linkedList;
-	while (current) {
-		while (current.next && current.value === current.next.value) {
-			current.next = current.next.next;
-		}
-		current = current.next;
-	}
-	return linkedList;
+  while (current) {
+    while (current.next && current.value === current.next.value) {
+      current.next = current.next.next;
+    }
+    current = current.next;
+  }
+  return linkedList;
 }
 ```
