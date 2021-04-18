@@ -17,8 +17,8 @@
 ```python
 # solution 1
 def binarySearch(array, target):
-    # Write your code here.
-    L = 0
+  # Write your code here.
+  L = 0
   R = len(array) - 1
   while L is not R:
     M = round((R - L) / 2) + L
@@ -40,7 +40,7 @@ def binarySearch(array, target):
   
 # solution 2
 def binarySearch(array, target):
-    # Write your code here.
+  # Write your code here.
   return search(array, target, 0, len(array)-1)
 
 
@@ -59,8 +59,8 @@ def search(array, target, L, R):
 
 # solution 3
 def binarySearch(array, target):
-    # Write your code here.
-    L = 0
+  # Write your code here.
+  L = 0
   R = len(array) - 1
   while L <= R:
     M = (R + L) // 2
