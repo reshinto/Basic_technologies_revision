@@ -20,8 +20,8 @@
   
 ```python
 def isMonotonic(array):
-    # Write your code here.
-    length = len(array)
+	# Write your code here.
+	length = len(array)
 	if length <= 2:
 		return True
 	isEqual = True if array[0] == array[length - 1] else False
@@ -38,7 +38,7 @@ def isMonotonic(array):
 ```
 ```javascript
 function isMonotonic(array) {
-  // Write your code here.
+	// Write your code here.
 	const len = array.length;
 	if (len <= 2) {
 		return true;
