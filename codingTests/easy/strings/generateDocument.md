@@ -28,94 +28,94 @@
 def generateDocument(characters, document):
     # Write your code here.
     result = False
-	newChars = list(characters)
-	if document == "":
-		return True
-	for v in document:
-		if v in newChars:
-			newChars.remove(v)
-			result = True
-		else:
-			return False
-	return result
+  newChars = list(characters)
+  if document == "":
+    return True
+  for v in document:
+    if v in newChars:
+      newChars.remove(v)
+      result = True
+    else:
+      return False
+  return result
 
 
 # solution 2
 def generateDocument(characters, document):
     # Write your code here.
     memo = {}
-	
-	for v in characters:
-		if v not in memo:
-			memo[v] = 0
-		memo[v] += 1
-	
-	for v in document:
-		if v not in memo or not memo[v]:
-			return False
-		memo[v] -= 1
-	return True
+  
+  for v in characters:
+    if v not in memo:
+      memo[v] = 0
+    memo[v] += 1
+  
+  for v in document:
+    if v not in memo or not memo[v]:
+      return False
+    memo[v] -= 1
+  return True
 
 
 # solution 3
 def generateDocument(characters, document):
     # Write your code here.
     for v in document:
-		charF = charFreq(v, characters)
-		docF = charFreq(v, document)
-		if docF > charF:
-			return False
-	return True
+    charF = charFreq(v, characters)
+    docF = charFreq(v, document)
+    if docF > charF:
+      return False
+  return True
 
 
 def charFreq(c, string):
-	freq = 0
-	for v in string:
-		if c == v:
-			freq += 1
-	return freq
+  freq = 0
+  for v in string:
+    if c == v:
+      freq += 1
+  return freq
 ```
 ```javascript
 // solution 1
 function generateDocument(characters, document) {
   // Write your code here.
   for (let v of document) {
-		const charFreq = charsFreq(v, characters);
-		const docFreq = charsFreq(v, document);
-		if (docFreq > charFreq) {
-			return false;
-		}
-	}
-	return true;
+    const charFreq = charsFreq(v, characters);
+    const docFreq = charsFreq(v, document);
+    if (docFreq > charFreq) {
+      return false;
+    }
+  }
+  return true;
 }
 
 function charsFreq(c, string) {
-	freq = 0;
-	for (let v of string) {
-		if (v === c) {
-			freq++;
-		}
-	}
-	return freq;
+  freq = 0;
+  for (let v of string) {
+    if (v === c) {
+      freq++;
+    }
+  }
+  return freq;
 }
 
 // solution 2
 function generateDocument(characters, document) {
   // Write your code here.
   const memo = {};
-	for (let i=0; i<characters.length; i++) {
-		if (!memo[characters[i]]) {
-			memo[characters[i]] = 0;
-		}
-		memo[characters[i]]++;
-	}
-	
-	for (let i=0; i<document.length; i++) {
-		if (!memo[document[i]]) {
-			return false;
-		}
-		memo[document[i]]--;
-	}
-	return true;
+  for (let i=0; i<characters.length; i++) {
+    if (!memo[characters[i]]) {
+      memo[characters[i]] = 0;
+    }
+    memo[characters[i]]++;
+  }
+  
+  for (let i=0; i<document.length; i++) {
+    if (!memo[document[i]]) {
+      return false;
+    }
+    memo[document[i]]--;
+  }
+  return true;
 }
 ```
