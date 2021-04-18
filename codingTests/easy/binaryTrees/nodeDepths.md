@@ -42,46 +42,46 @@ class BinaryTree:
     
 # solution 1
 def nodeDepths(root):
-	# Write your code here.
-	sum = 0
-	s = [{"node": root, "d": 0}]
-	while len(s) > 0:
-		current = s.pop()
-		node, d = current["node"], current["d"]
-		if not node:
-			continue
-		s.append({"node": node.right, "d": d+1})
-		s.append({"node": node.left, "d": d+1})
-		sum += d
-	return sum
+  # Write your code here.
+  sum = 0
+  s = [{"node": root, "d": 0}]
+  while len(s) > 0:
+    current = s.pop()
+    node, d = current["node"], current["d"]
+    if not node:
+      continue
+    s.append({"node": node.right, "d": d+1})
+    s.append({"node": node.left, "d": d+1})
+    sum += d
+  return sum
   
   
 # solution 2
 def nodeDepths(root):
-	# Write your code here.
-	sum = 0
-	s = [{"node": root, "d": 0}]
-	while len(s) > 0:
-		current = s.pop()
-		node, d = current["node"], current["d"]
-		if node.right:
-			s.append({"node": node.right, "d": d+1})
-		if node.left:
-			s.append({"node": node.left, "d": d+1})
-		sum += d
-	return sum
+  # Write your code here.
+  sum = 0
+  s = [{"node": root, "d": 0}]
+  while len(s) > 0:
+    current = s.pop()
+    node, d = current["node"], current["d"]
+    if node.right:
+      s.append({"node": node.right, "d": d+1})
+    if node.left:
+      s.append({"node": node.left, "d": d+1})
+    sum += d
+  return sum
   
  
 # solution 3
 def nodeDepths(root):
-	# Write your code here.
-	return getDepth(root, 0)
+  # Write your code here.
+  return getDepth(root, 0)
 
 
 def getDepth(current, depth):
-	if not current:
-		return 0
-	return depth + getDepth(current.left, depth+1) + getDepth(current.right, depth+1)
+  if not current:
+    return 0
+  return depth + getDepth(current.left, depth+1) + getDepth(current.right, depth+1)
 ```
 ```javascript
 // This is the class of the input binary tree.
@@ -95,31 +95,31 @@ class BinaryTree {
 
 // solution 1
 function nodeDepths(root) {
-	// Write your code here.
-	return getDepths(root, 0);
+  // Write your code here.
+  return getDepths(root, 0);
 }
 
 function getDepths(current, depth) {
-	if (!current) {
-		return 0;
-	}
-	return depth + getDepths(current.left, depth+1) + getDepths(current.right, depth+1)
+  if (!current) {
+    return 0;
+  }
+  return depth + getDepths(current.left, depth+1) + getDepths(current.right, depth+1)
 }
 
 // solution 2
 function nodeDepths(root) {
-	// Write your code here.
-	let sum = 0;
-	const s = [{node: root, d: 0}];
-	while (s.length > 0) {
-		const {node, d} = s.pop();
-		if (!node) {
-			continue;
-		}
-		sum += d
-		s.push({node: node.right, d: d+1});
-		s.push({node: node.left, d: d+1});
-	}
-	return sum;
+  // Write your code here.
+  let sum = 0;
+  const s = [{node: root, d: 0}];
+  while (s.length > 0) {
+    const {node, d} = s.pop();
+    if (!node) {
+      continue;
+    }
+    sum += d
+    s.push({node: node.right, d: d+1});
+    s.push({node: node.left, d: d+1});
+  }
+  return sum;
 }
 ```
