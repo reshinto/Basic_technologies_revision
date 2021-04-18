@@ -32,8 +32,8 @@
   ```// Place all students with blue shirts in the back row.```
 ```python
 def classPhotos(redShirtHeights, blueShirtHeights):
-    # Write your code here.
-    redShirtHeights.sort()
+  # Write your code here.
+  redShirtHeights.sort()
   blueShirtHeights.sort()
   checkR = 0
   checkB = 0
