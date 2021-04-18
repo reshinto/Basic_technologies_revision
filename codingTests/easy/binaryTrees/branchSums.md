@@ -42,47 +42,47 @@ class BinaryTree:
        
 # solution 1
 def branchSums(root):
-	# Write your code here.
-	if root is None:
-		return []
-	sums = []
-	unvisited = {}
-	total = 0
-	tree_nodes = []
-	tree_nodes.append(root)
-	
-	while len(tree_nodes) > 0:
-		current = tree_nodes.pop()
-		if current.value in unvisited:
-			total = unvisited[current.value]
-		total += current.value
-		if not current.left and not current.right:
-			sums.append(total)
-			total -= current.value
-		if current.right:
-			tree_nodes.append(current.right)
-			unvisited[current.right.value] = total
-		if current.left:
-			tree_nodes.append(current.left)
-	return sums
+  # Write your code here.
+  if root is None:
+    return []
+  sums = []
+  unvisited = {}
+  total = 0
+  tree_nodes = []
+  tree_nodes.append(root)
+  
+  while len(tree_nodes) > 0:
+    current = tree_nodes.pop()
+    if current.value in unvisited:
+      total = unvisited[current.value]
+    total += current.value
+    if not current.left and not current.right:
+      sums.append(total)
+      total -= current.value
+    if current.right:
+      tree_nodes.append(current.right)
+      unvisited[current.right.value] = total
+    if current.left:
+      tree_nodes.append(current.left)
+  return sums
   
 
 # solution 2
 def branchSums(root):
-	# Write your code here.
-	sums = []
-	dfs(root, 0, sums)
-	return sums
-	
+  # Write your code here.
+  sums = []
+  dfs(root, 0, sums)
+  return sums
+  
 
 def dfs(current, total, sums):
-	if current:
-		total += current.value
-		if not current.left and not current.right:
-			sums.append(total)
-			return
-		dfs(current.left, total, sums)
-		dfs(current.right, total, sums)
+  if current:
+    total += current.value
+    if not current.left and not current.right:
+      sums.append(total)
+      return
+    dfs(current.left, total, sums)
+    dfs(current.right, total, sums)
 ```
 ```javascript
 // This is the class of the input root.
@@ -97,22 +97,22 @@ class BinaryTree {
 
 // solution 1
 function branchSums(root) {
-	// Write your code here.
-	const sums = [];
-	dfs(root, 0, sums);
-	return sums;
+  // Write your code here.
+  const sums = [];
+  dfs(root, 0, sums);
+  return sums;
 }
 
 function dfs(current, total, sums) {
-	if (!current) {
-		return;
-	}
-	total += current.value;
-	if (!current.left && !current.right) {
-		sums.push(total);
-		return;
-	}
-	dfs(current.left, total, sums);
-	dfs(current.right, total, sums);
+  if (!current) {
+    return;
+  }
+  total += current.value;
+  if (!current.left && !current.right) {
+    sums.push(total);
+    return;
+  }
+  dfs(current.left, total, sums);
+  dfs(current.right, total, sums);
 }
 ```
