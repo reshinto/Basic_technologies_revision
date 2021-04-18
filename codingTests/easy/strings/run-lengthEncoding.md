@@ -27,62 +27,62 @@
 def runLengthEncoding(string):
     # Write your code here.
     newStr = []
-	count = 0
-	previous = None
-	for i in range(len(string)):
-		if not previous:
-			count += 1
-		elif string[i] == previous and count < 9:
-			count += 1
-		elif string[i] == previous:
-			newStr.append(str(count))
-			newStr.append(string[i])
-			count = 1
-		elif string[i] != previous:
-			newStr.append(str(count))
-			newStr.append(previous)
-			count = 1
-		if i == len(string) - 1:
-			newStr.append(str(count))
-			newStr.append(string[i])
-		previous = string[i]
-	return "".join(newStr)
+  count = 0
+  previous = None
+  for i in range(len(string)):
+    if not previous:
+      count += 1
+    elif string[i] == previous and count < 9:
+      count += 1
+    elif string[i] == previous:
+      newStr.append(str(count))
+      newStr.append(string[i])
+      count = 1
+    elif string[i] != previous:
+      newStr.append(str(count))
+      newStr.append(previous)
+      count = 1
+    if i == len(string) - 1:
+      newStr.append(str(count))
+      newStr.append(string[i])
+    previous = string[i]
+  return "".join(newStr)
 
 
 # solution 2
 def runLengthEncoding(string):
     # Write your code here.
     newStr = []
-	count = 1
-	for i in range(1, len(string)):
-		current = string[i]
-		previous = string[i-1]
-		if current != previous or count >= 9:
-			newStr.append(str(count))
-			newStr.append(previous)
-			count = 0
-		count += 1
-	newStr.append(str(count))
-	newStr.append(string[len(string) - 1])
-	return "".join(newStr)
+  count = 1
+  for i in range(1, len(string)):
+    current = string[i]
+    previous = string[i-1]
+    if current != previous or count >= 9:
+      newStr.append(str(count))
+      newStr.append(previous)
+      count = 0
+    count += 1
+  newStr.append(str(count))
+  newStr.append(string[len(string) - 1])
+  return "".join(newStr)
 ```
 ```javascript
 function runLengthEncoding(string) {
   // Write your code here.
-	const newStr = [];
-	let count = 1;
-	for (let i=1; i<string.length; i++) {
-		const current = string[i];
-		const previous = string[i - 1];
-		if (current !== previous || count >= 9) {
-			newStr.push(String(count));
-			newStr.push(previous);
-			count = 0;
-		}
-		count++;
-	}
-	newStr.push(String(count));
-	newStr.push(string[string.length - 1]);
-	return newStr.join("");
+  const newStr = [];
+  let count = 1;
+  for (let i=1; i<string.length; i++) {
+    const current = string[i];
+    const previous = string[i - 1];
+    if (current !== previous || count >= 9) {
+      newStr.push(String(count));
+      newStr.push(previous);
+      count = 0;
+    }
+    count++;
+  }
+  newStr.push(String(count));
+  newStr.push(string[string.length - 1]);
+  return newStr.join("");
 }
 ```
