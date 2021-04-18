@@ -6,36 +6,36 @@ Sample Output
 ```python
 def bubbleSort(array):
     # Write your code here.
-	isSorted = False
-	counter = 0
-	while not isSorted:
-		isSorted = True
-		for i in range(len(array) - 1 - counter):
-			v1 = array[i]
-			v2 = array[i+1]
-			if v1 > v2:
-				array[i], array[i+1] = array[i+1], array[i]
-				isSorted = False
-		counter += 1
-	return array
+  isSorted = False
+  counter = 0
+  while not isSorted:
+    isSorted = True
+    for i in range(len(array) - 1 - counter):
+      v1 = array[i]
+      v2 = array[i+1]
+      if v1 > v2:
+        array[i], array[i+1] = array[i+1], array[i]
+        isSorted = False
+    counter += 1
+  return array
 ```
 ```javascript
 function bubbleSort(array) {
   // Write your code here.
-	let isSorted = false;
-	let counter = 0;
-	while (!isSorted) {
-		isSorted = true;
-		for (let i = 0; i < array.length - 1 - counter; i++) {
-			const v1 = array[i];
-			const v2 = array[i+1];
-			if (v1 > v2) {
-				[array[i], array[i+1]] = [array[i+1], array[i]];
-				isSorted = false;
-			}
-		}
-		counter++;
-	}
-	return array;
+  let isSorted = false;
+  let counter = 0;
+  while (!isSorted) {
+    isSorted = true;
+    for (let i = 0; i < array.length - 1 - counter; i++) {
+      const v1 = array[i];
+      const v2 = array[i+1];
+      if (v1 > v2) {
+        [array[i], array[i+1]] = [array[i+1], array[i]];
+        isSorted = false;
+      }
+    }
+    counter++;
+  }
+  return array;
 }
 ```
