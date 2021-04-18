@@ -19,46 +19,46 @@
 def caesarCipherEncryptor(string, key):
     # Write your code here.
     aValue = ord("a")
-	zValue = ord("z")
-	newStr = []
-	for i in range(len(string)):
-		currentValue = ord(string[i]) + key
-		while currentValue > zValue:
-			currentValue = currentValue - zValue + aValue - 1
-		newStr.append(chr(currentValue))
-	return "".join(newStr)
+  zValue = ord("z")
+  newStr = []
+  for i in range(len(string)):
+    currentValue = ord(string[i]) + key
+    while currentValue > zValue:
+      currentValue = currentValue - zValue + aValue - 1
+    newStr.append(chr(currentValue))
+  return "".join(newStr)
 
 
 # solution 2
 def caesarCipherEncryptor(string, key):
     # Write your code here.
     aValue = ord("a")
-	zValue = ord("z")
-	newStr = []
-	newKey = key % 26
-	for i in range(len(string)):
-		currentValue = ord(string[i]) + newKey
-		if currentValue > zValue:
-			newStr.append(chr(currentValue - zValue + aValue - 1))
-		else:
-			newStr.append(chr(currentValue))
-	return "".join(newStr)
+  zValue = ord("z")
+  newStr = []
+  newKey = key % 26
+  for i in range(len(string)):
+    currentValue = ord(string[i]) + newKey
+    if currentValue > zValue:
+      newStr.append(chr(currentValue - zValue + aValue - 1))
+    else:
+      newStr.append(chr(currentValue))
+  return "".join(newStr)
 ```
 ```javascript
 function caesarCipherEncryptor(string, key) {
   // Write your code here.
-	const aValue = "a".charCodeAt();
-	const zValue = "z".charCodeAt();
-	const newKey = key % 26;
-	const newStr = [];
-	for (let i=0; i<string.length; i++) {
-		const currentValue = string[i].charCodeAt(0) + newKey;
-		if (currentValue > zValue) {
-			newStr.push(String.fromCharCode(currentValue - zValue + aValue - 1));
-		} else {
-			newStr.push(String.fromCharCode(currentValue));
-		}
-	}
-	return newStr.join("");
+  const aValue = "a".charCodeAt();
+  const zValue = "z".charCodeAt();
+  const newKey = key % 26;
+  const newStr = [];
+  for (let i=0; i<string.length; i++) {
+    const currentValue = string[i].charCodeAt(0) + newKey;
+    if (currentValue > zValue) {
+      newStr.push(String.fromCharCode(currentValue - zValue + aValue - 1));
+    } else {
+      newStr.push(String.fromCharCode(currentValue));
+    }
+  }
+  return newStr.join("");
 }
 ```
