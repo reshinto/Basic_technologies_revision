@@ -22,8 +22,8 @@
 ```python
 # solution 1
 def getNthFib(n):
-    # Write your code here.
-    if n == 1:
+  # Write your code here.
+  if n == 1:
     return 0
   if n == 2:
     return 1
@@ -32,8 +32,8 @@ def getNthFib(n):
 
 # solution 2
 def getNthFib(n, store={}):
-    # Write your code here.
-    if n == 1:
+  # Write your code here.
+  if n == 1:
     return 0
   if n == 2:
     return 1
@@ -45,8 +45,8 @@ def getNthFib(n, store={}):
 
 # solution 3
 def getNthFib(n):
-    # Write your code here.
-    lastTwo = [0, 1]
+  # Write your code here.
+  lastTwo = [0, 1]
   counter = 3
   while counter <= n:
     next = lastTwo[0] + lastTwo[1]
