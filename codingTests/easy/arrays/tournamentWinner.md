@@ -46,40 +46,40 @@
   ```
 ```python
 def tournamentWinner(competitions, results):
-	# Write your code here.
-	scores = {}
-	winner = ""
-	topScore = 0
-	for i, v in enumerate(results):
-		H, A = competitions[i]
-		W = H if v else A
-		if not scores.get(W):
-			scores[W] = 0
-		scores[W] += 3
-		if scores[W] > topScore:
-			winner = W
-			topScore = scores[W]
-	return winner
+  # Write your code here.
+  scores = {}
+  winner = ""
+  topScore = 0
+  for i, v in enumerate(results):
+    H, A = competitions[i]
+    W = H if v else A
+    if not scores.get(W):
+      scores[W] = 0
+    scores[W] += 3
+    if scores[W] > topScore:
+      winner = W
+      topScore = scores[W]
+  return winner
 ```
 ```javascript
 function tournamentWinner(competitions, results) {
-	// Write your code here.
-	const scores = {};
-	let winner = "";
-	let topScore = 0;
-	for (let i=0; i<results.length; i++) {
-		const result = results[i];
-		const [H, A] = competitions[i];
-		const W = result ? H : A;
-		if (!scores[W]) {
-			scores[W] = 0;
-		}
-		scores[W] += 3;
-		if (scores[W] > topScore) {
-			winner = W;
-			topScore = scores[W];
-		}
-	}
-	return winner;
+  // Write your code here.
+  const scores = {};
+  let winner = "";
+  let topScore = 0;
+  for (let i=0; i<results.length; i++) {
+    const result = results[i];
+    const [H, A] = competitions[i];
+    const W = result ? H : A;
+    if (!scores[W]) {
+      scores[W] = 0;
+    }
+    scores[W] += 3;
+    if (scores[W] > topScore) {
+      winner = W;
+      topScore = scores[W];
+    }
+  }
+  return winner;
 }
 ```
