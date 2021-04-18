@@ -13,7 +13,7 @@
   ```[18, 141, 541]```
 ```python
 def findThreeLargestNumbers(array):
-    # Write your code here.
+  # Write your code here.
   newArr = [None, None, None]
   for v in array:
     a, b, c = newArr[0], newArr[1], newArr[2]
