@@ -39,8 +39,8 @@ class BST:
 
 # solution 1
 def findClosestValueInBst(tree, target):
-    # Write your code here.
-    current = tree
+	# Write your code here.
+	current = tree
 	closest = tree.value
 	while current:
 		if abs(target - closest) > abs(current.value - target):
@@ -56,7 +56,7 @@ def findClosestValueInBst(tree, target):
         
 # solution 2
 def findClosestValueInBst(tree, target):
-    # Write your code here.
+	# Write your code here.
 	return traverse(tree, target, tree.value)
     
 	
@@ -84,7 +84,7 @@ class BST {
 
 // solution 1
 function findClosestValueInBst(tree, target) {
-  // Write your code here.
+	// Write your code here.
 	return traverse(tree, target, tree.value);
 }
 
@@ -106,7 +106,7 @@ function traverse(current, target, closest) {
 
 // solution 2
 function findClosestValueInBst(tree, target) {
-  // Write your code here.
+	// Write your code here.
 	return traverse(tree, target, tree.value);
 }
 
