@@ -6,8 +6,8 @@ Sample Output
 ```python
 # solution 1
 def insertionSort(array):
-    # Write your code here.
-    i = 0
+  # Write your code here.
+  i = 0
   while i < len(array) - 1:
     for j in range(i + 1, -1, -1):
       if j > 0 and array[j] < array[j - 1]:
@@ -18,12 +18,12 @@ def insertionSort(array):
   
 # solution 2
 def insertionSort(array):
-    # Write your code here.
-    for i in range(1, len(array)):
-    j = i
-    while j > 0 and array[j] < array[j - 1]:
-      array[j], array[j-1] = array[j-1], array[j]
-      j -= 1
+  # Write your code here.
+  for i in range(1, len(array)):
+  j = i
+  while j > 0 and array[j] < array[j - 1]:
+    array[j], array[j-1] = array[j-1], array[j]
+    j -= 1
   return array
 ```
 ```javascript
