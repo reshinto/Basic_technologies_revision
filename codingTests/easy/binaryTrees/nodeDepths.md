@@ -42,7 +42,7 @@ class BinaryTree:
     
 # solution 1
 def nodeDepths(root):
-    # Write your code here.
+	# Write your code here.
 	sum = 0
 	s = [{"node": root, "d": 0}]
 	while len(s) > 0:
@@ -58,7 +58,7 @@ def nodeDepths(root):
   
 # solution 2
 def nodeDepths(root):
-    # Write your code here.
+	# Write your code here.
 	sum = 0
 	s = [{"node": root, "d": 0}]
 	while len(s) > 0:
@@ -74,8 +74,8 @@ def nodeDepths(root):
  
 # solution 3
 def nodeDepths(root):
-    # Write your code here.
-    return getDepth(root, 0)
+	# Write your code here.
+	return getDepth(root, 0)
 
 
 def getDepth(current, depth):
@@ -95,7 +95,7 @@ class BinaryTree {
 
 // solution 1
 function nodeDepths(root) {
-  // Write your code here.
+	// Write your code here.
 	return getDepths(root, 0);
 }
 
@@ -108,7 +108,7 @@ function getDepths(current, depth) {
 
 // solution 2
 function nodeDepths(root) {
-  // Write your code here.
+	// Write your code here.
 	let sum = 0;
 	const s = [{node: root, d: 0}];
 	while (s.length > 0) {
