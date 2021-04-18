@@ -24,77 +24,77 @@
 def getNthFib(n):
     # Write your code here.
     if n == 1:
-		return 0
-	if n == 2:
-		return 1
-	return getNthFib(n-1) + getNthFib(n-2)
+    return 0
+  if n == 2:
+    return 1
+  return getNthFib(n-1) + getNthFib(n-2)
 
 
 # solution 2
 def getNthFib(n, store={}):
     # Write your code here.
     if n == 1:
-		return 0
-	if n == 2:
-		return 1
-	if n in store:
-		return store[n]
-	store[n] = getNthFib(n - 1, store) + getNthFib(n - 2, store)
-	return store[n]
+    return 0
+  if n == 2:
+    return 1
+  if n in store:
+    return store[n]
+  store[n] = getNthFib(n - 1, store) + getNthFib(n - 2, store)
+  return store[n]
 
 
 # solution 3
 def getNthFib(n):
     # Write your code here.
     lastTwo = [0, 1]
-	counter = 3
-	while counter <= n:
-		next = lastTwo[0] + lastTwo[1]
-		lastTwo[0] = lastTwo[1]
-		lastTwo[1] = next
-		counter += 1
-	return lastTwo[1] if n > 1 else lastTwo[0]
+  counter = 3
+  while counter <= n:
+    next = lastTwo[0] + lastTwo[1]
+    lastTwo[0] = lastTwo[1]
+    lastTwo[1] = next
+    counter += 1
+  return lastTwo[1] if n > 1 else lastTwo[0]
 ```
 ```javascript
 // solution 1
 function getNthFib(n) {
   // Write your code here.
-	if (n === 1) {
-		return 0;
-	}
-	if (n === 2) {
-		return 1;
-	}
-	return getNthFib(n - 1) + getNthFib(n - 2);
+  if (n === 1) {
+    return 0;
+  }
+  if (n === 2) {
+    return 1;
+  }
+  return getNthFib(n - 1) + getNthFib(n - 2);
 }
 
 // solution 2
 function getNthFib(n, store={}) {
   // Write your code here.
-	if (n === 1) {
-		return 0;
-	}
-	if (n === 2) {
-		return 1;
-	}
-	if (store[n]) {
-		return store[n];
-	}
-	store[n] = getNthFib(n - 1, store) + getNthFib(n - 2, store);
-	return store[n]
+  if (n === 1) {
+    return 0;
+  }
+  if (n === 2) {
+    return 1;
+  }
+  if (store[n]) {
+    return store[n];
+  }
+  store[n] = getNthFib(n - 1, store) + getNthFib(n - 2, store);
+  return store[n]
 }
 
 // solution 3
 function getNthFib(n) {
   // Write your code here.
-	const lastTwo = [0, 1];
-	let counter = 3;
-	while (counter <= n) {
-		const next = lastTwo[0] + lastTwo[1];
-		lastTwo[0] = lastTwo[1];
-		lastTwo[1] = next;
-		counter++;
-	}
-	return n > 1 ? lastTwo[1] : lastTwo[0];
+  const lastTwo = [0, 1];
+  let counter = 3;
+  while (counter <= n) {
+    const next = lastTwo[0] + lastTwo[1];
+    lastTwo[0] = lastTwo[1];
+    lastTwo[1] = next;
+    counter++;
+  }
+  return n > 1 ? lastTwo[1] : lastTwo[0];
 }
 ```
