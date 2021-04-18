@@ -19,7 +19,7 @@
   
 ```python
 def threeNumberSum(array, targetSum):
-    # Write your code here.
+	# Write your code here.
 	array.sort()
 	result = []
 	for i in range(len(array) - 2):
@@ -37,10 +37,10 @@ def threeNumberSum(array, targetSum):
 			elif sum < targetSum:
 				left += 1
 	return result
-  ```
-  ```javascript
-  function threeNumberSum(array, targetSum) {
-  // Write your code here.
+```
+```javascript
+function threeNumberSum(array, targetSum) {
+	// Write your code here.
 	array.sort((a, b) => a - b);
 	const result = [];
 	for (let i=0; i<array.length - 2; i++) {
