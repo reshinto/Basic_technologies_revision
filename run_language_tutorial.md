@@ -102,3 +102,6 @@ javac xxx.java && java xxx
 - ```groovy -e "println 'Hello, World!'"```
 ## Run groovy file
 - ```groovy hello.groovy``` or ```groovy hello```
+
+# Compile Latex file
+> xelatex filename.tex
