@@ -194,7 +194,7 @@ import React, {useEffect} from "react";
 
 export default function App(props) {
   useEffect(() => {
-    return doSomething();  // must return the action for component when unmounted
+    return doSomething;  // must return the action for component when unmounted, must be an uncalled function
   }, []);  // this does not matter
   
   return (<div></div>);
