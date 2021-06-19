@@ -7,5 +7,5 @@
       - ```sdk install springboot```
 ## Create new project
 - create a new web dependency project using maven
-```spring init --dependencies web --build maven --groupId groupName --artifactId projectName --name projectName saveAsThisFolderName```
-```spring init -d web --build maven -g groupName -a projectName -n projectName saveAsThisFolderName```
+  - ```spring init --dependencies web --build maven --groupId groupName --artifactId projectName --name projectName saveAsThisFolderName```
+  - ```spring init -d web --build maven -g groupName -a projectName -n projectName saveAsThisFolderName```
