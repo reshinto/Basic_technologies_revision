@@ -18,6 +18,7 @@
       }
     }
     ```
+- install husky ```npm run prepare```
 ## Create a pre-commit hook
 - ```npx husky add .husky/pre-commit "npm test"```
 - you should get
@@ -28,6 +29,7 @@
   npm test
   ```
 - change it to something like the following
+- precommit and test:coverage are scripts written in the package.json
   ```
   #!/bin/sh
   . "$(dirname "$0")/_/husky.sh"
