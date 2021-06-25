@@ -43,7 +43,7 @@
   #!/bin/sh
   . "$(dirname "$0")/_/husky.sh"
   
-  npx --no-install commitlint --edit
+  npx --no-install commitlint --edit ""
   ```
 - change it to something like the following
   ```
