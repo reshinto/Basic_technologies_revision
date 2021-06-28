@@ -39,7 +39,7 @@ export default function App() {
   return (<div onClick={handleClick}>{count}</div>);
 }
 ```
-#### handle multiple states
+### handle multiple states
 - example 1
 ```javascript
 import React from "react";
@@ -114,6 +114,49 @@ export default function App() {
   }
   
   return (<input onChange={handleChange("name1")} value={state.name1} />);
+}
+```
+### Batch state updates
+- wrong way
+```javascript
+import React, {useState} from "react";
+  
+export default function App() {
+  const [count1, setCount1] = useState(0);  // 0 = initial state
+  const [count2, setCount2] = useState(0);  // 0 = initial state
+
+  const handleClick = () => {
+    // React doesn't automatically batch updates
+    // react will re-render the UI twice for this case
+    Promise.resolve().then(() => {
+      setCount1(count1 + 1);
+      setCount2(count2 + 1);
+    }
+  }
+  
+  return (<div onClick={handleClick}>{count}</div>);
+}
+```
+- correct way
+```javascript
+import React, {useState} from "react";
+import {unstable_batchedUpdates} from "react-dom";
+  
+export default function App() {
+  const [count1, setCount1] = useState(0);  // 0 = initial state
+  const [count2, setCount2] = useState(0);  // 0 = initial state
+
+  const handleClick = () => {
+    // react will re-render the UI once
+    Promise.resolve().then(() => {
+      unstable_batchedUpdates(() => {
+        setCount1(count1 + 1);
+        setCount2(count2 + 1);
+      })
+    }
+  }
+  
+  return (<div onClick={handleClick}>{count}</div>);
 }
 ```
 ## Lifecycle vs Hooks
