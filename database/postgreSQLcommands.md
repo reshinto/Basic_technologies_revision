@@ -70,3 +70,7 @@
 > show data_directory;
 ### List available tables in current database
 > \dt
+### Show table fields
+> \d tableName
+### Show all data inside the table
+> SELECT * FROM tableName;
