@@ -255,6 +255,26 @@ public class StudentController {
 }
 ```
 ## setup environment settings to connect to postgresql in src/main/resources/application.properties
+### spring.jpa.hibernate.ddl-auto values
+- create
+  - Hibernate first drops existing tables, then creates new tables
+- create-drop
+  - use for test case scenarios
+  - create schema, add some mock data, run tests
+  - during the test case cleanup, the schema objects are dropped, leaving an empty database
+- validate
+  - can use in production
+  - but typically that should be a setting to use in quality/test environment to verify that the database scripts written or applied to database migration tool are accurate
+  - Another reason not to use validate in production is that it could be a bottleneck during the startup process of the application, particularly if the object model is quite extensive in size or if other network related factors come into play
+- update
+  - commonly used in development
+  - to automatically modify the schema to add new additions upon restart
+  - does not remove a column or constraint that may exist from previous executions that is no longer necessary
+- none
+  - highly recommended to use in production
+  - this value effectively turns off the DDL generation
+  - it's common practice for DBAs to review migration scripts for database changes
+    - particularly if your database is shared across multiple services and applications
 ```
 spring.datasource.url=jdbc:postgresql://localhost:5432/databaseName
 spring.datasource.username=
