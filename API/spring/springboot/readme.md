@@ -136,7 +136,10 @@ public class Student {
 package com.example.demoapi.student;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -165,6 +168,35 @@ public class StudentService {
     }
     studentRepository.save(student);
   }
+	
+	public void deleteStudent(Long studentId) {
+    boolean exists = studentRepository.existsById(studentId);  // similar to findById but returns a boolean
+    if (!exists) {
+      throw new IllegalStateException("student with id " + studentId + " does not exists");
+    }
+    studentRepository.deleteById(studentId);
+  }
+	
+	// used for put request, allows us to not have to implement JPQL query
+	// thus can use the setters from the entity to check if update is possible
+	// and to use setters to auto update the entity in the database
+  @Transactional
+  public void updateStudent(Long studentId, String name, String email) {
+    Student student = studentRepository.findById(studentId)
+        .orElseThrow(() -> new IllegalStateException("student with id " + studentId + " does not exists"));
+
+    Optional<Student> studentOptional = studentRepository.findStudentByEmail(email);
+    if (studentOptional.isPresent()) {
+      throw new IllegalStateException("email taken");
+    }
+
+    if (name != null && name.length() > 0 && !Objects.equals(student.getName(), name)) {
+      student.setName(name);
+    }
+    if (email != null && email.length() > 0 && !Objects.equals(student.getEmail(), email)) {
+      student.setEmail(email);
+    }
+  }
 }
 ```
 ## create and enable restful framework by creating a class controller and linking it with the service
@@ -175,10 +207,14 @@ package com.example.demoapi.student;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -192,16 +228,29 @@ public class StudentController {
     this.studentService = studentService;  // use dependency injection instead of manually instantiating here
   }
 
-  // enable get request
+  // enable get request http://localhost:8080/api/v1/student
   @GetMapping
   public List<Student> getStudents() {
     return studentService.getStudents();
   }
   
-  // enable post request
+  // enable post request http://localhost:8080/api/v1/student
   @PostMapping
   public void registerNewStudent(@RequestBody Student student) {  // @RequestBody enable retrieve payload from body
     studentService.addNewStudent(student);
+  }
+  
+ 	// enable delete request http://localhost:8080/api/v1/student/delete/1
+  @DeleteMapping(path = "delete/{studentId}")
+  public void deleteStudent(@PathVariable("studentId") Long studentId) {  // @PathVariable enable retrieve parameter from path
+    studentService.deleteStudent(studentId);
+  }
+	
+	// enable put request http://localhost:8080/api/v1/student/update/1?name=Test&email=test1@gmail.com
+	@PutMapping(path = "update/{studentId}")
+  public void updateStudent(@PathVariable("studentId") Long studentId, @RequestParam(required = false) String name,
+      @RequestParam(required = false) String email) {  // @RequestParm enable retrieve of key=value parameter from path
+    studentService.updateStudent(studentId, name, email);
   }
 }
 ```
