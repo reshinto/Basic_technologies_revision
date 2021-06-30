@@ -136,6 +136,7 @@ public class Student {
 package com.example.demoapi.student;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -155,6 +156,15 @@ public class StudentService {
   public List<Student> getStudents() {
     return studentRepository.findAll();
   }
+	
+	public void addNewStudent(Student student) {
+		// check if email already exist, if yes return an error, if no save the new student
+    Optional<Student> studentOptional = studentRepository.findStudentByEmail((student.getEmail()));
+    if (studentOptional.isPresent()) {
+      throw new IllegalStateException("email taken");
+    }
+    studentRepository.save(student);
+  }
 }
 ```
 ## create and enable restful framework by creating a class controller and linking it with the service
@@ -166,6 +176,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -180,9 +192,16 @@ public class StudentController {
     this.studentService = studentService;  // use dependency injection instead of manually instantiating here
   }
 
+  // enable get request
   @GetMapping
   public List<Student> getStudents() {
     return studentService.getStudents();
+  }
+  
+  // enable post request
+  @PostMapping
+  public void registerNewStudent(@RequestBody Student student) {  // @RequestBody enable retrieve payload from body
+    studentService.addNewStudent(student);
   }
 }
 ```
@@ -195,16 +214,30 @@ spring.jpa.hibernate.ddl-auto=create-drop
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.dialet=org.hibernate.dialect.PostgreSQLDialect
 spring.jpa.properties.hibernate.format_sql=true
+
+// allow display of error message in the response during an error
+server.error.include-message=always
 ```
 ## create an interface that is responsible for data access src/main/java/.../appname/classname/ClassNameRepository.java
 ```java
 package com.example.demoapi.student;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
+
+  // method 1: SELECT * FROM student WHERE email = ?
+  // Optional<Student> findStudentByEmail(String email);
+
+  // method 2: be more specific, the following is JPQL query and not SQL
+  // Student refers to the Student class
+  @Query("SELECT s FROM Student s WHERE s.email = ?1")
+  Optional<Student> findStudentByEmail(String email);
 }
 ```
 ## create a config file that seeds the table contents src/main/java/.../appname/classname/ClassNameConfig.java
