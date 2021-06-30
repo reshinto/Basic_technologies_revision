@@ -30,9 +30,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class DemoApiApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApiApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(DemoApiApplication.class, args);
+  }
 }
 ```
 ## create a simple class model that creates tables in the database
@@ -160,8 +160,8 @@ public class StudentService {
     return studentRepository.findAll();
   }
 	
-	public void addNewStudent(Student student) {
-		// check if email already exist, if yes return an error, if no save the new student
+  public void addNewStudent(Student student) {
+    // check if email already exist, if yes return an error, if no save the new student
     Optional<Student> studentOptional = studentRepository.findStudentByEmail((student.getEmail()));
     if (studentOptional.isPresent()) {
       throw new IllegalStateException("email taken");
@@ -169,7 +169,7 @@ public class StudentService {
     studentRepository.save(student);
   }
 	
-	public void deleteStudent(Long studentId) {
+  public void deleteStudent(Long studentId) {
     boolean exists = studentRepository.existsById(studentId);  // similar to findById but returns a boolean
     if (!exists) {
       throw new IllegalStateException("student with id " + studentId + " does not exists");
@@ -177,9 +177,9 @@ public class StudentService {
     studentRepository.deleteById(studentId);
   }
 	
-	// used for put request, allows us to not have to implement JPQL query
-	// thus can use the setters from the entity to check if update is possible
-	// and to use setters to auto update the entity in the database
+  // used for put request, allows us to not have to implement JPQL query
+  // thus can use the setters from the entity to check if update is possible
+  // and to use setters to auto update the entity in the database
   @Transactional
   public void updateStudent(Long studentId, String name, String email) {
     Student student = studentRepository.findById(studentId)
@@ -240,14 +240,14 @@ public class StudentController {
     studentService.addNewStudent(student);
   }
   
- 	// enable delete request http://localhost:8080/api/v1/student/delete/1
+  // enable delete request http://localhost:8080/api/v1/student/delete/1
   @DeleteMapping(path = "delete/{studentId}")
   public void deleteStudent(@PathVariable("studentId") Long studentId) {  // @PathVariable enable retrieve parameter from path
     studentService.deleteStudent(studentId);
   }
-	
-	// enable put request http://localhost:8080/api/v1/student/update/1?name=Test&email=test1@gmail.com
-	@PutMapping(path = "update/{studentId}")
+
+  // enable put request http://localhost:8080/api/v1/student/update/1?name=Test&email=test1@gmail.com
+  @PutMapping(path = "update/{studentId}")
   public void updateStudent(@PathVariable("studentId") Long studentId, @RequestParam(required = false) String name,
       @RequestParam(required = false) String email) {  // @RequestParm enable retrieve of key=value parameter from path
     studentService.updateStudent(studentId, name, email);
