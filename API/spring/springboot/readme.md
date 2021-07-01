@@ -355,6 +355,7 @@ package com.example.demoapi.student;
 import java.time.LocalDate;
 import static java.time.Month.*;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -368,6 +369,11 @@ public class StudentRepositoryTest {
 
   @Autowired
   private StudentRepository underTest;
+  
+  @AfterEach
+  void tearDown() {
+    underTest.deleteAll();
+  }
 
   @Test
   void itShouldCheckIfStudentExistsEmail() {
@@ -403,6 +409,7 @@ package com.example.demoapi.student;
 import java.time.LocalDate;
 import static java.time.Month.*;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -417,6 +424,11 @@ public class StudentRepositoryTest {
 
   @Autowired
   private StudentRepository underTest;
+  
+  @AfterEach
+  void tearDown() {
+    underTest.deleteAll();
+  }
 
   @Test
   void itShouldCheckIfStudentExistsEmail() {
