@@ -302,6 +302,26 @@ spring.jpa.properties.hibernate.format_sql=true
 // allow display of error message in the response during an error
 server.error.include-message=always
 ```
+### setup environments for unit tests and use H2 database src/test/resources/application.properties
+- paste h2 database dependency into the pom.xml file
+```xml
+<dependency>
+  <groupId>com.h2database</groupId>
+  <artifactId>h2</artifactId>
+  <scope>test</scope>
+</dependency>
+```
+- in the application.properties file
+```
+spring.datasource.url=jdbc:h2://mem:db;DB_CLOSE_DELAY=-1
+spring.datasource.username=sa
+spring.datasource.password=sa
+spring.datasource.driver-class-name=org.h2.Driver
+spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialet=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.properties.hibernate.format_sql=true
+```
 ## create an interface that is responsible for data access src/main/java/.../appname/classname/ClassNameRepository.java
 ```java
 package com.example.demoapi.student;
@@ -328,6 +348,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 }
 ```
 ### unit test for interface src/test/java/.../appname/classname/ClassNameRepositoryTest.java
+- Not using the test configurations (not recommended)
 ```java
 package com.example.demoapi.student;
 
@@ -343,6 +364,55 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest  // required for test to pass
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)  // required for test to pass
+public class StudentRepositoryTest {
+
+  @Autowired
+  private StudentRepository underTest;
+
+  @Test
+  void itShouldCheckIfStudentExistsEmail() {
+    // given
+    String email = "name1@gmail.com";
+    Student student = new Student("Name1", email, LocalDate.of(2000, JANUARY, 5));
+    underTest.save(student);
+
+    // when
+    Boolean expected = underTest.selectExistsEmail(email);
+
+    // then
+    assertThat(expected).isTrue();
+  }
+
+  @Test
+  void itShouldCheckWhenStudentEmailDoesNotExists() {
+    // given
+    String email = "jamila@gmail.com";
+
+    // when
+    Boolean expected = underTest.selectExistsEmail(email);
+
+    // then
+    assertThat(expected).isFalse();
+  }
+}
+```
+- using the test configuration (recommended)
+```java
+package com.example.demoapi.student;
+
+import java.time.LocalDate;
+import static java.time.Month.*;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+// not required
+// @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@DataJpaTest
 public class StudentRepositoryTest {
 
   @Autowired
