@@ -161,18 +161,26 @@ public class StudentService {
   }
 	
   public void addNewStudent(Student student) {
-    // check if email already exist, if yes return an error, if no save the new student
     Optional<Student> studentOptional = studentRepository.findStudentByEmail((student.getEmail()));
     if (studentOptional.isPresent()) {
-      throw new IllegalStateException("email taken");
+      // method 1, using default
+      // throw new IllegalStateException("email taken");
+
+      // method 2, using custom exception handler
+      throw new BadRequestException("Email " + student.getEmail() + " taken");
     }
     studentRepository.save(student);
   }
-	
+
   public void deleteStudent(Long studentId) {
-    boolean exists = studentRepository.existsById(studentId);  // similar to findById but returns a boolean
+    boolean exists = studentRepository.existsById(studentId);
     if (!exists) {
-      throw new IllegalStateException("student with id " + studentId + " does not exists");
+      // method 1, using default
+      // throw new IllegalStateException("student with id " + studentId + " does not
+      // exists");
+
+      // method 2, using custom exception handler
+      throw new StudentNotFoundException("Student with id " + studentId + " does not exists");
     }
     studentRepository.deleteById(studentId);
   }
@@ -333,6 +341,35 @@ public class StudentConfig {
 
       repository.saveAll(List.of(studentA, studentB));
     };
+  }
+}
+```
+## Create custom error exception handlers
+### src/main/java/.../classname/exception/TypeNameException.java
+```java
+package com.example.demoapi.student.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class BadRequestException extends RuntimeException {
+  public BadRequestException(String msg) {
+    super(msg);
+  }
+}
+```
+### src/main/java/.../classname/exception/TypeNameException.java
+```java
+package com.example.demoapi.student.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class StudentNotFoundException extends RuntimeException {
+  public StudentNotFoundException(String msg) {
+    super(msg);
   }
 }
 ```
