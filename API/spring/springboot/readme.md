@@ -141,6 +141,9 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import com.example.demoapi.student.exception.BadRequestException;
+import com.example.demoapi.student.exception.StudentNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
