@@ -164,8 +164,10 @@ public class StudentService {
   }
 	
   public void addNewStudent(Student student) {
-    Optional<Student> studentOptional = studentRepository.findStudentByEmail((student.getEmail()));
-    if (studentOptional.isPresent()) {
+    // Optional<Student> studentOptional = studentRepository.findStudentByEmail((student.getEmail()));
+    // if (studentOptional.isPresent()) {
+    Boolean existsEmail = studentRepository.selectExistsEmail(student.getEmail());
+    if (existsEmail) {
       // method 1, using default
       // throw new IllegalStateException("email taken");
 
@@ -196,8 +198,10 @@ public class StudentService {
     Student student = studentRepository.findById(studentId)
         .orElseThrow(() -> new IllegalStateException("student with id " + studentId + " does not exists"));
 
-    Optional<Student> studentOptional = studentRepository.findStudentByEmail(email);
-    if (studentOptional.isPresent()) {
+    // Optional<Student> studentOptional = studentRepository.findStudentByEmail(email);
+    // if (studentOptional.isPresent()) {
+    Boolean existsEmail = studentRepository.selectExistsEmail(student.getEmail());
+    if (existsEmail) {
       throw new IllegalStateException("email taken");
     }
 
@@ -316,8 +320,59 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
   // method 2: be more specific, the following is JPQL query and not SQL
   // Student refers to the Student class
-  @Query("SELECT s FROM Student s WHERE s.email = ?1")
-  Optional<Student> findStudentByEmail(String email);
+  // @Query("SELECT s FROM Student s WHERE s.email = ?1")
+  // Optional<Student> findStudentByEmail(String email);
+
+  @Query("" + "SELECT CASE WHEN COUNT(s) > 0 THEN " + "TRUE ELSE FALSE END " + "FROM Student s " + "WHERE s.email = ?1")
+  Boolean selectExistsEmail(String email);
+}
+```
+### unit test for interface src/test/java/.../appname/classname/ClassNameRepositoryTest.java
+```java
+package com.example.demoapi.student;
+
+import java.time.LocalDate;
+import static java.time.Month.*;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+@DataJpaTest  // required for test to pass
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)  // required for test to pass
+public class StudentRepositoryTest {
+
+  @Autowired
+  private StudentRepository underTest;
+
+  @Test
+  void itShouldCheckIfStudentExistsEmail() {
+    // given
+    String email = "name1@gmail.com";
+    Student student = new Student("Name1", email, LocalDate.of(2000, JANUARY, 5));
+    underTest.save(student);
+
+    // when
+    Boolean expected = underTest.selectExistsEmail(email);
+
+    // then
+    assertThat(expected).isTrue();
+  }
+
+  @Test
+  void itShouldCheckWhenStudentEmailDoesNotExists() {
+    // given
+    String email = "jamila@gmail.com";
+
+    // when
+    Boolean expected = underTest.selectExistsEmail(email);
+
+    // then
+    assertThat(expected).isFalse();
+  }
 }
 ```
 ## create a config file that seeds the table contents src/main/java/.../appname/classname/ClassNameConfig.java
@@ -348,7 +403,7 @@ public class StudentConfig {
 }
 ```
 ## Create custom error exception handlers
-### src/main/java/.../classname/exception/TypeNameException.java
+### src/main/java/.../appname/classname/exception/TypeNameException.java
 ```java
 package com.example.demoapi.student.exception;
 
@@ -362,7 +417,7 @@ public class BadRequestException extends RuntimeException {
   }
 }
 ```
-### src/main/java/.../classname/exception/TypeNameException.java
+### src/main/java/.../appname/classname/exception/TypeNameException.java
 ```java
 package com.example.demoapi.student.exception;
 
