@@ -214,6 +214,170 @@ public class StudentService {
   }
 }
 ```
+### create tests e.g.: src/test/java/.../appname/classname/ClassNameServiceTest.java
+```java
+package com.example.demoapi.student;
+
+import com.example.demoapi.student.exception.BadRequestException;
+import com.example.demoapi.student.exception.StudentNotFoundException;
+
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString; // use to parse in any string instead of the actual string value
+import static org.mockito.BDDMockito.given;
+
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled; // allow skipping of test
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension; // method 2: for mocking
+
+@ExtendWith(MockitoExtension.class) // method 2: for mocking
+public class StudentServiceTest {
+
+  // mock should be used as we have already tested respository
+  @Mock
+  private StudentRepository studentRepository;
+  private StudentService underTest;
+  // private AutoCloseable autoCloseable; // method 1: for mocking
+
+  @BeforeEach
+  void setUp() {
+    // autoCloseable = MockitoAnnotations.openMocks(this); // method 1: for mocking
+    underTest = new StudentService(studentRepository);
+  }
+
+  // method 1: for mocking
+  // @AfterEach
+  // void tearDown() throws Exception {
+  // autoCloseable.close();
+  // }
+
+  @Test
+  void canGetStudents() {
+    // when
+    underTest.getStudents();
+    // then
+    verify(studentRepository).findAll();
+  }
+
+  @Test
+  void canAddNewStudent() {
+    // given
+    Student student = new Student("Name1", "name1@gmail.com", LocalDate.of(2000, Month.JANUARY, 5));
+    // when
+    underTest.addNewStudent(student);
+    // then
+    ArgumentCaptor<Student> studentArgumentCaptor = ArgumentCaptor.forClass(Student.class);
+    verify(studentRepository).save(studentArgumentCaptor.capture());
+    Student captureStudent = studentArgumentCaptor.getValue();
+    assertThat(captureStudent).isEqualTo(student);
+  }
+
+  @Test
+  void willThrowWhenEmailIsTaken() {
+    // given
+    Student student = new Student("Name1", "name1@gmail.com", LocalDate.of(2000, Month.JANUARY, 5));
+
+    // method 1: get actual email
+    // given(studentRepository.selectExistsEmail(student.getEmail())).willReturn(true);
+    // method 2: parse any string as email
+    given(studentRepository.selectExistsEmail(anyString())).willReturn(true);
+    // when
+    // then
+    assertThatThrownBy(() -> underTest.addNewStudent(student)).isInstanceOf(BadRequestException.class)
+        .hasMessageContaining("Email " + student.getEmail() + " taken");
+
+    // our mocked studendRepository never saves anything
+    verify(studentRepository, never()).save(any());
+  }
+
+  @Test
+  void canDeleteStudent() {
+    // given
+    long studentId = 10;
+    given(studentRepository.existsById(studentId)).willReturn(true);
+    // when
+    underTest.deleteStudent(studentId);
+
+    // then
+    verify(studentRepository).deleteById(studentId);
+  }
+
+  @Test
+  void willThrowWhenDeleteStudentNotFound() {
+    // given
+    long studentId = 10;
+    given(studentRepository.existsById(studentId)).willReturn(false);
+    // when
+    // then
+    assertThatThrownBy(() -> underTest.deleteStudent(studentId)).isInstanceOf(StudentNotFoundException.class)
+        .hasMessageContaining("Student with id " + studentId + " does not exists");
+
+    verify(studentRepository, never()).deleteById(any());
+  }
+
+  @Test
+  void canUpdateStudent() {
+    // given
+    Student student = new Student("Name1", "name1@gmail.com", LocalDate.of(2000, Month.JANUARY, 5));
+    String name = "name2";
+    String email = "email2@gmail.com";
+    // when
+    // then
+    student.setName(name);
+    student.setEmail(email);
+    assertThat(student.getName()).isEqualTo(name);
+    assertThat(student.getEmail()).isEqualTo(email);
+  }
+
+  @Test
+  void willThrowWhenStudentNotFound() {
+    // given
+    long studentId = 10;
+    String name = "name2";
+    String email = "email2@gmail.com";
+    // when
+    // then
+    assertThatThrownBy(() -> underTest.updateStudent(studentId, name, email)).isInstanceOf(IllegalStateException.class)
+        .hasMessageContaining("student with id " + studentId + " does not exists");
+  }
+
+  @Test
+  void willThrowWhenNewEmailIsTaken() {
+    // given
+    Student student = new Student("Name1", "name1@gmail.com", LocalDate.of(2000, Month.JANUARY, 5));
+    long studentId = 10;
+    String name = "name2";
+    String email = "email2@gmail.com";
+    // when
+    when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+    given(studentRepository.selectExistsEmail(email)).willReturn(true);
+    // then
+    assertThatThrownBy(() -> underTest.updateStudent(studentId, name, email)).isInstanceOf(IllegalStateException.class)
+        .hasMessageContaining("email taken");
+  }
+
+}
+```
+- might be required to add in pom.xml to support custom exception imports for tests
+```xml
+<dependency>
+  <groupId>javax</groupId>
+  <artifactId>javaee-api</artifactId>
+  <version>8.0.1</version>
+</dependency>
+```
 ## create and enable restful framework by creating a class controller and linking it with the service
 ### e.g.: src/main/java/.../appname/classname/ClassNameController.java
 ```java
