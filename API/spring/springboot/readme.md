@@ -200,7 +200,7 @@ public class StudentService {
 
     // Optional<Student> studentOptional = studentRepository.findStudentByEmail(email);
     // if (studentOptional.isPresent()) {
-    Boolean existsEmail = studentRepository.selectExistsEmail(student.getEmail());
+    Boolean existsEmail = studentRepository.selectExistsEmail(email));
     if (existsEmail) {
       throw new IllegalStateException("email taken");
     }
