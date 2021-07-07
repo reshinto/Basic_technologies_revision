@@ -40,7 +40,7 @@
 > mono xxx.exe
 
 # Run Java files
-### xxx.java file name must be the same as public class name
+* xxx.java file name must be the same as public class name
 * note: it is case sensitive
 ## compile xxx.java file with javac in terminal
 > javac xxx.java
@@ -48,6 +48,22 @@
 > java xxx
 ## compile and run at the same time
 javac xxx.java && java xxx
+## using package
+- e.g.: Main.java
+```java
+package com.example.java;
+
+public class Main {
+  public static void main(String[] args) {
+    System.out.println("Hello from Java!");
+  }
+}
+```
+### at root directory of project
+#### compile file
+> javac ./com/example/java/Main.java
+#### run file
+> java com.example.java.Main
 
 # Run Typescript files
 ## run typescript files without compiling with ts-node in terminal (no javascript created)
