@@ -377,7 +377,7 @@ export default App;
 - Warning: do not prematurely optimize performance, use only as needed for expensive calculations
 - gives you referential equality between renders for functions
 - returns its memoized function when the dependencies change
-- helps prevent uneccessary renders of the children because the children will always be using the same function object
+- helps prevent unneccessary renders of the children because the children will always be using the same function object
   - e.g. shouldComponentUpdate
 ```javascript
 import React, {useState, useCallback } from "react";
