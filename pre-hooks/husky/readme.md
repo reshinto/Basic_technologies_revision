@@ -106,7 +106,7 @@ const msg = `
   # Please use the following rules:
   # '[required key1]/{required key2}-<required name>'
   #
-  # - [required key1]: '({key1}/', when the {key1} is a type of branch of either
+  # - [required key1]: '{key1}/', when the {key1} is a type of branch of either
   #   - feature | bugfix | improvement | library | prerelease | release | hotfix
   # - {required key2}: 'FS-{key2}-', when the {key2} is a valid JIRA issue key
   # - <required name>: '{msg}', when the {msg} is a clear branch name
