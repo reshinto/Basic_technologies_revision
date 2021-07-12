@@ -29,12 +29,21 @@
   npm test
   ```
 - change it to something like the following
-- precommit and test:coverage are scripts written in the package.json
+- code:clean and test:coverage are scripts written in the package.json
+  ```json
+  // package.json
+  {
+    "scripts": {
+      "prepare": "husky install",
+      "code:clean": "npm run code:lint --fix; npm run code:format"
+    }
+  }
+  ```
   ```
   #!/bin/sh
   . "$(dirname "$0")/_/husky.sh"
 
-  npm run precommit && npm run test:coverage && node ./branchLint.js
+  npm run code:clean && npm run test:coverage && node ./branchLint.js
   ```
 ## Create a commit-msg hook
 - ```npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'```
