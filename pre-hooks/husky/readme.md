@@ -35,6 +35,8 @@
   {
     "scripts": {
       "prepare": "husky install",
+      "code:lint": "eslint --ext .js,.jsx,.ts,.tsx \"src/\"",
+      "code:format": "prettier --write .",
       "code:clean": "npm run code:lint --fix; npm run code:format"
     }
   }
