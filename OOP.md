@@ -12,6 +12,14 @@
     * group related variables and functions that operate on them into objects
       * thus reduce complexity and increase reusability
     * (summary) hiding the code and data into a single unit
+    * in other words, it packages complex functionality for ease of programming
+      * access to individual functions can be restricted
+      * hide complex functionality in methods
+      * the true nature of encapsulated data may also be hidden
+    * benefits of encapsulation
+      * breaking functionality into small maintainable units
+      * grouping functions and data together
+      * supporting testing of software at a granular level
     ```javascript
     // procedural programming
     let baseSalary = 30000;
