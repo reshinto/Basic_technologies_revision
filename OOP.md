@@ -74,6 +74,14 @@
     ```
 3. Inheritance
     * it is a mechanism that allows you to eliminate redundant code
+    * it has a relationship between classes that lets you inherit or extend functionality from 1 class to another
+    * not all Object Oriented languages are the same
+      * c++ supports multiple inheritance
+      * java only supports single inheritance
+        * each class can extend or inherit functionality from only 1 other class
+        * classes can implement multiple interfaces
+    * inheritance relationship
+      * Parent/Child, Base/Derived, Superclass/Subclass
     ```javascript
     class Employee {  // parent
       raiseAmt = 1.04;
@@ -105,7 +113,10 @@
     console.log(dev.pay)  // 5500
     ```
 4. Polymorphism - literally means many forms
-    * it is a technique that allows you to get rid of long if and else or switch and case conditional statements
+    * it addresses an object as either super or subtype
+    * writes methods that accept supertype as arguments
+    * passes instances of subtypes
+    * increases code flxibility and reusability
     * has 2 types
         1. Compile time polymorphism (static binding)
             * e.g.: method overloading
