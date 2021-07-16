@@ -20,18 +20,58 @@
 ```
 ### Queries
 #### Basic queries
-```graphsql
+- graphql query
+```graphql
+// method 1: similar to anonymous function
 {
   viewer {
     id
   }
 }
+
+// method 2: makes it easier to find but does not have a unique name
+query {
+  viewer {
+    id
+  }
+}
+
+// method 3: Set operation names to all easy finding as names are unique
+query SomeUniqueName {
+  viewer {
+    id
+  }
+}
 ```
+- json result
 ```json
 {
   "data": {
     "viewer": {
       "id": "efhyubVgvkywdUBUYGGB"
+    }
+  }
+}
+```
+#### Variable definitions
+```graphql
+query SomeUniqueName($myVariable: String!) {
+  organization(login: $myVariable) {
+    id
+  }
+}
+```
+- query variables
+```
+{
+  "myVariable": "facebook"
+}
+```
+```json
+{
+  "data": {
+    "organization": {
+      "id": "MDEyOk9yZ2FuaXphdGlvbjY5NjMx"
     }
   }
 }
@@ -131,7 +171,7 @@
   ]
 }
 ```
-### Aliases
+#### Aliases
 - not using aliases with conflicting arguments will result with an error
 ```graphql
 {
@@ -199,7 +239,7 @@
   }
 }
 ```
-### Fragments
+#### Fragments
 - they are reusable sets of fields that can be included in queries as needed to prevent repetition
 ```graphql
 {
@@ -233,7 +273,7 @@ fragment repoFields on Repository {
   }
 }
 ```
-### Nested fields
+#### Nested fields
 ```graphql
 {
   viewer {
@@ -288,7 +328,7 @@ fragment repoFields on Repository {
   }
 }
 ```
-### Multiple nested fields
+#### Multiple nested fields
 ```graphql
 {
   repository(owner: "github", name: "opensource.guide") {
@@ -379,7 +419,7 @@ fragment repoFields on Repository {
   }
 }
 ```
-### Pagination
+#### Pagination
 - first, last, states can be used to filter the data
 ```graphql
 # (first: 5)
@@ -443,6 +483,46 @@ fragment repoFields on Repository {
             }
           }
         ]
+      }
+    }
+  }
+}
+```
+### Mutations
+- Data modifications are made with mutations
+- Similar to PUT or DELETE in REST
+- data is sent as a payload
+- GraphQL changes the dataset behind the schema
+- API defines which mutations are allowed
+#### Create mutations
+```graphql
+mutation NewComment($input: AddCommentInput!) {
+  addComment(input: $input) {
+    clientMutationId
+    subject {
+      id
+    }
+  }
+}
+```
+- query variables
+```
+{
+  "input": {
+    "clientMutationId": "123456",
+    "subjectId": "NININIWDNEUBNFIUuinife",
+    "body": "mutation has occured"
+  }
+}
+```
+- json result (shows that a new comment has been added to the issue of the repository)
+```json
+{
+  "data": {
+    "addComment": {
+      "clientMutationId": "123456",
+      "subject": {
+        "id": "MDU6SXNzdWU5NDY1MjM3MTM="
       }
     }
   }
