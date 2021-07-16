@@ -131,3 +131,79 @@
   ]
 }
 ```
+## Schemas
+- the way the fields are setup in graphQL is determined by the schemas
+- it provides sll the object types used in the data
+  - it also specifies the types for all the values
+### Input Types
+- Integer
+- Float
+- String
+- Boolean
+- Null
+- Enum
+- List
+- Object
+### Query ```__schema```
+```graphql
+{
+  __schema {
+    queryType {
+      name
+      description
+      fields {
+        name
+        description
+      }
+    }
+  }
+}
+```
+```json
+{
+  "data": {
+    "__schema": {
+      "queryType": {
+        "name": "Query",
+        "description": "The query root of GitHub's GraphQL interface.",
+        "fields": [
+          {
+            "name": "codeOfConduct",
+            "description": "Look up a code of conduct by its key"
+          },
+          {
+            "name": "codesOfConduct",
+            "description": "Look up a code of conduct by its key"
+          },
+          ...,
+          {
+            "name": "viewer",
+            "description": "The currently authenticated user."
+          }
+        ]
+      }
+    }
+  }
+}
+```
+### Query ```__type```
+```graphql
+{
+  __type(name: "Repository") {
+    kind
+    name
+    description
+  }
+}
+```
+```json
+{
+  "data": {
+    "__type": {
+      "kind": "OBJECT",
+      "name": "Repository",
+      "description": "A repository contains the content for a project."
+    }
+  }
+}
+```
