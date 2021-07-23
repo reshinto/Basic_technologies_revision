@@ -22,7 +22,7 @@
   - ```docker run -d -u 0 -p 80:8080 -p 50000:50000 -v ~/jenkins_home:/var/jenkins_home --name jenkins jenkins/jenkins```
 #### Get default admin password
 - ```docker exec -it jenkins bash```
-  - ```docker exec jenkins cat adminPasswordFilePathProvided```
+  - ```docker exec jenkins cat var/jenkins_home/secrets/initialAdminPassword```
 ## First time setup
 1. Click on ```Install suggested plugins```
 2. Create admin account
