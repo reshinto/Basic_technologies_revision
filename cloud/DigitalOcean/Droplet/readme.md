@@ -1,4 +1,6 @@
 # How to configure droplet after ssh
+- SSH with root
+> ssh root@11.123.123.123
 ## Create new user
 > adduser myusername
 ```
@@ -18,11 +20,11 @@ Retype new password:
 passwd: password updated successfully
 Changing the user information for myusername
 Enter the new value, or press ENTER for the default
-	Full Name []:
-	Room Number []:
-	Work Phone []:
-	Home Phone []:
-	Other []:
+  Full Name []:
+  Room Number []:
+  Work Phone []:
+  Home Phone []:
+  Other []:
 Is the information correct? [Y/n]
 ```
 - enable sudo
@@ -34,3 +36,21 @@ uid=1000(myusername) gid=1000(myusername) groups=1000(myusername),27(sudo)
 ```
 - login to user account
 > sudo su - myusername
+## Enable SSH for new user
+- create SSH directory
+> mkdir ~/.ssh
+- change permission of the folder
+> chmod 700 ~/.ssh
+- open file
+> nano ~/.ssh/authorized_keys
+  - on your local pc copy the ssh public key with ```pbcopy < ~/.ssh/id_ed25519.pub```
+  - paste the ssh public key into the file
+  ```
+  ssh-ed25519 LHBSLUBLYUG'O(TGUYhkvybg76g7OUYVG'(OBL
+  ```
+  - change permission for this file
+  > chmod 600 ~/.ssh/authorized_keys
+- restart SSH service
+> sudo service ssh restart
+- test SSH login with new user
+> ssh myusername@11.123.123.123
