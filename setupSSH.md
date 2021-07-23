@@ -73,3 +73,14 @@ The key's randomart image is:
 - copy the SSH public key
 > pbcopy < ~/.ssh/id_ed25519.pub
 - add and paste this value into the SSH key field in your server
+## Add server identity to your pc's known host
+- you will get a prompt similar to this
+```
+The authenticity of host 'someonlineserver.com (11.12.123.123)' can't be established.
+RSA key fingerprint is SHA256:kjlnfe7o8GBLU7o42ulgob24ofbuy.
+Are you sure you want to continue connecting (yes/no/[fingerprint])?
+```
+- if type ```yes``` it would be added to your ```~/.ssh/known_hosts``` file
+```
+Warning: Permanently added 'github.com,11.12.123.123' (RSA) to the list of known hosts.
+```
