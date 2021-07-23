@@ -55,7 +55,7 @@ uid=1000(myusername) gid=1000(myusername) groups=1000(myusername),27(sudo)
 - test SSH login with new user
 > ssh myusername@11.123.123.123
 ## Other configs
-- disbale root login and password authentication
+### disable root login and password authentication
 > sudo vim /etc/ssh/sshd_config
 - change ```yes``` to ```no```
 ```
@@ -67,3 +67,6 @@ PasswordAuthentication yes
 ```
 - reload sshd
 > sudo systemctl reload sshd
+### change droplet name inside droplet
+> sudo hostnamectl set-hostname new-host-name
+- exit from SSH and re-enter again for changes to take effect
