@@ -1,10 +1,16 @@
 # Jenkins
 ## Installation
 ### Mac
-- ```brew install jenkins-lts```
+- long term support
+  - ```brew install jenkins-lts```
+- latest
+  - ```brew install jenkins```
 ### Docker
 #### Install jenkins image
-- ```docker pull jenkins/jenkins:lts```
+- long term support
+  - ```docker pull jenkins/jenkins:lts```
+- latest
+  - ```docker pull jenkins/jenkins```
 ## How to run
 ### Mac
 #### Start Jenkins server
