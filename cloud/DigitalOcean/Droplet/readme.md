@@ -54,3 +54,16 @@ uid=1000(myusername) gid=1000(myusername) groups=1000(myusername),27(sudo)
 > sudo service ssh restart
 - test SSH login with new user
 > ssh myusername@11.123.123.123
+## Other configs
+- disbale root login and password authentication
+> sudo vim /etc/ssh/sshd_config
+- change ```yes``` to ```no```
+```
+...
+PermitRootLogin yes
+...
+PasswordAuthentication yes
+...
+```
+- reload sshd
+> sudo systemctl reload sshd
