@@ -16,7 +16,10 @@
   - paste admin password that was auto generated if first time setting up
 ### Docker
 #### Create new container
-- ```docker run -d -p 8080:8080 -p 50000:50000 -v ~/jenkins_home:/var/jenkins_home --name jenkins jenkins/jenkins:lts```
+- on local computer
+  - ```docker run -d -p 8080:8080 -p 50000:50000 -v ~/jenkins_home:/var/jenkins_home --name jenkins jenkins/jenkins```
+- on cloud server
+  - ```docker run -d -u 0 -p 80:8080 -p 50000:50000 -v ~/jenkins_home:/var/jenkins_home --name jenkins jenkins/jenkins```
 #### Get default admin password
 - ```docker exec -it jenkins bash```
   - ```docker exec jenkins cat adminPasswordFilePathProvided```
