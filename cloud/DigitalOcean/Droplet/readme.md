@@ -1,4 +1,4 @@
-# How to configure droplet after ssh
+# How to configure newly created droplet with SSH
 - SSH with root
 > ssh root@11.123.123.123
 ## Create new user
