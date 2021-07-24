@@ -2,6 +2,7 @@
 - SSH with root
 > ssh root@11.123.123.123
 ## Create new user
+- add new user
 > adduser myusername
 ```
 Adding user `myusername' ...
