@@ -1,5 +1,6 @@
 #!/bin/sh
 # chmod a+x ./rebuild.sh
+# remove sudo if not required
 
 sudo docker stop jenkins
 sudo docker rm jenkins
