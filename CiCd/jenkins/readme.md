@@ -8,7 +8,7 @@
 ### Docker
 #### Install jenkins image
 - long term support
-  - ```docker pull jenkins/jenkins:lts```
+  - ```docker pull jenkins/jenkins:lts-jdk11```
 - latest
   - ```docker pull jenkins/jenkins```
 ## How to run
@@ -25,7 +25,7 @@
 - on local computer
   - ```docker run -d -p 8080:8080 -p 50000:50000 -v ~/jenkins_home:/var/jenkins_home --name jenkins jenkins/jenkins```
 - on cloud server
-  - ```docker run -d -u 0 -p 80:8080 -p 50000:50000 -v ~/jenkins_home:/var/jenkins_home --name jenkins jenkins/jenkins```
+  - ```docker run -d -u 0 -p 8080:8080 -p 50000:50000 -v ~/jenkins_home:/var/jenkins_home --name jenkins --restart unless-stopped jenkins/jenkins:lts-jdk11```
 #### Get default admin password
 - ```docker exec -it jenkins bash```
   - ```docker exec jenkins cat var/jenkins_home/secrets/initialAdminPassword```
