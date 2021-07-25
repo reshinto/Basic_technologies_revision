@@ -53,3 +53,10 @@
 * ```uniq <file>```
 ### Temporarily replace or substitute string in a file and prints the file contents
 * ```sed "s/<oldString>/<newString>/" <file>```
+### Disable sudo password prompt
+> sudo visudo
+- add the following line at the bottom
+  - ```{username}``` e.g.: myusername
+```
+{username} ALL=(ALL) NOPASSWD:ALL
+```
