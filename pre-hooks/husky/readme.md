@@ -69,7 +69,9 @@
 const fs = require("fs");
 const path = require("path");
 
-const ruleCommit = "\\[((FS)-(\\d)+)\\]:\\s\\w";
+// Manually change projectAcronym
+const ruleCommit = "\\[((TEMPLATE)-(\\d)+)\\]:\\s\\w";
+const projectAcronym = "TEMPLATE";
 
 const regExpCommit = new RegExp(ruleCommit, "g");
 
@@ -79,11 +81,11 @@ const msg = `
   # Please use the following rules:
   # '[required key]: <required message>'
   #
-  # - [required key]: '[FS-{key}]: ', when the {key} is a valid JIRA issue key
+  # - [required key]: '[${projectAcronym}-{key}]: ', when the {key} is a valid JIRA issue key
   # - <required message>: '{msg}', when the {msg} is a clear commit message
   #
   # For example:
-  # '[FS-1234]: Commit message'
+  # '[${projectAcronym}-1234]: Commit message'
 `;
 
 const commitPath = path.resolve(
@@ -102,8 +104,9 @@ if (!regExpCommit.test(commitMsg)) {
 const fs = require("fs");
 const path = require("path");
 
-const ruleBranch =
-  /^(feature|bugfix|improvement|library|prerelease|release|hotfix)\/FS-(\d+)[a-z0-9._-]+$/;
+// Manually change projectAcronym
+const ruleBranch = /^(feature|bugfix|improvement|library|prerelease|release|hotfix)\/TEMPLATE-(\d+)[a-z0-9._-]+$/;
+const projectAcronym = "TEMPLATE";
 
 const regExpBranch = new RegExp(ruleBranch);
 
@@ -119,11 +122,11 @@ const msg = `
   #
   # - [required key1]: '{key1}/', when the {key1} is a type of branch of either
   #   - feature | bugfix | improvement | library | prerelease | release | hotfix
-  # - {required key2}: 'FS-{key2}-', when the {key2} is a valid JIRA issue key
+  # - {required key2}: '${projectAcronym}-{key2}-', when the {key2} is a valid JIRA issue key
   # - <required name>: '{msg}', when the {msg} is a clear branch name
   #
   # For example:
-  # 'feature/FS-01-feature-branch-name'
+  # 'feature/${projectAcronym}-01-feature-branch-name'
 `;
 
 const branchNamePath = path.resolve(
