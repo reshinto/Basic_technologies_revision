@@ -70,8 +70,8 @@ const fs = require("fs");
 const path = require("path");
 
 // Manually change projectAcronym
-const ruleCommit = "\\[((TEMPLATE)-(\\d)+)\\]:\\s\\w";
 const projectAcronym = "TEMPLATE";
+const ruleCommit = `\\[((${projectAcronym})-(\\d)+)\\]:\\s\\w`;
 
 const regExpCommit = new RegExp(ruleCommit, "g");
 
@@ -105,8 +105,8 @@ const fs = require("fs");
 const path = require("path");
 
 // Manually change projectAcronym
-const ruleBranch = /^(feature|bugfix|improvement|library|prerelease|release|hotfix)\/TEMPLATE-(\d+)[a-z0-9._-]+$/;
 const projectAcronym = "TEMPLATE";
+const ruleBranch = `^(feature|bugfix|improvement|library|prerelease|release|hotfix)\/${projectAcronym}-(\d+)[a-z0-9._-]+$`;
 
 const regExpBranch = new RegExp(ruleBranch);
 
