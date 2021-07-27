@@ -82,7 +82,7 @@ const msg = `
   # '[required key]: <required message>'
   #
   # - [required key]: '[${projectAcronym}-{key}]: ', when the {key} is a valid JIRA issue key
-  # - <required message>: '{msg}', when the {msg} is a clear commit message
+  # - <required message>: '{message}', when the {message} is a clear commit message
   #
   # For example:
   # '[${projectAcronym}-1234]: Commit message'
@@ -123,7 +123,7 @@ const msg = `
   # - [required key1]: '{key1}/', when the {key1} is a type of branch of either
   #   - feature | bugfix | improvement | library | prerelease | release | hotfix
   # - {required key2}: '${projectAcronym}-{key2}-', when the {key2} is a valid JIRA issue key
-  # - <required name>: '{msg}', when the {msg} is a clear branch name
+  # - <required name>: '{name}', when the {name} is a clear branch name
   #
   # For example:
   # 'feature/${projectAcronym}-01-feature-branch-name'
