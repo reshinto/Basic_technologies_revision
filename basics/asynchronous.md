@@ -1,5 +1,6 @@
 # Asynchronous
-## Promises
+## JavaScript / NodeJS
+### Promises
 - Use promises whenever you are using asynchronous or blocking code
 - resolve maps to then and reject maps to catch for all practical purposes
 - Make sure to write both .catch and .then methods for all the promises
@@ -10,7 +11,7 @@
 a Promise
 - In Promise.all, the order of the promises are maintained in the values variable, irrespective of which promise was first resolved
 
-## Async
+### Async
 - async functions return a promise
 - async functions use an implicit Promise to return results
   - Even if you don’t return a promise explicitly, the async function makes sure that your code is passed through a promise
@@ -24,7 +25,7 @@ a Promise
 - await only blocks the code execution within the async function
   - It only makes sure that the next line is executed when the promise resolves
   - So, if an asynchronous activity has already started, await will not have any effect on it
-### async library
+#### async library
 ```npm i async```
 ```javascript
 async.map(["foo.txt", "bar.txt"], fs.stat, (error, results) => {
