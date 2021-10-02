@@ -95,7 +95,7 @@ export const userSchema = Joi
     name: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
     age: Joi.number().integer().min(18).max(99),
     isAdmin: Joi.boolean().required()
-  }).meta({ className: 'User' });
+  });
 
 const users = [
   { id: 1, name: 'Diana', age: 21, isAdmin: true },
