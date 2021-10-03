@@ -14,7 +14,7 @@ or
 n:      1, 2, 3, 4, 5, 6, 7,  8,  9, ...
 fib(n): 0, 1, 1, 2, 3, 5, 8, 13, 21, ...
 ```
-## Fibonacci naive solution
+## Naive solution
 - time complexity is `O(2^n)`
 - space complexity is `O(n)`
 ```javascript
