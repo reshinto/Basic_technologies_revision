@@ -16,10 +16,16 @@
     - add a base case to return memo values
     - store return values into the memo before returning
 ## Tabulation technique
+### Strategies
 - instead of breaking a problem to multiple subproblems recursively, we do it iteratively
   - by building a table, which is just an array
     - create an array with 1 greater length than n input value
     - use starting value of 0 for all elements if need to calculate a running sum
     - ```[0, 0, 0] if n is 2```
-### Strategies
 ### Guidelines for solving dynamic programming problems using tabulation strategy
+- solution is already efficient and does not requires brute force
+  - visualize the problem as a table
+  - size the table based on the inputs
+  - initialize the table with default values
+  - seed the trivial answer into the table
+  - fill further positions based on the current position
