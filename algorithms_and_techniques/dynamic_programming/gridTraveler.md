@@ -67,7 +67,7 @@ console.log(gridTraveler(3, 2)); // 3
 console.log(gridTraveler(3, 3)); // 6
 console.log(gridTraveler(18, 18)); // 2333606220
 ```
-## Memoization technique
+## Memoization solution
 - time complexity is `O(m * n)`, simplified to `O(n)`
 - space complexity is `O(n + m)`, which is reduced to `O(n)`
 ```javascript
@@ -86,4 +86,130 @@ console.log(gridTraveler(3, 2)); // 3
 console.log(gridTraveler(3, 3)); // 6
 console.log(gridTraveler(18, 18)); // 2333606220
 ```
-## Tabulation technique
+## Tabulation solution
+```
+gridTraveler(2, 3) -> 3
+
+start by forming a table
+   0 1 2 3
+  ---------
+0 | | | | |
+  ---------
+1 | | | | |
+  ---------
+2 | | | | |
+  ---------
+
+next set all initial values as 0
+   0 1 2 3
+  ---------
+0 |0|0|0|0|
+  ---------
+1 |0|0|0|0|
+  ---------
+2 |0|0|0|0|
+  ---------
+
+next set all value to 1 for index 1, 1
+   0 1 2 3
+  ---------
+0 |0|0|0|0|
+  ---------
+1 |0|1|0|0|
+  ---------
+2 |0|0|0|0|
+  ---------
+
+during iteration, when current index is at 1, 1, add current value to index 1, 2 on the right, and index 2, 1 on the bottom
+   0 1 2 3
+  ---------
+0 |0|0|0|0|
+  ---------
+1 |0|1|1|0|
+  ---------
+2 |0|1|0|0|
+  ---------
+
+follow the same step as before
+   0 1 2 3
+  ---------
+0 |0|0|0|0|
+  ---------
+1 |0|1|1|1|
+  ---------
+2 |0|1|1|0|
+  ---------
+
+follow the same step as before, except that index 4, 1 is out of range, thus ignore
+   0 1 2 3
+  ---------
+0 |0|0|0|0|
+  ---------
+1 |0|1|1|1|
+  ---------
+2 |0|1|1|1|
+  ---------
+
+follow the same step as before, except that index 0, 3 is out of range, thus ignore
+   0 1 2 3
+  ---------
+0 |0|0|0|0|
+  ---------
+1 |0|1|1|1|
+  ---------
+2 |0|1|1|1|
+  ---------
+
+follow the same step as before, except that index 1, 3 is out of range, thus ignore
+   0 1 2 3
+  ---------
+0 |0|0|0|0|
+  ---------
+1 |0|1|1|1|
+  ---------
+2 |0|1|2|1|
+  ---------
+
+follow the same step as before, except that index 2, 3 is out of range, thus ignore
+   0 1 2 3
+  ---------
+0 |0|0|0|0|
+  ---------
+1 |0|1|1|1|
+  ---------
+2 |0|1|2|3|
+  ---------
+
+complete, index 3, 3 and index 4, 2 is out of range, thus ignore
+   0 1 2 3
+  ---------
+0 |0|0|0|0|
+  ---------
+1 |0|1|1|1|
+  ---------
+2 |0|1|2|3|
+  ---------
+```
+- time complexity is `O(m * n)`, simplified to `O(n)`
+- space complexity is `O(n * m)`, which is reduced to `O(n)`
+```javascript
+const gridTraveler = (m, n) => {
+  const table = Array(m + 1).fill().map(() => Array(n + 1).fill(0));
+  table[1][1] = 1;
+  
+  for (let i=0; i<=m; i++) {
+    for (let j=0; j<=n; j++) {
+      const current = table[i][j];
+      if (j + 1 <= n) table[i][j + 1] += current;
+      if (i + 1 <= m) table[i + 1][j] += current;
+    }
+  }
+  return table[m][n];
+}
+
+console.log(gridTraveler(1, 1)); // 1
+console.log(gridTraveler(2, 3)); // 3
+console.log(gridTraveler(3, 2)); // 3
+console.log(gridTraveler(3, 3)); // 6
+console.log(gridTraveler(18, 18)); // 2333606220
+```
