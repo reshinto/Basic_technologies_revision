@@ -190,8 +190,8 @@ complete, index 3, 3 and index 4, 2 is out of range, thus ignore
 2 |0|1|2|3|
   ---------
 ```
-- time complexity is `O(m * n)`, simplified to `O(n)`
-- space complexity is `O(n * m)`, which is reduced to `O(n)`
+- time complexity is `O(m * n)`
+- space complexity is `O(n * m)`
 ```javascript
 const gridTraveler = (m, n) => {
   const table = Array(m + 1).fill().map(() => Array(n + 1).fill(0));
