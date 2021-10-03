@@ -125,9 +125,7 @@ graph display when n is 5 which is also the number of levels for this case
 - count the number of different ways to move through a 6x9 grid
 - given a set of coins, how can we make 27 cents in the least number of coins
 - given a set of substrings, what are the possible ways to construct the string "potentpot"
-## Memoization technique
-- store subproblems and reuse it when required
-### Fibonacci memoization solution
+## Memoization solution
 - time complexity is `O(2n)`, simplified to `O(n)`
 - space complexity is `O(n)`
 ```javascript
@@ -180,13 +178,7 @@ memo
  / \
 2   1
 ```
-## Tabulation technique
-- instead of breaking a problem to multiple subproblems recursively, we do it iteratively
-  - by building a table, which is just an array
-    - create an array with 1 greater length than n input value
-    - use starting value of 0 for all elements if need to calculate a running sum
-    - ```[0, 0, 0] if n is 2```
-### Fibonacci tabulation solution
+## Tabulation solution
 - start index 1 value of 1
   - ```[0, 1, 0] if n is 2```
 ```
