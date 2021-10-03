@@ -68,7 +68,7 @@ console.log(gridTraveler(3, 3)); // 6
 console.log(gridTraveler(18, 18)); // 2333606220
 ```
 ## Memoization solution
-- time complexity is `O(m * n)`, simplified to `O(n)`
+- time complexity is `O(m * n)`
 - space complexity is `O(n + m)`, which is reduced to `O(n)`
 ```javascript
 const gridTraveler = (m, n, memo = {}) => {
