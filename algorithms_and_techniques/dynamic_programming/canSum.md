@@ -54,7 +54,7 @@ n = array length
 all leaf nodes as a targetSum value of more than 0 and cannot be reduced further, thus returns false
 ```
 ## Naive solution
-- time complexity is `O(n^m)`
+- time complexity is `O(n^m)`, where m = target sum, n = numbers.length
 - space complexity is `O(m)`
 ```javascript
 const canSum = (targetSum, numbers) => {
