@@ -1,5 +1,9 @@
 # Dynamic Programming
-- 2 types of techniques
+## examples
+- canSum: Decision Problem
+- howSum: Combination Problem
+- bestSum: Optimization Problem
+### 2 types of techniques
 ## Memoization technique
 - Store subproblems and reuse it when required
 ### Strategies
