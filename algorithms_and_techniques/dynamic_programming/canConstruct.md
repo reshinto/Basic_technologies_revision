@@ -62,10 +62,10 @@ eboard      board
 const canConstruct = (target, wordBank) => {
   if (target === "") return true
   
-  for (const word of wordBank) {  // time n, space m
+  for (const word of wordBank) {  // time n
     if (target.indexOf(word) === 0) {
       const suffix = target.slice(word.length);  // time, space this copies an array which the worst case will be m times
-      if (canConstruct(suffix, wordBank)) {  // time ^m, n has to be recalled depending of m
+      if (canConstruct(suffix, wordBank)) {  // time ^m, n has to be recalled depending on m, space m
         return true;
       }
     }
@@ -83,10 +83,10 @@ console.log(canConstruct("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeef", ["e", "ee",
 - space complexity is `O(m * m)`, simplified to `O(m^2)`
 ```javascript
 const canConstruct = (target, wordBank, memo={}) => {
-  if (target in memo) return memo[target];
+  if (target in memo) return memo[target];  // space m
   if (target === "") return true
   
-  for (const word of wordBank) {  // time n, space m
+  for (const word of wordBank) {  // time n
     if (target.indexOf(word) === 0) {
       const suffix = target.slice(word.length);  // time, space this copies an array which the worst case will be m times
       if (canConstruct(suffix, wordBank, memo)) {  // time m, since no duplicate of n is being compute
