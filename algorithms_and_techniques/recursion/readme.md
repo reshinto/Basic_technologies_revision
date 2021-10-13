@@ -94,7 +94,7 @@ return result: "hello my friends."
 |--------------------------|
 ```
 ### Call Stack with Recursion
-```javascriot
+```javascript
 function a() {
   return a();
 }
