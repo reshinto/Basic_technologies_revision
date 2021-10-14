@@ -14,6 +14,9 @@
     return 1 + getMyPositionInLine(person.nextInLine);  // this is the recursive call
   }
   ```
+## Strategy
+1. Define the base case / stopping condition
+2. Do some work to shrink the problem space
 ## Pros & Cons of using Recursion
 | Pros | Cons |
 | ---- | ---- |
