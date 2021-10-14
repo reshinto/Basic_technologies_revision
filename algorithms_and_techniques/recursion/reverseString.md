@@ -129,7 +129,7 @@ function reverseString(input) {
   const midIndex = Math.ceil(input.length / 2);
   const strArr = input.split("");
   for (let i=0; i<midIndex; i++) {
-    [strArr[0+i], strArr[strArr.length - 1 - i]] = [strArr[strArr.length - 1 - i], strArr[0 + i]];
+    [strArr[0 + i], strArr[strArr.length - 1 - i]] = [strArr[strArr.length - 1 - i], strArr[0 + i]];
   }
   return strArr.join("");
 }
