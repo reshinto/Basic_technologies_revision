@@ -234,3 +234,16 @@ return result: "11101001"
 |                           |
 |---------------------------|
 ```
+### Iterative solution
+```javascript
+function findBinary(decimal, result="") {
+  if (decimal === 0) return result;
+  
+  while (decimal > 0) {
+    const remainder = decimal % 2;
+    decimal = Math.floor(decimal / 2);
+    result = remainder + result;
+  }
+  return result;
+}
+```
