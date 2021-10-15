@@ -78,6 +78,7 @@ return result: true
 |                       |
 |-----------------------|
 ```
+### Iterative solution
 ```javascript
 function isPalindrome(input) {
   const midIndex = Math.ceil(input.length / 2);
