@@ -100,7 +100,7 @@ total current capacity = 22 + (9 * 0.33) = 25
 total current value = 19 + (9 * 0.33) = 22
 ```
 
-- the aboe 2 approaches does not give the most optimal choice, as there is a better solution for this case, which is to use best value to size ratio
+- the above 2 approaches does not give the most optimal choice, as there is a better solution for this case, which is to use best value to size ratio
   - therefore the items with the best value over size ratio will the best item to select
 
 ```
