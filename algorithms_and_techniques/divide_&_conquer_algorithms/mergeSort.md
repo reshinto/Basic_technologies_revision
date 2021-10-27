@@ -397,3 +397,25 @@ the smallest would be added to the new parent array first
 
 return results = [-1, 0, 1, 2, 3, 4, 7, 9, 10, 20]
 ```
+## Iterative solution
+```javascript
+function mergeSort(data) {
+  const endIndex = data.length - 1;
+
+  // current size of subarrays to be merged
+  // currSize varies from 1 to endIndex/2
+  // Merge subarrays in bottom up manner
+  // First merge subarrays of size 1 to create sorted subarrays of size 2
+  // then merge subarrays of size 2 to create sorted subarrays of size 4
+  for (let currSize=1; currSize<=endIndex; currSize*=2) {
+    // starting index of different subarray to be merged
+    for (let leftIndex=0; leftIndex<endIndex; leftIndex+=2*currSize) {
+      // Find ending point of left subarray
+      // mid+1 is starting point of right
+      const mid = Math.min(leftIndex + currSize - 1, endIndex);
+      const rightEnd = Math.min(leftIndex + 2 * currSize - 1, endIndex);
+      merge(data, leftIndex, mid, rightEnd);
+    }
+  }
+}
+```
