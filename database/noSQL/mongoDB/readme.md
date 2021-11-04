@@ -274,7 +274,7 @@ DATA TYPES
 ## ADDITIONAL DATA TYPES
 Timestamp, Binary data, Regular expressions, javascript code
 
-# Getting started on nodej
+# Getting started on nodejs
 ```javascript
 const { MongoClient } = require("mongodb");
 const assert = require("assert");
