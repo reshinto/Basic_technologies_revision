@@ -84,6 +84,13 @@ db.dataName.find({})
 ```
 * find all data keys and values under dataName
 
+### Dos and Don'ts
+```
+√ db.dataName.find({ _id: ObjectId("fu438h9784hgf847") })  // need to be stored as a hash
+x db.dataName.find({ _id: "fu438h9784hgf847 })  // does not work
+√ db.dataName.find({ lastLogin: ISODate("2018-10-10T00:00:00") })  // need to be written this way to work for dates
+```
+
 > db.dataName.find({key: "value"})
 * e.g.: ```db.dogs.find({name: "Rusty"})```
 * find a specific data key and value under dataName
