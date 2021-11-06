@@ -37,6 +37,25 @@
 #### Summary
 - application layer provides services for network applications with the help of protocols to perform user activities
 ### Presentation layer
+1. Translation
+    - receives data in the form of alphanumeric characters from Application layer
+    - Presentatin layer then translate the data into binary code format for the machine to understand
+      - e.g.: convert ASCII (American Standard Code for Information Interchange) to EBCDIC (Extended Binary Coded Decimal Interchange Code)
+2. Data Compression
+    - before translated data is transmitted, presentation layer will reduce the number of bits that were used to represent the original data
+    - can be in 2 type of formats
+      1. Lossy
+      2. Lossless
+    - it reduces the amount of space used to store the original file
+      - e.g.: a 5 MB file into a 2 MB file
+    - when space is reduced, the amount of time required to transmit also reduces, thus allow data transmission to be faster
+      - useful for realtime audio and video streaming
+3. Encryption / Decryption
+    - use to maintain the integrity of data before transmission
+    - it helps to enhance the security of sensitive data
+      - data gets encrypted on the sender side, and gets decrypted on the receiver side
+    - examples:
+      - SSL (Secure Sockets Layer) is used for encryption and decryption
 ### Session layer
 ### Transport layer
 ### Network layer
