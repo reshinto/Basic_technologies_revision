@@ -57,6 +57,28 @@
     - examples:
       - SSL (Secure Sockets Layer) is used for encryption and decryption
 ### Session layer
+- it helps in setting up and managing connections enabling sending and receiving of data
+  - followed by termination of connections or sessions
+- it has its own helpers called APIs (Application Programming Interface)
+  - examples:
+    - NetBIOS (Network Basic Input/Output System)
+      - it is an API example that allows applications on different computers to communicate with each other
+1. Authentication
+    - done before a session or connection is established with the server
+    - it is a process of verifying who you are
+      - for this, server uses username and password
+      - when matched with the server, a connection or session is established between the server and your computer
+2. Authorization
+    - after authentication, authorization is checked
+    - it is a process used by the server to determine if you have permission to access a file
+3. Session Management
+    - session layer keeps track of the files being downloaded
+      - webpage example
+        - it contains text and image files, and are stored as separate files on the web server
+        - when you request a website on the web browser, it opens a separate session to the web server to download each of the text and image files separately 
+        - files are received at the computer in the form of `Data Packets`
+        - Session layer keeps tracks of which data packets belongs to which file and where it goes to (web browser for this case)
+- the web browser performs all functions of Application, Presentation, and Session layer
 ### Transport layer
 ### Network layer
 ### Data Link layer
