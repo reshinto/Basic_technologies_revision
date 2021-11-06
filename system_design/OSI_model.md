@@ -148,4 +148,37 @@
       - IS-IS (Intermediate System to Intermediate System)
         - it is a routing protocol 
 ### Data Link layer
+- Data link layer receives data packets from network layer
+  - Data packets contains IP addresses of sender and receiver
+    - There are two types of addressing: 
+      1. Logical Addressing
+          - done at the Network layer
+          - where senders and receivers IP addresses are assigned to each segments to form a data packets
+      2. Physical Addressing
+          - done at the Data Link layer
+          - head is added infront of the IP packet, while the tail is added behind
+          - where MAC addresses of sender and receiver are assigned to each data packets to form a frame
+          - MAC Address is 12 digit Alpha-Character Number Data unit in data link layer is called Frame.
+            - it is embedded into the network card by the manufacturer
+- Data Unit in Data Link layer is referred to as `frame`
+  - it is embedded as a software in NIC (Network Interface Card) of the computer
+    - it provide means to transfer data from 1 computer to another via a local media
+      - such as copper wire, optical fiber, and air
+      - media refers to the physical links between 2 computer or networks
+#### performs 2 basic function
+1. allows upper layer of OSI Model to access the media
+    - via techniques such as framing
+      - IP packet gets encapsulated into a frame before sending, upon receiving it gets decapsulated
+        - this process repeats itself until the data reaches its final destination
+2. controls how data is placed and received from the media
+    - via techniques such as media access control, and error detection
+      - multiple devices could be connected via a common media
+        - if 2 or more devices sends data at the same time
+          - there will be a possibility of collision of the 2 messages resulting in a useless message that no recipient can understand 
+            - use CSMA (Carrier-Sense Multiple Access) to avoid such a situation
+              - it is a (MAC) Media Access Control protocol
+              - keeps an eye on when the shared media is free so that device can transmit data to the receiver
+              - this helps to control data transmission
+            - each frame contains bits which are used to detect errors in the receiver frame
+              - errors occur due to certain limitations of the media used for transporting data
 ### Physical layer
