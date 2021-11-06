@@ -53,3 +53,11 @@
     * ease of making updates or modifications
     * how simple the system is to operate
 * Early detection of faults can decrease or avoid system downtime
+## Fallacies
+- network is reliable
+- latency is 0
+- bandwidth is finite
+- topology doesn't change
+- network is secure
+- only 1 administrator
+- transport cost is 0
