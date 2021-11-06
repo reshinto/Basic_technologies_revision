@@ -72,12 +72,15 @@
 - transport cost is 0
 
 ## System Design Performance Metrics
-* Scalability, Reliability, Availability, Efficiency, and Manageability
-
+- use to measure the performance of a distributed system
 ### Scalability
-* It is the capability of a system, process, or a network to grow and manage increased demand
+* It is the capability of a system, process, or a network to grow and manage increased demand or traffic
+  * could be the volume of data per request or the total number of requests over time increasing
+  * goal is to achieve the growth without a loss in performance
   * Any distributed system that can continuously evolve in order to support the growing amount of work is considered to be scalable
 * A good scalable architecture attempts to balance the load on all the participating nodes evenly
+* bad system design could result in a bottleneck on the number of users or traffic the app can handle
+  * or could result in exponentially increasing cost to serve a small increase in traffic
 #### Horizontal vs Vertical Scaling
 * Horizontal Scaling: scale by adding more servers into the pool of resources
   * easier to scale dynamically by adding more machines into existing pool
@@ -90,12 +93,21 @@
 ### Reliability
 * It is the probability a system will fail in a given period
   * meaning: a distributed system is considered reliable if it keeps delivering its services even when one or several of its software or hardware components fail
-* Redundancy is use to protect a transaction should it fail due to the machine that is running the transaction
-  * in this case, another server that has the exact replica will replace the data stored
-* Redundancy has a cost
-  * reliable system has to pay the cost to achieve such resilience for services
-    * by eliminating every single point of failure
+  * responses could slow down, they're accurate but are just slower than normal
+    * hard to define whether this is a failure or not
+* ways to enable reliability
+  * requires systems in place like automated testings to prevent bugs from being deployed to production
+    * also need tools that can predict and compensate for hardware failure
+      * so that before a server even fails you can be notified and you can preemptively take that server offline and repair it before it starts serving bad requests
+#### Common way to measure reliability is `Mean Time Between Failure`
+```
+MTBF = (total_elapsed_time - total_down_time) / number_of_failures
+     = (24 hours - 4 hours downtime) / 4 failures
+     = 5 hour MTBF 
+     // this means that you have 5 hours on average before the system will have a failure
+```
 ### Availability
+* it is the most important metric when it comes to your users is whether the site actually works and what % of the time it works
 * It is the time a system remains operational to perform its required function in a specific period
   * a simple measure of the percentage of time that a system, service, or a machine remains operational under normal conditions
   * takes into account maintainability, repair time, spares availability, and other logistics considerations
@@ -105,7 +117,51 @@
   * meaning: high reliability contributes to high availability
     * but it is possible to achieve a high availability even with an unreliable product
       * by minimizing repair time and ensuring that spares are always available when they are needed
+* Poorly designed software requiring downtime for updates is less available
+  * such as when a site says it is down for maintenance
+  * in the past, there weren't that many best practices or good tools
+    * updating a database would need take the entire app down
+      * SWE would need to wait till around 3am where traffic is the lowest to take down the website for maintenance
+* it is hard to measure overall software system availability
+  * because certain parts (in a microservices) might be less available than others, but can be covered up by having `redundancy`
+    * Redundancy is use to protect a transaction should it fail due to the machine that is running the transaction
+      * in this case, another server that has the exact replica will replace the data stored
+      * shoul a request fail, a load balance will detect it and resend the request to the redundant server or replica which the user knowing
+      * Redundancy has a cost
+        * reliable system has to pay the cost to achieve such resilience for services
+          * by eliminating every single point of failure
+#### Common way to measure availability is `Availability Calculation`
+```
+Availability % = (available_time / total_time) x 100
+               = (23 hours / 24 hours) x 100
+               = 95.83% available
+```
+#### Show table for downtime for 9's
+- higher % is better, 99% is really bad
+
+|Availability|Annual Downtime|
+|-|-|
+|99%, 2 nines|3 days 15 hours 40 minutes|
+|99.9%, 3 nines|8 hours 46 minutes|
+|99.99%, 4 nines|52 minutes 36 seconds|
+|99.999%, 5 nines|5.26 minutes|
+#### Reliability vs Availablility
+- reliable system is always an available system
+  - not gonna happen in the real world, but is ideal to aim for more reliability
+- availability can be maintained by redundancy and replication, but system may not be reliable
+  - because there is a risk that the software systems that compensate for the lack of reliability break, all those flaws in the software will be exposed and you'll see a lot of downtime as a result
+- reliable software will be more profitable because providing same service requires less backup resources
+  - because you would need less hardware to serve the same amount of traffic
+    - so you don't have to have a bunch of extra resources on hand to hanlde the failures
+- requirements like the service level agreements, the availability will depend on the function of the software
+  - e.g.: social media is not exactly the end of the world if you try to create a post and it fails
+    - its not a terrible disaster, thus it might not be worth for such an app to invest tons of money high reliability and availability
+  - as for spacex and you're shooting rockets into space, you wanna make sure that your software is reliable because there's a billion $ worth of hardware on the line if it explodes, etc.
 ### Efficiency
+* how well the system performs
+* latency and throughput often used as metrics
+  * latency is how long (the delay) a request takes to get back to the user
+  * throughput is the total amount of requests and traffic that your system can handle 
 * 2 standard measures of its efficiency
   1. the response time (or latency) that denotes the delay to obtain the first item
   2. the throughput (or bandwidth) which denotes the number of items delivered in a given time unit (e.g., a second)
@@ -117,10 +173,22 @@
     * It ignores the impact of network topology, network load, its variation, the possible heterogeneity of the software and hardware components involved in data processing and routing, etc
       * However, it is difficult to develop a precise cost model that would accurately take into account all these performance factors
       * therefore, we have to live with rough but robust estimates of the system behavior
+* Poorly design system will hit a limit somewhere
+  * maybe have a bad algorithm that scales exponentially
+    * the result is that a slight increase in traffic dramatically increases the latency
+      * users will get frustrated from this 
 ### Manageability
-* The system must be easy to operate and maintain
+* Speed and difficulty involved with maintaining system
+  * e.g.: you have the fastest car in the world but is impossible for anyone to drive without crashing which is useless
+  * The system must be easy to operate and maintain
   * Serviceability or manageability is the simplicity and speed with which a system can be repaired or maintained
   * if the time to fix a failed system increases, then availability will decrease
+* Observability, how hard is it to track bugs
+  * in a complex system, you don't know where the origin of an actual bug is which could be in multiple different services
+  * so this basically tells how hard is it, how observable is the system, and how do you find bugs when you're working with it
+* Difficulty of deploying updates, how easy is it to deploy updates and new features
+  * if it is complicated and have high risks, people would not want to take that risk, and the creation of new features would slow down, which impacts your success a business
+* goal is to abstract away infrastructure so product engineers don't have to worry about deployment and risks
 * Things to consider for manageability
   * ease of diagnosing and understanding problems when they occur
   * ease of making updates or modifications
