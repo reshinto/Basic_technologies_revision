@@ -123,5 +123,29 @@
         - used when receiving of whole data is not necessary
           - e.g.: online streaming movies, songs, games, voice over ip, TFTP (Trivial File Transfer Protocol), DNS (Domain Name System)
 ### Network layer
+- Transport Layer sends data segments to the network layer
+- Network Layer works for the transmission of the recieved data segments from one computer to another located in different networks
+- Data Units in Network Layer is called Data Packets
+- The Function of Network Layer are:
+1. Logical Addressing
+    - IPv4 & IPv6 + Mask
+      - every computer in a network has a unique IP address
+      - Network layer assigns sender and receiver IP address to each segment to form an IP Packet
+        - IP address are assigned to ensure each data packet can reached the correct destination
+      - Mask tells that the first 3 combination of an IP address represent the which network
+        - the last combination of the IP address represents which host or computer
+2. Routing
+    - it is a method of moving data packet from source to destination
+    - it is based on the logical addressing format (IP addresses and Mask), routing decisions are made in the computer network
+3. Path Determination
+    - a computer can be connected to an internet server or a computer in a number of ways
+      - choosing the best possible path for delivery from source to destination is called path determination
+    - examples of protocols used to determine the best possible path for delivery
+      - OSPF (Open Shortest Path First)
+        - it is a link-state routing protocol
+      - BGP (Border Gateway Protocol)
+        - it is a standardized exterior gateway protocol
+      - IS-IS (Intermediate System to Intermediate System)
+        - it is a routing protocol 
 ### Data Link layer
 ### Physical layer
