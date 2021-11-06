@@ -4,7 +4,7 @@
   - shares data with the help of NIC (Network Interface Controller) card
   - this forms the computer network
 ## Problem
-- if 1 computer uses Windows OS, and another uses Mach OS, how would they communicate?
+- if 1 computer uses Windows OS, and another uses Mac OS, how would they communicate?
 ## Solution
 - OSI Model was introduced by ISO (International Organization for Standardization) in 1984
 ## OSI Model contains 7 layers
