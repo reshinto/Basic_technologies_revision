@@ -80,6 +80,48 @@
         - Session layer keeps tracks of which data packets belongs to which file and where it goes to (web browser for this case)
 - the web browser performs all functions of Application, Presentation, and Session layer
 ### Transport layer
+- controls the reliability of communication
+#### Segmentation
+- data received from the Session layer is divided into small data units called `Segments`
+  - each Segment or data unit contains
+    - a source and destination Port number
+      - helps to direct the segment to the correct computer application
+    - a sequence number
+      - helps to reassemble segments in the correct order to form correct message at the receiver
+#### Flow Control
+- controls the amount of data being transmitted
+- example: a mobile app connected to a server
+  - server can transmit a max data of 100 Mbps
+  - mobile can process data with a max of 10 Mbps
+  - when mobile is downloading a file from a server
+    - if server sends data at 50 Mbps
+      - it is a a rate the mobile can't process
+      - mobile uses the Transport layer to tell the server to slow the data transmission rate to 10 Mbps so that no data gets lost
+    - if server sends data at 5 Mbps
+      - mobile uses the Transport layer to tell the server to increase the data trasmission rate to 10 Mbps to maintain system performance
+#### Error Control
+- Automatic Repeat Request
+  - this is used when a data unit did not arrive at the destination
+  - it helps to retransmit the lost or corrupted data unit from the server to the app
+- Checksum
+  - it is added to each data unit by the Transport layer to find out the received corrupted or missing segment
+#### transport layer performs 2 types of services
+1. Connection-oriented Transmission
+    - done via TCP (Transmission Control Protocol)
+      - more reliable than UDP
+        - because it provides feedback
+          - you will know of the data delivery status
+          - data can be retransmitted if lost or corrupted
+      - used when whole data delivery is a must
+        - www (world wide web), email, FTP
+2. Connectionless Transmission
+    - done via UDP (User Datagram Protocol)
+      - UDP (User Datagram Protocol)
+        - faster than TCP
+          - because it provides no feedback
+            - you do not know of the data delivery status
+        - used when receiving of whole data is not necessary
+          - e.g.: online streaming movies, songs, games, voice over ip, TFTP (Trivial File Transfer Protocol), DNS (Domain Name System)
 ### Network layer
 ### Data Link layer
 ### Physical layer
