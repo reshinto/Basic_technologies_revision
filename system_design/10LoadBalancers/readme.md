@@ -58,7 +58,7 @@
     - this is useful as if we want to deploy a big change to a service
       - this will only affect the servers that handles this service
 ### Hot Spot
--when distributing a workload across a set of servers, that workload might be spread unevenly
+- when distributing a workload across a set of servers, that workload might be spread unevenly
   - this can happen if the ```sharding key``` or the ```hashing function``` are suboptimal
   - or if workload is naturally skewed
     - some servers receiving a lot more traffic than others, thus creating a ```hot spot```
