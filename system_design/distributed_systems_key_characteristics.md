@@ -82,14 +82,46 @@
 * bad system design could result in a bottleneck on the number of users or traffic the app can handle
   * or could result in exponentially increasing cost to serve a small increase in traffic
 #### Horizontal vs Vertical Scaling
-* Horizontal Scaling: scale by adding more servers into the pool of resources
-  * easier to scale dynamically by adding more machines into existing pool
-  * e.g.: Cassandra, MongoDB (allow easy way to scale horizontally by adding more machines to meet growing needs)
-* Vertical Scaling: scale by adding more power (CPU, RAM, Storage, etc.) to an existing server
-  * usually limited to the capacity of a single server
-  * scaling beyong the capacity often involves downtime and comes with an upper limit
-  * e.g.: MySQL (allow easy way to scale vertically by switching from smaller to bigger machines, however, this process often involves downtime)
+- case study: on a web app server, number of users is rapidly growing, which makes the app to run slow, due to volume of requests increasing
+  - Reasons why this could happen
+    1. CPU
+        - a certain function that requires a lot of processing power is overwhelming the CPU, causing the app to slow down
+    2. Memory
+        - app is doing something where it needs to hold large chunks of data in memory, it would get full and it won't be able to process as many requests at the same time
+    3. IO
+        - it is how fast the app can read from storage, such as accessing images or video files stored on the hard drive, you would be limited to how much data you can access at once
+    4. Bandwidth
+        - if you're streaming or similar, the amount of data that can be pushed through the network is also limited through a single server
+
 ![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/verticalScaling_vs_horizontalScaling.png "Vertical scaling vs. Horizontal scaling")
+
+- Vertical Scaling
+
+|pros|cons|
+|-|-|
+|easiest way to scale an application|diminishing returns since there is a limit to how much hardware could be added, and when the system gets larger, you get less effect for more money|
+|if server is slow, just increase the hardware(cpu, memory, etc.)|limits to scalability, as it is not possible for a single machine to handle a huge amount of traffic|
+||single point of failure, if anything fails the server would crash|
+
+  - Diminishing returns
+  ![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/diminishingReturns.png "Diminishing Returns")
+
+- Horizontal Scaling
+
+|pros|cons|
+|-|-|
+|more efficient long term, because you can buy commodity hardware, which is cheaper when you can buy in bulk |more complexity up front to build|
+|redundancy built in, if any server is done, the other servers can still handle traffic|need load balancer to distribute traffic|
+|cloud providers make load balancing easier, because it helps to abstracts away a lot of the complexity you face when building||
+
+|Horizontal Scaling|Vertical Scaling|
+|-|-|
+|scale by adding more servers into the pool of resources|scale by adding more power (CPU, RAM, Storage, etc.) to an existing server|
+|easier to scale dynamically by adding more machines into existing pool|usually limited to the capacity of a single server|
+|e.g.: Cassandra, MongoDB (allow easy way to scale horizontally by adding more machines to meet growing needs), Kubernetes (use to build on top docker containers, help to abstract the complexity of having to deal with all the different servers), Docker (allows you to put apps in containers and easily deploy them to various servers), Hadoop (good for handling petabytes of data as it uses map reduce, by breaking up massive amount of data and splits it off so that it can be worked on by thousands of different servers, and then puts that data back together)|scaling beyong the capacity often involves downtime and comes with an upper limit|
+||e.g.: MySQL (allow easy way to scale vertically by switching from smaller to bigger machines, however, this process often involves downtime)|
+
+
 ### Reliability
 * It is the probability a system will fail in a given period
   * meaning: a distributed system is considered reliable if it keeps delivering its services even when one or several of its software or hardware components fail
