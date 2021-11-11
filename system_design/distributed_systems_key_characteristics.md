@@ -113,6 +113,10 @@
 |more efficient long term, because you can buy commodity hardware, which is cheaper when you can buy in bulk |more complexity up front to build|
 |redundancy built in, if any server is done, the other servers can still handle traffic|need load balancer to distribute traffic|
 |cloud providers make load balancing easier, because it helps to abstracts away a lot of the complexity you face when building||
+|having more servers means you can have servers around the world which reduce latency for users all over the world||
+
+  - Price per capacity vs Extra capacity
+  ![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/priceToCapacity.png "Price per capacity vs Extra capacity")
 
 |Horizontal Scaling|Vertical Scaling|
 |-|-|
