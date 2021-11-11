@@ -9,7 +9,8 @@
 - OSI Model was introduced by ISO (International Organization for Standardization) in 1984
 ## OSI Model contains 7 layers
 - each layer is a package of protocols
-### Application layer
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/osiLayers.png "OSI Layers")
+### Application layer (7)
 - this layer is used by network applications
   - network application means computer apps that uses internet
     - computer apps e.g.: chrome, firefox, outlook, skype, etc.
@@ -36,7 +37,7 @@
   - Virtual Terminals: Telnet
 #### Summary
 - application layer provides services for network applications with the help of protocols to perform user activities
-### Presentation layer
+### Presentation layer (6)
 1. Translation
     - receives data in the form of alphanumeric characters from Application layer
     - Presentatin layer then translate the data into binary code format for the machine to understand
@@ -56,7 +57,7 @@
       - data gets encrypted on the sender side, and gets decrypted on the receiver side
     - examples:
       - SSL (Secure Sockets Layer) is used for encryption and decryption
-### Session layer
+### Session layer (5)
 - it helps in setting up and managing connections enabling sending and receiving of data
   - followed by termination of connections or sessions
 - it has its own helpers called APIs (Application Programming Interface)
@@ -79,7 +80,7 @@
         - files are received at the computer in the form of `Data Packets`
         - Session layer keeps tracks of which data packets belongs to which file and where it goes to (web browser for this case)
 - the web browser performs all functions of Application, Presentation, and Session layer
-### Transport layer
+### Transport layer (4)
 - controls the reliability of communication
 #### Segmentation
 - data received from the Session layer is divided into small data units called `Segments`
@@ -122,7 +123,7 @@
             - you do not know of the data delivery status
         - used when receiving of whole data is not necessary
           - e.g.: online streaming movies, songs, games, voice over ip, TFTP (Trivial File Transfer Protocol), DNS (Domain Name System)
-### Network layer
+### Network layer (3)
 - Transport Layer sends data segments to the network layer
 - Network Layer works for the transmission of the recieved data segments from one computer to another located in different networks
 - Data Units in Network Layer is called Data Packets
@@ -147,7 +148,7 @@
         - it is a standardized exterior gateway protocol
       - IS-IS (Intermediate System to Intermediate System)
         - it is a routing protocol 
-### Data Link layer
+### Data Link layer (2)
 - Data link layer receives data packets from network layer
   - Data packets contains IP addresses of sender and receiver
     - There are two types of addressing: 
@@ -181,7 +182,7 @@
               - this helps to control data transmission
             - each frame contains bits which are used to detect errors in the receiver frame
               - errors occur due to certain limitations of the media used for transporting data
-### Physical layer
+### Physical layer (1)
 - Till now, Data from Application Layer has  been segmented by Transport Layer - placed into Packets by Network Layer
 - and Framed by Data Link Layer
   - which is a sequence of binary 0's and 1's
