@@ -12,6 +12,7 @@
   - LB will stop sending traffic to such a server if
     - a server is not available to take new requests
     - is not responding or has elevated error rate
+  - basically it helps to improve reliability and scalability of the app
 - load balancers can also be overloaded, therefore multiple load balancers can be used
   - different server selection strategies can also be applied to different load balancers
   - load balancers can also communicate between each other so as to determine the best redirection strategy for the specific request
@@ -36,10 +37,32 @@
 - depends on configurations
 - can either register the new server or deregister a removed server by itself
 - or someone has to update and configure the information
+## 2 layer types of load balancer
+### Layer 4
+- only has access to TCP and UDP data
+- faster because it does not need to use as much processing power to look at each request
+- lack of information can lead to uneven traffic
+- most popular Layer 4 load balancing techniques are:
+  - round-robin, weighted round-robin, least connections, weighted least connections
+### Layer 7
+- full access to HTTP protocol and data
+- can terminate SSL and decrypt traffic
+- check for authentication
+- smarter routing options
+- more cpu intensive
+  - but is no longer a big factor due to the drop in hardware costs over the years
+- the staff who are responsible for the apps themselves need to ensure that their apps are perfectly tuned for optimal application performance
+- Layer 7 switching directs its requests at the application layer, this type of switching is also known as:
+  - Request switching, Application switching, Content based routing
 ## 2 types of load balancers
+### Software or Hardware type
+- SLB (Server Load Balancing)
+    - provides network services and content delivery using a series of load balancing algorithms
+    - prioritizes responses to the specific requests from clients over the network
+    - distributes client traffic to servers to ensure consistent, high-performance application delivery
 ### Software type
 - can do more compared to hardware type, as it has more power over customization and scaling
-- examples
+- examples: Nginx, HAProxy
   - SDN (software-defined networking)
     - separates the control plane from the data plane for application delivery
       - This allows the control of multiple load balancing
@@ -53,10 +76,6 @@
   - TCP (transmission control protocol)
     - provides a reliable and error-checked stream of packets to IP addresses
       - which can otherwise easily be lost or corrupted
-  - SLB (Server Load Balancing)
-    - provides network services and content delivery using a series of load balancing algorithms
-    - prioritizes responses to the specific requests from clients over the network
-    - distributes client traffic to servers to ensure consistent, high-performance application delivery
   - Virtual
     - mimic software-driven infrastructure through virtualization
     - runs the software of a physical load balancing appliance on a virtual machine
@@ -73,10 +92,12 @@
       - to meet the agility and application traffic demands of organizations implementing private cloud infrastructure
     - Using an as-a-service model
       - creates a simple model for application teams to spin up load balancers
-### Hardware type
+### Hardware type: F5, Citrix
 - they are physical machines that are dedicated to load balancing
 - limited to the hardware that is given
 - hardware is often expensive
+  - as it could lead to vendor lock-in
+- can handle tons of taffic because they are specifically designed only to be load balancers
 - examples
   - Geographic
     - redistributes application traffic across data centers in different locations for maximum efficiency and security
@@ -127,6 +148,7 @@
     - check how much traffic a server is handling at an given time
     - directs traffic to the server with the fewest active connections
     - useful when there are a large number of persistent client connections which are unevenly distributed between the servers
+      - such as chat or streaming apps
   - Least Response Time Method / performance-based selection
     - check how long a server is taking to respond to traffic
     - directs traffic to the server with the fewest active connections and the lowest average response time
@@ -137,6 +159,7 @@
     - cycles through a list of servers and sends each new request to the next server in 1 order
       - When it reaches the end of the list, it starts over at the beginning
       - is most useful when the servers are of equal specification and there are not many persistent connections
+    - simplest type of routing, but can result in uneven traffic
   - Weighted Round Robin Method
     - designed to better handle servers with different processing capacities
       - Each server is assigned a weight (an integer value that indicates the processing capacity)
@@ -155,6 +178,7 @@
       - if we are caching the results of requests in the servers
         - it will be helpful to have requests from a specific client always be redirected to the server in which the response of that particular client's request has been cached
     - this can help you maximize cache hits
+    - useful for stateful sessions
   - path-based server selection
     - load balancer distributes requests to servers according to the path of the requests
       - for example, it could be split based on features, payments related feature is redirected to payment handled related servers, and other features related requests are redirected to their respective related servers
