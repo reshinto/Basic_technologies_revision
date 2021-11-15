@@ -1,4 +1,19 @@
 # Caching
+## definition
+- It is like short-term memory
+  - has a limited amount of space
+  - but is typically faster than the original data source
+  - contains the most recently accessed items
+- caching enables
+  - better use of already available resources
+  - unattainable product requirements feasible
+- take advantage of the locality of reference principle "recently requested data is likely to be requested again"
+- used in almost every layer of computing
+  - e.g.: hardware, operating systems, web browsers, web applications, etc
+- can exist at all levels in architecture
+  - but are often found at the level nearest to the front end
+    - where they are implemented to return data quickly without taxing downstream levels
+## use cases
 - most likely will use caching in all, or almost all of the Systems Design interviews
 - the reason for using caching is to avoid redoing the same operations, especially computationally complex operations that might take a lot of time for multiple times
 - therefore, caching is used to speed up a system, to reduce or improve the latency of a system
@@ -36,7 +51,12 @@
     - can either have a single cache at some detached componentwhere all servers to refer to
       - such as a ```Redis``` a popular in-memory database which uses a key value store
     - or each server will have its own cache
-## 2 popular types of caches that caches data for reading and writing
+## Cache Invalidation
+- Caching requires maintenance for keeping cache coherent with the source of truth (e.g., database)
+- If the data is modified in the database
+  - it should be invalidated in the cache
+  - else can cause inconsistent application behavior
+  - This problem is solved via Cache Invalidation
 ### Understanding the problem
 - if we are designing a system or web app, where users can read, write, and edit posts
   - we have the client (browser) that the user is interacting with
@@ -55,35 +75,62 @@
 ### First popular type: Write through cache
 - it is type of caching system where when you make an edit or write to a piece of data
   - the system will write that piece of data both in cache and in the main source of truth (in this case the database) at the same time / operation
-  - pros: allows the cache and database to always be in sync
-  - cons: still have to go to the database as everytime the cache or database is overwritten, you would be doing both things as the same time
+    - cached data allows for fast retrieval
+    - same data gets written in the permanent storage
+      - this will have complete data consistency between the cache and the storage
+    - ensures that nothing will get lost in case of a crash, power failure, or other system disruptions
+   
+  |pros|cons|
+  |-|-|
+  |allows the cache and database to always be in sync|higher latency for write operations, because every write operation must be done twice before returning success to the client|
+  |minimizes the risk of data loss|have to go to the database everytime the cache or database is overwritten, thus doing both things as the same time|
+  
 ### Second popular type: Write back cache
-- difference between this and the ```Write through cache``` is that the server is gonna update only the cache
+- difference between this and the ```Write through cache``` is that the server update only the cache
   - cache will be out of sync with the database
     - the system will asynchronously update the database with the values that are stored in the cache
       - can be done in different ways
         - on certain intervals
           - e.g.: every 5 seconds, 5 minutes, or every 5 hours
           - or a different type of schedule e.g.: whenever cache gets filled up and requires eviction
+
 - in summary: whenever a user makes a network request to the server to make any modifications, only the cache will be updated, and then later at a specific schedule, the database will be asynchronously updated
-- cons: if something ever happens to the cache, and the data is lost before the database has been asynchronously updated, then the data will be lost permanently
-  - data inconsistency or staleness will occur, especially if there are multiple servers with their own cache
-    - for this case, it would be better to have 1 component solely for caching so that all servers can retrieve the similar cache data
+
+  |pros|cons|
+  |-|-|
+  |write to the permanent storage is done after specified intervals or under certain conditions, results in low latency and high throughput for write-intensive applications| this speed comes with the risk of data loss in case of a crash or other adverse event, because the only copy of the written data is in the cache|
+  ||if something ever happens to the cache, and the data is lost before the database has been asynchronously updated, then the data will be lost permanently|
+  ||data inconsistency or staleness will occur, especially if there are multiple servers with their own cache, for this case, it would be better to have 1 component solely for caching so that all servers can retrieve the similar cache data|
+
+### Second popular type: Write around cache
+- similar to write through cache
+  - but data is written directly to permanent storage, bypassing the cache
+  
+  |pros|cons|
+  |-|-|
+  |can reduce the cache being flooded with write operations that will not subsequently be re-read|a read request for recently written data will create a “cache miss”|
+  ||must be read from slower back-end storage and experience higher latency|
+        
 ## Eviction policies for stale cache data
 - determines how we get rid of data in caches
   - or what policy or rules we have to follow to get rid of data in caches
 - there are lots of ways to evict data from a cache
   - thus depends on the use case, the product, or system that you are building or designing
   - therefore need to discuss with interviewer to figure out what things are valued
+### FIFO (First In First Out) policy (most common)
+- cache evicts the first block accessed first regardless of how often it was accessed before
+### LIFO (Last In First Out) policy
+- cache evicts the block accessed most recently first regarless of how often it was accessed before
 ### LRU (Least Recently Used) policy
 - get rid of the least recently used pieces of data in a cache
   - you have some way of tracking what pieces of data are the least recently used
     - usually based on assumption that a piece of data that was used least recently is the one that we least care about
+### MRU (Most Recently Used) Policy
+- Discards, in contrast to LRU, the most recently used items first
 ### LFU (Least Frequently Used) policy
 - get rids of the least frequently used of that data, not necessarily the least recently used
-### LIFO (Last In First Out) policy
-### FIFO (First In First Out) policy
-### Random policy
+### RR (Random Replacement) Policy (least common)
+- Randomly selects a candidate item and discards it to make space when necessary
 ## Terms used
 ### Cache
 - a piece of hardware or software that stores data, typically meant to retrieve that data faster than otherwise
@@ -98,10 +145,36 @@
 ### Cache Eviction Policy
 - the policy by which values get evicted or removed from a cache
 - popular cache eviction polices include LRU (Least Recently Used), FIFO (First in First out), and LFU (Least-Frequently Used)
+### Application server cache
+- Placing a cache directly on a request layer node enables the local storage of response data
+- Each time a request is made to the service, the node will quickly return local cached data if it exists
+- If it is not in the cache, the requesting node will query the data from disk
+- The cache on one request layer node could be located
+  - in memory (very fast)
+  - on the node’s local disk (faster than going to network storage)
+- If the request layer is expanded to multiple nodes
+  - possible to have each node host its own cache
+  - however, if load balancer randomly distributes requests across the nodes
+    - the same request will go to different nodes
+      - thus increasing cache misses
+      - 2 choices for overcoming this hurdle: 1) global caches 2) distributed caches
 ### CDN (Content Delivery Network)
 - it is a 3rd party service that acts like a cache for your servers
+  - for sites serving large amounts of static media
 - sometimes, web apps can be slow for users in a particular region if your servers are located only in another region
 - a CDN has servers all around the world
   - this means that the latency to a CDN's servers will almost always be far better than the latency to your servers
 - a CDN's servers are often referred to as PoPs (Points of Presence)
   - 2 of the most popular CDNs are ```Cloudflare``` and ```Google Cloud CDN```
+- In a typical CDN setup
+  - a request will first ask the CDN for a piece of static media
+  - the CDN will serve that content if it has it locally available
+  - If it isn’t available
+    - the CDN will query the back-end servers for the file
+    - cache it locally
+    - serve it to the requesting user
+- If the system we are building isn’t yet large enough to have its own CDN
+  - can ease future transition
+    - by serving the static media off a separate subdomain (e.g. static.yourservice.com)
+      - using a lightweight HTTP server (e.g. Nginx)
+    - cut-over the DNS from your servers to a CDN later
