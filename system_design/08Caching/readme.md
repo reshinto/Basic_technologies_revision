@@ -1,5 +1,11 @@
 # Caching
-## definition
+- improves speed and performance of application
+  - reading from memory is faster than disk, 50 - 200 times faster
+  - can serve the same amount of traffic with fewer resources
+  - pre-calculate and cache data in advance
+  - most apps have far more reads than writes, perfect for caching
+- saves money long term
+## Definition
 - It is like short-term memory
   - has a limited amount of space
   - but is typically faster than the original data source
@@ -102,7 +108,7 @@
   ||if something ever happens to the cache, and the data is lost before the database has been asynchronously updated, then the data will be lost permanently|
   ||data inconsistency or staleness will occur, especially if there are multiple servers with their own cache, for this case, it would be better to have 1 component solely for caching so that all servers can retrieve the similar cache data|
 
-### Second popular type: Write around cache
+### Write around cache
 - similar to write through cache
   - but data is written directly to permanent storage, bypassing the cache
   
@@ -112,52 +118,45 @@
   ||must be read from slower back-end storage and experience higher latency|
         
 ## Eviction policies for stale cache data
-- determines how we get rid of data in caches
+- determines how we get rid of stale data in caches
   - or what policy or rules we have to follow to get rid of data in caches
 - there are lots of ways to evict data from a cache
   - thus depends on the use case, the product, or system that you are building or designing
   - therefore need to discuss with interviewer to figure out what things are valued
+- 2 reasons for needing this
+  1. preventing stale data
+  2. caching only most valuable data to save resources
+### TTL (Time to Live)
+- set a time period before a cache entry is deleted automatically
+- used to prevent stale data
+- time set can depend on how essential it is for data to be fresh
+  - example
+    - blog post: very rarely it would be updated, so a longer cache time could be implemented
+    - tweet counts: this does not need to be immediately updated, so data can remain stale for few seconds or even a minute
 ### FIFO (First In First Out) policy (most common)
 - cache evicts the first block accessed first regardless of how often it was accessed before
 ### LIFO (Last In First Out) policy
 - cache evicts the block accessed most recently first regarless of how often it was accessed before
 ### LRU (Least Recently Used) policy
-- get rid of the least recently used pieces of data in a cache
+- get rid of the least recently used pieces of data when cache is full
   - you have some way of tracking what pieces of data are the least recently used
     - usually based on assumption that a piece of data that was used least recently is the one that we least care about
 ### MRU (Most Recently Used) Policy
 - Discards, in contrast to LRU, the most recently used items first
 ### LFU (Least Frequently Used) policy
 - get rids of the least frequently used of that data, not necessarily the least recently used
+  - track number of times key is accessed
+  - drop lease used when cache is full
 ### RR (Random Replacement) Policy (least common)
 - Randomly selects a candidate item and discards it to make space when necessary
-## Terms used
-### Cache
-- a piece of hardware or software that stores data, typically meant to retrieve that data faster than otherwise
-- caches are often used to store responses to network requests as well as results of computationally-long operations
-- data in a cache can become ```stale``` if the main source of truth for that data (i.e. the main database behind the cache) gets updates and the cache doesn't
-### Cache Hit
-- when requested data is found in a cache
-### Cache Miss
-- when requested data could have been found in a cache but isn't
-- this is typically used to refer to a negative consequence of a system failure or of a poor design choice
-  - e.g.: if a server goes down, our load balancer will have to forward requests to a new server, which will result in cache misses
-### Cache Eviction Policy
-- the policy by which values get evicted or removed from a cache
-- popular cache eviction polices include LRU (Least Recently Used), FIFO (First in First out), and LFU (Least-Frequently Used)
-### Application server cache
-- Placing a cache directly on a request layer node enables the local storage of response data
-- Each time a request is made to the service, the node will quickly return local cached data if it exists
-- If it is not in the cache, the requesting node will query the data from disk
-- The cache on one request layer node could be located
-  - in memory (very fast)
-  - on the node’s local disk (faster than going to network storage)
-- If the request layer is expanded to multiple nodes
-  - possible to have each node host its own cache
-  - however, if load balancer randomly distributes requests across the nodes
-    - the same request will go to different nodes
-      - thus increasing cache misses
-      - 2 choices for overcoming this hurdle: 1) global caches 2) distributed caches
+
+## Caching layers
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/cachingLayers.png "Caching Layers")
+
+### DNS (Domain Name System) cache
+- when typing a website address, you would go to an ip address first
+  - before being able to retrieve the ip address, you would need to access it from a DNS server
+- by caching the request to the DNS server once and storing it at the client, the client can then go to the ip address directly
 ### CDN (Content Delivery Network)
 - it is a 3rd party service that acts like a cache for your servers
   - for sites serving large amounts of static media
@@ -178,3 +177,67 @@
     - by serving the static media off a separate subdomain (e.g. static.yourservice.com)
       - using a lightweight HTTP server (e.g. Nginx)
     - cut-over the DNS from your servers to a CDN later
+### Application Server Cache
+- Placing a cache directly on a request layer node enables the local storage of response data
+- Each time a request is made to the service, the node will quickly return local cached data if it exists
+- If it is not in the cache, the requesting node will query the data from disk
+- The cache on one request layer node could be located
+  - in memory (very fast)
+  - on the node’s local disk (faster than going to network storage)
+- If the request layer is expanded to multiple nodes
+  - possible to have each node host its own cache
+  - however, if load balancer randomly distributes requests across the nodes
+    - the same request will go to different nodes
+      - thus increasing cache misses
+      - 2 choices for overcoming this hurdle: 1) global caches 2) distributed caches
+
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/appServerCache.png "App Server Cache")
+
+### Database
+- most database would have their own internal caching to cache frequent accessed data
+## Terms used
+### Cache
+- a piece of hardware or software that stores data, typically meant to retrieve that data faster than otherwise
+- caches are often used to store responses to network requests as well as results of computationally-long operations
+- data in a cache can become ```stale``` if the main source of truth for that data (i.e. the main database behind the cache) gets updates and the cache doesn't
+### Cache Hit
+- when requested data is found in a cache
+### Cache Miss
+- when requested data could have been found in a cache but isn't
+- this is typically used to refer to a negative consequence of a system failure or of a poor design choice
+  - e.g.: if a server goes down, our load balancer will have to forward requests to a new server, which will result in cache misses
+## Distributed Cache
+- works same as traditional cache
+- has built-in functionality to replicate data
+- shard data across servers if amount of data is too big for a single server
+- and locate proper server for each key
+- reason for doing this is, at scale, you don't want your entire system to break down just because your single cache server goes down
+  - you'll want some replication to ensure system is more reliable
+- whenever an active server is down, the application will detect it and reroute it to a passive server
+  - under ideal conditions, the passive servers will not do anything
+  - before a passive server gets brought up online, it needs to be `warm-up` which is to pre-query the database and fill up the cache data
+
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/distributedCache.png "Distributed Cache")
+
+
+## Code example
+### Caching retrieval
+```python
+def app_request(tweet_id):
+    cache = {}
+    data = cache.get(tweet_id)
+    if data:
+        return data
+    else:
+        data = db_query(tweet_id)
+        # set data in cache
+        cache[tweet_id] = data
+        return data
+```
+### Caching writing
+```python
+def app_update(tweet_id, data):
+    cache = {}
+    db_update(data)
+    cache.pop(tweet_id)
+```
