@@ -47,3 +47,16 @@
 ### Vertical Scaling
 - get a bigger server with faster processor or more memory
 - easiest solution when starting out
+
+## Replication and Partitioning
+### Read Replicas
+- duplicate the database and set it as the master server dedicated only to writes
+- create replica servers to handle reads
+- have to handle making sure new data reaches replicas
+- have built in fault tolerance as even if any of the replica were to go down, there would be backups to take its place
+
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/replicas.png "replicas")
+
+### Sharding
+
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/sharding.png "sharding")
