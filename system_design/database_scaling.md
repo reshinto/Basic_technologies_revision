@@ -57,6 +57,21 @@
 
 ![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/replicas.png "replicas")
 
-### Sharding
+### Sharding (a type of partitioning)
+- also called as horizontal partitioning
+- schema of table stays the same, but it's now split across multiple DBs
+  - reason for this is because if read replica is set up, you need to handle more writes
+    - can split the task
+      - e.g.: names of users from A-M goes to the first shard, while users from N-Z goes to the second shard
+
+|pros|cons|
+|-|-|
+|can hanlde more traffic|Hot Keys situation where some keys does not have as much traffic compared to the others leading to uneven traffic|
+||no joins across shards because the data is separate, if we attempt to join them, it would be very slow|
+
+- famous example of hot key senario
+  - instagram: justin bieber user id had way more traffic than an average user
+    - thus there is no good way to handle the traffic whenever he posts a picture, the servers would go crazy
+- some cases, there's no way good way to handle sharding, just have to deal with it
 
 ![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/sharding.png "sharding")
