@@ -75,3 +75,15 @@
 - some cases, there's no way good way to handle sharding, just have to deal with it
 
 ![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/sharding.png "sharding")
+
+### Vertical Partitioning
+- divide up the schema of database into separate tables
+  - typically done by functionality if there is 1 big row of user data
+    - data that does not make sense to be used together would make sense to split them apart so that you do not retrieve a bunch of data that is not required
+- best when most data in row isn't needed for most queries
+
+|pros|cons|
+|-|-|
+|generally it is easier to implement than sharding|could potentially end up having to shard or horizontally partition anyway, which would get complicated because the data has already been vertically partitioned|
+
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/verticalPartitioning.png "Vertical Partitioning")
