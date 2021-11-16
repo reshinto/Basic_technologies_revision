@@ -18,6 +18,15 @@
 |thus it does not have to do a full table scans across the database|requires more storage for a table that's indexed because you have to store the index itself|
 
 ### Denormalization
+- it go against a standard best practices with relational databases
+- add redundant data to tables so that it reduces the amount of joins you need to do
+
+|pros|cons|
+|-|-|
+|improves the read performance|sacrificing write performance|
+||risk inconsistent data across tables, because all tables have to have the same data|
+||code becomes harder to write as you would need to deal with the situation where you not only write to 1 table, but you have to update that data place that column is now located. Usually its abstracted away by some library|
+
 ### Connection Pooling
 ### Caching
 ### Vertical Scaling
