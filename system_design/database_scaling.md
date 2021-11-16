@@ -95,7 +95,7 @@
 - the reason why you would choose a NoSQL isn't because NoSQL is magical
   - you choose it because you know up front what you are sacrificing and what specifically you need for your application that you can make a trade off
     - when you start of with a relational databases, you thought you would stay with all the best practices
+    - but by the time you end up scaling, you have lost all of it
 - examples:
   - when dealing with transactions and banking, you would want consistency with SQL
   - for stuff like google or social media where you don't need perfect consistency right away, you could make those trade offs for scale with NoSQL
-    - but by the time you end up scaling, you have lost all of it
