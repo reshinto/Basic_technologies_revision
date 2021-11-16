@@ -87,3 +87,15 @@
 |generally it is easier to implement than sharding|could potentially end up having to shard or horizontally partition anyway, which would get complicated because the data has already been vertically partitioned|
 
 ![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/verticalPartitioning.png "Vertical Partitioning")
+
+## When to consider NoSQL
+- when the benefit of relational database is gone
+  - e.g.: normalized data, strong consistency, simple data model
+- when you made a lot of trade offs trying to scale, it becomes unrecognizable compared to a standard SQL setup
+- the reason why you would choose a NoSQL isn't because NoSQL is magical
+  - you choose it because you know up front what you are sacrificing and what specifically you need for your application that you can make a trade off
+    - when you start of with a relational databases, you thought you would stay with all the best practices
+- examples:
+  - when dealing with transactions and banking, you would want consistency with SQL
+  - for stuff like google or social media where you don't need perfect consistency right away, you could make those trade offs for scale with NoSQL
+    - but by the time you end up scaling, you have lost all of it
