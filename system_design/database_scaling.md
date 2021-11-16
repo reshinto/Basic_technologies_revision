@@ -28,7 +28,22 @@
 ||code becomes harder to write as you would need to deal with the situation where you not only write to 1 table, but you have to update that data place that column is now located. Usually its abstracted away by some library|
 
 ### Connection Pooling
+- similar to car pooling where everyone rides in the same car to save resources or money
+- allow multiple application threads to use the same database connection
+  - in this case, instead of every application thread using its own connection
+    - they are pooled together and use the same one
+- which saves on overhead of independent database connections
+
 ### Caching
+- serve traffic from memory rather than having to read from disk
+- not directly related to database
+- cache sits in front of database to handle serving content
+- can't cache everything
+  - dynamic data that is frequently updated would not work well
+- e.g.: Redis, Memcached
+- best way to scale the database is to not let traffic reach the database at all
+  - according to facebook, 99% of their requests are served from cache
+
 ### Vertical Scaling
 - get a bigger server with faster processor or more memory
 - easiest solution when starting out
