@@ -184,4 +184,15 @@ output: node6 -> node5 -> node4 -> node3 -> node2 -> node1
 ```
 ## Iterative solution
 ```javascript
+function reverseList(head) {
+  let newNext = null;
+  let current = head;
+  while (current) {
+    const tmp = current.next;
+    current.next = newNext;
+    newNext = current;
+    current = tmp;
+  }
+  return newNext;
+}
 ```
