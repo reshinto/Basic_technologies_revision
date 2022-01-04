@@ -171,4 +171,28 @@ output: node1 -> node4 -> node8 -> node11 -> node16 -> node20 -> node22 -> node4
 ```
 ## Iterative solution
 ```javascript
+function sortedMerge(nodeA, nodeB) {
+  let dummyNode = new Node(0);  // a dummy first node to hang the result on
+  let tail = dummyNode;  // tail points to the last result node
+  while (true) {
+    if (!nodeA) {  // use nodeB if nodeA runs out
+      tail.next = nodeB;
+      break;
+    }
+    if (!nodeB) {  // use nodeA if nodeB runs out
+      tail.next = nodeA;
+      break;
+    }
+    // Compare data of 2 lists, append the smaller list into tail and advance the head to the next Node
+    if (nodeA.value <= nodeB.value) {
+      tail.next = nodeA;
+      nodeA = nodeA.next;
+    } else {
+      tail.next = nodeB;
+      nodeB = nodeB.next;
+    }
+    tail = tail.next;  // Advance the tail
+  }
+  return dummyNode.next;
+}
 ```
