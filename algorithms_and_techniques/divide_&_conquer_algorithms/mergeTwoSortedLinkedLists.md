@@ -55,8 +55,8 @@ function sortedMerge(nodeA, nodeB) {
   }
   ```
 ```
-input1: node1 -> node8 -> node22 -> node40
-input2: node4 -> node11 -> node16 -> node20
+nodeA: node1 -> node8 -> node22 -> node40
+nodeB: node4 -> node11 -> node16 -> node20
 
 since node1 and node4 are both not null, base case is skipped
 when comparing node1 and node4, 1 is less than 4
@@ -166,6 +166,8 @@ node4 -> node8 -> node11 -> node16 -> node20 -> node22 -> node40
 |------------------------------|
 node1 next = node4
 node1 -> node4 -> node8 -> node11 -> node16 -> node20 -> node22 -> node40
+
+output: node1 -> node4 -> node8 -> node11 -> node16 -> node20 -> node22 -> node40
 ```
 ## Iterative solution
 ```javascript
