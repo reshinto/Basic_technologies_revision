@@ -17,8 +17,7 @@ new BST:
 ```javascript
 function insertNode(head, value) {
   if (!head) {  // create and append new node with value
-    head = new Node(value);
-    return head;
+    return new Node(value);
   }
   // if current value is larger than current tree node value, move to the right child
   if (head.value < value) {
@@ -129,4 +128,27 @@ return 100
 ```
 ## Iterative solution
 ```javascript
+function insertNode(head, value) {
+  const newNode = new Node(value)
+  if (!head) {
+    return newNode;
+  }
+  let currentNode = head;
+  while (currentNode) {
+    if (currentNode.value < value) {
+      if (!currentNode.right) {
+        currentNode.right = newNode;
+        break;
+      }
+      currentNode = currentNode.right;
+    } else {
+      if (!currentNode.left) {
+        currentNode.left = newNode;
+        break;
+      }
+      currentNode = currentNode.left;
+    }
+  }
+  return head;
+}
 ```
