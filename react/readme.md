@@ -365,7 +365,7 @@ const App = () => {
 
   return (
     <>
-      {count}
+      {expensiveCount}
     </>
   );
 };
