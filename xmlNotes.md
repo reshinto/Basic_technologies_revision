@@ -1,4 +1,75 @@
-# XML Syntax
+# XML (eXtensible Markup Language)
+- became a W3C recommendation or standard in 1998
+- it is a tag-based syntax, similar to HTML
+  - XML is NOT a replacement for HTML
+- X means eXtensible
+  - can use existing tags
+  - or can make your own tags
+    - any app that can read XML, will be able to parse and read
+- XML is the foundation of several Web technologies
+  - e.g.:
+    - XHTML: HTML formatted as XML syntax
+    - RSS/ATOM: used for publishing, such as blogs
+    - AJAX: asynchronous JavaScript and XML, XML is the X in AJAX
+    - Web services: using APIs over the web
+      - XML can be used to exchange data over the web
+## What is XML used for
+- used to structure and describe information
+- purpose is to take in information and apply structure and meaning to it
+- it was intended to be used over the internet
+- used to exchange data between disparate systems that may have never been intended to talk with each other
+  - e.g.: using XML to bridge the gap between a very old computer system to a new application so as to allow data to be accessed by newer systems
+## XML related technologies
+- technologies that make working with XML to solve certain problems easier and more productive
+- e.g.:
+  - `XPath`: eXtensible Path Language
+    - it's called XPath because it uses a path-life syntax to perform queries on XML data
+    - XPath is similar to how files are organized on the computer
+      - `~/dev/example/file`
+    - used to find and extract information from XML documents
+    - a sort of a derivative form of `XQuery`
+      - but is used for extracting information from XML in an advanced way
+  - `XSLT`: XML Stylesheet Language Transformations
+    - a kind of CSS
+    - can be used to style XML information, important word is trsnformations
+    - provides a way of taking XML information and transforming it into something else
+      - transforming into any file (e.g.: pdf, text, webpage, any file format)
+  - `XQuery`: XML Query
+    - a type of SQL for XML
+    - a way of extracting data from XML as if it were a database
+    - provides more advanced querying than `XPath`
+    - can build complex queries that search multiple XML files to extract and join information
+  - `Xpointer` and `XLink`
+    - create links between and within XML documents
+    - similar to link tag in HTML, but more powerful
+## Describing Data with XML
+- raw data
+  ```
+  Joe Marini
+  - +1 (415) 555-1234 (home)
+  - +1 (800) 555-9867 (work)
+  - +1 (510) 555-1212 (mobile)
+  - joe@joe.com
+  ```
+- xml data
+  ```xml
+  <BusinessCard>
+    <name>Joe Marini</name>
+    <phone type="home">+1 (415) 555-1234</phone>
+    <phone type="work">+1 (800) 555-9867</phone>
+    <phone type="mobile">+1 (510) 555-1212</phone>
+    <email>joe@joe.com</email>
+  </BusinessCard>
+  ```
+## Pros and Cons of XML
+|pros|cons|
+|-|-|
+|`XML keeps content separate from presentation.` You can take the data that your app uses & store it separately from how its's presented to users|`XML is not suitable for very large data sets.` might not be efficient if storing MB of data|
+|`XML is an open format that can be read by many apps.` Many apps also have ability to output XML|`Some formats like JSON might be better for storing data`|
+|`XML can be used on both the client and the server.`|`Some data types like images aren't represented well.` Can try to encode images and insert into XML documents but can get ugly quickly|
+|`XML has widespread support in multiple languages and runtimes.`|`XML can quickly become difficult to read when complex`|
+|`XML makes it possible for disparate systems to exchange data.`||
+
 ## View Groups, Root View, Parent
 * contains Child groups
 * these child groups are Siblings of each other
