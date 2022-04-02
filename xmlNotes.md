@@ -70,6 +70,118 @@
 |`XML has widespread support in multiple languages and runtimes.`|`XML can quickly become difficult to read when complex`|
 |`XML makes it possible for disparate systems to exchange data.`||
 
+## Types of XML Content
+- XML Document Declaration
+  - it is optional, but W3C recommends it
+  - it identifies the file as XML document
+  - provides a place for the encoding and standalone attributes
+  - must be at very beginning, no whitespace before it
+  - `encoding` attribute defaults to `UTF-8` if it is not included
+  - `standalone` attribute identifies whether or not the document stands by itself or depends on something else
+  ```xml
+  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  ```
+- Elements (Tags) and Attributes
+  - `Elements` must have valid names
+    - can begin with underscore `_` or letter
+      - followed by letters, digits, periods, hyphens, underscores
+    - cannot use the string `xml` in any case combination because the W3C reserves that
+  - `Attributes` are specified on opening element tags
+    - must start with letter or underscore
+      - can be followed by digits, letters, hypens, periods, underscores
+    - attributes that begin with "xml" are reserved
+    - attributes appear only once on a given element
+  ```xml
+  <element attribute="value">
+  ```
+  - valid tag names
+    ```xml
+    <_Element1>
+    
+    <My.Element>
+      
+    <My-Element_Name>
+    ```
+  - invalid tag names
+    ```xml
+    <1Tag> <!-- can't begin with a number -->
+    
+    <#Elem&ent> <!-- invalid characters in name -->
+      
+    <XmL> <!-- the string "xml" is reserved -->
+    ```
+- Comments
+  - can go almost anywhere except
+    - inside element brackets
+    - before the document declaration
+  ```xml
+  <!-- This is an XML comment -->
+  ```
+  - valid comments
+    ```xml
+    <element>
+      <!-- comment -->
+    </element>
+    ```
+  - invalid comments
+    ```xml
+    <element <!-- comment --> >
+    ```
+- Character Data
+  - specified using CDATA and are part of document content
+  - the actual contents of CDATA sections are not parsed by XML parser
+    - it skips the internal content and doesn't try to figure what kind of data might be in there
+  - typically used to contain unescaped textual data (characters that aren't legal within parsed XML)
+    - e.g.: &, <, >
+  ```xml
+  <![CDATA[This is unparsed text & data]]>
+  ```
+  - invalid xml
+    ```xml
+    <script>
+      function f(a, b) {
+        return a < b;  // invalid because < is illegal in XML
+      }
+    </script>
+    ```
+  - valid xml by using CDATA
+    ```xml
+    <script>
+      <![CDATA[
+        function f(a, b) {
+          return a < b;
+        }
+      ]]>
+    </script>
+    ```
+- Processing Instructions
+  - a way for XML content to deliver special instructions to XML parser
+    ```xml
+    <?targetName instruction ?>
+    ```
+  - "xml" target name is reserved
+  - can start with number or letter, then followed by digits, letters, hyphens, periods, underscores
+  - e.g.: app has multiple spell checking modes
+    ```xml
+    <?SpellCheckMode mode="us-english" ?>
+    ```
+- Entity References
+  - help shorten and modularize XML documents
+  - provide markup for illegal characters
+  - `General entities`
+    - replaces by parser with a full string
+    - e.g.:
+      ```xml
+      &copyright;
+      &author;
+      ```
+  - `Character entities`
+    ```xml
+    &#60;
+    &amp;
+    &quot;
+    ```
+
 ## View Groups, Root View, Parent
 * contains Child groups
 * these child groups are Siblings of each other
