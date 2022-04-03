@@ -21,7 +21,7 @@
   - [Combinatorics](#combinatorics)
   - [Datetime](#datetime)
 - [Syntax](#syntax)
-  - [Args](#args)
+  - [Arguments](#arguments)
   - [Inline](#inline)
   - [Closure](#closure)
   - [Decorator](#decorator)
@@ -595,14 +595,87 @@ list(permutations('abc', 2))  # [('a', 'b'), ('a', 'c'), ('b', 'a'), ('b', 'c'),
 [back to top](#table-of-contents)
 
 ### Datetime
+- Module 'datetime' provides 'date', 'time', 'datetime' and 'timedelta' classes
+  - All are immutable and hashable
+- Time and datetime objects can be 'aware' (have defined timezone), or 'naive' (don't have defined timezone)
+- If object is naive, it is presumed to be in the system's timezone
+#### python 2
 ```python
+from datetime import date, time, datetime, timedelta
+from dateutil.tz import UTC, tzlocal, gettz, resolve_imaginary  # included in python 2
+```
+#### python 3
+- `pip install python-dateutil`
+```python
+from datetime import date, time, datetime, timedelta
+from dateutil.tz import UTC, tzlocal, gettz, resolve_imaginary  # needs to install 3rd party library
+```
+- Constructors
+  - Use `<date/datetime>.weekday()` to get the day of the week (Mon == 0)
+  - 'fold=1' means the second pass in case of time jumping back for one hour
+  - `<datetime aware> = resolve_imaginary(<datetime aware>)` fixes datetimes that fall into the missing hour
+```python
+<date>  = date(year, month, day)
+<time>  = time(hour=0, minute=0, second=0, microsecond=0, tzinfo=None, fold=0)
+<datetime> = datetime(year, month, day, hour=0, minute=0, second=0, ...)
+<timedelta> = timedelta(days=0, seconds=0, microseconds=0, milliseconds=0,
+                        minutes=0, hours=0, weeks=0)
+```
+- Now
+  - To extract time use `<datetime naive>.time()`, `<datetime aware>.time()` or `<datetime aware>.timetz()`
+```python
+<date/datetime naive>  = date/datetime.today()  # Current local date or naive datetime
+<datetime naive> = datetime.utcnow()  # Naive datetime from current UTC time
+<datetime aware> = datetime.now(<tzinfo>)  # Aware datetime from current tz time
+```
+- Timezone
+```python
+<tzinfo> = UTC  # UTC timezone. London without DST
+<tzinfo> = tzlocal()  # Local timezone, also gettz()
+<tzinfo> = gettz('<Continent>/<City>')  # 'Continent/City_Name' timezone or None
+<datetime aware>    = <datetime>.astimezone(<tzinfo>)  # Datetime, converted to passed timezone
+<time aware/datetime aware> = <time/datetime>.replace(tzinfo=<tzinfo>)  # Unconverted object with new timezone
+```
+- Encode
+  - ISO strings come in following forms: `'YYYY-MM-DD', 'HH:MM:SS.ffffff[±<offset>]'`, or both separated by an arbitrary character
+    - Offset is formatted as: `HH:MM`
+  - Epoch on Unix systems is: `'1970-01-01 00:00 UTC', '1970-01-01 01:00 CET', ...`
+```python
+<date/time/datetime> = date/time/datetime.fromisoformat('<iso>')  # Object from ISO string. Raises ValueError
+<datetime> = datetime.strptime(<str>, '<format>')  # Datetime from str, according to format
+<date/datetime naive> = date/datetime.fromordinal(<int>)  # date/datetime naive from days since Christ, at midnight
+<datetime naive> = datetime.fromtimestamp(<real>)  # Local time datetime naive from seconds since Epoch
+<datetime aware> = datetime.fromtimestamp(<real>, <tz.>)  # Aware datetime from seconds since Epoch
+```
+- Decode
+```python
+<str> = <date/time/datetime>.isoformat(sep='T')  # Also timespec='auto/hours/minutes/seconds'
+<str> = <date/time/datetime>.strftime('<format>')  # Custom string representation
+<int> = <date/datetime>.toordinal()  # Days since Christ, ignoring time and tz
+<float> = <datetime naive>.timestamp()  # Seconds since Epoch, from datetime naive in local tz
+<float> = <datetime aware>.timestamp()  # Seconds since Epoch, from datetime aware
+```
+- Format
+  - When parsing, `%z` also accepts `±HH:MM`
+  - For abbreviated weekday and month use `%a` and `%b`
+```python
+from datetime import datetime
 
+dt = datetime.strptime('2015-05-14 23:39:00.00 +0200', '%Y-%m-%d %H:%M:%S.%f %z')
+dt.strftime("%A, %dth of %B '%y, %I:%M%p %Z")  # "Thursday, 14th of May '15, 11:39PM UTC+02:00"
+```
+- Arithmetics
+```python
+<date/datetime> = <date/datetime> ± <timedelta>  # Returned datetime can fall into missing hour
+<timedelta> = <date/datetime naive> - <date/datetime naive>  # Returns the difference, ignoring time jumps
+<timedelta> = <datetime aware> - <datetime aware>  # Ignores time jumps if they share tzinfo object
+<timedelta> = <datetime_UTC> - <datetime_UTC>  # Convert datetimes to UTC to get the actual delta
 ```
 
 [back to top](#table-of-contents)
 
 ## Syntax
-### Args
+### Arguments
 ```python
 
 ```
