@@ -1443,51 +1443,235 @@ def get_next_member(member):
 
 ## System
 ### Exit
+- Exits the interpreter by raising SystemExit exception
 ```python
+import sys
 
+
+sys.exit()  # Exits with exit code 0 (success)
+sys.exit(<el>)  # Prints to stderr and exits with 1
+sys.exit(<int>)  # Exits with passed exit code
 ```
 
 [back to top](#table-of-contents)
 
 ### Print
-```python
+- Use `file=sys.stderr` for messages about errors
+- Use `flush=True“ to forcibly flush the stream
+  ```python
+  print(<el_1>, ..., sep=' ', end='\n', file=sys.stdout, flush=False)
+  ```
+- Pretty Print
+  - Levels deeper than 'depth' get replaced by '...'.
+  ```python
+  from pprint import pprint
 
-```
+
+  pprint(<collection>, width=80, depth=None, compact=False, sort_dicts=True)
+  ```
 
 [back to top](#table-of-contents)
 
 ### Input
-```python
-
-```
+- Reads a line from user input or pipe if present
+  - Trailing newline gets stripped
+  - Prompt string is printed to the standard output before reading input
+  - Raises EOFError when user hits `EOF (ctrl-d/z)` or input stream gets exhausted
+  ```python
+  <str> = input(prompt=None)
+  ```
 
 [back to top](#table-of-contents)
 
 ### Command Line Arguments
 ```python
+import sys
 
+
+script_name = sys.argv[0]
+arguments   = sys.argv[1:]
 ```
+- Argument Parser
+  - Use `help=<str>` to set argument description
+  - Use `default=<el>` to set the default value
+  - Use `type=FileType(<mode>)` for files
+  ```python
+  from argparse import ArgumentParser, FileType
+
+
+  p = ArgumentParser(description=<str>)
+  p.add_argument('-<short_name>', '--<name>', action='store_true')  # Flag
+  p.add_argument('-<short_name>', '--<name>', type=<type>)  # Option
+  p.add_argument('<name>', type=<type>, nargs=1)  # First argument
+  p.add_argument('<name>', type=<type>, nargs='+')  # Remaining arguments
+  p.add_argument('<name>', type=<type>, nargs='*')  # Optional arguments
+  args = p.parse_args()  # Exits on error
+  value = args.<name>
+  ```
 
 [back to top](#table-of-contents)
 
 ### Open
-```python
+- Opens the file and returns a corresponding file object
+  - `encoding=None` means that the default encoding is used, which is platform dependent
+    - Best practice is to use `encoding="utf-8"` whenever possible
+  - `newline=None` means all different end of line combinations are converted to '\n' on read
+    - while on write all `\n` characters are converted to system's default line separator
+  - `newline=""` means no conversions take place
+    - but input is still broken into chunks by readline() and readlines() on either `\n`, `\r` or `\r\n`
+  ```python
+  <file> = open('<path>', mode='r', encoding=None, newline=None)
+  ```
+- Modes
+  - `r` - Read (default)
+  - `w` - Write (truncate)
+  - `x` - Write or fail if the file already exists
+  - `a` - Append
+  - `w+` - Read and write (truncate)
+  - `r+` - Read and write from the start
+  - `a+` - Read and write from the end
+  - `t` - Text mode (default)
+  - `b` - Binary mode
+- Exceptions
+  - `FileNotFoundError` can be raised when reading with `r` or `r+`
+  - `FileExistsError` can be raised when writing with `x`
+  - `IsADirectoryError` and `PermissionError` can be raised by any
+  - `OSError` is the parent class of all listed exceptions
+- File Object
+  - Methods do not add or strip trailing newlines, even writelines()
+  ```python
+  <file>.seek(0)  # Moves to the start of the file
+  <file>.seek(offset)  # Moves "offset" chars/bytes from the start
+  <file>.seek(0, 2)  # Moves to the end of the file
+  <bin_file>.seek(±offset, <anchor>)  # Anchor: 0 start, 1 current position, 2 end
 
-```
+  <str/bytes> = <file>.read(size=-1)  # Reads 'size' chars/bytes or until EOF
+  <str/bytes> = <file>.readline()  # Returns a line or empty string/bytes on EOF
+  <list> = <file>.readlines()  # Returns a list of remaining lines
+  <str/bytes> = next(<file>)  # Returns a line using buffer, do not mix
+
+  <file>.write(<str/bytes>)  # Writes a string or bytes object
+  <file>.writelines(<collection>)  # Writes a collection of strings or bytes objects
+  <file>.flush()  # Flushes write buffer
+  ```
+- Read Text from File
+  ```python
+  def read_file(filename):
+      with open(filename, encoding='utf-8') as file:
+          return file.readlines()
+  ```
+- Write Text to File
+  ```python
+  def write_to_file(filename, text):
+      with open(filename, 'w', encoding='utf-8') as file:
+          file.write(text)
+  ```
 
 [back to top](#table-of-contents)
 
 ### Path
 ```python
+from os import getcwd, path, listdir
+from glob import glob
 
+
+<str> = getcwd()  # Returns the current working directory
+<str> = path.join(<path>, ...)  # Joins two or more pathname components
+<str> = path.abspath(<path>)  # Returns absolute path
+
+<str> = path.basename(<path>)  # Returns final component of the path
+<str> = path.dirname(<path>)  # Returns path without the final component
+<tup.> = path.splitext(<path>)  # Splits on last period of the final component
+
+<list> = listdir(path='.')  # Returns filenames located at path
+<list> = glob('<pattern>')  # Returns paths matching the wildcard pattern
+
+<bool> = path.exists(<path>)  # Or: <Path>.exists()
+<bool> = path.isfile(<path>)  # Or: <DirEntry/Path>.is_file()
+<bool> = path.isdir(<path>)  # Or: <DirEntry/Path>.is_dir()
+```
+- DirEntry
+  - Using scandir() instead of listdir() can significantly increase the performance of code that also needs file type information
+  ```python
+  from os import scandir
+
+
+  <iter> = scandir(path='.')  # Returns DirEntry objects located at path
+  <str> = <DirEntry>.path  # Returns path as a string
+  <str> = <DirEntry>.name  # Returns final component as a string
+  <file> = open(<DirEntry>)  # Opens the file and returns file object
+  ```
+- Path Object
+```python
+from pathlib import Path
+
+
+<Path> = Path(<path> [, ...])  # Accepts strings, Paths and DirEntry objects
+<Path> = <path> / <path> [/ ...]  # One of the paths must be a Path object
+
+<Path> = Path()  # Returns relative cwd, also Path('.')
+<Path> = Path.cwd()  # Returns absolute cwd, also Path().resolve()
+<Path> = <Path>.resolve()  # Returns absolute Path without symlinks
+
+<Path> = <Path>.parent  # Returns Path without final component
+<str> = <Path>.name  # Returns final component as a string
+<str> = <Path>.stem  # Returns final component without extension
+<str> = <Path>.suffix  # Returns final component's extension
+<tup.> = <Path>.parts  # Returns all components as strings
+
+<iter> = <Path>.iterdir()  # Returns dir contents as Path objects
+<iter> = <Path>.glob('<pattern>')  # Returns Paths matching the wildcard pattern
+
+<str> = str(<Path>)  # Returns path as a string
+<file> = open(<Path>)  # Opens the file and returns file object
 ```
 
 [back to top](#table-of-contents)
 
 ### OS Commands
-```python
+- Files and Directories
+  - Paths can be either strings, Paths or DirEntry objects
+  - Functions report OS related errors by raising either OSError or one of its subclasses
+  ```python
+  import os, shutil
 
+
+  os.chdir(<path>)  # Changes the current working directory
+  os.mkdir(<path>, mode=0o777)  # Creates a directory. Mode is in octal
+
+  shutil.copy(from, to)  # Copies the file, 'to' can exist or be a dir
+  shutil.copytree(from, to)  # Copies the directory, 'to' must not exist
+
+  os.rename(from, to)  # Renames/moves the file or directory
+  os.replace(from, to)  # Same, but overwrites 'to' if it exists
+
+  os.remove(<path>)  # Deletes the file
+  os.rmdir(<path>)  # Deletes the empty directory
+  shutil.rmtree(<path>)  # Deletes the directory
+  ```
+- Shell Commands
+```python
+import os
+
+
+<str> = os.popen('<shell_command>').read()
 ```
+  - Sends '1 + 1' to the basic calculator and captures its output:
+    ```python
+    from subprocess import run
+
+
+    run('bc', input='1 + 1\n', capture_output=True, encoding='utf-8')  # CompletedProcess(args='bc', returncode=0, stdout='2\n', stderr='')
+    ```
+  - Sends test.in to the basic calculator running in standard mode and saves its output to test.out
+    ```python
+    from shlex import split
+
+
+    os.popen('echo 1 + 1 > test.in')
+    run(split('bc -s'), stdin=open('test.in'), stdout=open('test.out', 'w'))  # CompletedProcess(args=['bc', '-s'], returncode=0)
+    open('test.out').read()  # '2\n'
+    ```
 
 [back to top](#table-of-contents)
 
