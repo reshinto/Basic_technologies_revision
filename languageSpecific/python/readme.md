@@ -1290,9 +1290,51 @@ def add(x, y):
 [back to top](#table-of-contents)
 
 ### Enum
+- If there are no numeric values before auto(), it returns 1
+- Otherwise it returns an increment of the last numeric value
 ```python
+from enum import Enum, auto
 
+
+class <enum_name>(Enum):
+    <member_name_1> = <value_1>
+    <member_name_2> = <value_2_a>, <value_2_b>
+    <member_name_3> = auto()
+
+
+<member> = <enum>.<member_name>  # Returns a member
+<member> = <enum>['<member_name>']  # Returns a member or raises KeyError
+<member> = <enum>(<value>)  # Returns a member or raises ValueError
+<str> = <member>.name  # Returns member's name
+<obj> = <member>.value  # Returns member's value
+
+
+list_of_members = list(<enum>)
+member_names = [a.name for a in <enum>]
+member_values = [a.value for a in <enum>]
+random_member = random.choice(list(<enum>))
 ```
+```python
+def get_next_member(member):
+    members = list(member.__class__)
+    index = (members.index(member) + 1) % len(members)
+    return members[index]
+```
+- Inline
+  ```python
+  Cutlery = Enum('Cutlery', 'fork knife spoon')
+  Cutlery = Enum('Cutlery', ['fork', 'knife', 'spoon'])
+  Cutlery = Enum('Cutlery', {'fork': 1, 'knife': 2, 'spoon': 3})
+  ```
+  - User-defined functions cannot be values, so they must be wrapped
+    - Another solution in this particular case is to use built-in functions and_() and or_() from the module operator
+    ```python
+    from functools import partial
+    
+    
+    LogicOp = Enum('LogicOp', {'AND': partial(lambda l, r: l and r),
+                               'OR' : partial(lambda l, r: l or r)})
+    ```
 
 [back to top](#table-of-contents)
 
