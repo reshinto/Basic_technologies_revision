@@ -1339,9 +1339,105 @@ def get_next_member(member):
 [back to top](#table-of-contents)
 
 ### Exception
-```python
+- Basic Example
+  ```python
+  try: 
+      <code>
+  except <exception>:
+      <code>
+  ```
+- Complex Example
+  - Code inside the 'else' block will only be executed if 'try' block had no exception
+  - Code inside the 'finally' block will always be executed.
+  ```python
+  try:
+      <code_1>
+  except <exception_a>:
+      <code_2_a>
+  except <exception_b>:
+      <code_2_b>
+  else:
+      <code_2_c>
+  finally:
+      <code_3>
+  ```
+- Catching Exceptions
+  - Also catches subclasses of the exception
+  - Use `traceback.print_exc()` to print the error message to stderr
+  ```python
+  except <exception>:
+  except <exception> as <name>:
+  except (<exception>, ...):
+  except (<exception>, ...) as <name>:
+  ```
+- Raising Exceptions
+  ```python
+  raise <exception>
+  raise <exception>()
+  raise <exception>(<el> [, ...])
+  ```
+  - Re-raising caught exception
+    ```python
+    except <exception> as <name>:
+        ...
+        raise
+    ```
+- Exception Object
+  ```python
+  arguments = <name>.args
+  exc_type = <name>.__class__
+  filename = <name>.__traceback__.tb_frame.f_code.co_filename
+  func_name = <name>.__traceback__.tb_frame.f_code.co_name
+  line = linecache.getline(filename, <name>.__traceback__.tb_lineno)
+  error_msg = traceback.format_exception(exc_type, <name>, <name>.__traceback__)
+  ```
+- Built-in Exceptions
+  ```
+  BaseException
+   ├── SystemExit                   # Raised by the sys.exit() function
+   ├── KeyboardInterrupt            # Raised when the user hits the interrupt key (ctrl-c)
+   └── Exception                    # User-defined exceptions should be derived from this class
+        ├── ArithmeticError         # Base class for arithmetic errors
+        │    └── ZeroDivisionError  # Raised when dividing by zero
+        ├── AttributeError          # Raised when an attribute is missing
+        ├── EOFError                # Raised by input() when it hits end-of-file condition
+        ├── LookupError             # Raised when a look-up on a collection fails
+        │    ├── IndexError         # Raised when a sequence index is out of range
+        │    └── KeyError           # Raised when a dictionary key or set element is not found
+        ├── NameError               # Raised when a variable name is not found
+        ├── OSError                 # Failures such as “file not found” or “disk full”
+        │    └── FileNotFoundError  # When a file or directory is requested but doesn't exist
+        ├── RuntimeError            # Raised by errors that don't fall in other categories
+        │    └── RecursionError     # Raised when the maximum recursion depth is exceeded
+        ├── StopIteration           # Raised by next() when run on an empty iterator
+        ├── TypeError               # Raised when an argument is of wrong type
+        └── ValueError              # When an argument is of right type but inappropriate value
+             └── UnicodeError       # Raised when encoding/decoding strings to/from bytes fails
+  ```
+- Collections and their exceptions
 
-```
+  ||list|dict|set|
+  |-|-|-|-|
+  |getitem()|IndexError|KeyError||
+  |pop()|IndexError|KeyError|KeyError|
+  |remove()|ValueError||KeyError|
+  |index()|ValueError|||
+
+- Useful built-in exceptions:
+  ```python
+  raise TypeError('Argument is of wrong type!')
+  raise ValueError('Argument is of right type but inappropriate value!')
+  raise RuntimeError('None of above!')
+  ```
+- User-defined Exceptions
+  ```python
+  class MyError(Exception):
+      pass
+
+
+  class MyInputError(MyError):
+      pass
+  ```
 
 [back to top](#table-of-contents)
 
