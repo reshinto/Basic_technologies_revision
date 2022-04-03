@@ -120,7 +120,6 @@ import functools
 <list> = sorted(<collection>)
 <iter> = reversed(<list>)
 
-
 sum_of_elements  = sum(<collection>)
 elementwise_sum  = [sum(pair) for pair in zip(list_a, list_b)]
 
@@ -152,7 +151,33 @@ index = <list>.index(<el>)  # Returns index of first occurrence or raises ValueE
 
 ### Dictionary
 ```python
+<view> = <dict>.keys()  # Coll. of keys that reflects changes
+<view> = <dict>.values()  # Coll. of values that reflects changes
+<view> = <dict>.items()  # Coll. of key-value tuples that reflects chgs
 
+value  = <dict>.get(key, default=None)  # Returns default if key is missing
+value  = <dict>.setdefault(key, default=None)  # Returns and writes default if key is missing
+<dict> = collections.defaultdict(<type>)  # Creates a dict with default value of type
+<dict> = collections.defaultdict(lambda: 1)  # Creates a dict with default value 1
+
+<dict> = dict(<collection>)  # Creates a dict from coll. of key-value pairs
+<dict> = dict(zip(keys, values))  # Creates a dict from two collections
+<dict> = dict.fromkeys(keys [, value])  # Creates a dict from collection of keys
+
+<dict>.update(<dict>)  # Adds items. Replaces ones with matching keys
+value = <dict>.pop(key)  # Removes item or raises KeyError
+{k for k, v in <dict>.items() if v == value}  # Returns set of keys that point to the value
+{k: v for k, v in <dict>.items() if k in keys}  # Returns a dictionary, filtered by keys
+```
+```python
+# Counter
+from collections import Counter
+
+colors = ['blue', 'blue', 'blue', 'red', 'red']
+counter = Counter(colors)
+counter['yellow'] += 1  # Counter({'blue': 3, 'red': 2, 'yellow': 1})
+
+counter.most_common()[0]  # ('blue', 3)
 ```
 
 [back to top](#table-of-contents)
