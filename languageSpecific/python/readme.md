@@ -520,8 +520,56 @@ f"{90:X}"  # '5A'
 [back to top](#table-of-contents)
 
 ### Numbers
+- Types
+  - `int(<str>)` and `float(<str>)` raise ValueError on malformed strings
+  - Decimal numbers can be represented exactly, unlike foats where `1.1 + 2.2 != 3.3`
+  - Precision of decimal operations is set with: `decimal.getcontext().prec = <int>`
 ```python
+<int> = int(<float/str/bool>)  # Or: math.floor(<float>)
+<float> = float(<int/str/bool>)  # Or: <real>e±<int>
+<complex> = complex(real=0, imag=0)  # Or: <real> ± <real>j
+<Fraction> = fractions.Fraction(0, 1)  # Or: Fraction(numerator=0, denominator=1)
+<Decimal> = decimal.Decimal(<str/int>)  # Or: Decimal((sign, digits, exponent))
+```
+- Basic Functions
+```python
+<num> = pow(<num>, <num>)  # Or: <num> ** <num>
+<num> = abs(<num>)  # <float> = abs(<complex>)
+<num> = round(<num> [, ±ndigits])  # `round(126, -1) == 130`
+```
+- Math
+```python
+from math import e, pi, inf, nan, isinf, isnan
+from math import cos, acos, sin, asin, tan, atan, degrees, radians
+from math import log, log10, log2
+```
+- Statistics
+```python
+from statistics import mean, median, variance, stdev, pvariance, pstdev
+```
+- Random
+```python
+from random import random, randint, choice, shuffle
 
+<float> = random()
+<int> = randint(from_inclusive, to_inclusive)
+<el> = choice(<list>)
+shuffle(<list>)
+```
+- Bin, Hex
+```python
+<int> = ±0b<bin>  # Or: ±0x<hex>
+<int> = int('±<bin>', 2)  # Or: int('±<hex>', 16)
+<int> = int('±0b<bin>', 0)  # Or: int('±0x<hex>', 0)
+'[-]0b<bin>' = bin(<int>)  # Or: hex(<int>)
+```
+- Bitwise Operators
+```python
+<int> = <int> & <int>  # And
+<int> = <int> | <int>  # Or
+<int> = <int> ^ <int>  # Xor (0 if both bits equal)
+<int> = <int> << n_bits  # Shift left (>> for right)
+<int> = ~<int>  # Not (also: -<int> - 1)
 ```
 
 [back to top](#table-of-contents)
