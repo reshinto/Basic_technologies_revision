@@ -344,7 +344,62 @@ isinstance(123, Number)  # True
 
 ### String
 ```python
+str1 = "test string"
+str1.capitalize()  # "Test string"
+str1.upper()  # "TEST STRING"
+str1.lower()  # "test string"
+str1.title()  # "Test String"
 
+
+<str> = <str>.strip()  # Strips all whitespace characters from both ends
+<str> = <str>.strip('<chars>')  # Strips all passed characters from both ends
+<str> = <str>.lstrip()  # Strips all whitespace characters from left end
+<str> = <str>.rstrip()  # Strips all whitespace characters from right end
+
+<list> = <str>.split()  # Splits on one or more whitespace characters
+<list> = <str>.split(sep=None, maxsplit=-1)  # Splits on 'sep' str at most 'maxsplit' times.
+<list> = <str>.splitlines(keepends=False)  # Splits on \n,\r,\r\n. Keeps them if 'keepends'
+<str>  = <str>.join(<coll_of_strings>)  # Joins elements using string as separator
+
+<bool> = <sub_str> in <str>  # Checks if string contains a substring
+<bool> = <str>.startswith(<sub_str>)  # Pass tuple of strings for multiple options
+<bool> = <str>.endswith(<sub_str>)  # Pass tuple of strings for multiple options
+<int> = <str>.find(<sub_str>)  # Returns start index of first match or -1
+<int> = <str>.index(<sub_str>)  # Same but raises ValueError if missing
+
+<str> = <str>.replace(old, new [, count])   # Replaces 'old' with 'new' at most 'count' times
+
+txt = "Hello Sam!"
+mytable = txt.maketrans("S", "P")  # Create a mapping table
+# use mapping table in the translate() method to replace any "S" characters with a "P" character
+txt.translate(mytable)  # "Hello Pam!"
+
+<str> = chr(<int>)  # Converts int to Unicode char
+<int> = ord(<str>)  # Converts Unicode char to int
+```
+- Property Methods
+
+||!#$%...|a-zA-Z|1/4 1/2 3/4|<sup>2</sup><sup>3</sup><sup>1</sup>|0-9|
+|-|-|-|-|-|-|
+|isprintable()|&#9745;|&#9745;|&#9745;|&#9745;|&#9745;|
+|isalnum()||&#9745;|&#9745;|&#9745;|&#9745;|
+|isnumeric()|||&#9745;|&#9745;|&#9745;|
+|isdigit()||||&#9745;|&#9745;|
+|isdecimal()|||||&#9745;|
+
+```python
+str1 = ""
+str1.isspace()  # False
+
+str2 = " t "
+str2.isspace()  # False
+
+str3 = " "
+str3.isspace()  # True
+
+# checks for \t\n\r\f\v...
+str4 = " \n"
+str4.isspace()  # True
 ```
 
 [back to top](#table-of-contents)
