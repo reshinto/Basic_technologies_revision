@@ -575,8 +575,21 @@ shuffle(<list>)
 [back to top](#table-of-contents)
 
 ### Combinatorics
+- Every function returns an iterator
+- If you want to print the iterator, you need to pass it to the list() function first!
 ```python
+from itertools import product, combinations, combinations_with_replacement, permutations
 
+product([0, 1], repeat=3)  # <itertools.product object at 0x10b08ffc0>
+list(product([0, 1], repeat=3))  # [(0, 0, 0), (0, 0, 1), (0, 1, 0), (0, 1, 1), (1, 0, 0), (1, 0, 1), (1, 1, 0), (1, 1, 1)]
+
+list(product('ab', '12'))  # [('a', '1'), ('a', '2'), ('b', '1'), ('b', '2')]
+
+list(combinations('abc', 2))  # [('a', 'b'), ('a', 'c'), ('b', 'c')]
+
+list(combinations_with_replacement('abc', 2))  # [('a', 'a'), ('a', 'b'), ('a', 'c'), ('b', 'b'), ('b', 'c'), ('c', 'c')]
+
+list(permutations('abc', 2))  # [('a', 'b'), ('a', 'c'), ('b', 'a'), ('b', 'c'), ('c', 'a'), ('c', 'b')]
 ```
 
 [back to top](#table-of-contents)
