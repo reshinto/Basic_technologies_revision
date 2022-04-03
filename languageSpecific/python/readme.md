@@ -405,8 +405,39 @@ str4.isspace()  # True
 [back to top](#table-of-contents)
 
 ### Regular Expression
+- Argument `flags=re.IGNORECASE` can be used with all functions
+- Argument `flags=re.MULTILINE` makes `^` and `$` match the start/end of each line
+- Argument `flags=re.DOTALL` makes dot also accept the `\n`
+- Use r`\1` or `\\1` for backreference
+- Add `?` after an operator to make it non-greedy
 ```python
+import re
 
+<str> = re.sub(<regex>, new, text, count=0)  # Substitutes all occurrences with 'new'
+<list> = re.findall(<regex>, text)  # Returns all occurrences as strings
+<list> = re.split(<regex>, text, maxsplit=0)  # Use brackets in regex to include the matches
+
+# Search() and match() return None if they can't find a match
+<Match> = re.search(<regex>, text)  # Searches for first occurrence of the pattern
+<Match> = re.match(<regex>, text)  # Searches only at the beginning of the text
+
+<iter> = re.finditer(<regex>, text)  # Returns all occurrences as match objects
+```
+- Match Object
+```python
+<str> = <Match>.group()  # Returns the whole match, also group(0)
+<str> = <Match>.group(1)  # Returns part in the first bracket
+<tuple> = <Match>.groups()  # Returns all bracketed parts
+<int> = <Match>.start()  # Returns start index of the match
+<int> = <Match>.end()  # Returns exclusive end index of the match
+```
+- Special Sequences
+  - By default digits, alphanumerics and whitespaces from all alphabets are matched, unless `flags=re.ASCII` argument is used
+  - Use a capital letter for negation
+```python
+'\d' == '[0-9]'  # Matches any digit
+'\w' == '[a-zA-Z0-9_]'  # Matches any alphanumeric
+'\s' == '[\t\n\r\f\v]'  # Matches any whitespace
 ```
 
 [back to top](#table-of-contents)
