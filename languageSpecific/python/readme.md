@@ -184,7 +184,27 @@ counter.most_common()[0]  # ('blue', 3)
 
 ### Set
 ```python
+<set> = set()
 
+<set>.add(<el>)  # Or: <set> |= {<el>}
+<set>.update(<collection>)  # Or: <set> |= <set>
+
+<set>  = <set>.union(<coll.>)  # Or: <set> | <set>
+<set>  = <set>.intersection(<coll.>)  # Or: <set> & <set>
+<set>  = <set>.difference(<coll.>)  # Or: <set> - <set>
+<set>  = <set>.symmetric_difference(<coll.>)  # Or: <set> ^ <set>
+<bool> = <set>.issubset(<coll.>)  # Or: <set> <= <set>
+<bool> = <set>.issuperset(<coll.>)  # Or: <set> >= <set>
+
+<el> = <set>.pop()  # Raises KeyError if empty
+<set>.remove(<el>)  # Raises KeyError if missing
+<set>.discard(<el>)  # Doesn't raise an error
+```
+- Frozen Set
+  - Is immutable and hashable
+  - That means it can be used as a key in a dictionary or as an element in a set
+```python
+<frozenset> = frozenset(<collection>)
 ```
 
 [back to top](#table-of-contents)
