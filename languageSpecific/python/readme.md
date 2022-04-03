@@ -814,8 +814,49 @@ creature = Creature(Point(0, 0), Direction.n)
 [back to top](#table-of-contents)
 
 ### Closure
+- have a closure in Python when:
+  - A nested function references a value of its enclosing function
+  - and the enclosing function returns the nested function
+  - If multiple nested functions within enclosing function reference the same value, that value gets shared
+  - To dynamically access function's first free variable use `<function>.__closure__[0].cell_contents`
 ```python
+def get_multiplier(a):
+    def out(b):
+        return a * b
+    return out
 
+
+multiply_by_3 = get_multiplier(3)
+multiply_by_3(10)  # 30
+```
+- Partial
+  - Partial is also useful in cases when function needs to be passed as an argument
+    - because it enables us to set its arguments beforehand
+  - e.g.: `defaultdict(<function>)`, `iter(<function>, to_exclusive)` and dataclass's `field(default_factory=<function>)`
+```python
+from functools import partial
+import operator as op
+
+
+<function> = partial(<function> [, <arg_1>, <arg_2>, ...])
+
+multiply_by_3 = partial(op.mul, 3)
+multiply_by_3(10)  # 30
+```
+- Non-Local
+  - If variable is being assigned to anywhere in the scope, it is regarded as a local variable
+  - unless it is declared as a `global` or a `nonlocal`
+```python
+def get_counter(): i= 0
+    def out():
+        nonlocal i
+        i += 1
+        return i
+    return out
+
+
+counter = get_counter()
+counter(), counter(), counter()  # (1, 2, 3)
 ```
 
 [back to top](#table-of-contents)
