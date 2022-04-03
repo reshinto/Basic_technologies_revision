@@ -1078,9 +1078,214 @@ def add(x, y):
 [back to top](#table-of-contents)
 
 ### Duck Type
-```python
+- A duck type is an implicit type that prescribes a set of special methods
+  - Any object that has those methods defined is considered a member of that duck type
+- Comparable
+  - If `eq()` method is not overridden, it returns `id(self) == id(other)`, which is the same as 'self is other'
+  - That means all objects compare not equal by default
+  - Only the left side object has eq() method called, unless it returns NotImplemented, in which case the right object is consulted
+  ```python
+  class MyComparable:
+      def __init__(self, a):
+          self.a = a
 
-```
+      def __eq__(self, other):
+          if isinstance(other, type(self)):
+              return self.a == other.a
+          return NotImplemented
+  ```
+- Hashable
+  - Hashable object needs both hash() and eq() methods and its hash value should never change
+  - Hashable objects that compare equal must have the same hash value, meaning default `hash()` that returns `id(self)` will not do
+  - That is why Python automatically makes classes unhashable if you only implement `eq()`
+    ```python
+    class MyHashable:
+        def __init__(self, a):
+            self._a = a
+
+        @property
+        def a(self):
+            return self._a
+
+        def __eq__(self, other):
+            if isinstance(other, type(self)):
+                return self.a == other.a
+            return NotImplemented
+
+        def __hash__(self):
+            return hash(self.a)
+    ```
+- Sortable
+  - With total_ordering decorator, you only need to provide eq() and one of lt(), gt(), le() or ge() special methods
+  ```python
+  from functools import total_ordering
+
+  @total_ordering
+  class MySortable:
+      def __init__(self, a):
+          self.a = a
+      
+      def __eq__(self, other):
+          if isinstance(other, type(self)):
+              return self.a == other.a
+          return NotImplemented
+      
+      def __lt__(self, other):
+          if isinstance(other, type(self)):
+              return self.a < other.a
+          return NotImplemented
+  ```
+- Iterator
+  - Any object that has methods next() and iter() is an iterator
+  - Next() should return next item or raise StopIteration
+  - Iter() should return 'self'
+  - Python has many different iterator objects
+    - Iterators returned by the iter() function, such as list_iterator and set_iterator
+    - Objects returned by the itertools module, such as count, repeat and cycle
+    - Generators returned by the generator functions and generator expressions
+    - File objects returned by the open() function, etc
+  ```python
+  class Counter:
+      def __init__(self):
+          self.i = 0
+
+      def __next__(self):
+          self.i += 1
+          return self.i
+
+      def __iter__(self):
+          return self
+
+
+  counter = Counter()
+  next(counter), next(counter), next(counter)  # (1, 2, 3)
+  ```
+- Callable
+  - All functions and classes have a call() method, hence are callable
+  - When this cheatsheet uses `<function>` as an argument, it actually means `<callable>`
+  ```python
+  class Counter:
+      def __init__(self):
+          self.i = 0
+
+      def __call__(self):
+          self.i += 1
+          return self.i
+
+
+  counter = Counter()
+  counter(), counter(), counter()  # (1, 2, 3)
+  ```
+- Context Manager
+  - Enter() should lock the resources and optionally return an object
+  - Exit() should release the resources
+  - Any exception that happens inside the with block is passed to the exit() method
+  - If it wishes to suppress the exception it must return a true value
+  ```python
+  class MyOpen:
+      def __init__(self, filename):
+          self.filename = filename
+
+      def __enter__(self):
+          self.file = open(self.filename)
+          return self.file
+
+      def __exit__(self, exc_type, exception, traceback):
+          self.file.close()
+
+
+  with open('test.txt', 'w') as file:
+    file.write('Hello World!')
+
+  with MyOpen('test.txt') as file:
+    print(file.read())
+
+  Hello World!
+  ```
+- Iterable
+  - Only required method is iter()
+    - It should return an iterator of object's items
+  - Contains() automatically works on any object that has iter() defined
+  ```python
+  class MyIterable:
+    def __init__(self, a):
+        self.a = a
+
+    def __iter__(self):
+        return iter(self.a)
+
+    def __contains__(self, el):
+        return el in self.a
+
+
+  obj = MyIterable([1, 2, 3])
+  [el for el in obj]  # [1, 2, 3]
+  1 in obj  # True
+  ```
+- Collection
+  - Only required methods are iter() and len()
+  ```python
+  class MyCollection:
+      def __init__(self, a):
+          self.a = a
+
+      def __iter__(self):
+          return iter(self.a)
+
+      def __contains__(self, el):
+          return el in self.a
+
+      def __len__(self):
+          return len(self.a)
+  ```
+- Sequence
+  - Only required methods are len() and getitem()
+  - Getitem() should return an item at index or raise IndexError
+  - Iter() and contains() automatically work on any object that has getitem() defined
+  - Reversed() automatically works on any object that has getitem() and len() defined
+  ```python
+  class MySequence:
+      def __init__(self, a):
+          self.a = a
+
+      def __iter__(self):
+          return iter(self.a)
+
+      def __contains__(self, el):
+          return el in self.a
+
+      def __len__(self):
+          return len(self.a)
+
+      def __getitem__(self, i):
+          return self.a[i]
+
+      def __reversed__(self):
+          return reversed(self.a)
+  ```
+- ABC Sequence
+  - It's a richer interface than the basic sequence
+  - Extending it generates iter(), contains(), reversed(), index() and count()
+  - Unlike 'abc.Iterable' and 'abc.Collection', it is not a duck type
+    - That is why 'issubclass(MySequence, abc.Sequence)' would return False even if MySequence had all the methods defined
+  ```python
+  from collections import abc
+
+
+  class MyAbcSequence(abc.Sequence):
+      def __init__(self, a):
+          self.a = a
+
+      def __len__(self):
+          return len(self.a)
+
+      def __getitem__(self, i):
+          return self.a[i]
+  ```
+  - available special methods
+    - iter(), contains(), len(), getitem(), reversed(), index(), count()
+  - Other ABCs that generate missing methods are: MutableSequence, Set, MutableSet, Mapping and MutableMapping
+  - Names of their required methods are stored in `<abc>.__abstractmethods__`
 
 [back to top](#table-of-contents)
 
