@@ -862,8 +862,64 @@ counter(), counter(), counter()  # (1, 2, 3)
 [back to top](#table-of-contents)
 
 ### Decorator
+- A decorator takes a function, adds some functionality and returns it
 ```python
+@decorator_name
+def function_that_gets_passed_to_decorator():
+    ...
+```
+- Debugger Example
+  - Wraps is a helper decorator that copies the metadata of the passed function (func) to the function it is wrapping (out)
+  - Without it `add.__name__` would return 'out'
+```python
+from functools import wraps
 
+
+def debug(func):
+    @wraps(func)
+    def out(*args, **kwargs):
+        print(func.__name__)
+        return func(*args, **kwargs)
+    return out
+
+
+@debug
+def add(x, y):
+    return x + y
+```
+- LRU Cache
+  - Decorator that caches function's return values
+  - All function's arguments must be hashable
+  - CPython interpreter limits recursion depth to 1000 by default
+    - To increase it use `sys.setrecursionlimit(<depth>)`
+```python
+from functools import lru_cache
+
+
+@lru_cache(maxsize=None)
+def fib(n):
+    return n if n < 2 else fib(n-2) + fib(n-1)
+```
+- Parametrized Decorator
+  - A decorator that accepts arguments and returns a normal decorator that accepts a function
+```python
+from functools import wraps
+
+
+def debug(print_result=False):
+    def decorator(func):
+        @wraps(func)
+        def out(*args, **kwargs):
+            result = func(*args, **kwargs)
+            print(func.__name__, result if print_result else '')
+            return result
+        return out
+    return decorator
+
+
+@debug(print_result=True)
+def add(x, y):
+    return x + y
 ```
 
 [back to top](#table-of-contents)
