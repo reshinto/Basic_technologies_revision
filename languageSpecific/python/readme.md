@@ -169,8 +169,8 @@ value = <dict>.pop(key)  # Removes item or raises KeyError
 {k for k, v in <dict>.items() if v == value}  # Returns set of keys that point to the value
 {k: v for k, v in <dict>.items() if k in keys}  # Returns a dictionary, filtered by keys
 ```
+- Counter
 ```python
-# Counter
 from collections import Counter
 
 colors = ['blue', 'blue', 'blue', 'red', 'red']
@@ -210,8 +210,28 @@ counter.most_common()[0]  # ('blue', 3)
 [back to top](#table-of-contents)
 
 ### Tuple
+- Tuple is an immutable and hashable list
 ```python
+<tuple> = ()
+<tuple> = (<el>, )
+<tuple> = (<el_1>, <el_2> [, ...])
+```
+- Named Tuple
+  - Tuple's subclass with named elements
+```python
+from collections import namedtuple
 
+Point = namedtuple('Point', 'x y')
+
+p = Point(1, y=2)  # Point(x=1, y=2)
+p[0]  # 1
+
+p.x  # 1
+
+getattr(p, 'y')  # 2
+
+p._fields  # ('x', 'y')
+Point._fields  # ('x', 'y')
 ```
 
 [back to top](#table-of-contents)
