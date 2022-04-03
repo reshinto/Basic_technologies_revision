@@ -22,6 +22,7 @@
   - [Datetime](#datetime)
 - [Syntax](#syntax)
   - [Arguments](#arguments)
+  - [Splat Operator](#splat-operator)
   - [Inline](#inline)
   - [Closure](#closure)
   - [Decorator](#decorator)
@@ -676,8 +677,78 @@ dt.strftime("%A, %dth of %B '%y, %I:%M%p %Z")  # "Thursday, 14th of May '15, 11:
 
 ## Syntax
 ### Arguments
+- Inside Function Call
 ```python
+<function>(<positional_args>)  # f(0, 0)
+<function>(<keyword_args>)  # f(x=0, y=0)
+<function>(<positional_args>, <keyword_args>)  # f(0, y=0)
+```
+- Inside Function Definition
+```python
+def f(<nondefault_args>):  # def f(x, y):
+    ...
 
+def f(<default_args>):  # def f(x=0, y=0):
+    ...
+
+
+def f(<nondefault_args>, <default_args>):  # def f(x, y=0):
+    ...
+```
+
+[back to top](#table-of-contents)
+
+### Splat Operator
+- Inside Function Call
+  - Splat expands a collection into positional arguments, while splatty-splat expands a dictionary into keyword arguments
+```python
+# method 1
+args = (1, 2)
+kwargs = {'x': 3, 'y': 4, 'z': 5}
+functionName(*args, **kwargs)
+
+# method 2
+functionName(1, 2, x=3, y=4, z=5)
+```
+- Inside Function Definition
+  - Splat combines zero or more positional arguments into a tuple, while splatty-splat combines zero or more keyword arguments into a dictionary
+```python
+def add(*a):
+    return sum(a)
+
+
+add(1, 2, 3)  # 6
+```
+- Legal argument combinations
+```python
+def f(x, y, z):  # f(x=1, y=2, z=3) | f(1, y=2, z=3) | f(1, 2, z=3) | f(1, 2, 3)
+def f(*, x, y, z):  # f(x=1, y=2, z=3)
+def f(x, *, y, z):  # f(x=1, y=2, z=3) | f(1, y=2, z=3)
+def f(x, y, *, z):  # f(x=1, y=2, z=3) | f(1, y=2, z=3) | f(1, 2, z=3)
+
+def f(*args):  # f(1, 2, 3)
+def f(x, *args):  # f(1, 2, 3)
+def f(*args, z):  # f(1, 2, z=3)
+def f(x, *args, z):  # f(1, 2, z=3)
+
+
+def f(**kwargs):  # f(x=1, y=2, z=3)
+def f(x, **kwargs):  # f(x=1, y=2, z=3) | f(1, y=2, z=3)
+def f(*, x, **kwargs):  # f(x=1, y=2, z=3)
+
+def f(*args, **kwargs):  # f(x=1, y=2, z=3) | f(1, y=2, z=3) | f(1, 2, z=3) | f(1, 2, 3)
+def f(x, *args, **kwargs):  # f(x=1, y=2, z=3) | f(1, y=2, z=3) | f(1, 2, z=3) | f(1, 2, 3)
+def f(*args, y, **kwargs):  # f(x=1, y=2, z=3) | f(1, y=2, z=3)
+def f(x, *args, z, **kwargs):  # f(x=1, y=2, z=3) | f(1, y=2, z=3) | f(1, 2, z=3)
+```
+- Other Uses
+```python
+<list>  = [*<collection> [, ...]]
+<set>   = {*<collection> [, ...]}
+<tuple> = (*<collection>, [...])
+<dict>  = {**<dict> [, ...]}
+
+head, *body, tail = <collection>
 ```
 
 [back to top](#table-of-contents)
