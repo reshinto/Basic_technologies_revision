@@ -30,7 +30,7 @@
   - [Duck Type](#duck-type)
   - [Enum](#enum)
   - [Exception](#exception)
-- [System](#System)
+- [System](#system)
   - [Exit](#exit)
   - [Print](#print)
   - [Input](#input)
@@ -70,7 +70,7 @@
   - [Games](#games)
   - [Pandas](#pandas)
   - [Plotly](#plotly)
-  - [Cython](#Cython)
+  - [Cython](#cython)
 
 ## Hello World
 #### python 2
@@ -925,9 +925,155 @@ def add(x, y):
 [back to top](#table-of-contents)
 
 ### Class
-```python
+- Return value of repr() should be unambiguous and of str() readable
+- If only repr() is defined, it will also be used for str()
+  ```python
+  class Test:
+      def __init__(self, a):
+          self.a = a
+      def __repr__(self):
+          class_name = self.__class__.__name__
+          return f'{class_name}({self.a!r})'
+      def __str__(self):
+          return str(self.a)
 
-```
+      @classmethod
+      def get_class_name(cls):
+          return cls.__name__
+  ```
+  - `Str()` use cases
+    ```python
+    test = Test("sample")
+    print(test)  # sample
+    print(f"{test}")  # sample
+    raise Exception(test)
+    """
+    Traceback (most recent call last):
+      File "/path/to/file.py", line 27, in <module>
+        raise Exception(test)
+    Exception: sample
+
+    shell returned 1
+    """
+    
+    
+    import loguru  # pip install loguru
+    
+    loguru.logger.debug(test)  # 2022-04-04 02:43:02.509 | DEBUG    | __main__:<module>:28 - sample
+    
+    
+    import csv
+    
+    # open the file in the write mode
+    file = open('path/to/csv_file', 'w')
+    csv.writer(file).writerow([test])
+    ```
+  - `Repr()` use cases
+    ```python
+    test = Test("sample")
+    print([test])  # [Test('sample')]
+    print(f'{test!r}')  # Test('sample')
+
+
+    import loguru  # pip install loguru
+    
+    loguru.logger.exception(test)
+    """
+    2022-04-04 02:51:52.414 | ERROR    | __main__:<module>:25 - sample
+    NoneType: None
+    """
+    
+    
+    import dataclasses
+    
+    Z = dataclasses.make_dataclass('Z', ['a'])
+    print(Z(test))  # Z(a=Test('sample'))
+    ```
+- Constructor Overloading
+  ```python
+  class <name>:
+      def __init__(self, a=None):
+          self.a = a
+  ```
+  - Inheritance
+    ```python
+    class Person:
+        def __init__(self, name, age):
+            self.name = name
+            self.age  = age
+    
+    
+    class Employee(Person):
+        def __init__(self, name, age, staff_num):
+            super().__init__(name, age)
+            self.staff_num = staff_num
+    ```
+  - Multiple Inheritance
+    ```python
+    class A: pass
+    class B: pass
+    class C(A, B): pass
+    
+    # MRO determines the order in which parent classes are traversed when searching for a method
+    C.mro()  # [<class 'C'>, <class 'A'>, <class 'B'>, <class 'object'>]
+    ```
+- Property
+  - Pythonic way of implementing getters and setters
+  ```python
+  class MyClass:
+      @property
+      def a(self):
+          return self._a
+
+      @a.setter
+      def a(self, value):
+          self._a = value
+
+
+  el = MyClass()
+  el.a = 123
+  el.a  # 123
+  ```
+- Dataclass
+  - Decorator that automatically generates init(), repr() and eq() special methods
+  - Objects can be made sortable with 'order=True' and/or immutable and hashable with 'frozen=True'
+  - Function field() is needed because `<attr_name>: list = []` would make a list that is shared among all instances
+  - Default_factory can be any callable
+  ```python
+  from dataclasses import dataclass, field
+
+
+  @dataclass(order=False, frozen=False)
+  class <class_name>:
+      <attr_name_1>: <type>
+      <attr_name_2>: <type> = <default_value>
+      <attr_name_3>: list/dict/set = field(default_factory=list/dict/set)
+  ```
+  - Inline
+    ```python
+    from dataclasses import make_dataclass
+
+
+    <class> = make_dataclass('<class_name>', <coll_of_attribute_names>)
+    <class> = make_dataclass('<class_name>', <coll_of_tuples>)
+    <tuple> = ('<attr_name>', <type> [, <default_value>])
+    ```
+- Slots
+  - Mechanism that restricts objects to attributes listed in 'slots' and significantly reduces their memory footprint
+  ```python
+  class MyClassWithSlots:
+      __slots__ = ['a']
+      def __init__(self):
+          self.a = 1
+  ```
+- Copy
+  ```python
+  from copy import copy, deepcopy
+  
+  
+  <object> = copy(<object>)
+  <object> = deepcopy(<object>)
+  ```
 
 [back to top](#table-of-contents)
 
