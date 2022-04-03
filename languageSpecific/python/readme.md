@@ -238,28 +238,60 @@ Point._fields  # ('x', 'y')
 
 ### Range
 ```python
+<range> = range(to_exclusive)
+<range> = range(from_inclusive, to_exclusive)
+<range> = range(from_inclusive, to_exclusive, ±step_size)
 
+from_inclusive = <range>.start
+to_exclusive   = <range>.stop
 ```
 
 [back to top](#table-of-contents)
 
 ### Enumerate
 ```python
-
+for i, el in enumerate(<collection> [, i_start]):
+    ...
 ```
 
 [back to top](#table-of-contents)
 
 ### Iterator
 ```python
+<iter> = iter(<collection>)  # `iter(<iter>)` returns unmodified iterator
+<iter> = iter(<function>, to_exclusive)  # A sequence of return values until 'to_exclusive'
+<el>   = next(<iter> [, default])  # Raises StopIteration or returns 'default' on end
+<list> = list(<iter>)  # Returns a list of iterator's remaining elements
+```
+- Itertools
+```python
+from itertools import count, repeat, cycle, chain, islice
 
+<iter> = count(start=0, step=1)  # Returns updated value endlessly. Accepts floats
+<iter> = repeat(<el> [, times])  # Returns element endlessly or 'times' times
+<iter> = cycle(<collection>)  # Repeats the sequence endlessly
+
+<iter> = chain(<coll_1>, <coll_2> [, ...])  # Empties collections in order
+<iter> = chain.from_iterable(<collection>)  # Empties collections inside a collection in order
+
+<iter> = islice(<collection>, to_exclusive)
+<iter> = islice(<collection>, from_inclusive, to_exclusive [, +step_size])
 ```
 
 [back to top](#table-of-contents)
 
 ### Generator
+- Any function that contains a yield statement returns a generator
+- Generators and iterators are interchangeable
 ```python
+def count(start, step):
+    while True:
+        yield start
+        start += step
 
+
+counter = count(10, 2)
+next(counter), next(counter), next(counter)  # (10, 12, 14)
 ```
 
 [back to top](#table-of-contents)
