@@ -298,9 +298,47 @@ next(counter), next(counter), next(counter)  # (10, 12, 14)
 
 ## Types
 ### Type
+- Everything is an object
+- Every object has a type
+- Type and class are synonymous
 ```python
+<type> = type(<el>)  # Or: <el>.__class__
+<bool> = isinstance(<el>, <type>)  # Or: issubclass(type(<el>), <type>)
 
+type('a'), 'a'.__class__, str  # (<class 'str'>, <class 'str'>, <class 'str'>)
 ```
+- Some types do not have built-in names, so they must be imported
+```python
+from types import FunctionType, MethodType, LambdaType, GeneratorType
+```
+- Abstract Base Classes
+  - Each abstract base class specifies a set of virtual subclasses
+  - These classes are then recognized by isinstance() and issubclass() as subclasses of the ABC, although they are really not
+```python
+from collections.abc import Sequence, Collection, Iterable
+
+isinstance([1, 2, 3], Iterable)  # True
+```
+
+||Sequence|Collection|Iterable|
+|-|-|-|-|
+|list, range, str|&#9745;|&#9745;|&#9745;|
+|dict, set||&#9745;|&#9745;|
+|iter|||&#9745;|
+
+```python
+from numbers import Integral, Rational, Real, Complex, Number
+
+isinstance(123, Number)  # True
+```
+
+||Integral|Rational|Real|Complex|Number|
+|-|-|-|-|-|-|
+|int|&#9745;|&#9745;|&#9745;|&#9745;|&#9745;|
+|fractions.Fraction||&#9745;|&#9745;|&#9745;|&#9745;|
+|float|||&#9745;|&#9745;|&#9745;|
+|complex||||&#9745;|&#9745;|
+|decimal.Decimal|||||&#9745;|
 
 [back to top](#table-of-contents)
 
