@@ -28,7 +28,7 @@
     - then that system has 50% availability which is very bad
 - when dealing with availability, usually we are dealing with very high percentages
   - therefore we measure availability not exactly in percentages but rather in ```Nines```
-    ![availabilityTable](../../images/availabilityTable.png)
+    ![availabilityTable](../../../images/availabilityTable.png)
     - a system with 5 nines and above are regarded as ```highly available``` or ```high availability```
 ## How to improve the availability
 - ensure that the system doesn't have single points of failure
