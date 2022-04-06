@@ -1,5 +1,5 @@
 # Security and HTTPS
-![encryption](../../images/encryption.png)
+![encryption](../../../images/encryption.png)
 ## Man-In-The-Middle Attack (MITM)
 - an attack in which the attacker intercepts a line of communication that is thought to be private by its 2 communicating parties
 - if a malicious actor intercepted and mutated an IP packet on its way from a client to a server, that would be a man-in-the-middle attack
@@ -47,4 +47,4 @@
     - this time encrypted with the server's public key to the server
   - the client and the server use the client hello, the server hello, and the premaster secret to then generate same symmetric-encryption session keys
     - to be used to encrypt and decrypt all data communicated during the remainder of the connection
-![tlsHandshake](../../images/tlsHandshake.png)
+![tlsHandshake](../../../images/tlsHandshake.png)
