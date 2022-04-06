@@ -31,7 +31,7 @@
 - it minimizes the number of requests that get forwarded to different servers when new servers are added or when existing servers are brought down
 - if a server gets removed or is newly added, most of the clients will still be redirected to the same server
 - the same server can also be placed at multiple locations to allow more clients to be redirected to it
-![consistentHashing](../../images/consistentHashing.png)
+![consistentHashing](../../../images/consistentHashing.png)
 ### Rendezvous hashing
 - a type of hashing also coined highest random weight hashing
 - allows for minimal re-distribution of mappings when a server goes down
