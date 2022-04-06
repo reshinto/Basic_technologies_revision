@@ -9,7 +9,7 @@
 - OSI Model was introduced by ISO (International Organization for Standardization) in 1984
 ## OSI Model contains 7 layers
 - each layer is a package of protocols
-![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/osiLayers.png "OSI Layers")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/interviewPrep/system_design/images/osiLayers.png "OSI Layers")
 ### Application layer (7)
 - this layer is used by network applications
   - network application means computer apps that uses internet
