@@ -29,7 +29,7 @@
             - if the message that is being sent is an idempotent operation, it might be bad for the system, whether it is bad or not depends on the ultimate operation
               - e.g.: if only 1 user can like a youtube video once, it should not increment the number of likes more than once
                 - for this case, it is a drawback for the pub/sub system
-  ![pubSubExample](../../images/pubSub.png)
+  ![pubSubExample](../../../images/pubSub.png)
 ## When to use example
 - in the chat application, we can use streaming paradigm as a solution
   - however, if we need to expand the system, we would get some issues
