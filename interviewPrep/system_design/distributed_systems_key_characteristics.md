@@ -93,7 +93,7 @@
     4. Bandwidth
         - if you're streaming or similar, the amount of data that can be pushed through the network is also limited through a single server
 
-![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/verticalScaling_vs_horizontalScaling.png "Vertical scaling vs. Horizontal scaling")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/interviewPrep/system_design/images/verticalScaling_vs_horizontalScaling.png "Vertical scaling vs. Horizontal scaling")
 
 - Vertical Scaling
 
@@ -104,7 +104,7 @@
 ||single point of failure, if anything fails the server would crash|
 
   - Diminishing returns
-  ![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/diminishingReturns.png "Diminishing Returns")
+  ![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/interviewPrep/system_design/images/diminishingReturns.png "Diminishing Returns")
 
 - Horizontal Scaling
 
@@ -116,7 +116,7 @@
 |having more servers means you can have servers around the world which reduce latency for users all over the world||
 
   - Price per capacity vs Extra capacity
-  ![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/priceToCapacity.png "Price per capacity vs Extra capacity")
+  ![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/interviewPrep/system_design/images/priceToCapacity.png "Price per capacity vs Extra capacity")
 
 |Horizontal Scaling|Vertical Scaling|
 |-|-|
