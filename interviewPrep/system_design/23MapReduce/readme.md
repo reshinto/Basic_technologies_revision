@@ -1,7 +1,7 @@
 # [MapReduce](https://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf)
 - it is a programming model for processing and generating big data sets with a parallel, distributed algorithm on a cluster
 - it is a popular framework for processing very large datasets in a distributed setting efficiently, quickly, and in a fault-tolerant manner
-![MapReduce](../../images/mapReduce.png)
+![MapReduce](../../../images/mapReduce.png)
 - its job is comprised of 3 main steps
   - the Map step, which runs a map function on the various chunks of the dataset and transforms these chunks into intermediate key-value pairs
     - these chunks are from the same data sets
@@ -43,7 +43,7 @@
   - the main thing that you care about is what Map and Reduce function you are gonna specify, and what the various inputs and outputs of those functions is gonna be
 ## MapReduce example
 - count the total number of occurances of every letter in some large data set that spread out across multiple machines
-![MapReduceExample](../../images/mapReduceExample.png)
+![MapReduceExample](../../../images/mapReduceExample.png)
 ### When to use
 - if you have a bunch of youtube videos stored in some data set and you have the metadata about those youtube videos
   - you want to get maybe the total number of views or likes per user or per youtube channel
