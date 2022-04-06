@@ -151,7 +151,7 @@
 - Randomly selects a candidate item and discards it to make space when necessary
 
 ## Caching layers
-![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/cachingLayers.png "Caching Layers")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/interviewPrep/system_design/images/cachingLayers.png "Caching Layers")
 
 ### DNS (Domain Name System) cache
 - when typing a website address, you would go to an ip address first
@@ -191,7 +191,7 @@
       - thus increasing cache misses
       - 2 choices for overcoming this hurdle: 1) global caches 2) distributed caches
 
-![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/appServerCache.png "App Server Cache")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/interviewPrep/system_design/images/appServerCache.png "App Server Cache")
 
 ### Database
 - most database would have their own internal caching to cache frequent accessed data
@@ -217,7 +217,7 @@
   - under ideal conditions, the passive servers will not do anything
   - before a passive server gets brought up online, it needs to be `warm-up` which is to pre-query the database and fill up the cache data
 
-![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/distributedCache.png "Distributed Cache")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/interviewPrep/system_design/images/distributedCache.png "Distributed Cache")
 
 
 ## Code example
