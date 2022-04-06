@@ -55,7 +55,7 @@
 - have to handle making sure new data reaches replicas
 - have built in fault tolerance as even if any of the replica were to go down, there would be backups to take its place
 
-![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/replicas.png "replicas")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/interviewPrep/system_design/images/replicas.png "replicas")
 
 ### Sharding (a type of partitioning)
 - also called as horizontal partitioning
@@ -74,7 +74,7 @@
     - thus there is no good way to handle the traffic whenever he posts a picture, the servers would go crazy
 - some cases, there's no way good way to handle sharding, just have to deal with it
 
-![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/sharding.png "sharding")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/interviewPrep/system_design/images/sharding.png "sharding")
 
 ### Vertical Partitioning
 - divide up the schema of database into separate tables
@@ -86,7 +86,7 @@
 |-|-|
 |generally it is easier to implement than sharding|could potentially end up having to shard or horizontally partition anyway, which would get complicated because the data has already been vertically partitioned|
 
-![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/system_design/images/verticalPartitioning.png "Vertical Partitioning")
+![alt text](https://github.com/reshinto/Basic_technologies_revision/raw/master/interviewPrep/system_design/images/verticalPartitioning.png "Vertical Partitioning")
 
 ## When to consider NoSQL
 - when the benefit of relational database is gone
