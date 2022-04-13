@@ -1887,37 +1887,152 @@ import csv
 [back to top](#table-of-contents)
 
 ### Struct
+- Module that performs conversions between a sequence of numbers and a bytes object
+- Machine’s native type sizes and byte order are used by default
 ```python
+from struct import pack, unpack, iter_unpack
 
+
+<bytes> = pack('<format>', <num_1> [, <num_2>, ...])
+<tuple> = unpack('<format>', <bytes>)
+<tuples> = iter_unpack('<format>', <bytes>)
+
+# example
+pack('>hhl', 1, 2, 3)  # b'\x00\x01\x00\x02\x00\x00\x00\x03'
+unpack('>hhl', b'\x00\x01\x00\x02\x00\x00\x00\x03')  # (1, 2, 3)
 ```
+- Format
+  - For standard type sizes start format string with:
+    - `=` - native byte order
+    - `<` - little-endian
+    - `>` - big-endian (also '!')
+  - Integer types. Use a capital letter for unsigned type. Standard sizes are in brackets:
+    - `x` - pad byte 'b' - char (1)
+    - `h` - short (2) 'i' - int (4)
+    - `l` - long (4)
+    - `q` - long long (8)
+  - Floating point types:
+    - `f` - float (4)
+    - `d` - double (8)
+
 
 [back to top](#table-of-contents)
 
 ### Array
+- List that can only hold numbers of a predefined type
+- Available types and their sizes in bytes are listed above
 ```python
+from array import array
 
+
+<array> = array('<typecode>', <collection>)  # Array from collection of numbers
+<array> = array('<typecode>', <bytes>)  # Array from bytes object
+<array> = array('<typecode>', <array>)  # Treats array as a sequence of numbers
+<bytes> = bytes(<array>)  # Or: <array>.tobytes()
 ```
 
 [back to top](#table-of-contents)
 
 ### Memory View
+- A sequence object that points to the memory of another object
+- Each element can reference a single or multiple consecutive bytes, depending on format
+- Order and number of elements can be changed with slicing.
 ```python
+<mview> = memoryview(<bytes/bytearray/array>)  # Immutable if bytes, else mutable
+<real> = <mview>[<index>]  # Returns an int or a float
+<mview> = <mview>[<slice>]  # Mview with rearranged elements
+<mview> = <mview>.cast('<typecode>')  # Casts memoryview to the new format
+<mview>.release()  # Releases the object's memory buffer
 
+<bin_file>.write(<mview>)  # Writes mview to the binary file
+<bytes> = bytes(<mview>)  # Creates a new bytes object
+<bytes> = <bytes>.join(<coll_of_mviews>)  # Joins mviews using bytes object as sep
+<array> = array('<typecode>', <mview>)  # Treats mview as a sequence of numbers
+
+<list>  = list(<mview>)  # Returns list of ints or floats
+<str> = str(<mview>, 'utf-8')  # Treats mview as a bytes object
+<int> = int.from_bytes(<mview>, ...)  # `byteorder='big/little', signed=False`
+'<hex>' = <mview>.hex()  # Treats mview as a bytes object
 ```
 
 [back to top](#table-of-contents)
 
 ### Deque
+- A thread-safe list with efficient appends and pops from either side. Pronounced "deck"
 ```python
+from collections import deque
 
+
+<deque> = deque(<collection>, maxlen=None)
+
+<deque>.appendleft(<el>)  # Opposite element is dropped if full
+<deque>.extendleft(<collection>)  # Collection gets reversed
+<el> = <deque>.popleft()  # Raises IndexError if empty
+<deque>.rotate(n=1)  # Rotates elements to the right
 ```
 
 [back to top](#table-of-contents)
 
 ## Advanced
 ### Threading
+- CPython interpreter can only run a single thread at a time
+- That is why using multiple threads won't result in a faster execution, unless at least one of the threads contains an I/O operation
 ```python
+from threading import Thread, RLock, Semaphore, Event, Barrier
+```
+- Thread
+  - Use `kwargs=<dict>` to pass keyword arguments to the function
+  - Use `daemon=True`, or the program will not be able to exit while the thread is alive
+  ```python
+  <Thread> = Thread(target=<function>)  # Use `args=<collection>` to set arguments
+  <Thread>.start()  # Starts the thread
+  <bool> = <Thread>.is_alive()  # Checks if thread has finished executing
+  <Thread>.join()  # Waits for thread to finish
+  ```
+- Lock
+  ```python
+  <lock> = RLock()
+  <lock>.acquire()  # Waits for lock to be available
+  <lock>.release()  # Makes the lock available again
 
+  # Or
+  lock = RLock()
+  with lock:
+      ...
+  ```
+- Semaphore, Event, Barrier
+  ```python
+  <Semaphore> = Semaphore(value=1)  # Lock that can be acquired 'value' times
+  <Event> = Event()  # Method wait() blocks until set() is called
+  <Barrier> = Barrier(n_times)  # Method wait() blocks until it's called 'n_times'
+  ```
+- Thread Pool Executor
+  ```python
+  from concurrent.futures import ThreadPoolExecutor
+
+
+  with ThreadPoolExecutor(max_workers=None) as executor:  # Does not exit until done
+      <iter> = executor.map(lambda x: x + 1, range(3))  # (1, 2, 3)
+      <iter> = executor.map(lambda x, y: x + y, 'abc', '123')  # ('a1', 'b2', 'c3')
+      <Future> = executor.submit(<function> [, <arg_1>, ...])  # Also visible outside block
+
+  # Future
+  <bool> = <Future>.done()  # Checks if thread has finished executing
+  <obj> = <Future>.result()  # Waits for thread to finish and returns result
+  ```
+- Queue
+  - A thread-safe FIFO queue
+  - For LIFO queue use LifoQueue
+```python
+from queue import Queue
+
+
+<Queue> = Queue(maxsize=0)
+
+<Queue>.put(<el>)  # Blocks until queue stops being full
+<Queue>.put_nowait(<el>)  # Raises queue.Full exception if full
+<el> = <Queue>.get()  # Blocks until queue stops being empty
+<el> = <Queue>.get_nowait()  # Raises queue. Empty exception if empty
 ```
 
 [back to top](#table-of-contents)
