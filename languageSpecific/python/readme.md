@@ -2223,50 +2223,193 @@ curses.wrapper(main)
 
 ## Libraries
 ### Progress Bar
+- `pip3 install tqdm`
 ```python
+from tqdm import tqdm
+from time import sleep
 
+
+for el in tqdm([1, 2, 3]):
+    sleep(0.2)
 ```
 
 [back to top](#table-of-contents)
 
 ### Plot
+- `pip3 install matplotlib`
 ```python
+from matplotlib import pyplot
 
+
+pyplot.plot(<y_data> [, label=<str>])
+pyplot.plot(<x_data>, <y_data>)
+pyplot.legend()  # Adds a legend
+pyplot.savefig('<path>')  # Saves the figure
+pyplot.show()  # Displays the figure
+pyplot.clf()  # Clears the figure
 ```
 
 [back to top](#table-of-contents)
 
 ### Table
+- Prints a CSV file as an ASCII table:
+- `pip3 install tabulate`
 ```python
+import csv, tabulate
 
+
+with open('test.csv', encoding='utf-8', newline='') as file:
+    rows = csv.reader(file)
+    header = [a.title() for a in next(rows)]
+    table = tabulate.tabulate(rows, header)
+    print(table)
 ```
 
 [back to top](#table-of-contents)
 
 ### Curses
+- Clears the terminal, prints a message and waits for the ESC key press:
 ```python
+from curses import wrapper, curs_set, ascii
+from curses import KEY_UP, KEY_RIGHT, KEY_DOWN, KEY_LEFT
 
+
+def main():
+    wrapper(draw)
+
+
+def draw(screen):
+    curs_set(0)  # Makes cursor invisible
+    screen.nodelay(True)  # Makes getch() non-blocking
+    screen.clear()
+    screen.addstr(0, 0, 'Press ESC to quit.')  # Coordinates are y, x
+    while screen.getch() != ascii.ESC:
+      pass
+
+
+def get_border(screen):
+    from collections import namedtuple
+    P = namedtuple('P', 'x y')
+    height, width = screen.getmaxyx()
+    return P(width-1, height-1)
+
+
+if __name__ == '__main__':
+    main()
 ```
 
 [back to top](#table-of-contents)
 
 ### Logging
+- `pip3 install loguru`
+- Levels: `debug`, `info`, `success`, `warning`, `error`, `critical`
 ```python
+from loguru import logger
 
+
+logger.add('debug_{time}.log', colorize=True)  # Connects a log file
+logger.add('error_{time}.log', level='ERROR')  # Another file for errors or higher
+logger.<level>('A logging message.')
 ```
+- Exceptions
+  - Exception description, stack trace and values of variables are appended automatically
+  ```python
+  try:
+      ...
+  except <exception>:
+      logger.exception('An error happened.')
+  ```
+- Rotation
+  - Argument that sets a condition when a new log file is created
+  - `<int>` - Max file size in bytes
+  - `<timedelta>` - Max age of a file
+  - `<time>` - Time of day
+  - `<str>` - Any of above as a string: '100 MB', '1 month', 'monday at 12:00', ...
+  ```python
+  rotation = <int>|<datetime.timedelta>|<datetime.time>|<str>
+  ```
+- Retention
+  - Sets a condition which old log files get deleted
+  - `<int>` - Max number of files
+  - `<timedelta>` - Max age of a file
+  - `<str>` - Max age as a string: '1 week, 3 days', '2 months', ...
+  ```python
+  retention = <int>|<datetime.timedelta>|<str>
+  ```
 
 [back to top](#table-of-contents)
 
 ### Scraping
+- Scrapes Python's URL, version number and logo from Wikipedia page:
+- `pip3 install requests beautifulsoup4`
 ```python
+import requests, sys
+from bs4 import BeautifulSoup
 
+
+URL = 'https://en.wikipedia.org/wiki/Python_(programming_language)'
+
+try:
+    html  = requests.get(URL).text
+    doc   = BeautifulSoup(html, 'html.parser')
+    table = doc.find('table', class_='infobox vevent')
+    rows  = table.find_all('tr')
+    link  = rows[11].find('a')['href']
+    ver   = rows[6].find('div').text.split()[0]
+    url_i = rows[0].find('img')['src']
+    image = requests.get(f'https:{url_i}').content
+    with open('test.png', 'wb') as file:
+        file.write(image)
+    print(link, ver)
+except requests.exceptions.ConnectionError:
+    print("You've got problems with connection.", file=sys.stderr)
 ```
 
 [back to top](#table-of-contents)
 
 ### Web
+- `pip3 install bottle`
 ```python
+from bottle import run, route, static_file, template, post, request, response
+import json
+```
+- Run
+  ```python
+  run(host='localhost', port=8080)  # Runs locally
+  run(host='0.0.0.0', port=80)  # Runs globally
+  ```
+- Static Request
+  ```python
+  @route('/img/<image>')
+  def send_image(image):
+      return static_file(image, 'img_dir/', mimetype='image/png')
+  ```
+- Dynamic Request
+  ```python
+  @route('/<sport>')
+  def send_page(sport):
+      return template('<h1>{{title}}</h1>', title=sport)
+  ```
+- REST Request
+  ```python
+  @post('/odds/<sport>')
+  def odds_handler(sport):
+      team = request.forms.get('team')
+      home_odds, away_odds = 2.44, 3.29
+      response.headers['Content-Type'] = 'application/json'
+      response.headers['Cache-Control'] = 'no-cache'
+      return json.dumps([team, home_odds, away_odds])
+  ```
+- Test
+  - `pip3 install requests`
+```python
+import requests
 
+
+url = 'http://localhost:8080/odds/football'
+data = {'team': 'arsenal f.c.'}
+response = requests.post(url, data=data)
+response.json()  # ['arsenal f.c.', 2.44, 3.29]
 ```
 
 [back to top](#table-of-contents)
