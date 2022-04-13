@@ -43,6 +43,7 @@
   - [Pickle](#pickle)
   - [CSV](#csv)
   - [SQLite](#sqlite)
+  - [MySQL](#mysql)
   - [Bytes](#bytes)
   - [Struct](#struct)
   - [Array](#array)
@@ -1677,37 +1678,211 @@ import os
 
 ## Data
 ### JSON
+- Text file format for storing collections of strings and numbers
 ```python
+import json
 
+
+<str> = json.dumps(<object>, ensure_ascii=True, indent=None)
+<object> = json.loads(<str>)
 ```
+- Read Object from JSON File
+  ```python
+  def read_json_file(filename):
+      with open(filename, encoding='utf-8') as file:
+          return json.load(file)
+  ```
+- Write Object to JSON File
+  ```python
+  def write_to_json_file(filename, an_object):
+      with open(filename, 'w', encoding='utf-8') as file:
+          json.dump(an_object, file, ensure_ascii=False, indent=2)
+  ```
 
 [back to top](#table-of-contents)
 
 ### Pickle
+- Binary file format for storing objects
 ```python
+import pickle
 
+
+<bytes> = pickle.dumps(<object>)
+<object> = pickle.loads(<bytes>)
 ```
+- Read Object from File
+  ```python
+  def read_pickle_file(filename):
+      with open(filename, 'rb') as file:
+          return pickle.load(file)
+  ```
+- Write Object to File
+  ```python
+  def write_to_pickle_file(filename, an_object):
+      with open(filename, 'wb') as file:
+          pickle.dump(an_object, file)
+  ```
 
 [back to top](#table-of-contents)
 
 ### CSV
+- Text file format for storing spreadsheets
 ```python
-
+import csv
 ```
+- Read
+  - File must be opened with `newline=""` argument, or newlines embedded inside quoted fields will not be interpreted correctly!
+  ```python
+  <reader> = csv.reader(<file>)  # Also: `dialect='excel', delimiter=','`
+  <list> = next(<reader>)  # Returns next row as a list of strings
+  <list> = list(<reader>)  # Returns list of remaining rows
+  ```
+- Write
+  - File must be opened with `newline=""` argument, or `\r` will be added in front of every `\n` on platforms that use `\r\n` line endings!
+  ```python
+  <writer> = csv.writer(<file>)   # Also: `dialect='excel', delimiter=','`
+  <writer>.writerow(<collection>)  # Encodes objects using `str(<el>)`
+  <writer>.writerows(<coll_of_coll>)  # Appends multiple rows
+  ```
+- Parameters
+  - `dialect` - Master parameter that sets the default values
+  - `delimiter` - A one-character string used to separate fields
+  - `quotechar` - Character for quoting fields that contain special characters
+  - `doublequote` - Whether quotechars inside fields get doubled or escaped
+  - `skipinitialspace` - Whether whitespace after delimiter gets stripped
+  - `lineterminator` - Specifies how writer terminates rows
+  - `quoting` - Controls the amount of quoting: 0 - as necessary, 1 - all
+  - `escapechar` - Character for escaping 'quotechar' if `doublequote` is False
+- Dialets
+
+  ||excel|excel-tab|unix|
+  |-|-|-|-|
+  |delimiter|,|\t|,|
+  |quotechar|"|"|"|
+  |doublequote|True|True|True|
+  |skipinitialspace|False|False|False|
+  |lineterminator|\r\n|\r\n|\n|
+  |quoting|0|0|1|
+  |escapechar|None|None|None|
+
+- Read Rows from CSV File
+  ```python
+  def read_csv_file(filename):
+      with open(filename, encoding='utf-8', newline='') as file:
+          return list(csv.reader(file))
+  ```
+- Write Rows to CSV File
+  ```python
+  def write_to_csv_file(filename, rows):
+      with open(filename, 'w', encoding='utf-8', newline='') as file:
+          writer = csv.writer(file)
+          writer.writerows(rows)
+  ```
 
 [back to top](#table-of-contents)
 
 ### SQLite
-```python
+- Server-less database engine that stores each database into a separate file
+- Connect
+  - Opens a connection to the database file
+  - Creates a new file if path doesn't exist
+  ```python
+  import sqlite3
 
-```
+
+  <con> = sqlite3.connect('<path>')  # Also ':memory:'
+  <con>.close()
+  ```
+- Read
+  - Returned values can be of type str, int, float, bytes or None
+  ```python
+  <cursor> = <con>.execute('<query>')  # Can raise a subclass of sqlite3.Error
+  <tuple> = <cursor>.fetchone()  # Returns next row. Also next(<cursor>)
+  <list> = <cursor>.fetchall()  # Returns remaining rows. Also list(<cursor>)
+  ```
+- Write
+  ```python
+  <con>.execute('<query>')
+  <con>.commit()
+
+  # or
+  with <con>:
+      <con>.execute('<query>')
+  ```
+- Placeholders
+  - Passed values can be of type str, int, float, bytes, None, bool, datetime.date or datetime.datetme
+  - Bools will be stored and returned as ints and dates as ISO formatted strings
+  ```python
+  <con>.execute('<query>', <list/tuple>)  # Replaces '?'s in query with values
+  <con>.execute('<query>', <dict/namedtuple>)  # Replaces ':<key>'s with values
+  <con>.executemany('<query>', <coll_of_above>)  # Runs execute() many times
+  ```
+- In this example values are not actually saved because `con.commit()` is omitted!
+  ```python
+  import sqlite3
+
+
+  con = sqlite3.connect('test.db')
+  
+  con.execute('create table person (person_id integer primary key, name, height)')
+  con.execute('insert into person values (null, ?, ?)', ('Jean-Luc', 187)).lastrowid  # 1
+  con.execute('select * from person').fetchall()  #[(1, 'Jean-Luc', 187)]
+  ```
+
+[back to top](#table-of-contents)
+
+### MySQL
+- Has a very similar interface with SQLite, but with differences listed below
+  - `pip3 install mysql-connector`
+  ```python
+  from mysql import connector
+
+
+  <con> = connector.connect(host=<str>, ...)  # `user=<str>, password=<str>, database=<str>
+  <cursor> = <con>.cursor()  # Only cursor has execute method
+
+  <cursor>.execute('<query>')  # Can raise a subclass of connector.Error
+  <cursor>.execute('<query>', <list/tuple>)  # Replaces '%s's in query with values
+  <cursor>.execute('<query>', <dict/namedtuple>)  # Replaces '%(<key>)s's with values
+  ```
 
 [back to top](#table-of-contents)
 
 ### Bytes
+- Bytes object is an immutable sequence of single bytes
+- Mutable version is called bytearray
 ```python
-
+<bytes> = b'<str>'  # Only accepts ASCII characters and \x00 - \xff
+<int> = <bytes>[<index>]  # Returns int in range from 0 to 255
+<bytes> = <bytes>[<slice>]  # Returns bytes even if it has only one element
+<bytes> = <bytes>.join(<coll_of_bytes>)  # Joins elements using bytes object as separator
 ```
+- Encode
+  ```python
+  <bytes> = bytes(<coll_of_ints>)  # Ints must be in range from 0 to 255
+  <bytes> = bytes(<str>, 'utf-8')  # Or: <str>.encode('utf-8')
+  <bytes> = <int>.to_bytes(n_bytes, ...)  # `byteorder='big/little', signed=False`
+  <bytes> = bytes.fromhex('<hex>')  # Hex numbers can be separated by spaces
+  ```
+- Decode
+  ```python
+  <list> = list(<bytes>)  # Returns ints in range from 0 to 255
+  <str> = str(<bytes>, 'utf-8')  # Or: <bytes>.decode('utf-8')
+  <int> = int.from_bytes(<bytes>, ...)  # `byteorder='big/little', signed=False`
+  '<hex>' = <bytes>.hex()  # Returns a string of hexadecimal numbers
+  ```
+- Read Bytes from File
+  ```python
+  def read_bytes(filename):
+      with open(filename, 'rb') as file:
+          return file.read()
+  ```
+- Write Bytes to File
+  ```python
+  def write_bytes(filename, bytes_obj):
+      with open(filename, 'wb') as file:
+          file.write(bytes_obj)
+  ```
 
 [back to top](#table-of-contents)
 
