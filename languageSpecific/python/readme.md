@@ -2038,36 +2038,185 @@ from queue import Queue
 [back to top](#table-of-contents)
 
 ### Operator
+- Module of functions that provide the functionality of operators
 ```python
+from operator import add, sub, mul, truediv, floordiv, mod, pow, neg, abs
+from operator import eq, ne, lt, le, gt, ge
+from operator import and_, or_, not_
+from operator import itemgetter, attrgetter, methodcaller
+import operator as op
 
+
+elementwise_sum  = map(op.add, list_a, list_b)
+sorted_by_second = sorted(<collection>, key=op.itemgetter(1))
+sorted_by_both = sorted(<collection>, key=op.itemgetter(1, 0))
+product_of_elems = functools.reduce(op.mul, <collection>)
+LogicOp = enum.Enum('LogicOp', {'AND': op.and_, 'OR' : op.or_})
+last_el = op.methodcaller('pop')(<list>)
 ```
 
 [back to top](#table-of-contents)
 
 ### Introspection
-```python
+- Inspecting code at runtime
+- Variables
+  ```python
+  <list> = dir()  # Names of local variables (incl. functions)
+  <dict> = vars()  # Dict of local variables. Also locals()
+  <dict> = globals()  # Dict of global variables
+  ```
+- Attributes
+  ```python
+  <list> = dir(<object>)  # Names of object's attributes (incl. methods)
+  <dict> = vars(<object>)  # Dict of object's fields. Also <obj>.__dict__
+  <bool> = hasattr(<object>, '<attr_name>')  # Checks if getattr() raises an error
+  value  = getattr(<object>, '<attr_name>')  # Raises AttributeError if attribute is missing
+  setattr(<object>, '<attr_name>', value)    # Only works on objects with __dict__ attribute
+  delattr(<object>, '<attr_name>')           # Equivalent to `del <object>.<attr_name>`
+  ```
+- Parameters
+  ```python
+  from inspect import signature
 
-```
+
+  <sig> = signature(<function>)
+  no_of_params = len(<sig>.parameters)
+  param_names = list(<sig>.parameters.keys())
+  param_kinds = [a.kind for a in <sig>.parameters.values()]
+  ```
 
 [back to top](#table-of-contents)
 
 ### Metaprogramming
-```python
+- Code that generates code
+- Type
+  - Type is the root class
+  - If only passed an object it returns its type (class)
+    - Otherwise it creates a new class
+  ```python
+  <class> = type('<class_name>', <parents_tuple>, <attributes_dict>)
 
+  Z = type('Z', (), {'a': 'abcde', 'b': 12345})
+  z = Z()
+  ```
+- Meta Class
+  - A class that creates classes
+  - `New()` is a class method that gets called before init()
+    - If it returns an instance of its class, then that instance gets passed to init() as a 'self' argument
+    - It receives the same arguments as init(), except for the first one that specifies the desired type of the returned instance (MyMetaClass in our case)
+    - `new()` can also be called directly, usually from a `new()` method of a child class (```def __new__(cls): return super().__new__(cls)```)
+    - The only difference between the examples above is that `my_meta_class()` returns a class of type `type`, while `MyMetaClass()` returns a class of type `MyMetaClass`
+  ```python
+  def my_meta_class(name, parents, attrs):
+        attrs['a'] = 'abcde'
+        return type(name, parents, attrs)
+
+  # or
+  class MyMetaClass(type):
+      def __new__(cls, name, parents, attrs):
+          attrs['a'] = 'abcde'
+          return type.__new__(cls, name, parents, attrs)
+  ```
+- Metaclass Attribute
+  - Right before a class is created it checks if it has the 'metaclass' attribute defined
+  - If not, it recursively checks if any of his parents has it defined and eventually comes to type()
+  ```python
+  class MyClass(metaclass=MyMetaClass):
+      b = 12345
+
+
+  MyClass.a, MyClass.b  # ('abcde', 12345)
+  ```
+- Type Diagram
+  ```python
+  type(MyClass) == MyMetaClass  # MyClass is an instance of MyMetaClass
+  type(MyMetaClass) == type  # MyMetaClass is an instance of type
+  ```
+- Inheritance Diagram
+```python
+MyClass.__base__ == object  # MyClass is a subclass of object
+MyMetaClass.__base__ == type  # MyMetaClass is a subclass of type
 ```
 
 [back to top](#table-of-contents)
 
 ### Eval
 ```python
+from ast import literal_eval
 
+
+literal_eval('1 + 2')  # 3
+literal_eval('[1, 2, 3]')  # [1, 2, 3]
+literal_eval('abs(1)')  # ValueError: malformed node or string
 ```
 
 [back to top](#table-of-contents)
 
 ### Coroutine
+- Coroutines have a lot in common with threads, but unlike threads, they only give up control when they call another coroutine and they don’t use as much memory
+- Coroutine definition starts with `async` and its call with `await`
+- `asyncio.run(<coroutine>)` is the main entry point for asynchronous programs
+- Functions wait(), gather() and as_completed() can be used when multiple coroutines need to be started at the same time
+- Asyncio module also provides its own Queue, Event, Lock and Semaphore classes
+- Example
+  - Runs a terminal game where you control an asterisk that must avoid numbers:
 ```python
+import asyncio, collections, curses, enum, random
 
+
+P = collections.namedtuple('P', 'x y')  # Position
+D = enum.Enum('D', 'n e s w')  # Direction
+
+def main(screen):
+    curses.curs_set(0)  # Makes cursor invisible
+    screen.nodelay(True)  # Makes getch() non-blocking
+    asyncio.run(main_coroutine(screen))  # Starts running asyncio code
+
+
+async def main_coroutine(screen):
+    state = {'*': P(0, 0), **{id_: P(30, 10) for id_ in range(10)}}
+    moves = asyncio.Queue()
+    coros = (*(random_controller(id_, moves) for id_ in range(10)),
+             human_controller(screen, moves),
+             model(moves, state, *screen.getmaxyx()),
+             view(state, screen))
+    await asyncio.wait(coros, return_when=asyncio.FIRST_COMPLETED)
+
+
+async def random_controller(id_, moves):
+    while True:
+        moves.put_nowait((id_, random.choice(list(D))))
+        await asyncio.sleep(random.random() / 2)
+
+
+async def human_controller(screen, moves):
+    while True:
+        ch = screen.getch()
+        key_mappings = {259: D.n, 261: D.e, 258: D.s, 260: D.w}
+        if ch in key_mappings:
+            moves.put_nowait(('*', key_mappings[ch]))
+        await asyncio.sleep(0.01)
+
+
+async def model(moves, state, height, width):
+    while state['*'] not in {p for id_, p in state.items() if id_ != '*'}:
+        id_, d = await moves.get()
+        p      = state[id_]
+        deltas = {D.n: P(0, -1), D.e: P(1, 0), D.s: P(0, 1), D.w: P(-1, 0)}
+        new_p  = P(*[sum(a) for a in zip(p, deltas[d])])
+        if 0 <= new_p.x < width-1 and 0 <= new_p.y < height:
+            state[id_] = new_p
+
+
+async def view(state, screen):
+    while True:
+        screen.clear()
+        for id_, p in state.items():
+            screen.addstr(p.y, p.x, str(id_))
+        await asyncio.sleep(0.01)
+
+
+curses.wrapper(main)
 ```
 
 [back to top](#table-of-contents)
