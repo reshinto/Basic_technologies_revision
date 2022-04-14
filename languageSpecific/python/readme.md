@@ -2945,9 +2945,266 @@ def write_to_wav_file(filename, float_samples, nchannels=1, sampwidth=2, framera
 [back to top](#table-of-contents)
 
 ### Pandas
+- `pip3 install pandas`
 ```python
-
+import pandas as pd
+from pandas import Series, DataFrame
 ```
+- Series
+  - Ordered dictionary with a name
+  ```python
+  Series([1, 2], index=['x', 'y'], name='a')
+  """
+  x  1
+  y  2
+  Name: a, dtype: int64
+  """
+
+  <Sr> = Series(<list>)  # Assigns RangeIndex starting at 0
+  <Sr> = Series(<dict>)  # Takes dictionary's keys for index
+  <Sr> = Series(<dict/Series>, index=<list>)  # Only keeps items with keys specified in index
+
+  <el> = <Sr>.loc[key]  # Or: <Sr>.iloc[index]
+  <Sr> = <Sr>.loc[keys]  # Or: <Sr>.iloc[indexes]
+  <Sr> = <Sr>.loc[from_key : to_key_inclusive]  # Or: <Sr>.iloc[from_i : to_i_exclusive]
+
+  <el> = <Sr>[key/index]  # Or: <Sr>.key
+  <Sr> = <Sr>[keys/indexes]  # Or: <Sr>[<key_range/range>]
+  <Sr> = <Sr>[bools]  # Or: <Sr>.i/loc[bools]
+
+  <Sr> = <Sr> ><== <el/Sr>  # Returns a Series of bools
+  <Sr> = <Sr> +-*/ <el/Sr>  # Non-matching keys get value NaN
+
+  <Sr> = <Sr>.append(<Sr>)  # Or: pd.concat(<coll_of_Sr>)
+  <Sr> = <Sr>.combine_first(<Sr>)  # Adds items that are not yet present
+  <Sr>.update(<Sr>)  # Updates items that are already present
+  ```
+  - Aggregate, Transform, Map
+    - The way `aggregate()` and `transform()` find out whether a function accepts an element or the whole Series is by passing it a single value at first and if it raises an error, then they pass it the whole Series
+    - Last result has a hierarchical index. Use `<Sr>[key_1, key_2]` to get its values
+    ```python
+    <el> = <Sr>.sum/max/mean/idxmax/all()  # Or: <Sr>.aggregate(<agg_func>)
+    <Sr> = <Sr>.rank/diff/cumsum/ffill/interpl()  # Or: <Sr>.agg/transform(<trans_func>)
+    <Sr> = <Sr>.fillna(<el>)  # Or: <Sr>.apply/agg/transform/map(<map_func>)
+
+
+    sr = Series([1, 2], index=['x', 'y'])
+    """
+    x  1
+    y  2
+    """
+    ```
+    
+    |             |    'sum'    |   ['sum']   | {'s': 'sum'}  |
+    |-|-|-|-|
+    | sr.apply(...) |      3      |    sum  3   |     s  3      |
+    | sr.agg(...)   |             |             |               |
+
+    | | 'rank' | ['rank'] | {'r': 'rank'} |
+    |-|-|-|-| 
+    | sr.apply(...) | | rank || 
+    | sr.agg(...) | x 1 | x1 | rx1|
+    | sr.trans(...) | y 2 | y 2 | y 2 | 
+
+- DataFrame
+  - Table with labeled rows and columns
+  ```python
+  DataFrame([[1, 2], [3, 4]], index=['a', 'b'], columns=['x', 'y'])
+  """
+    x y
+  a 1 2
+  b 3 4
+  """
+
+  <DF> = DataFrame(<list_of_rows>)  # Rows can be either lists, dicts or series
+  <DF> = DataFrame(<dict_of_columns>)  # Columns can be either lists, dicts or series
+
+  <el> = <DF>.loc[row_key, column_key]  # Or: <DF>.iloc[row_index, column_index]
+  <Sr/DF> = <DF>.loc[row_key/s]  # Or: <DF>.iloc[row_index/es]
+  <Sr/DF> = <DF>.loc[:, column_key/s]  # Or: <DF>.iloc[:, column_index/es]
+  <DF> = <DF>.loc[row_bools, column_bools]  # Or: <DF>.iloc[row_bools, column_bools]
+
+  <Sr/DF> = <DF>[column_key/s]  # Or: <DF>.column_key
+  <DF> = <DF>[row_bools]  # Keeps rows as specified by bools
+  <DF> = <DF>[<DF_of_bools>]  # Assigns NaN to False values
+
+  <DF> = <DF> ><== <el/Sr/DF>  # Returns DataFrame of bools
+  <DF> = <DF> +-*/ <el/Sr/DF>  # Non-matching keys get value NaN
+
+  <DF> = <DF>.set_index(column_key)  # Replaces row keys with values from a column
+  <DF> = <DF>.reset_index()  # Moves row keys to their own column
+  <DF> = <DF>.filter('<regex>', axis=1)  # Only keeps columns whose key matches the regex
+  <DF> = <DF>.melt(id_vars=column_key/s)  # Converts DF from wide to long format
+  ```
+  - Merge, Join, Concat
+    - `l.merge(r, on="y", how=...)`
+      - `outer`
+        ```
+          x y z
+        0 1 2 .
+        1 3 4 5
+        2 . 6 7
+        ```
+      - `inner`
+        ```
+        x y z
+        3 4 5
+        ```
+      - `left`
+        ```
+        x y z
+        1 2 .
+        3 4 5
+        ```
+      - Joins / Merges on column
+      - also accepts left_on and right_on parameters
+      - uses `inner` by default
+    - `l.join(r, lsuffix="l", rsuffix="r", how=...)`
+      - `outer`
+        ```
+          x yl yr z
+        a 1 2  .  .
+        b 3 4  4  5
+        c . .  6  7
+        ```
+      - `inner`
+        ```
+        x yl yr z
+        3 4  4  5
+        ```
+      - `left`
+        ```
+        x yl yr z
+        1 2  .  .
+        3 4  4  5
+        ```
+      - Joins / Merges on row keys
+      - uses `left` by default
+    - `pd.concat([l, r], axis=0, join=...)`
+      - `outer`
+        ```
+          x y z
+        a 1 2 .
+        b 3 4 .
+        b . 4 5
+        c . 6 7
+        ```
+      - `inner`
+        ```
+        y
+        2
+        4
+        4
+        6
+        ```
+      - Adds rows at the bottom
+      - uses `outer` by default
+      - by default works the same as `l.append(r)`
+    - `pd.concat([l, r], axis=1, join=...)`
+      - `outer`
+        ```
+          x y y z
+        a 1 2 . .
+        b 3 4 4 5
+        c . . 6 7
+        ```
+      - `inner`
+        ```
+        x y y z
+        3 4 4 5
+        ```
+      - Adds columns at the right end
+      - uses `outer` by default
+    - `l.combine_first(r)`
+      - `outer`
+        ```
+          x y z
+        a 1 2 .
+        b 3 4 5
+        c . 6 7
+        ```
+      - Adds missing rows and columns
+    ```python
+    l = DataFrame([[1, 2], [3, 4]], index=['a', 'b'], columns=['x', 'y'])
+    """
+      x y
+    a 1 2
+    b 3 4
+    """
+
+    r = DataFrame([[4, 5], [6, 7]], index=['b', 'c'], columns=['y', 'z'])
+    """
+      y z
+    b 4 5
+    c 6 7
+    """
+    ```
+  - Aggregate, Transform, Map
+    - All operations operate on columns by default
+    - Use `axis=1` parameter to process the rows instead
+    - Use `<DF>[col_key_1, col_key_2][row_key]` to get the fifth result's values.
+    ```python
+    <Sr> = <DF>.sum/max/mean/idxmax/all()  # Or: <DF>.apply/agg/transform(<agg_func>)
+    <DF> = <DF>.rank/diff/cumsum/ffill/interpl()  # Or: <DF>.apply/agg/transform(<trans_func>)
+    <DF> = <DF>.fillna(<el>)  # Or: <DF>.applymap(<map_func>)
+
+    # example
+    df = DataFrame([[1, 2], [3, 4]], index=['a', 'b'], columns=['x', 'y'])
+      x y
+    a 1 2
+    b 3 4
+    ```
+  - Encode, Decode
+    ```python
+    <DF> = pd.read_json/html('<str/path/url>')
+    <DF> = pd.read_csv/pickle/excel('<path/url>')
+    <DF> = pd.read_sql('<query>', <connection>)
+    <DF> = pd.read_clipboard()
+
+    <dict> = <DF>.to_dict(['d/l/s/sp/r/i'])
+    <str>  = <DF>.to_json/html/csv/markdown/latex([<path>])
+    <DF>.to_pickle/excel(<path>)
+    <DF>.to_sql('<table_name>', <connection>)
+    ```
+- GroupBy
+  - Object that groups together rows of a dataframe based on the value of the passed column
+```python
+df = DataFrame([[1, 2, 3], [4, 5, 6], [7, 8, 6]], index=list('abc'), columns=list('xyz'))
+df.groupby('z').get_group(3)
+"""
+  x y
+a 1 2
+"""
+
+df.groupby('z').get_group(6)
+"""
+  x y
+b 4 5
+c 7 8
+"""
+
+<GB> = <DF>.groupby(column_key/s)  # DF is split into groups based on passed column
+<DF> = <GB>.get_group(group_key)  # Selects a group by value of grouping column
+```
+  - Aggregate, Transform, Map
+    ```python
+    <DF> = <GB>.sum/max/mean/idxmax/all()  # Or: <GB>.apply/agg(<agg_func>)
+    <DF> = <GB>.rank/diff/cumsum/ffill()  # Or: <GB>.aggregate(<trans_func>)
+    <DF> = <GB>.fillna(<el>)  # Or: <GB>.transform(<map_func>)
+    
+    gb = df.groupby('z')
+         x y z
+    3: a 1 2 3
+    6: b 4 5 6
+       c 7 8 6
+    ```
+- Rolling
+  - Object for rolling window calculations
+  ```python
+  <R_Sr/R_DF/R_GB> = <Sr/DF/GB>.rolling(window_size)  # Also: `min_periods=None, center=False`.
+  <R_Sr/R_DF> = <R_DF/R_GB>[column_key/s]  # Or: <R>.column_key
+  <Sr/DF/DF> = <R_Sr/R_DF/R_GB>.sum/max/mean()  # Or: <R>.apply/agg(<agg_func/str>)
+  ```
 
 [back to top](#table-of-contents)
 
