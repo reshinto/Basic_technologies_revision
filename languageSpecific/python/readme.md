@@ -2415,16 +2415,146 @@ response.json()  # ['arsenal f.c.', 2.44, 3.29]
 [back to top](#table-of-contents)
 
 ### Profile
-```python
+- Stopwatch
+  ```python
+  from time import time
 
+
+  start_time = time()  # Seconds since the Epoch
+  ...
+  duration = time() - start_time
+  ```
+- High performance
+  ```python
+  from time import perf_counter
+
+
+  start_time = perf_counter()  # Seconds since restart
+  ...
+  duration = perf_counter() - start_time
+  ```
+- Timing a Snippet
+```python
+from timeit import timeit
+
+
+timeit('"-".join(str(a) for a in range(100))', ... , number=10000, globals=globals(), setup='pass')  # 0.34986
 ```
+- Profiling by Line
+  - `pip3 install line_profiler memory_profiler`
+  ```python
+  @profile
+  def main():
+      a = [*range(10000)]
+      b = {*range(10000)}
+  main()
+  ```
+  - `kernprof -lv test.py`
+  - `python3 -m memory_profiler test.py`
+- Call Graph
+  - Generates a PNG image of a call graph with highlighted bottlenecks
+  - `pip3 install pycallgraph`
+  ```python
+  from pycallgraph import output, PyCallGraph
+  from datetime import datetime
+
+
+  time_str = datetime.now().strftime('%Y%m%d%H%M%S')
+  filename = f'profile-{time_str}.png'
+  drawer = output.GraphvizOutput(output_file=filename)
+  with PyCallGraph(drawer):
+      <code_to_be_profiled>
+  ```
 
 [back to top](#table-of-contents)
 
 ### NumPy
+- `pip3 install numpy`
+- Array manipulation mini-language
+- It can run up to one hundred times faster than the equivalent Python code
+- Shape is a tuple of dimension sizes
+- Axis is the index of a dimension that gets collapsed
+  - The leftmost dimension has index 0
 ```python
+import numpy as np
 
+
+<array> = np.array(<list>)
+<array> = np.arange(from_inclusive, to_exclusive, ±step_size)
+<array> = np.ones(<shape>)
+<array> = np.random.randint(from_inclusive, to_exclusive, <shape>)
+<array>.shape = <shape>
+<view> = <array>.reshape(<shape>)
+<view> = np.broadcast_to(<array>, <shape>)
+<array> = <array>.sum(axis)
+indexes = <array>.argmin(axis)
 ```
+- Indexing
+  - If row and column indexes differ in shape, they are combined with broadcasting
+  ```python
+  <el> = <2d_array>[0, 0]  # First element
+  <1d_view> = <2d_array>[0]  # First row
+  <1d_view> = <2d_array>[:, 0]  # First column. Also [..., 0]
+  <3d_view> = <2d_array>[None, :, :]  # Expanded by dimension of size 1
+
+  <1d_array> = <2d_array>[<1d_row_indexes>, <1d_column_indexes>]
+  <2d_array> = <2d_array>[<2d_row_indexes>, <2d_column_indexes>]
+  <2d_bools> = <2d_array> > 0
+  <1d_array> = <2d_array>[<2d_bools>]
+  ```
+- Broadcasting
+  - Broadcasting is a set of rules by which NumPy functions operate on arrays of different sizes and/or dimensions
+  ```python
+  left = [[0.1], [0.6], [0.8]]  # Shape: (3, 1)
+  right = [ 0.1 ,  0.6 ,  0.8 ]  # Shape: (3)
+  ```
+  1. If array shapes differ in length, left-pad the shorter shape with ones
+      ```python
+      left = [[0.1], [0.6], [0.8]]  # Shape: (3, 1)
+      right = [[0.1 ,  0.6 ,  0.8]]  # Shape: (1, 3) <- !
+      ```
+  2. If any dimensions differ in size, expand the ones that have size 1 by duplicating their elements
+      ```python
+      left = [[0.1, 0.1, 0.1], [0.6, 0.6, 0.6], [0.8, 0.8, 0.8]]  # Shape: (3, 3) <- !
+      right = [[0.1, 0.6, 0.8], [0.1, 0.6, 0.8], [0.1, 0.6, 0.8]]  # Shape: (3, 3) <- !
+      ```
+  3. If neither non-matching dimension has size 1, raise an error
+      - Example: For each point returns index of its nearest point ([0.1, 0.6, 0.8] => [1, 2, 1])
+        ```python
+        points = np.array([0.1, 0.6, 0.8])  # [ 0.1,  0.6,  0.8]
+
+        wrapped_points = points.reshape(3, 1)
+        """
+        [[ 0.1],
+        [ 0.6],
+         [ 0.8]]
+        """
+
+        distances = wrapped_points - points
+        """
+        [[ 0. , -0.5, -0.7],
+         [ 0.5,  0. , -0.2],
+         [ 0.7,  0.2,  0. ]]
+        """
+
+        distances = np.abs(distances)
+        """
+        [[ 0. ,  0.5,  0.7],
+         [ 0.5,  0. ,  0.2],
+         [ 0.7,  0.2,  0. ]]
+        """
+
+        i = np.arange(3)  # [0, 1, 2]
+
+        distances[i, i] = np.inf
+        """
+        [[ inf,  0.5,  0.7],
+         [ 0.5,  inf,  0.2],
+         [ 0.7,  0.2,  inf]]
+        """
+
+        distances.argmin(1)  # [1, 2, 1]
+        ```
 
 [back to top](#table-of-contents)
 
