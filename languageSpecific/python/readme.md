@@ -2787,9 +2787,160 @@ def write_to_wav_file(filename, float_samples, nchannels=1, sampwidth=2, framera
 [back to top](#table-of-contents)
 
 ### Games
-```python
+- Basic Example
+  - `pip3 install pygame`
+  ```python
+  import pygame as pg
+  pg.init()
+  screen = pg.display.set_mode((500, 500))
+  rect = pg.Rect(240, 240, 20, 20)
+  while all(event.type != pg.QUIT for event in pg.event.get()):
+      deltas = {pg.K_UP: (0, -3), pg.K_RIGHT: (3, 0), pg.K_DOWN: (0, 3), pg.K_LEFT: (-3, 0)}
+      for delta in (deltas.get(i) for i, on in enumerate(pg.key.get_pressed()) if on):
+          rect = rect.move(delta) if delta else rect
+      screen.fill((0, 0, 0))
+      pg.draw.rect(screen, (255, 255, 255), rect)
+      pg.display.flip()
+  ```
+  - Rectangle
+    - Object for storing rectangular coordinates
+    ```python
+    <Rect> = pg.Rect(x, y, width, height)  # X and y are coordinates of topleft corner
+    <int> = <Rect>.x/y/centerx/centery/...  # Top, right, bottom, left
+    <tup.> = <Rect>.topleft/center/...  # Topright, bottomright, bottomleft
+    <Rect> = <Rect>.move((x, y))  # Use move_ip() to move in place
 
-```
+    <bool> = <Rect>.collidepoint((x, y))  # Tests if a point is inside a rectangle
+    <bool> = <Rect>.colliderect(<Rect>)  # Tests if two rectangles overlap
+    <int> = <Rect>.collidelist(<list_of_Rect>)  # Returns index of first colliding Rect or -1
+    <list> = <Rect>.collidelistall(<list_of_Rect>)  # Returns indexes of all colliding Rects 
+    ```
+  - Surface
+    - Object for representing images
+    ```python
+    <Surf> = pg.display.set_mode((width, height))  # Returns the display surface
+    <Surf> = pg.Surface((width, height))  # Creates a new surface.
+    <Surf> = pg.image.load('<path>')  # Loads the image
+    <Surf> = <Surf>.subsurface(<Rect>)  # Returns a subsurface
+
+    <Surf>.fill(color)  # Fills the whole surface
+    <Surf>.set_at((x, y), color)  # Updates pixel
+    <Surf>.blit(<Surface>, (x, y))  # Draws passed surface to the surface
+
+    <Surf> = pg.transform.flip(<Surf>, xbool, ybool)
+    <Surf> = pg.transform.rotate(<Surf>, degrees)
+    <Surf> = pg.transform.scale(<Surf>, (width, height))
+
+    pg.draw.line(<Surf>, color, (x1, y1), (x2, y2), width)
+    pg.draw.arc(<Surf>, color, <Rect>, from_radians, to_radians)
+    pg.draw.rect(<Surf>, color, <Rect>)
+    pg.draw.polygon(<Surf>, color, points)
+    pg.draw.ellipse(<Surf>, color, <Rect>)
+    ```
+  - Font
+    ```python
+    <Font> = pg.font.SysFont('<name>', size, bold=False, italic=False)
+    <Font> = pg.font.Font('<path>', size)
+    <Surf> = <Font>.render(text, antialias, color [, background])
+    ```
+  - Sound
+    ```python
+    <Sound> = pg.mixer.Sound('<path>')  # Loads the WAV file
+    <Sound>.play()  # Starts playing the sound
+    ```
+- Basic Mario Brothers Example
+  ```python
+  import collections, dataclasses, enum, io, pygame, urllib.request, itertools as it
+  from random import randint
+
+
+  P = collections.namedtuple('P', 'x y')  # Position
+  D = enum.Enum('D', 'n e s w')  # Direction
+  SIZE, MAX_SPEED = 50, P(5, 10)  # Screen size, Speed limit
+
+
+  def main():
+      def get_screen():
+          pygame.init()
+          return pygame.display.set_mode(2 * [SIZE*16])
+
+      def get_images():
+          url = 'https://gto76.github.io/python-cheatsheet/web/mario_bros.png'
+          img = pygame.image.load(io.BytesIO(urllib.request.urlopen(url).read()))
+          return [img.subsurface(get_rect(x, 0)) for x in range(img.get_width() // 16)]
+
+      def get_mario():
+          Mario = dataclasses.make_dataclass('Mario', 'rect spd facing_left frame_cycle'.split())
+          return Mario(get_rect(1, 1), P(0, 0), False, it.cycle(range(3)))
+
+      def get_tiles():
+          positions = [p for p in it.product(range(SIZE), repeat=2) if {*p} & {0, SIZE-1}] + \
+              [(randint(1, SIZE-2), randint(2, SIZE-2)) for _ in range(SIZE**2 // 10)]
+          return [get_rect(*p) for p in positions]
+
+      def get_rect(x, y):
+          return pygame.Rect(x*16, y*16, 16, 16)
+
+      run(get_screen(), get_images(), get_mario(), get_tiles())
+
+
+  def run(screen, images, mario, tiles):
+      clock = pygame.time.Clock()
+      while all(event.type != pygame.QUIT for event in pygame.event.get()):
+          keys = {pygame.K_UP: D.n, pygame.K_RIGHT: D.e, pygame.K_DOWN: D.s, pygame.K_LEFT: D.w}
+          pressed = {keys.get(i) for i, on in enumerate(pygame.key.get_pressed()) if on}
+          update_speed(mario, tiles, pressed)
+          update_position(mario, tiles)
+          draw(screen, images, mario, tiles, pressed)
+          clock.tick(28)
+
+
+  def update_speed(mario, tiles, pressed):
+      x, y = mario.spd
+      x += 2 * ((D.e in pressed) - (D.w in pressed))
+      x -= x // abs(x) if x else 0
+      y += 1 if D.s not in get_boundaries(mario.rect, tiles) else (-10 if D.n in pressed else 0)
+      mario.spd = P(*[max(-limit, min(limit, s)) for limit, s in zip(MAX_SPEED, P(x, y))])
+
+
+  def update_position(mario, tiles):
+      new_p = mario.rect.topleft
+      larger_speed = max(abs(s) for s in mario.spd)
+      for _ in range(larger_speed):
+          mario.spd = stop_on_collision(mario.spd, get_boundaries(mario.rect, tiles))
+          new_p = P(*[a + s/larger_speed for a, s in zip(new_p, mario.spd)])
+          mario.rect.topleft = new_p
+
+
+  def get_boundaries(rect, tiles):
+      deltas = {D.n: P(0, -1), D.e: P(1, 0), D.s: P(0, 1), D.w: P(-1, 0)}
+      return {d for d, delta in deltas.items() if rect.move(delta).collidelist(tiles) != -1}
+
+
+  def stop_on_collision(spd, bounds):
+      return P(x=0 if (D.w in bounds and spd.x < 0) or (D.e in bounds and spd.x > 0) else spd.x,
+               y=0 if (D.n in bounds and spd.y < 0) or (D.s in bounds and spd.y > 0) else spd.y)
+
+
+  def draw(screen, images, mario, tiles, pressed):
+      def get_frame_index():
+          if D.s not in get_boundaries(mario.rect, tiles):
+              return 4
+          return next(mario.frame_cycle) if {D.w, D.e} & pressed else 6
+
+      screen.fill((85, 168, 255))
+      mario.facing_left = (D.w in pressed) if {D.w, D.e} & pressed else mario.facing_left
+      screen.blit(images[get_frame_index() + mario.facing_left * 9], mario.rect)
+
+      for rect in tiles:
+          screen.blit(images[18 if {*rect.topleft} & {0, (SIZE-1)*16} else 19], rect)
+
+      pygame.display.flip()
+
+
+  if __name__ == '__main__':
+      main()
+  ```
 
 [back to top](#table-of-contents)
 
