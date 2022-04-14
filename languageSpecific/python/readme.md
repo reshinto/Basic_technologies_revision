@@ -69,6 +69,7 @@
   - [Image](#image)
   - [Animation](#animation)
   - [Audio](#audio)
+  - [Synthesizer](#synthesizer)
   - [Games](#games)
   - [Pandas](#pandas)
   - [Plotly](#plotly)
@@ -2651,9 +2652,137 @@ from PIL import Image
 [back to top](#table-of-contents)
 
 ### Audio
+- Bytes object contains a sequence of frames, each consisting of one or more samples
+- In a stereo signal, the first sample of a frame belongs to the left channel
+- Each sample consists of one or more bytes that, when converted to an integer, indicate the displacement of a speaker membrane at a given moment
+- If sample width is one, then the integer should be encoded unsigned
+- For all other sizes, the integer should be encoded signed with little-endian byte order
 ```python
+import wave
 
+
+<Wave_read> = wave.open('<path>', 'rb')  # Opens the WAV file
+framerate = <Wave_read>.getframerate()  # Number of frames per second
+nchannels = <Wave_read>.getnchannels()  # Number of samples per frame
+sampwidth = <Wave_read>.getsampwidth()  # Sample size in bytes
+nframes = <Wave_read>.getnframes()  # Number of frames
+<params> = <Wave_read>.getparams()  # Immutable collection of above
+<bytes> = <Wave_read>.readframes(nframes)  # Returns next 'nframes' frames
+
+<Wave_write> = wave.open('<path>', 'wb')  # Truncates existing file
+<Wave_write>.setframerate(<int>)  # 44100 for CD, 48000 for video
+<Wave_write>.setnchannels(<int>)  # 1 for mono, 2 for stereo
+<Wave_write>.setsampwidth(<int>)  # 2 for CD quality sound
+<Wave_write>.setparams(<params>)  # Sets all parameters
+<Wave_write>.writeframes(<bytes>)  # Appends frames to the file
 ```
+- Sample Values
+
+  | sampwidth | min | zero | max |
+  |-|-|-|-|
+  |1|0|128|255|
+  |2|-32768|0|32767|
+  |3|-8388608|0|8388607|
+  |4|-2147483648|0|2147483647|
+
+- Read Float Samples from WAV File
+  ```python
+  def read_wav_file(filename):
+      def get_int(a_bytes):
+          an_int = int.from_bytes(a_bytes, 'little', signed=width!=1)
+          return an_int - 128 * (width == 1)
+      with wave.open(filename, 'rb') as file:
+          width  = file.getsampwidth()
+          frames = file.readframes(-1)
+      byte_samples = (frames[i: i + width] for i in range(0, len(frames), width))
+      return [get_int(b) / pow(2, width * 8 - 1) for b in byte_samples]
+  ```
+- Write Float Samples to WAV File
+```python
+def write_to_wav_file(filename, float_samples, nchannels=1, sampwidth=2, framerate=44100):
+    def get_bytes(a_float):
+        a_float = max(-1, min(1 - 2e-16, a_float))
+        a_float += sampwidth == 1
+        a_float *= pow(2, sampwidth * 8 - 1)
+        return int(a_float).to_bytes(sampwidth, 'little', signed=sampwidth!=1)
+    with wave.open(filename, 'wb') as file:
+        file.setnchannels(nchannels)
+        file.setsampwidth(sampwidth)
+        file.setframerate(framerate)
+        file.writeframes(b''.join(get_bytes(f) for f in float_samples))
+```
+- Examples
+  - Saves a sine wave to a mono WAV file
+    ```python
+    from math import pi, sin
+
+
+    samples_f = (sin(i * 2 * pi * 440 / 44100) for i in range(100000))
+    write_to_wav_file('test.wav', samples_f)
+    ```
+  - Adds noise to a mono WAV file
+    ```python
+    from random import random
+
+
+    add_noise = lambda value: value + (random() - 0.5) * 0.03
+    samples_f = (add_noise(f) for f in read_wav_file('test.wav'))
+    write_to_wav_file('test.wav', samples_f)
+    ```
+  - Plays a WAV file
+    - `pip3 install simpleaudio`
+    ```python
+    from simpleaudio import play_buffer
+
+
+    with wave.open('test.wav', 'rb') as file:
+        p = file.getparams()
+        frames = file.readframes(-1)
+        play_buffer(frames, p.nchannels, p.sampwidth, p.framerate)
+    ```
+- Text to Speech
+  - `pip3 install pyttsx3`
+  ```python
+  import pyttsx3
+
+
+  engine = pyttsx3.init()
+  engine.say('Sally sells seashells by the seashore.')
+  engine.runAndWait()
+  ```
+
+[back to top](#table-of-contents)
+
+### Synthesizer
+- Plays Popcorn by Gershon Kingsley
+  - `pip3 install simpleaudio`
+  ```python
+  import simpleaudio, math, struct
+  from itertools import chain, repeat
+
+
+  F = 44100
+  P1 = '71♪,69,,71♪,66,,62♪,66,,59♪,,,'
+  P2 = '71♪,73,,74♪,73,,74,,71,,73♪,71,,73,,69,,71♪,69,,71,,67,,71♪,,,'
+  
+  get_pause = lambda seconds: repeat(0, int(seconds * F))
+  
+  sin_f = lambda i, hz: math.sin(i * 2 * math.pi * hz / F)
+  
+  get_wave = lambda hz, seconds: (sin_f(i, hz) for i in range(int(seconds * F)))
+  
+  get_hz = lambda key: 8.176 * 2 ** (int(key) / 12)
+  
+  parse_note = lambda note: (get_hz(note[:2]), 0.25 if '♪' in note else 0.125)
+  
+  get_samples = lambda note: get_wave(*parse_note(note)) if note else get_pause(0.125)
+  
+  samples_f = chain.from_iterable(get_samples(n) for n in f'{P1}{P1}{P2}'.split(','))
+  
+  samples_b = b''.join(struct.pack('<h', int(f * 30000)) for f in samples_f)
+  
+  simpleaudio.play_buffer(samples_b, 1, 2, F)
+  ```
 
 [back to top](#table-of-contents)
 
