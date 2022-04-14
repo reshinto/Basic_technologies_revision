@@ -67,6 +67,7 @@
   - [Profile](#profile)
   - [NumPy](#numpy)
   - [Image](#image)
+  - [Animation](#animation)
   - [Audio](#audio)
   - [Games](#games)
   - [Pandas](#pandas)
@@ -2559,9 +2560,93 @@ indexes = <array>.argmin(axis)
 [back to top](#table-of-contents)
 
 ### Image
+- `pip3 install pillow`
 ```python
+from PIL import Image
 
+
+<Image> = Image.new('<mode>', (width, height))
+<Image> = Image.open('<path>')
+<Image> = <Image>.convert('<mode>')
+<Image>.save('<path>')
+<Image>.show()
+
+<tuple/int> = <Image>.getpixel((x, y))  # Returns a pixel
+<Image>.putpixel((x, y), <tuple/int>)  # Writes a pixel to the image
+<ImagingCore> = <Image>.getdata()  # Returns a sequence of pixels
+<Image>.putdata(<list/ImagingCore>)  # Writes a sequence of pixels
+<Image>.paste(<Image>, (x, y))  # Writes an image to the image
+
+<2d_array> = np.array(<Image>)  # Creates NumPy array from greyscale image
+<3d_array> = np.array(<Image>)  # Creates NumPy array from color image
+<Image> = Image.fromarray(<array>)  # Creates image from NumPy array of floats
 ```
+- Modes
+  - `1` - 1-bit pixels, black and white, stored with one pixel per byte
+  - `L` - 8-bit pixels, greyscale
+  - `RGB` - 3x8-bit pixels, true color
+  - `RGBA` - 4x8-bit pixels, true color with transparency mask
+  - `HSV` - 3x8-bit pixels, Hue, Saturation, Value color space
+- Examples
+  - Creates a PNG image of a rainbow gradient
+    ```python
+    WIDTH, HEIGHT = 100, 100
+    size = WIDTH * HEIGHT
+    hues = [255 * i/size for i in range(size)]
+    img = Image.new('HSV', (WIDTH, HEIGHT))
+    img.putdata([(int(h), 255, 255) for h in hues])
+    img.convert('RGB').save('test.png')
+    ```
+  - Adds noise to a PNG image
+    ```python
+    from random import randint
+
+
+    add_noise = lambda value: max(0, min(255, value + randint(-20, 20)))
+    img = Image.open('test.png').convert('HSV')
+    img.putdata([(add_noise(h), s, v) for h, s, v in img.getdata()])
+    img.convert('RGB').save('test.png')
+    ```
+- Drawing
+  - Use `fill=<color>` to set the primary color
+  - Use `outline=<color>` to set the secondary color
+  - Color can be specified as a tuple, int, `#rrggbb` string or a color name
+  ```python
+  from PIL import ImageDraw
+  
+  
+  <ImageDraw> = ImageDraw.Draw(<Image>)
+  <ImageDraw>.point((x, y), fill=None)
+  <ImageDraw>.line((x1, y1, x2, y2 [, ...]), fill=None, width=0, joint=None)
+  <ImageDraw>.arc((x1, y1, x2, y2), from_deg, to_deg, fill=None, width=0)
+  <ImageDraw>.rectangle((x1, y1, x2, y2), fill=None, outline=None, width=0)
+  <ImageDraw>.polygon((x1, y1, x2, y2 [, ...]), fill=None, outline=None)
+  <ImageDraw>.ellipse((x1, y1, x2, y2), fill=None, outline=None, width=0)
+  ```
+
+[back to top](#table-of-contents)
+
+### Animation
+- `pip3 install pillow imageio`
+- Creates a GIF of a bouncing ball
+  ```python
+  from PIL import Image, ImageDraw
+  import imageio
+
+
+  WIDTH, R = 126, 10
+  frames = []
+  
+  for velocity in range(15):
+      y = sum(range(velocity+1))
+      frame = Image.new('L', (WIDTH, WIDTH))
+      draw  = ImageDraw.Draw(frame)
+      draw.ellipse((WIDTH/2-R, y, WIDTH/2+R, y+R*2), fill='white')
+      frames.append(frame)
+  
+  frames += reversed(frames[1:-1])
+  imageio.mimsave('test.gif', frames, duration=0.03)
+  ```
 
 [back to top](#table-of-contents)
 
