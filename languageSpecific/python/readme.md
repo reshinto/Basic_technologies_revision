@@ -3168,24 +3168,24 @@ from pandas import Series, DataFrame
     ```
 - GroupBy
   - Object that groups together rows of a dataframe based on the value of the passed column
-```python
-df = DataFrame([[1, 2, 3], [4, 5, 6], [7, 8, 6]], index=list('abc'), columns=list('xyz'))
-df.groupby('z').get_group(3)
-"""
-  x y
-a 1 2
-"""
+  ```python
+  df = DataFrame([[1, 2, 3], [4, 5, 6], [7, 8, 6]], index=list('abc'), columns=list('xyz'))
+  df.groupby('z').get_group(3)
+  """
+    x y
+  a 1 2
+  """
 
-df.groupby('z').get_group(6)
-"""
-  x y
-b 4 5
-c 7 8
-"""
+  df.groupby('z').get_group(6)
+  """
+    x y
+  b 4 5
+  c 7 8
+  """
 
-<GB> = <DF>.groupby(column_key/s)  # DF is split into groups based on passed column
-<DF> = <GB>.get_group(group_key)  # Selects a group by value of grouping column
-```
+  <GB> = <DF>.groupby(column_key/s)  # DF is split into groups based on passed column
+  <DF> = <GB>.get_group(group_key)  # Selects a group by value of grouping column
+  ```
   - Aggregate, Transform, Map
     ```python
     <DF> = <GB>.sum/max/mean/idxmax/all()  # Or: <GB>.apply/agg(<agg_func>)
