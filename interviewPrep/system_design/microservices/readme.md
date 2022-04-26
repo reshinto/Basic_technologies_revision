@@ -401,3 +401,13 @@ Original Service - Original Database
                                             \
                                           New Service - New Database
 ```
+## Data Synchronization
+### Use Cases
+- different databases
+- different systems
+### Model
+```
+Source - Message Broker - Destination
+      \                  /
+             Watcher
+```
