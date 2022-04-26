@@ -229,3 +229,17 @@ Event Producer -> call -> Orchestrator -> Message Broker -> Step 1
   - need to have more complex code
   - costs in both operations and developer efficiencies
 ## Hybrid events
+- good thing about asynchronous model is that you are not forced to use a fixed pattern, hybrids are possible and efficient
+### Not Exclusive
+- still have a centralized command and control for the system as a whole
+- can dispatch choreography events to remote systems when needed
+- the events can either stay choreographed or convert back to internal command and control structure
+- work gets done and the original command and control knows when everything is completed
+  - knows by either directly in line or via some other polling mechanism
+## Contracts
+- regardless of event model, contracts between systems via the message broker are key
+- contract must be well documented to prevent error or disjointed processes
+- contract must be passive to change
+  - changes can and do happen, but must not break downstream or upstream systems in the process
+- contracts must be enforced rigorously
+  - so as to be resistant to change and be efficient in the processing
