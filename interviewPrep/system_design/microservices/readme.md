@@ -83,3 +83,19 @@
 #### Producers
 #### Consumers or receiver
 #### Dead-letter queue
+# Interservice Communications Patterns
+- use when in a situation where you just need to push a message to a remote system to do work, and you don't want a block on the downstream system completing its tasks
+## Service Communications
+### Point-to-Point
+- single producer
+- single consumer
+- send and forget
+- responses are another point-to-point
+### Publish-Subscribe
+- single producer
+- one or more consumers
+- send and forget
+- durable subscriptions
+  - guarantees subscriber will get the message at some point in time
+## Point-to-point async
+## Publish-subscribe
