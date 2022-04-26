@@ -243,3 +243,37 @@ Event Producer -> call -> Orchestrator -> Message Broker -> Step 1
   - changes can and do happen, but must not break downstream or upstream systems in the process
 - contracts must be enforced rigorously
   - so as to be resistant to change and be efficient in the processing
+# Stream Data Platform
+- handles streams of data
+- all done asynchronously
+- very useful in microservices
+- increased complexity for a reason
+## Common Architecture
+- a pub/sub model with multiple publishers on the same set of topics
+```
+Producer -                    - Consumer
+Producer -                    - Consumer
+Producer -   Message Broker   - Consumer
+Producer -                    - Consumer
+```
+## Producers
+- Applications
+- Databases
+- Servers
+- Anything that producers events or logs
+## Consumers
+- Log aggregators
+  - can help paint a real picture of what's going on in the system
+- Analytics engines
+  - great use cases for streaming data
+- Long-term storage
+  - many use cases in big data drive their data flow from a stream data platform
+  - once the set of data has been identified through analytics or other learning mechanisms
+    - data can be collected and shipped to a storage for historical analysis and other uses
+- Eventing engines
+  - key off key analytical points and trigger downstream events usually through orchestration
+## Why go through all the trouble is consumer use cases are enough?
+- data is king
+- business drives off data
+- what you don't know can hurt you
+- decision-making
