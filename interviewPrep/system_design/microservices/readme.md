@@ -82,7 +82,7 @@
 ### Common Terms
 #### Producers
 #### Consumers or receiver
-#### Dead-letter queue
+#### Dead-letter queue (DLQ)
 # Interservice Communications Patterns
 - use when in a situation where you just need to push a message to a remote system to do work, and you don't want a block on the downstream system completing its tasks
 ## Service Communications
@@ -154,5 +154,39 @@ producer -> Message Broker -> Subscriber
 - still based on isolated steps
 - each step still has a job to do
 ## Choreographed events
+```
+                      Step 1
+                        ^
+                        |
+                        v
+Event Producer -> Message Broker <-> Step 2
+                        |
+                        v
+                      Step 3
+                      
+Event Producer -> Message Broker -> Step 1 -> Message Broker -> Step 2 -> Message Broker -> Step 3
+```
+### Uses cases
+- when there is distinct systems
+- when there is alternative cascades
+### Benefits and Trade-offs
+#### pros
+- increased performance over orchestration
+  - because don't have a centralized orchestrator, steps don't funnel through a single process
+  - performance can increase by offloading the steps to message broker
+  - each step can be optimized for its sole function
+- can reduce cost
+  - due to reduced total cost of ownership due to performance and code complexity
+#### cons
+- reduce reliability in the system
+  - because there is no central place to handle error states
+    - there is more chance that a single event will fail to fire everywhere that it is needed
+    - thus need to ensure that error tracking and Dead Letter Queues exists in the message broker
+      - so as to indicate the need to address errors in the workflow
+- reduce observability, increase observability complexity
+  - because there is no centralized orchestrator
+  - it makes determining the status of the event more difficult
+  - have to look everywhere until you find the state of the current message to know what's going on
+  - in addition, in an asynchronous model, there is also the message broker and each DLQ to look at
 ## Orchestrated events
 ## Hybrid events
