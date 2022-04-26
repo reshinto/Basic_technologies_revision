@@ -316,3 +316,8 @@ Producer -                    - Consumer
 - insights are powerful
 - needs dedication
 - value isn't immediate
+## Event detection
+### Eventing Use Cases
+- stop the bad actor from occurring
+- increase the good
+- immediate actions
