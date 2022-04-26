@@ -299,3 +299,20 @@ Producer -                    - Consumer
 - operations can leverage the visualization of logs when troubleshooting and inspecting system health
 - logs can be used for debugging
 - useful for determining if refactoring has positive or negative impacts
+## System Analytics
+### Why?
+- allow data to be analyzed quickly
+- happens near real time
+- faster than downstream
+- quicker responses
+### How?
+- write the job
+- execute against the processed stream
+- read the result
+- repeast as necessary
+- ship it
+### Is it worth it?
+- maturity matters
+- insights are powerful
+- needs dedication
+- value isn't immediate
