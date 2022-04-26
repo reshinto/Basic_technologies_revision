@@ -164,7 +164,10 @@ Event Producer -> Message Broker <-> Step 2
                         v
                       Step 3
                       
-Event Producer -> Message Broker -> Step 1 -> Message Broker -> Step 2 -> Message Broker -> Step 3
+Event Producer
+-> Message Broker -> Step 1
+-> Message Broker -> Step 2
+-> Message Broker -> Step 3
 ```
 ### Uses cases
 - when there is distinct systems
@@ -188,5 +191,41 @@ Event Producer -> Message Broker -> Step 1 -> Message Broker -> Step 2 -> Messag
   - it makes determining the status of the event more difficult
   - have to look everywhere until you find the state of the current message to know what's going on
   - in addition, in an asynchronous model, there is also the message broker and each DLQ to look at
-## Orchestrated events
+## Orchestrated events 
+- more common pattern within the asyncrhonous event driven microservices model
+- Orchestrator can also be referred as the Command and Control center
+```
+               call
+Event Producer <-> Orchestrator <-> Message Broker <-> Step 1
+           polling call                            <-> Step 2
+                                                   <-> Step 3
+
+Event Producer -> call -> Orchestrator -> Message Broker -> Step 1 
+-> Message Broker -> Orchestrator -> Event Producer 
+-> polling call -> Orchestrator -> Message Broker -> Step 2
+-> Message Broker -> Orchestrator -> Event Producer 
+-> polling call -> Orchestrator -> Message Broker -> Step 3
+-> Message Broker -> Orchestrator -> Event Producer 
+```
+### Use Cases
+- when there is sequential processing
+  - step A must be completed before step B can proceed
+- Command workflow senario
+  - to allow many Kubernetes clusters to be spun up at once through a single orchestrator call, since calls become non-blocking asynchronous messages
+- when a response is required
+### Benefits and Trade-Offs
+#### pros
+- increase reliability
+  - can use its state to resubmit jobs that need to be processed
+  - can also build in much more robust error handling for outlier conditions
+- increase observability
+  - central point can produce more logging and metrics that can help an operations team
+#### cons
+- reduced performance or choreography
+  - Because you have a centralized orchestrator, the steps funnel through a single process, thus decrease performance
+- increased cost
+  - orchestrator need to keep track of state of the status responses and code paths
+  - increase total cost of ownership
+  - need to have more complex code
+  - costs in both operations and developer efficiencies
 ## Hybrid events
