@@ -98,4 +98,18 @@
 - durable subscriptions
   - guarantees subscriber will get the message at some point in time
 ## Point-to-point async
+- one of the most common uses of asynchronous messaging
+```
+Producer -> Message Broker -> Consumer
+```
+### Use Cases
+- when no response are needed
+- when need admin task to happen
+- out of band
+  - e.g.: email: send and forget
+- scaling
+### Considerations
+- wire time, is it really saving time?
+- extra components worth it?
+- plan for failure scenarios
 ## Publish-subscribe
