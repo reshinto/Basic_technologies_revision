@@ -321,3 +321,17 @@ Producer -                    - Consumer
 - stop the bad actor from occurring
 - increase the good
 - immediate actions
+# Data flow (from state store perspective)
+- one of the biggest use case of asynchronous messaging in a microservices architecture is in data flows
+- data flows can range from a distributed data and eventual consistency to CQRS-based data rights
+- to improve throughput on a microservices based data services
+## Distributed data
+### Why is data such a powerful use case?
+- data is slow
+- data is critical to the operation of any system
+- data is growing
+### Big Uses
+- distributed data
+- CQRS
+- Data migrations
+- Data synchronization
