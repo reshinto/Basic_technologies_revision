@@ -28,3 +28,23 @@
         - but also keeps the system as a whole healthier
       - Asynchronous communications, especially in workloads and dag or directed in cyclical graph workflows
         - can allow you to build a natural retries without negatively impacting performance on the processes involved
+## Pros
+### Prevent Gridlock
+- Congestion
+- Exponential traffic
+- Slow services
+- Remove synchronous calls
+### impact it can have when dealing with Long-Running Processes
+- Reduce blocking
+- natural retry
+- no more call trees
+- reduce risk of timeouts
+### Reduce Coupling
+- prevent building of monolithic microservices
+- prevent exponential traffic
+- prevent slow services
+### Additional Benefits
+- can build better quality of service and priority
+- Fault tolerance easier to solve
+- response not needed immediately
+- logging, metrics, analytics does not need blocking
