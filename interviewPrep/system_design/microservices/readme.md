@@ -62,3 +62,24 @@
 - additional components increases
 - operational runbooks increases
 - issue source identification becomes difficult
+## Common Technologies
+### Message Broker
+- Heart of the system
+- able to translate and transform incoming and outgoing messages
+- Routing of messages
+  - point to point routing
+  - inspection based routing
+- Aggregations
+  - messages can be aggregated if required
+- able to handle errors
+### Common Message Brokers
+#### RabbitMQ
+#### Apache ActiveMQ
+#### Java Message Service (JMS)
+#### Apache Kafka
+#### Cache (e.g.: Redis)
+- downside is Redis does not provide the robustness of the other tools
+### Common Terms
+#### Producers
+#### Consumers or receiver
+#### Dead-letter queue
