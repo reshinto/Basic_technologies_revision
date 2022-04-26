@@ -277,3 +277,25 @@ Producer -                    - Consumer
 - business drives off data
 - what you don't know can hurt you
 - decision-making
+## Log aggregation
+### what is this about?
+- message broker
+  - Most diagrams only focus on the log aggregation activities of the message broker itself
+  - it can aggregate logs from various systems, but in a raw format
+- transformations
+  - not traditionally done in the stream data platform itself
+  - It is usually preferred to keep all logs in the original format so as to not lose context or metadata from the log itself
+    - As such, they become disjointed
+- Readability of log messages directly impacts the utilization of them
+- log aggregation is mostly referring to is in a consumption engine
+  - log messages are transformed into a common format and shipped to a system designed to provide insight and readability into the log messages
+### Stream Processors
+- can act as internal aggregators
+- call APIs
+- Trigger alerts
+- Create events
+### Visualization
+- improve human readability of log messages
+- operations can leverage the visualization of logs when troubleshooting and inspecting system health
+- logs can be used for debugging
+- useful for determining if refactoring has positive or negative impacts
