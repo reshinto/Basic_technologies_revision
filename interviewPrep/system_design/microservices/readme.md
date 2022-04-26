@@ -380,3 +380,24 @@ client - A - C
 Update Service -> Update Database -> Message Broker
 Read Service  <-> Read Database   <- 
 ```
+## Data migration
+### Migrations
+- Moving data
+- Transforming data
+- Downtime consideration
+- Orchestration
+### Consideration
+- Writes are critical
+- Do reads do more?
+- Transformation impact
+- Migration time
+### Model
+```
+Original Service - Original Database
+                 /      |             \
+           Crawler - Producer          \
+                         \              \
+                       Message Broker - Consumer
+                                            \
+                                          New Service - New Database
+```
