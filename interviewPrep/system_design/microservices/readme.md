@@ -133,3 +133,26 @@ producer -> Message Broker -> Subscriber
 - can unregister if needed
 - producer agnostic
   - producer doesn't know anything about the consumer
+# Event-Driven Microservices Pattern
+## Event-driven microservices
+### What is it?
+- requires a series of steps from start to goal
+- each step is triggered from a single event
+- move towards an end goal
+- each steps play its own isolated role
+### Choreographed events
+- can be called a call tree
+- step to step
+  - each step does some work and passes a message down the chain
+- no centralized controller
+  - just cascade down the pipelines
+- pipes
+  - some trigger will be passed with sufficient data to the next step for it to do its work and so on down the call chain
+### Orchestrated events
+- much more common in practice than choreographed events
+- comes from the centralized command and control
+- still based on isolated steps
+- each step still has a job to do
+## Choreographed events
+## Orchestrated events
+## Hybrid events
