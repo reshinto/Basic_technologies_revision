@@ -113,3 +113,23 @@ Producer -> Message Broker -> Consumer
 - extra components worth it?
 - plan for failure scenarios
 ## Publish-subscribe
+```
+producer -> Message Broker -> Subscriber
+                           -> Subscriber
+```
+### Use Cases
+- when multiple responders are required
+  - when flow of traffic between sites is limited on purpose to enforce good constraints across the data centers
+  - but what happens when you need more than data in sync?
+    - you can federate the message broker across multiple data centers and allow triggered actions within each data center to occur in isolation
+    - Those triggered actions are often admin tasks like triggers to clean up or update search indices
+    - In this model, the central hub can publish a message and a worker in each data center can subscribe to the message
+- when multiple tasks must fire across disparate systems
+- to allow for consumer choice
+  - consumers can choose not to subscribe
+### Durable Subscribers
+- they always get the message
+- powerful in mission-critical operations
+- can unregister if needed
+- producer agnostic
+  - producer doesn't know anything about the consumer
