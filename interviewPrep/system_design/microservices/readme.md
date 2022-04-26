@@ -48,3 +48,17 @@
 - Fault tolerance easier to solve
 - response not needed immediately
 - logging, metrics, analytics does not need blocking
+## Trade-offs
+### Complexity increases
+- Artifact sprawl
+  - consumers of messages are individual artifacts that have their own repositories, build pipelines, deployment pipelines, and configuration management
+- Disconnected code paths
+- Multiple paths
+### Observability becomes harder
+- lack of immediate response
+- log aggregation
+- metrics correlation becomes a challenge
+### Additional Complexity
+- additional components increases
+- operational runbooks increases
+- issue source identification becomes difficult
