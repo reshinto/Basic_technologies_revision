@@ -335,3 +335,29 @@ Producer -                    - Consumer
 - CQRS
 - Data migrations
 - Data synchronization
+## Eventual consistency
+- it is a paramount concept in distributed data
+### ACID and BASE
+- ACID is a calling card of relational database management systems
+  - it is what allows transactional writes and consistent reads in a database
+  - ACID, becomes painful at best in a microservices world, especially in a distributed one
+  - Atomic transactions are usually what people think of with ACID, meaning that the data is either all written or it isn't
+- BASE
+  - we seldom care that the data is written immediately in a microservices architecture
+  - What we do care about is that the data is going to be there when we need it
+    - This is the E in BASE, eventual consistency
+  - B is basically available and S is a soft state
+    - meaning the data shifts and is eventually consistent, so it is always soft and malleable, and not durable like an ACID
+  - And the A is just part of basically
+  - This eventual consistency model allows us to speed up writes to a database with trust that the technology will distribute the data to wherever it is needed
+### High Level
+```
+           B
+          / \
+client - A - C
+```
+### Trade-Offs
+- latent reads is possible (stale data)
+- communication faults
+- catastrophic failure
+  - data may not be available
