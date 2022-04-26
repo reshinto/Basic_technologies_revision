@@ -323,7 +323,7 @@ Producer -                    - Consumer
 - immediate actions
 # Data flow (from state store perspective)
 - one of the biggest use case of asynchronous messaging in a microservices architecture is in data flows
-- data flows can range from a distributed data and eventual consistency to CQRS-based data rights
+- data flows can range from a distributed data and eventual consistency to CQRS-based data writes
 - to improve throughput on a microservices based data services
 ## Distributed data
 ### Why is data such a powerful use case?
@@ -361,3 +361,22 @@ client - A - C
 - communication faults
 - catastrophic failure
   - data may not be available
+## CQRS (Command Query Responsibility Segregation)
+- a software pattern to improve performance for a microservices architecture
+- it describes written data in a different model than read data
+- can be achieved through an even-driven asynchronous architecture
+- tends to be focused on microservices architectures but not required
+- it is not a replacement for CRUD
+### Data Services
+- usually operate on a single data domain
+- usually dealing with CRUD operations in the data services
+  - can be problematic in specific use cases
+- writes are expensive especially in a traditional RDBMS
+  - we can tune a system only to a point, when the update domain is different than the read domain
+- reads are not immediate or cheap
+  - when data services need data being read to diverge from data being written, CQRS may be of help
+### In Action
+```
+Update Service -> Update Database -> Message Broker
+Read Service  <-> Read Database   <- 
+```
