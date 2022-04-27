@@ -59,3 +59,31 @@
   - deployments comprised of ReplicaSets, which are a collection of one or more pods
 - Containers are implemented in pods
 - Communicate to each other via well-defined ports
+## Runtime patterns
+### Associating Resources in Kubernetes
+- everything is treated as a service, and configurations are stored in a ConfigMap or Secret
+### Scenario: Replace a link to a database
+1. Create a new database
+    - ensure it's online and ready to accept connections
+2. Update configuration stored in the ConfigMaps or Secrets
+3. Kill the pods that were communicating with the old database
+### strengths
+- when kubernetes starts up the new pods, the new pods automatically pick up the new configuration, and can use the new service
+- if a pod is taking too much load or is receiving a lot of requests
+  - it's easy to scale the number of pods in kubernetes by adding more to the replica set
+- Scaling kubernetes to handle more traffic is one of the strengths of the platform
+- disposability
+  - the ability to maximize robustness with fast startup and graceful shutdown
+ ### containers
+ - start up fast and run efficiently
+ - have all required tooling built inside of the container image
+ ### Containers to Pods to Replicas
+ - Kubernetes manages your containers in pods, which are managed with ReplicaSets
+ - if one of the pods goes offline, the ReplicaSet will automatically start up a new pod to take its place
+### Advantages to Users
+- from a user perspective, the application will still function, and the user won't see any downtime
+### Logging
+- treat logs as streams
+  - execution environment handles the logs
+- common to use a log router (Beats, Fluentd) to save the logs to a service (Elasticsearch, Splunk)
+- Kubernetes makes this process easy
