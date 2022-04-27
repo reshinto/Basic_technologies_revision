@@ -25,3 +25,37 @@
 - admin process containers tagged in a similar way to the running application
 - containers run as kubernetes jobs/chron job
 - also run as a separate deployment
+## Deployment patterns
+### Application Configuration
+- Applications always have associated configuration to make the application work as expected
+### Application Configuration in Kubernetes
+- 2 ways to store configs
+  1. configMaps
+      - for generic information (e.g.: metadata, version)
+  2. secrets
+      - for sensitive data (e.g.: passwords)
+      - depending on the use case, might need something like `HashiCorp Vault`
+- Loaded into the pod via
+  - environment variables
+  - files
+### Build, Release, Run
+- Tag containers at build time with explicit version
+- don't use latest tag for production containers
+### Running in Kubernetes
+- high level constructs to run containers
+- deployments, DaemonSets, ReplicaSets
+- package management provided by Helm
+- adds revision control
+### Processes and Port Bindings
+#### processes
+- keep application stateless
+- don't rely on sticky sessions
+- goal: allow request to go to any container or server by default
+- Word on StatefulSets
+  - Typically used to create persistent storage systems like a MySQL shard
+#### Port Binding
+- Statelessness in Kubernetes
+  - translated to deployments and pods
+  - deployments comprised of ReplicaSets, which are a collection of one or more pods
+- Containers are implemented in pods
+- Communicate to each other via well-defined ports
