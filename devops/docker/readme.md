@@ -45,6 +45,8 @@
 ### Remove images
 - ensure that no containers are running before removing
   > docker rmi [imageNameOrImageID]
+  - remove all images
+    > docker rmi -f $(docker images -aq)
 ### Update image
 - updates the image after modifying a container
 > docker commit [containerName] [imageNamge]
@@ -57,10 +59,16 @@
   > docker start [containerName or containerId]
 - stop
   > docker stop [containerName or containerId]
+  - alternative
+    > docker kill [containerName or containerId]
+  - stop all
+    > docker kill $(docker ps -q)
 ### Remove a stopped container permanently
 - this will delete all saved data in the container
   - use volume mapping to enable persistent data
 > docker rm [containerName]
+- remove all
+  > docker rm $(docker ps -a -q)
 ### Running a container
 - Creates a random container name and run it, it will stop and exit after all tasks are completed
   > docker run [imageName]
