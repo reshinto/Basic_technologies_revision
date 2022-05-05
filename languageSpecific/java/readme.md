@@ -551,17 +551,24 @@ boolean booleanName4 = Boolean.parseBoolean(sBoolean);  // true
 ## Comparison Operators
 - ```==```
   - reference comparison
-  ```java
-  String s1 = new String("string value");
-  String s2 = new String("string value");
-  System.out.println(s1 == s2);  // false
-  ```
+    ```java
+    String s1 = new String("string value");
+    String s2 = new String("string value");
+    System.out.println(s1 == s2);  // false
+    ```
   - use equals method to compare string values
-  ```java
-  String s1 = new String("string value");
-  String s2 = new String("string value");
-  System.out.println(s1.equals(s2));  // true  
-  ```
+    ```java
+    String s1 = new String("string value");
+    String s2 = new String("string value");
+    System.out.println(s1.equals(s2));  // true
+    ```
+  - use equalsIgnoreCase to ignore cases
+    ```java
+    String s1 = new String("String value");
+    String s2 = new String("string value");
+    System.out.println(s1.equals(s2));  // false
+    System.out.println(s1.equalsIgnoreCase(s2));  // true
+    ```
 - ```!=```
 - ```>```
 - ```<```
