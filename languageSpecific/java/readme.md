@@ -608,10 +608,6 @@ String input1 = scanner.nextLine();
 Int input2 = scanner.nextInt();
 ```
 - single input
-## Input
-```java
-import java.util.Scanner;
-```
 ```java
 String name;
 try (Scanner in = new Scanner(System.in)) {
