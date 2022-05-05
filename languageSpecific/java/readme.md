@@ -555,6 +555,11 @@ boolean booleanName4 = Boolean.parseBoolean(sBoolean);  // true
     String s1 = new String("string value");
     String s2 = new String("string value");
     System.out.println(s1 == s2);  // false
+    
+    String s3, s4;
+    s3 = "string value";
+    s4 = "string value";
+    System.out.println(s3 == s4);  // true
     ```
   - use equals method to compare string values
     ```java
