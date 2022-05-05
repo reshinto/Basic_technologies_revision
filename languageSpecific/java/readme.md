@@ -1,4 +1,13 @@
 # Java
+- what is java
+  - concurrent
+  - class-based
+  - object-oriented
+  - platform-independent
+  - generates bytecode
+  - runs on Java Virtual Machine (JVM)
+  - incorporates a garbage collector
+  - derives its syntax from C++
 ## Table of Contents
 - [Compiled Language](#compiled-language)
 - [Hello World](#hello-world)
