@@ -55,7 +55,6 @@
 - [Generators](#generators)
 - [Fetching Web Data](#fetching-web-data)
 - [Enum](#enum)
-- [Input](#input)
 - [Language Specific](#language-specific)
 
 ## Compiled Language  
@@ -607,6 +606,29 @@ String input = scanner.next();
 String input1 = scanner.nextLine();
 // convert raw value to int type
 Int input2 = scanner.nextInt();
+```
+- single input
+## Input
+```java
+import java.util.Scanner;
+```
+```java
+String name;
+try (Scanner in = new Scanner(System.in)) {
+  System.out.println("Enter your name: ");
+  name = in.nextLine();
+}
+System.out.println("name is " + name);
+```
+- multiple inputs
+```java
+String firstname, surname;
+try (Scanner in = new Scanner(System.in)) {
+  System.out.println("Enter your first name and then your surname: ");
+  firstname = in.nextLine();
+  surname = in.nextLine();
+}
+System.out.println("name is " + firstname + " " + surname);
 ```
 
 [back to top](#table-of-contents)
@@ -1878,21 +1900,6 @@ public class Main {
     System.out.println(p.getName2());  // "John"
   }
 }
-```
-
-[back to top](#table-of-contents)
-
-## Input
-```java
-import java.util.Scanner;
-```
-```java
-String name;
-try (Scanner in = new Scanner(System.in)) {
-  System.out.println("Enter your name: ");
-  name = in.nextLine();
-}
-System.out.println("name is " + name);
 ```
 
 [back to top](#table-of-contents)
