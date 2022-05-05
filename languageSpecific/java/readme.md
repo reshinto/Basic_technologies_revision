@@ -1379,14 +1379,23 @@ public class Student {
 [back to top](#table-of-contents)
 
 ## Type Conversions
+- implicit type conversion
+  - occurs when an equation has multiple data types
+  - small value to big only
+- explicit type conversion
+  - occurs when we use casting to change the data type
+  - can convert big value to small, however, data loss will occur
 ```java
-// implicit type conversion (small value to big only)
+System.out.println((3 + 5 + 8) / 3);  // 5
+System.out.println((3 + 5 + 8) / 3.0);  // 5.333333333333333
+
+// implicit type conversion
 byte b = 1;
 int i = b;
 float f = i;
 
 // casting
-// explicit type conversion (can convert big value to small, however, data loss will occur)
+// explicit type conversion
 float pi = 3.14f;
 int intPi = (int) pi;  // 3
 
