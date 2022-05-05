@@ -358,6 +358,7 @@ double inf = Double.NEGATIVE_INFINITY;  // -Infinty
 [back to top](#table-of-contents)
 
 ## Strings
+- characters
 ```java
 // character: 16 bits, 2 bytes, only 1 letter or symbol, must use single quotes ''
 char charName1 = 'a';
@@ -376,7 +377,9 @@ char[] chars2 = s.toCharArray();
 for (char c : chars2) {  // for each loop
   System.out.print(c);  // "Hello"
 }
-
+```
+- strings
+```java
 // convert primitive values to string
 int intValue = 42;
 String fromInt = Integer.toString(intValue);  // "42"
