@@ -987,7 +987,7 @@ static double myFunction(String ... args) {
 [back to top](#table-of-contents)
 
 ## Class
-- if not constructor has been defined, a constructor with no args will be auto generated
+- if no constructor has been defined, a constructor with no args will be auto generated
 - if a constructor with args has been defined, a constructor with no args will not be auto generated
 ```java
 public class Math {
