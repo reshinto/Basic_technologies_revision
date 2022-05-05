@@ -13,6 +13,7 @@
 - [Hello World](#hello-world)
 - [Comments](#comments)
 - [Data types](#data-types)
+- [Variable declaration](#variable-declaration)
 - [Variable declaration int](#variable-declaration-int)
 - [Variable declaration float](#variable-declaration-float)
 - [Variable declaration None](#variable-declaration-none)
@@ -257,6 +258,15 @@ multi-line comments
         ```
 
 [back to top](#table-of-contents)
+
+## Variable declaration
+- multi variables declaration
+```java
+double num1, num2, num3;
+```
+
+[back to top](#table-of-contents)
+
 
 ## Variable declaration int
 - integer ...-2, -1, 0, 1, 2...
