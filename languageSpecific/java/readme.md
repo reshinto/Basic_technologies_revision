@@ -693,12 +693,6 @@ string_array[index];
 // Find array size
 string_array.length;
 
-// Sort array, can sort numbers, strings, etc.
-// must import
-// import java.util.Arrays;
-String[] sourceArr = {"orange", "apple", "pear"};
-Arrays.sort(sourceArr);  // {"apple", "orange", "pear"}
-
 // Copy array
 int sourceArrStartingIndex = 1;
 int destinationArrStartingIndex = 0;
@@ -710,6 +704,15 @@ System.arraycopy(sourceArr, sourceArrStartingIndex, copiedArr, destinationArrSta
 String[][] states = new String[3][2];
 states[0][0] = "Japan";
 states[0][1] = "Tokyo";
+```
+- Sorting an array
+  - Sort array, can sort numbers, strings, etc.
+```java
+import java.util.Arrays;
+```
+```java
+String[] sourceArr = {"orange", "apple", "pear"};
+Arrays.sort(sourceArr);  // {"apple", "orange", "pear"}
 ```
 - Arraylist
   - it is a class, extends the AbstractList class and implements List interface
