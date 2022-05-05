@@ -12,6 +12,7 @@
 - [Compiled Language](#compiled-language)
 - [Hello World](#hello-world)
 - [Comments](#comments)
+- [Print](#print)
 - [Data types](#data-types)
 - [Variable declaration](#variable-declaration)
 - [Variable declaration int](#variable-declaration-int)
@@ -180,6 +181,91 @@ multi-line comments
 ```
 
 [back to top](#table-of-contents)
+
+## Print
+```java
+System.out.println("Hello World");  // adds new line after printing
+System.out.print("Hello World");  // no new line is added after
+```
+- formatting
+  - [print format reference](https://www.baeldung.com/java-printstream-printf)
+  - `s` for strings
+  - `S` for uppercase strings, it converts lowercase to uppercase
+  - `c` for characters
+  - `C` for uppercase characters
+  - `d` for byte, short, int, long, and BigInteger
+  - `f` for float and double
+  - `t` for date/time values
+    - time
+      - `T` for time hh:mm:ss
+      - `H` for hours
+      - `M` for minutes
+      - `S` for seconds
+      - `L` for milliseconds
+      - `N` for nanoseconds
+      - `p` adds a.m./p.m. formatting
+      - `z` prints out the time-zone offset
+    - data
+      - `A` prints out the full day of the week
+      - `d` formats a two-digit day of the month
+      - `B` is for the full month name
+      - `m` formats a two-digit month
+      - `Y` outputs a year in four digits
+      - `y` outputs the last two digits of the year
+  - `n` for line separator
+  - `b` for boolean
+```java
+// syntax
+System.out.printf(format, arguments);
+System.out.printf(locale, format, arguments);
+
+// example
+System.out.printf("Hello %s!%n", "World");  // Hello World!
+
+// add left spaces
+System.out.printf("'%15s' %n", "baeldung");  // '       baeldung'
+
+// add right spaces
+System.out.printf("'%-10s' %n", "baeldung");  // 'baeldung  '
+
+// limit number of characters in string
+/*
+%x.ys syntax
+x is the padding, y is the number of chars
+*/
+System.out.printf("%2.2s", "Hi there!");  // 'Hi'
+
+
+// control float precision
+/*
+%x.yf syntax
+x is the padding, y is the number of decimal places
+*/
+System.out.printf("'%5.2f'%n", 5.1473);  // ' 5.15'
+
+// using locale to format numbers
+import java.util.Locale;
+System.out.printf(Locale.US, "%,d %n", 10000);  // 10,000
+System.out.printf(Locale.ITALY, "%,d %n", 10000);  // 10.000
+
+// dates
+import java.util.Date;
+System.out.printf("%tT%n", date);  // 13:51:15
+System.out.printf("hours %tH: minutes %tM: seconds %tS%n", date, date, date);  // hours 13: minutes 51: seconds 15
+
+// extracting from 1 argument
+System.out.printf("hours %1$tH: minutes %1$tM: seconds %1$tS%n", date);  // hours 13: minutes 51: seconds 15
+
+// date words format
+System.out.printf("%1$tA, %1$tB %1$tY %n", date);  // Thursday, November 2018
+
+// date numeric format
+System.out.printf("%1$td.%1$tm.%1$ty %n", date);  // 22.11.18
+
+```
+
+[back to top](#table-of-contents)
+
 
 ## Data types
 ### java 8
