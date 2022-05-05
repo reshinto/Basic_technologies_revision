@@ -1501,6 +1501,17 @@ String newString2 = String.format("%s%d", string1, num1);  // "string1"
 [back to top](#table-of-contents)
 
 ## Swapping values
+```java
+int nums[] = {0, 1};
+System.out.printf("%d, %d %n", nums[0], nums[1]);  // 0, 1
+```
+```java
+int temp;
+temp = nums[0];
+nums[0] = nums[1];
+nums[1] = temp;
+System.out.printf("%d, %d %n", nums[0], nums[1]);  // 1, 0
+```
 
 [back to top](#table-of-contents)
 
