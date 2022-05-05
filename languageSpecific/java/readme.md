@@ -673,9 +673,10 @@ c >>> 2  // 1073741821 = 0011...1111 1101, count the 0s
 [back to top](#table-of-contents)
 
 ## Arrays and Lists
+- Arrays
+  - can only have 1 data type: string, int, etc.
+  - printing this only shows the memory
 ```java
-// Arrays: can only have 1 data type: string, int, etc.
-// printing this only shows the memory
 // Empty string array of desired array size
 String[] string_array = new String[length_of_desired_array];
 // New string array with elements inside
@@ -709,15 +710,16 @@ System.arraycopy(sourceArr, sourceArrStartingIndex, copiedArr, destinationArrSta
 String[][] states = new String[3][2];
 states[0][0] = "Japan";
 states[0][1] = "Tokyo";
-
-
-// Arraylists: it is a class, extends the AbstractList class and implements List interface
-// can be instantiated
-// used to create a dynamic array that contains objects
-// creates an array of objects where the array can grow dynamically
-// can only have 1 data type: string, int, etc.
-// import java.util.ArrayList;  // Must import to use
-
+```
+- Arraylist
+  - it is a class, extends the AbstractList class and implements List interface
+  - used to create a dynamic array that contains objects
+  - creates an array of objects where the array can grow dynamically
+  - can only have 1 data type: string, int, class, etc.
+```java
+import java.util.ArrayList;
+```
+```java
 // Empty string arrayList
 ArrayList<String> arrayList = new ArrayList<String>();
 
@@ -738,15 +740,17 @@ arrayList.size();
 
 // Remove all elements
 arrayList.clear();
-
-
-// List: it is an interface, extends the Collection framework
-// cannot be instantiated
-// used to create a list of elements(objects) which are associated with their index numbers
-// creates a collection of elements that are stored in a sequence and they are identified and accessed using the index
-// print this shows the actual array
-// import java.util.List;  // must import to use
-// import java.util.ArrayList;  // Must import to use
+```
+- List
+  - it is an interface, extends the Collection framework
+  - used to create a list of elements(objects) which are associated with their index numbers
+  - creates a collection of elements that are stored in a sequence and they are identified and accessed using the index
+  - printing this shows the actual array
+```java
+import java.util.List;
+import java.util.ArrayList;
+```
+```java
 List<String> list = new ArrayList<>();  // from java 7 onwards redundent <String> is not required, can just use <>
 
 // Add element to string List (left to right)
