@@ -1526,7 +1526,7 @@ try {
 ```
 - try with resources statement
   - only for java 8 or later versions, can't be used on android
-  - it is a try statement that declares 1 or more ressources
+  - it is a try statement that declares 1 or more resources
   - a resource is an object that must be closed after the program is finished with it
 ```java
 // type 1
