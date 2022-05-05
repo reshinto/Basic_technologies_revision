@@ -55,6 +55,7 @@
 - [Generators](#generators)
 - [Fetching Web Data](#fetching-web-data)
 - [Enum](#enum)
+- [Input](#input)
 - [Language Specific](#language-specific)
 
 ## Compiled Language  
@@ -1868,6 +1869,21 @@ public class Main {
     System.out.println(p.getName2());  // "John"
   }
 }
+```
+
+[back to top](#table-of-contents)
+
+## Input
+```java
+import java.util.Scanner;
+```
+```java
+String name;
+try (Scanner in = new Scanner(System.in)) {
+  System.out.println("Enter your name: ");
+  name = in.nextLine();
+}
+System.out.println("name is " + name);
 ```
 
 [back to top](#table-of-contents)
