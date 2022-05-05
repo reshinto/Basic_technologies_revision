@@ -12,7 +12,7 @@ eval "$(jenv init -)"
 ## Verify installation
 - ```jenv doctor```
   - during the first initial setup, it is normal to have the following, it means jenv is correctly loaded
-    ![jenvdoctor](images/jenvdoctor.png)
+    ![jenvdoctor](../../images/jenvdoctor.png)
 ## Run the following if using ```maven (mvn)```
 - ensure that JAVA_HOME is correct ```jenv enable-plugin export```
 - make Maven aware of the java version in use & switch when project does ```jenv enable-plugin maven```
