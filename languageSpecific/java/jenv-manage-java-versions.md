@@ -20,7 +20,13 @@ eval "$(jenv init -)"
 - Install latest
   - ```brew install openjdk```
 - Install Java 8
-  - ```brew install AdoptOpenJDK/openjdk/adoptopenjdk8```
+  - `brew install AdoptOpenJDK/openjdk/adoptopenjdk8`
+- Install Java 9
+  - `brew install AdoptOpenJDK/openjdk/adoptopenjdk9`
+- Install Java 10
+  - `brew install AdoptOpenJDK/openjdk/adoptopenjdk10`
+- Install Java 11
+  - `brew install AdoptOpenJDK/openjdk/adoptopenjdk11`
 ## Configure JDK versions with jEnv
 - list all java versions installed ```/usr/libexec/java_home -V```
   - if installed java version path is not listed, find the path, then add it with the same method below
