@@ -10,6 +10,7 @@
   - derives its syntax from C++
 ## Table of Contents
 - [Compiled Language](#compiled-language)
+- [Modifiers](#modifiers)
 - [Hello World](#hello-world)
 - [Comments](#comments)
 - [Print](#print)
@@ -129,6 +130,16 @@
    - methods and variables are Camel case ```void doSomething(String withThis) {}```
    - constants are all uppercase ```public static final String FIRSTNAME="Myname";```
      - ```final``` means once it has been set, it can't be changed
+
+[back to top](#table-of-contents)
+
+## Modifiers
+|modifier|class|package|subclass|world|
+|-|-|-|-|-|
+|public|Y|Y|Y|Y|
+|protected|Y|Y|Y|N|
+|no modifier|Y|Y|N|N|
+|private|Y|N|N|N|
 
 [back to top](#table-of-contents)
 
@@ -669,6 +680,14 @@ c >>> 2  // 2 = ...0000 0010, count the 1s
 c = -9  // -9 = ...1111 0111
 c >>> 2  // 1073741821 = 0011...1111 1101, count the 0s
 ```
+
+[back to top](#table-of-contents)
+
+## Increment
+* `x = x + 1;`
+* `x += 1;`
+* `++x;` preincrement, add 1 now
+* `x++;` postincrement, display without addition now then add 1 later when called again
 
 [back to top](#table-of-contents)
 
