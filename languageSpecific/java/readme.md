@@ -958,6 +958,9 @@ public static int sum(int a){
       ```java
       UnaryOperator<String> str = (msg) -> msg.toUpperCase();
       System.out.println(str.apply("Msg in upper case"));  // MSG IN UPPER CASE
+      
+      UnaryOperator<String> makeGreeting = "Hello, "::concat;
+      System.out.println(makeGreeting.apply("World"));  // Hello, World
       ```
     - `BinaryOperator` takes 2 arguments and returns value
       ```java
@@ -987,6 +990,47 @@ public static int sum(int a){
       StringFunction strFunc = (s) -> s;
       System.out.println(strFunc.doSomething("test"));  // test
       ```
+    - method as lambdas
+      ```java
+      import java.util.function.Function;
+      import java.util.function.IntFunction;
+      ```
+      ```java
+      // method 1
+      IntFunction<String> intToString = num -> Integer.toString(num);
+      System.out.println(intToString.apply(123));  // 123
+
+      // method 2: static method reference using ::
+      IntFunction<String> intToString2 = Integer::toString;
+      System.out.println(intToString2.apply(123));  // 123
+      ```
+      - lambdas made using a constructor
+        ```java
+        import java.math.BigInteger;
+        ```
+        ```java
+        // method 1
+        Function<String, BigInteger> newBigInt1 = (num) -> new BigInteger(num);
+        System.out.println("expected value: 123456789, actual value: " + newBigInt1.apply("123456789"));  // expected value: 123456789, actual value: 123456789
+    
+        // method 2
+        Function<String, BigInteger> newBigInt2 = BigInteger::new;
+        System.out.println("expected value: 123456789, actual value: " + newBigInt2.apply("123456789"));  // expected value: 123456789, actual value: 123456789
+        ```
+      - lambdas made from an instance method
+        ```java
+        import java.util.function.Consumer;
+        ```
+        ```java
+        // method 1
+        Consumer<String> print1 = (str1) -> System.out.println(str1);
+        print1.accept("Hello World");  // Hello World
+        
+        // method 2
+        Consumer<String> print2 = System.out::println;
+        print2.accept("Hello World");  // Hello World
+        ```
+
 ```java
 // import java.util.ArrayList;
 // import java.util.function.Consumer;  // must import
