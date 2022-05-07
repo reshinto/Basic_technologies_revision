@@ -154,7 +154,7 @@
 [back to top](#table-of-contents)
 
 ## Accessibility
-|modifier|class|package|subclass|world|
+|modifier|same class|same package|subclass|everywhere else|
 |-|-|-|-|-|
 |public|Y|Y|Y|Y|
 |protected|Y|Y|Y|N|
