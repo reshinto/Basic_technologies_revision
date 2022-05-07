@@ -978,10 +978,12 @@ public static int sum(int a){
       ```
     - custom interface
       ```java
+      @FunctionalInterface  // not a must but better to have
       interface StringFunction {
         String doSomething(String str);
       }
-
+      ```
+      ```java
       StringFunction strFunc = (s) -> s;
       System.out.println(strFunc.doSomething("test"));  // test
       ```
