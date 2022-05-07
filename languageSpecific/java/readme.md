@@ -936,6 +936,21 @@ public static int sum(int a){
       Supplier<String> s = () -> "Java is fun";
       System.out.println(s.get());  // Java is fun
       ```
+    - `Runnable` similar to `Supplier`
+    ```java
+    // method 1
+    Runnable r1 = new Runnable() {
+      @Override
+      public void run() {
+        System.out.println("run");
+      }
+    };
+    r1.run();  // run
+    
+    // method 2
+    Runnable r2 = () -> System.out.println("run");
+    r2.run();  // run
+    ```
     - `UnaryOperator` single argument with a return value
       ```java
       import java.util.function.UnaryOperator;
@@ -944,7 +959,7 @@ public static int sum(int a){
       UnaryOperator<String> str = (msg) -> msg.toUpperCase();
       System.out.println(str.apply("Msg in upper case"));  // MSG IN UPPER CASE
       ```
-    - `BinaryOperator` takes 2 arguments and returns 1
+    - `BinaryOperator` takes 2 arguments and returns value
       ```java
       import java.util.function.BinaryOperator;
       ```
@@ -952,14 +967,23 @@ public static int sum(int a){
       BinaryOperator<Integer> add = (a, b) -> a + b;
       System.out.println(add.apply(10, 25));  // 35
       ```
+    - `BiFunction` similar to `BinaryOperator`
+      ```java
+      import java.util.function.BiFunction;
+      ```
+      ```java
+      BiFunction<String, String, String> concat = (a, b) -> a + b;
+      String sentence = concat.apply("Today is ", "a great day");
+      System.out.println(sentence);  // Today is a great day
+      ```
     - custom interface
       ```java
       interface StringFunction {
-        String run(String str);
+        String doSomething(String str);
       }
 
       StringFunction strFunc = (s) -> s;
-      System.out.println(strFunc.run("test"));  // "test"
+      System.out.println(strFunc.doSomething("test"));  // test
       ```
 ```java
 // import java.util.ArrayList;
