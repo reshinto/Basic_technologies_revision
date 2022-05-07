@@ -1154,60 +1154,99 @@ System.out.println(names);  // [Sam, Paul, Michaela, Jane]
 ```
 - removing duplicates
   - elimate duplicates and auto sort
-```java
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-```
-```java
-List<Integer> duplicateNums = Arrays.asList(4, 3, 3, 3, 2, 1, 1, 1);
-System.out.println(duplicateNums.toString());  // [4, 3, 3, 3, 2, 1, 1, 1]
+  ```java
+  import java.util.Arrays;
+  import java.util.Collection;
+  import java.util.HashSet;
+  import java.util.List;
+  import java.util.Set;
+  ```
+  ```java
+  List<Integer> duplicateNums = Arrays.asList(4, 3, 3, 3, 2, 1, 1, 1);
+  System.out.println(duplicateNums.toString());  // [4, 3, 3, 3, 2, 1, 1, 1]
 
-// method 1
-Collection<Integer> noDuplicatesNums = new HashSet<>(duplicateNums);
-System.out.println(noDuplicatesNums.toString());  // [1, 2, 3, 4]
+  // method 1
+  Collection<Integer> noDuplicatesNums = new HashSet<>(duplicateNums);
+  System.out.println(noDuplicatesNums.toString());  // [1, 2, 3, 4]
 
-// method 2
-Set<Integer> noDuplicatesNums2 = new HashSet<>(duplicateNums);
-System.out.println(noDuplicatesNums2.toString());  // [1, 2, 3, 4]
-```
+  // method 2
+  Set<Integer> noDuplicatesNums2 = new HashSet<>(duplicateNums);
+  System.out.println(noDuplicatesNums2.toString());  // [1, 2, 3, 4]
+  ```
 - streams
-```java
-import java.util.List;
-import java.util.Arrays;
-import java.util.Collections;
+  - the package contains interfaces for using streams
+  - a stream represents a sequence of elements
+  - the package was added to traverse collections
+  - most stream operations take a lambda expression
+  - Stream operations are either intermediate or terminal
+    - Terminal operations are either void or return a type
+      - e.g.: `.collect(...)` 
+    - Intermediate operations return the stream itself
+      - e.g.: `.sorted()`
+  - common operations include map, filter, forEach
+  - elements in a stream cannot be changed
+  ```java
+  import java.util.List;
+  import java.util.Arrays;
+  import java.util.stream.Collectors;
 
-public class Person {
-  private String name;
+  public class Person {
+    private String name;
 
-  public Person(String name) {
-    this.name = name;
+    public Person(String name) {
+      this.name = name;
+    }
+
+    public String getName() {
+      return name;
+    }
   }
 
-  public String getName() {
-    return name;
+  public class Main {
+    public static void main(String[] args) {
+      List<String> names = Arrays.asList("Paul", "Jane", "Michaela", "Sam");
+      System.out.println(names.stream().collect(Collectors.joining(",")));  // Paul,Jane,Michaela,Sam
+
+      Person personA = new Person("Paul");
+      Person personB = new Person("Jane");
+      Person personC = new Person("Sam");
+      List<Person> people = Arrays.asList(personA, personB, personC);
+
+      // use .collect to aggregate names into a list
+      // use .map to get the name
+      List<String> names2 = people.stream().map(Person::getName).collect(Collectors.toList());
+      System.out.println(names2);  // [Paul, Jane, Sam]
+    }
   }
-}
+  ```
+  ```java
+  import java.util.Arrays;
+  import java.util.List;
+  import java.util.stream.Collectors;
+  import java.util.stream.Stream;
+  ```
+  ```java
+  Arrays.asList("red", "green", "blue").stream().sorted().findFirst().ifPresent(System.out::println);  // blue
 
-public class Main {
-  public static void main(String[] args) {
-    List<String> names = Arrays.asList("Paul", "Jane", "Michaela", "Sam");
-    System.out.println(names.stream().collect(Collectors.joining(",")));  // Paul,Jane,Michaela,Sam
+  Stream.of("red", "green", "blue").filter(color -> color.startsWith("g")).forEach(System.out::println);  // green
 
-    Person personA = new Person("Paul");
-    Person personB = new Person("Jane");
-    Person personC = new Person("Sam");
-    List<Person> people = Arrays.asList(personA, personB, personC);
+  List<String> collected = Stream.of("red", "green", "blue").map(string -> string.toUpperCase()).collect(Collectors.toList());
+  System.out.println(collected.toString());  // [RED, GREEN, BLUE]
+  ```
+  ```java
+  import java.util.Arrays;
+  import java.util.stream.IntStream;
+  import java.util.stream.Stream;
+  ```
+  ```java
+  IntStream.range(1, 4).forEach(System.out::print);  // 123
 
-    // use .collect to aggregate names into a list
-    // use .map to get the name
-    List<String> names2 = people.stream().map(Person::getName).collect(Collectors.toList());
-    System.out.println(names2);  // [Paul, Jane, Sam]
-  }
-}
-```
+  // find the average of the numbers squared
+  Arrays.stream(new int[] {1, 2, 3, 4}).map(n -> n*n).average().ifPresent(System.out::println);  // 7.5
+
+  // map doubles to ints
+  Stream.of(1.5, 2.3, 3.7).mapToInt(Double::intValue).forEach(System.out::print);  // 123
+  ```
 
 [back to top](#table-of-contents)
 
