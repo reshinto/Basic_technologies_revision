@@ -29,7 +29,7 @@
       - modules work independently of other modules
 ## Table of Contents
 - [Compiled Language](#compiled-language)
-- [Modifiers](#modifiers)
+- [Accessibility](#accessibility)
 - [Hello World](#hello-world)
 - [Comments](#comments)
 - [Print](#print)
@@ -153,12 +153,12 @@
 
 [back to top](#table-of-contents)
 
-## Modifiers
+## Accessibility
 |modifier|class|package|subclass|world|
 |-|-|-|-|-|
 |public|Y|Y|Y|Y|
 |protected|Y|Y|Y|N|
-|no modifier|Y|Y|N|N|
+|no modifier aka "package private" |Y|Y|N|N|
 |private|Y|N|N|N|
 
 [back to top](#table-of-contents)
