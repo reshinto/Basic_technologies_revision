@@ -899,27 +899,82 @@ public static void myFunction(dataType a){
 public static int sum(int a){
   return a + 1;
 }
+```
+- Lambda
+  - interface
+    - an interface that contains at most one abstract function
+    - represents abstract concepts such as functions, actions, or predicates
+    - `Predicate:` takes 1 argument, returns a Boolean
+      ```java
+      import java.util.function.Predicate;
+      ```
+      ```java
+      Predicate<String> stringLen = (s) -> s.length() < 10;
+      System.out.println(stringLen.test("Apples") + " - Apples is less than 10");  // true - Apples is less than 10
+      ```
+    - `Consumer` accepts single argument with no return value
+      ```java
+      import java.util.function.Consumer;
+      ```
+      ```java
+      Consumer<String> consumerStr = (s) -> System.out.println(s.toLowerCase());
+      consumerStr.accept("ABCDefghij");  // abcdefghij
+      ```
+    - `Function` accepts 1 argument and produces a result
+      ```java
+      import java.util.function.Function;
+      ```
+      ```java
+      Function<Integer, String> converter = (num) -> Integer.toString(num);
+      System.out.println("length of 26: " + converter.apply(26).length());  // length of 26: 2
+      ```
+    - `Supplier` represents a supplier of results
+      ```java
+      import java.util.function.Supplier;
+      ```
+      ```java
+      Supplier<String> s = () -> "Java is fun";
+      System.out.println(s.get());  // Java is fun
+      ```
+    - `UnaryOperator` single argument with a return value
+      ```java
+      import java.util.function.UnaryOperator;
+      ```
+      ```java
+      UnaryOperator<String> str = (msg) -> msg.toUpperCase();
+      System.out.println(str.apply("Msg in upper case"));  // MSG IN UPPER CASE
+      ```
+    - `BinaryOperator` takes 2 arguments and returns 1
+      ```java
+      import java.util.function.BinaryOperator;
+      ```
+      ```java
+      BinaryOperator<Integer> add = (a, b) -> a + b;
+      System.out.println(add.apply(10, 25));  // 35
+      ```
+    - custom interface
+      ```java
+      interface StringFunction {
+        String run(String str);
+      }
 
-
-// lamda
-// store returning function
-interface StringFunction {
-  String run(String str);
-}
-
-StringFunction strFunc = (s) -> s;
-strFunc.run("test");  // "test"
-
-// store non returning function
+      StringFunction strFunc = (s) -> s;
+      System.out.println(strFunc.run("test"));  // "test"
+      ```
+```java
 // import java.util.ArrayList;
 // import java.util.function.Consumer;  // must import
+
+// store non returning function
 ArrayList<Integer> numbers = new ArrayList<Integer>();
 numbers.add(5);
-Consumer<Integer> method = (n) -> { System.out.println(n); };
-numbers.forEach( method );
+Consumer<Integer> method = (n) -> { System.out.println(n); };  // can remove {} if is one liner
 
-// using inside forEach loop
-numbers.forEach( (n) -> { System.out.println(n); } );
+// method 1
+numbers.forEach( method );  // 5
+
+// method 2
+numbers.forEach( (n) -> { System.out.println(n); } );  // 5
 ```
 - method overloading
 ```java
