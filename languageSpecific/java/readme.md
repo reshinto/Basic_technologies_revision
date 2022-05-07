@@ -34,6 +34,7 @@
 - [Functions](#functions)
 - [Higher order functions](#higher-order-functions)
 - [Hash Tables](#hash-tables)
+- [Collections](#collections)
 - [Destructuring](#destructuring)
 - [Spread Operator](#spread-operator)
 - [Rest parameters](#rest-parameters)
@@ -770,9 +771,14 @@ arrayList.clear();
   - printing this shows the actual array
 ```java
 import java.util.List;
+import java.util.Arrays;
 import java.util.ArrayList;
 ```
 ```java
+// method 1
+List<String> list = Arrays.asList(element, element, ...)
+
+// method 2
 List<String> list = new ArrayList<>();  // from java 7 onwards redundent <String> is not required, can just use <>
 
 // Add element to string List (left to right)
@@ -1116,6 +1122,91 @@ map.remove("sg");  // { jp=Japan, usa=United States }
 // get a set of keys
 // import java.util.Set;  // must import
 Set<String> keys = map.keySet();  // [ usa, jp ]
+```
+
+[back to top](#table-of-contents)
+
+## Collections
+- introduced in Java 7
+- it is a group of elements
+- can store, retrieve, manipulate, and communicate aggregate data
+```java
+import java.util.List;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Collections;
+```
+```java
+List<String> names = Arrays.asList("Paul", "Jane", "Michaela", "Sam");
+
+// method 1
+Collections.sort(names, new Comparator<String>() {
+  @Override
+  public int compare(String a, String b) {
+    return a.compareTo(b);  // ascending order
+  }
+});
+System.out.println(names);  // [Jane, Michaela, Paul, Sam]
+
+// method 2 using lambda
+Collections.sort(names, (a, b) -> b.compareTo(a));  // descending order
+System.out.println(names);  // [Sam, Paul, Michaela, Jane]
+```
+- removing duplicates
+  - elimate duplicates and auto sort
+```java
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+```
+```java
+List<Integer> duplicateNums = Arrays.asList(4, 3, 3, 3, 2, 1, 1, 1);
+System.out.println(duplicateNums.toString());  // [4, 3, 3, 3, 2, 1, 1, 1]
+
+// method 1
+Collection<Integer> noDuplicatesNums = new HashSet<>(duplicateNums);
+System.out.println(noDuplicatesNums.toString());  // [1, 2, 3, 4]
+
+// method 2
+Set<Integer> noDuplicatesNums2 = new HashSet<>(duplicateNums);
+System.out.println(noDuplicatesNums2.toString());  // [1, 2, 3, 4]
+```
+- streams
+```java
+import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
+
+public class Person {
+  private String name;
+
+  public Person(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return name;
+  }
+}
+
+public class Main {
+  public static void main(String[] args) {
+    List<String> names = Arrays.asList("Paul", "Jane", "Michaela", "Sam");
+    System.out.println(names.stream().collect(Collectors.joining(",")));  // Paul,Jane,Michaela,Sam
+
+    Person personA = new Person("Paul");
+    Person personB = new Person("Jane");
+    Person personC = new Person("Sam");
+    List<Person> people = Arrays.asList(personA, personB, personC);
+
+    // use .collect to aggregate names into a list
+    // use .map to get the name
+    List<String> names2 = people.stream().map(Person::getName).collect(Collectors.toList());
+    System.out.println(names2);  // [Paul, Jane, Sam]
+  }
+}
 ```
 
 [back to top](#table-of-contents)
