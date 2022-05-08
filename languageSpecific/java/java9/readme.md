@@ -64,10 +64,10 @@
 - modules could each have their own codebase and lifecycles, but is not a must
 - filename `module-info.java`
   ```java
-  module module.name {                                   // 1
-      exports package.name.a;                            // 2
-      exports package.name.b to other.module.name.a;     // 3
-      requires other.module.name.b;                      // 4
+  module module.name {                                 // 1
+    exports package.name.a;                            // 2
+    exports package.name.b to other.module.name.a;     // 3
+    requires other.module.name.b;                      // 4
   }
   ```
 ### Module name
@@ -88,6 +88,18 @@
 ### Module dependency
 - In the last line contains the information about the module dependencies
 - In the provided example the `module module.name` depends on `other.module.name.b` module and has access to its exported packages
+## Transitive dependencies
+- a transfer of dependencies to dependent modules
+  - in simpler terms
+    - every package a given module requires gets automatically passed to dependent modules
+- it keep dependency graphs coherent
+- it is a clean way to transfer dependencies to dependent modules
+  - but avoid having to repeat the dependency requirements
+```java
+module module.name {                                   
+  requires transitive other.module.name.b;  // add transitive key word
+}
+```
 ## Rules of modularization
 - Firstly
   - cycles between modules (on compilation level) are prohibited
