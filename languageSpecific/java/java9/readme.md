@@ -202,7 +202,7 @@ module module.name {
 moduel module.name {
   requires package.name.b;
   requires static package.name.c;  // use the static keyword to make it optional
-  exports package.name.a;;
+  exports package.name.a;
   provides package.name.a.InterfaceName with
            package.name.a.type.One;           
            package.name.a.type.Two;
@@ -222,7 +222,30 @@ java --module-path mods/ -m com.domain.module/com.domain.module.Main
 # run with optional dependency
 java --module-path mods/ --add-modules com.domain.optionalmodule -m com.domain.module/com.domain.module.Main
 ```
+## Runtime dependencies
+- API misuses are caught at compilation time
+  - by not exporting the package
+    - the package won't be readable by foreign modules
+- if a dependency was not exported
+  - importing or instantiating the dependency will cause a compilation error
+  - reflection-based framework
+    - not importing but using the type without instantiating will allow compilation but fails at runtime
+### Open dependencies
+- allows module access at run time only (via reflection)
+- compile time access is closed
+![open dependencies](../../../images/openDependencies.png)
 
+```java
+moduel module.name {
+  requires package.name.b;
+  requires static package.name.c;
+  exports package.name.a;
+  opens package.name.a.type;  // use the opens keyword to allow reflection-based access at run time to all classes
+  provides package.name.a.InterfaceName with
+           package.name.a.type.One;           
+           package.name.a.type.Two;
+}
+```
 ## Rules of modularization
 - Firstly
   - cycles between modules (on compilation level) are prohibited
