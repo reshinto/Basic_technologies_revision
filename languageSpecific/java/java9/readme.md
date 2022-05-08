@@ -47,20 +47,37 @@
   - thus the `rt.jar` has been modularized
     - libraries that used to eist in `rt.jar` have now been segmented into smaller `JMOD` files
       - a new file format to package modules
-## Example
-- require `module-info.java` file containing the module descriptor
-```java
-module module.name {                                   // 1
-    exports package.name.a;                            // 2
-    exports package.name.b to other.module.name.a;     // 3
-    requires other.module.name.b;                      // 4
-}
-```
+## Module-info
+- Regular java class
+- Module-related syntax only
+- module meta-data available at runtime
+- providing fidelity across phrases
+- 1 module-info per module
+- declared at the root of module
+- mandatory for JPMS
+- creates a namespace for the module
+- must be globally unique, like package names
+- no duplication
+- modules dictate how packages are stored on file system
+- module hierarchies must match filesystem hierarchies
+- segregated package hierarchies
+- modules could each have their own codebase and lifecycles, but is not a must
+- filename `module-info.java`
+  ```java
+  module module.name {                                   // 1
+      exports package.name.a;                            // 2
+      exports package.name.b to other.module.name.a;     // 3
+      requires other.module.name.b;                      // 4
+  }
+  ```
 ### Module name
 - first line contains module keyword followed by module name
   - `module.name` in given example
 - Module naming convention is similar to package convention
-  - reversed domain notation, eg `com.organization.project`
+  - reversed domain notation: domainName.module
+    - domain name: organization.com
+    - module: project
+    - module name in module-info: `com.organization.project`
 ### Module API
 - The second line declares that classes from a `package.name.a` may be accessible for other modules
 - Module descriptor can export multiple packages, each on a separate line
