@@ -105,6 +105,28 @@ module module.name {
 - to
   ![with transition](../../../images/withTransition.png)
 
+## Qualified dependencies
+- exporting of packages to chosen modules
+  - similar to white listing approach to exporting
+- allow the exporting module to choose which foreign modules are allowed to read it
+- acts as a fine-grained filter, giving individual access at the package level
+- problem
+  ![without qualified dependency](../../../images/withoutQualifiedDependency.png)
+- solution 1: changing accessibility from public to package private
+  - works if dependency does not require access from anywhere else
+  ![limited qualified solution](../../../images/limitedQualifiedSolution.png)
+- solution 2: refactor code
+  - is a hacky solution
+  ![hacky qualified solution](../../../images/hackyQualifiedSolution.png)
+- Proper solution:
+  - change accessibility from public to package private
+  - use the `to` key word in `module-info.java` file
+  ![qualified solution](../../../images/qualifiedSolution.png)
+```java
+module module.name {                                 
+  exports package.name.b to other.module.name.a, other.module.name.c, ...;  // use the to key, can export to multiple packages
+}
+```
 ## Rules of modularization
 - Firstly
   - cycles between modules (on compilation level) are prohibited
