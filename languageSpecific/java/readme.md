@@ -1860,6 +1860,7 @@ try {
 } catch(SomeSpecificException e) {
   doSomethingIfErrorOccursRelatedToSomESpecificException;
 } catch(Exception e) {  // e is an arg (mandatory), e can be used to print general or more detailed error
+  e.printStackTrace();
   doSomethingIfErrorOccursRelatedToAllExceptions;
 } finally {
   doSomethingWhenTryAndCatchIsCompleted;
