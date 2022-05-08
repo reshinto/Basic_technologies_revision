@@ -64,7 +64,13 @@ public class Main {
 > javac ./com/example/java/Main.java
 #### run file
 > java com.example.java.Main
-
+## using modularity
+- compile
+  > javac -d ./mods/ --module-source-path src $(find src -name "*.java")
+- run without optional dependencies
+  > java --module-path mods/ -m com.domain.module/com.domain.module.Main
+- run with optional dependencies
+  > java --module-path mods/ --add-modules com.domain.optionalmodule -m com.domain.module/com.domain.module.Main
 # Run Typescript files
 ## run typescript files without compiling with ts-node in terminal (no javascript created)
 > ts-node xxx.ts
