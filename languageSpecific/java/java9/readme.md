@@ -27,8 +27,11 @@
 - example
   - 1 package example works fine
     - all packages are inside the movement package
+    
     ![single package module](../../../images/singlePackageModule.png)
+  
   - multiple packages example will not compile
+    
     ![multiple package module](../../../images/multiPackagesModule.png)
 
 ### Java 9 improvements
@@ -38,6 +41,7 @@
   - JPMS maintains class integrity
   - can be verified by static analysis
   - support for versioning
+  
   ![classpath hell](../../../images/classpathHell.png)
   
 - controlling the system footprint
@@ -103,8 +107,11 @@ module module.name {
 }
 ```
 - from
+  
   ![without transition](../../../images/withoutTransition.png)
+
 - to
+  
   ![with transition](../../../images/withTransition.png)
 
 ## Qualified dependencies
@@ -126,19 +133,23 @@ module module.name {
   - but should be instead be used in special circumstances
   - best used to give fine-grained access to known modules working together
 - problem
+  
   ![without qualified dependency](../../../images/withoutQualifiedDependency.png)
 
 - solution 1: changing accessibility from public to package private
   - works if dependency does not require access from anywhere else
+  
   ![limited qualified solution](../../../images/limitedQualifiedSolution.png)
 
 - solution 2: refactor code
   - is a hacky solution
+  
   ![hacky qualified solution](../../../images/hackyQualifiedSolution.png)
 
 - Proper solution:
   - change accessibility from public to package private
   - use the `to` key word in `module-info.java` file
+  
   ![qualified solution](../../../images/qualifiedSolution.png)
 
 ```java
@@ -147,6 +158,7 @@ module module.name {
 }
 ```
 ## Service dependencies
+
 ![service dependencies](../../../images/serviceDependencies.png)
 
 - service provider
@@ -196,6 +208,7 @@ module module.name {
 - optional dependencies must be coded defensively
   - must use with `try/catch` and with `NoClassDefFoundError` exception
 - optinal modules become regular modules if they get required by other modules in the graph
+
 ![optional dependencies](../../../images/optionalDependencies.png)
 
 ```java
@@ -233,6 +246,7 @@ java --module-path mods/ --add-modules com.domain.optionalmodule -m com.domain.m
 ### Open dependencies
 - allows module access at run time only (via reflection)
 - compile time access is closed
+
 ![open dependencies](../../../images/openDependencies.png)
 
 ```java
@@ -313,10 +327,13 @@ moduel module.name {
 - the module path can aggregate many modules
   - each module can be its own island of code
 - 1 modular structure
+  
   ![modular structure](../../../images/modularStructure.png)
 
 - multi modular structure
+  
   ![multi modular structure](../../../images/multiModularStructure.png)
+
 ## Tools and Strategies
 ### javac
 - `javac -d ./mods/ --module-source-path src $(find src -name "*.java")`
@@ -512,6 +529,7 @@ moduel module.name {
   - this means that if a class exists in 2 different jar files
     - only 1 jar file will be used as automatic
     - the other jar will be discarded in its entirety
+
 ![automatic and unnamed modules](../../../images/automaticAndUnnamedModules.png)
 
 - build automatic module
