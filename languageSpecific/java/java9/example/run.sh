@@ -1,5 +1,4 @@
 #!/bin/bash
 set -v
 
-java --module-path mods/ -m com.java9modules.app/com.java9modules.app.api.App
-
+java --module-path mods/ -m com.java9modules.main/com.java9modules.main.api.App
