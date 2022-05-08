@@ -110,18 +110,35 @@ module module.name {
   - similar to white listing approach to exporting
 - allow the exporting module to choose which foreign modules are allowed to read it
 - acts as a fine-grained filter, giving individual access at the package level
+- drawbacks of using qualified dependencies
+  - exporting modules should normally not know about which other modules are depending upon them
+  - qualified exports break this rule
+  - it should only be used in friend like contexts
+  - it is used because the modules are working closely with other modules to provide a functionality
+  - funcationalities are structured into independent modules
+    - but federated to act as 1 in providing that functionality
+- limitations to qualified dependencies
+  - it can't be used to grant readability to all forieng modules because they would all need to be known
+  - foreign modules must already exist, if not compilation will fail
+- qualified exporting should not be used as the default exporting tool
+  - but should be instead be used in special circumstances
+  - best used to give fine-grained access to known modules working together
 - problem
   ![without qualified dependency](../../../images/withoutQualifiedDependency.png)
+
 - solution 1: changing accessibility from public to package private
   - works if dependency does not require access from anywhere else
   ![limited qualified solution](../../../images/limitedQualifiedSolution.png)
+
 - solution 2: refactor code
   - is a hacky solution
   ![hacky qualified solution](../../../images/hackyQualifiedSolution.png)
+
 - Proper solution:
   - change accessibility from public to package private
   - use the `to` key word in `module-info.java` file
   ![qualified solution](../../../images/qualifiedSolution.png)
+
 ```java
 module module.name {                                 
   exports package.name.b to other.module.name.a, other.module.name.c, ...;  // use the to key, can export to multiple packages
