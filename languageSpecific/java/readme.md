@@ -1722,10 +1722,12 @@ public class Student {
 ## Type Conversions
 - implicit type conversion
   - occurs when an equation has multiple data types
-  - small value to big only
+  - small memory value to big memory value only
+    - e.g.: byte to int
 - explicit type conversion
   - occurs when we use casting to change the data type
-  - can convert big value to small, however, data loss will occur
+  - can convert big memory value to small memory value, however, data loss will occur
+    - allow int to byte
 ```java
 System.out.println((3 + 5 + 8) / 3);  // 5
 System.out.println((3 + 5 + 8) / 3.0);  // 5.333333333333333
