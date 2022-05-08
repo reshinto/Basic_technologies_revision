@@ -1301,6 +1301,7 @@ static double myFunction(String ... args) {
 ## Class
 - if no constructor has been defined, a constructor with no args will be auto generated
 - if a constructor with args has been defined, a constructor with no args will not be auto generated
+- constructor can be overloaded with multiple constructors
 ```java
 public class Math {
   public int arg1;
