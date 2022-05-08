@@ -102,3 +102,18 @@
   - It’s important that not exported packages are not accessible
   - Since Java 9 some APIs are marked as internal and are unavailable from regular packages
   - If you compile code using such packages in Java 8 and try to use it with Java 9, you’ll get runtime error
+## Modular structure design
+- small apps may have just 1 module
+### JPMS introduces the module path
+- it tells the compiler and runtime where to find the modules
+- directory hierarchy must match module/package hierarchy
+  - each module is a separate hierarchy
+- the module path supersedes the class path
+  - the class path is for backward compatibility
+- the module path can aggregate many modules
+  - each module can be its own island of code
+- 1 modular structure
+  ![modular structure](../../../images/modularStructure.png)
+
+- multi modular structure
+  ![multi modular structure](../../../images/multiModularStructure.png)
