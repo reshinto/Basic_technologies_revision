@@ -512,6 +512,8 @@ moduel module.name {
   - this means that if a class exists in 2 different jar files
     - only 1 jar file will be used as automatic
     - the other jar will be discarded in its entirety
+![automatic and unnamed modules](../../../images/automaticAndUnnamedModules.png)
+
 - build automatic module
   - src_1 has no `module-info.java` file
     - however, the classes inside can still import from src_2
@@ -528,4 +530,3 @@ moduel module.name {
   ```
 - run automatic module
   > java --module-path bin --add-modules ALL-MODULE-PATH com.domain.modulea.ClassName
-![automatic and unnamed modules](../../../images/automaticAndUnnamedModules.png)
