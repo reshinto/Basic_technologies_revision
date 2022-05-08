@@ -528,3 +528,4 @@ moduel module.name {
   ```
 - run automatic module
   > java --module-path bin --add-modules ALL-MODULE-PATH com.domain.modulea.ClassName
+![automatic and unnamed modules](../../../images/automaticAndUnnamedModules.png)
