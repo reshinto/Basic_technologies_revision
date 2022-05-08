@@ -1476,6 +1476,8 @@ public class Calculator {
 }
 ```
 - inheritance
+  - if a class isn't defined as `final` it can be extended
+  - superclass members are inherited unless marked private
 ```java
 // enum
 public enum Names {
