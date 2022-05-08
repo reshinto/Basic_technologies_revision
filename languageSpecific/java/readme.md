@@ -632,10 +632,11 @@ if (s instanceof java.lang.String) {
 [back to top](#table-of-contents)
 
 ## Logical Operators
-- ```&&``` and
-- ```||``` or
-- ```^``` exclusive or
-- ```!``` not
+- `&&` and
+- `||` or
+- `^` exclusive or
+- `!` not
+- `?=` Ternary (shorthand if-then)
 
 [back to top](#table-of-contents)
 
