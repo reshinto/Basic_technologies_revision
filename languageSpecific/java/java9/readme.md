@@ -262,6 +262,48 @@ moduel module.name {
   - If you compile code using such packages in Java 8 and try to use it with Java 9, you’ll get runtime error
 ## Modular structure design
 - small apps may have just 1 module
+- 9 tips
+  1. Token modularization
+      - package non-modular classes into jars and use automatic modules
+      - automatic jars can be read and depended upon by modules
+      - gateway to modular java
+  2. Piecemeal Modularization
+      - modularizing large code bases is a big undertaking
+        - use a piecemeal approach
+      - start with root packages, such as utility
+      - can be read by unnamed modules
+  3. use modularity for better design
+      - modularity helps detect hidden bad designs
+      - cyclic dependencies, lack of interfaces, and packages that try to do too much
+      - take the opportunity to refactor during modularization
+  4. Break Monoliths along Natural Fault Lines
+      - consider module boundaries in tiers
+      - front-end/back-end/persistence
+      - mobile, web, and desktop
+      - relational vs document vs graph databases
+  5. Keep Private Things Private
+      - modules are the next level of lexical scope
+      - hide classes that shouldn't be exposed
+      - identify the export package
+        - put public classes there
+      - leads to better APIs
+  6. OSGi Status Quo
+      - future of OSGi integration is not clear
+      - JPMS offers native modularity
+      - hold off JPMS until there is clarity with OSGi integration
+  7. Complement Microservices with JPMS
+      - introduce JPMS to your microservices architecture
+      - JPMS will provide better encapsulation and the next level of lexical scoping
+        - better code hygiene
+      - focus on larger services
+  8. Use the Tools to Deliver Software
+      - introduce the static analysis tools in your build process
+      - Jdeps, java -dry-run, jdeprscan
+      - used to produce metrics and quality software
+  9. All Things in Moderation
+      - don't over-modularize
+      - over-modularized code is worse than a monolith
+      - understand the dependencies in your package
 ### JPMS introduces the module path
 - it tells the compiler and runtime where to find the modules
 - directory hierarchy must match module/package hierarchy
@@ -414,3 +456,75 @@ moduel module.name {
 |support modules|use for custom run time image|
 |use for running on a pre-installed JRE|can hold native libraries|
 ||use for packaging on custom images|
+
+### backward compatibility with classes
+#### Jdeprscan
+- a static analysis tool that scans code for uses of deprecated API elements
+- use to show every method in the standard JDK libraries that have been deprecated or slated for removal
+- scan jdk libraries
+  > jdeprscan --list --release 6
+- list jdk libraries for removel
+  > jdeprscan --list --for-removal
+- scan classes
+  > jdeprscan --class-path classes classes
+#### Explicit vs unamed modules
+- the module path is always searched first when loading classes, and if it's not found there, the class path is searched, so classes and modules can coexist
+- All nonmodule classes loaded from the class path are part of what is called the unnamed module
+- The unnamed module is a new concept created to bridge modularized and unmodularized code
+- Explicit modules are those defined via the module-info class
+- Unnamed modules are special modules created by their runtime that contain all classes that are loaded from the class path
+- At most, there will be only one unnamed module at runtime
+- Classes within the unnamed module can read any public class from an exported package of an explicit module
+  - But the reverse is not true
+- Explicit modules cannot read the classes from the unnamed module, nor can they depend upon the unnamed module
+- unnamed modules exist only for interoperability between modularized and unmodularized code
+  - This means that the axle class can access anything that the movement module exports without explicitly requiring it
+- if a package is defined in both the class path and the module path, then the class found in the module is loaded
+- These readability rules are important to preserve reliable configuration in JPMS
+- Otherwise, JPMS would be broken
+- These constructs exist for backward compatibility and not as an end state
+- While unnamed modules can participate in JPMS, they are second-class citizens in the world of modularity because they can't fully take advantage of all the features
+- build unnamed module
+  - src_1 has no `module-info.java` file
+    - however, the classes inside can still import from src_2
+  ```
+  rm -rf mods bin classes
+  mkdir mods bin classes
+
+  javac -d ./mods/ --module-source-path src_2 $(find src_2 -name "*.java")
+  javac -d ./classes/ -cp mods/com.domain.moduleb --source-path src_1 $(find src_1 -name "*.java")
+
+  jar --create --file ./bin/com.domain.moduleb.jar -C mods/com.domain.moduleb .
+  ```
+- run unnamed module
+  > java --module-path bin --add-modules ALL-MODULE-PATH -cp classes com.domain.modulea.ClassName
+### backward compatibility with JARs
+#### Automatic modules
+- a jar that was created from unmodularized code doesn't have the module info class but can still be used within JPMS
+- created by the platform to hold classes loaded from a non-modular jar
+- classes loaded from non-modular jars are contained by the platform inside automatic modules
+- it helps with the in between world of partially modularized code bases and libraries
+- it offer better integration with modules
+  - but still is limited because they cannot depend upon explicit modules
+  - together with unnamed modules, they allow piecemeal migration to modules
+    - and avoid a big bang migration approach
+- it is class exclusive
+  - this means that if a class exists in 2 different jar files
+    - only 1 jar file will be used as automatic
+    - the other jar will be discarded in its entirety
+- build automatic module
+  - src_1 has no `module-info.java` file
+    - however, the classes inside can still import from src_2
+  ```
+  rm -rf mods bin classes
+  mkdir mods bin classes
+
+  javac -d ./mods/ --module-source-path src_2 $(find src_2 -name "*.java")
+
+  javac -d ./classes/ -cp mods/com.domain.moduleb --source-path src_1 $(find src_1 -name "*.java")
+
+  jar --create --file ./bin/com.domain.moduleb.jar -C mods/com.domain.moduleb .
+  jar --create --file ./bin/com.domain.modulea.jar -C classes .
+  ```
+- run automatic module
+  > java --module-path bin --add-modules ALL-MODULE-PATH com.domain.modulea.ClassName
