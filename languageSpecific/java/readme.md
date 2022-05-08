@@ -450,7 +450,8 @@ public class Main {
     BigDecimal bigValue1 = new BigDecimal(value);
     BigDecimal bSum1 = bigValue1.add(bigValue1).add(bigValue1);
     System.out.println(bSum1.toString());  // 0.0360000000000000007494005416219806647859513759613037109375
-      
+    
+    // convert double value to string for accuracy
     BigDecimal bigValue2 = new BigDecimal(strValue);
     BigDecimal bSum2 = bigValue2.add(bigValue2).add(bigValue2);
     System.out.println(bSum2.toString());  // 0.036
