@@ -88,6 +88,8 @@
 ### Module dependency
 - In the last line contains the information about the module dependencies
 - In the provided example the `module module.name` depends on `other.module.name.b` module and has access to its exported packages
+- dependencies are enforced at run time
+- apps fail if they can't resolve all of their dependencies
 ## Transitive dependencies
 - a transfer of dependencies to dependent modules
   - in simpler terms
@@ -188,6 +190,39 @@ module module.name {
     optional.orElseThrow(() -> new RuntimeException("No service providers found"));
     InterfaceName interfaceName = optional.get();
     ```
+## Optional dependencies
+- mandatory at compilation time, but optional at run time
+- the interface can now add an option to enable or disable the implementation of the optional dependencies
+- optional dependencies must be coded defensively
+  - must use with `try/catch` and with `NoClassDefFoundError` exception
+- optinal modules become regular modules if they get required by other modules in the graph
+![optional dependencies](../../../images/optionalDependencies.png)
+
+```java
+moduel module.name {
+  requires package.name.b;
+  requires static package.name.c;  // use the static keyword to make it optional
+  exports package.name.a;;
+  provides package.name.a.InterfaceName with
+           package.name.a.type.One;           
+           package.name.a.type.Two;
+}
+```
+```java
+try {
+  OptionalDependencyName a = new OptionalDependencyName();
+} catch (NoClassDefFoundError exception) {
+  a = null;
+}
+```
+```bash
+# run without optional dependency
+java --module-path mods/ -m com.domain.module/com.domain.module.Main
+
+# run with optional dependency
+java --module-path mods/ --add-modules com.domain.optionalmodule -m com.domain.module/com.domain.module.Main
+```
+
 ## Rules of modularization
 - Firstly
   - cycles between modules (on compilation level) are prohibited
