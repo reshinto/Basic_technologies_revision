@@ -342,3 +342,75 @@ moduel module.name {
 - list jdeps
   - print a summarized list of dependencies
   > jdeps --list-deps --module-path mods/ mods/com.domain.modulea
+### Module packaging tools
+#### Jmod
+- a tool and a file format
+- it creates jmod files
+- similar in intent as jar files, but designed to work with `Jlink`
+- used to build custom runtime images
+- pre-java9
+  - 1 jar file as `rt.jar` contains all JDK libraries
+  - causes longer time to start
+  - not suitable for small apps with very short lifecycle
+- build jmods
+  ```
+  rm -rf jmods jlink
+  mkdir jmods
+
+  javac -d ./mods/ --module-source-path src $(find src -name "*.java")
+
+  jmod create jmods/com.domain.modulea.jmod --class-path mods/com.domain.modulea
+  jmod create jmods/com.domain.moduleb.jmod --class-path mods/com.domain.moduleb
+  ```
+- list jmod contents
+  > jmod list jmods/com.domain.modulea.jmod
+- describe jmod contents
+  > jmod describe jmods/com.domain.modulea.jmod
+- extract classes from jmod contents
+  > jmod extract jmods/com.domain.modulea.jmod
+### Custom image building tools
+#### Jlink
+- a tool to create custom runtime images
+- self-contained images that include the JRE
+- it contains everything needed to run, no pre-installing of Java Runtime on the host is required
+- it strips away everything from the JDK that isn't used by the app
+  - results in a smaller overall app distribution
+- build jlink from jmod
+  ```
+  rm -rf jmods jlink
+  mkdir jmods
+
+  javac -d ./mods/ --module-source-path src $(find src -name "*.java")
+
+  jmod create jmods/com.domain.modulea.jmod --class-path mods/com.domain.modulea
+  jmod create jmods/com.domain.moduleb.jmod --class-path mods/com.domain.moduleb
+  
+  jlink --module-path $JAVA_HOME/jmods:jmods --add-modules com.domain.modulea --output jlink --launcher run=com.domain.modulea/com.domain.modulea.ClassName
+  ```
+- run jlink
+  > jlink/bin/run
+#### Jmod hasing
+- a hash is a tag that marks interrelated Jmod files ensuring they are used together
+- it prevents files from different tags to be interchanged
+- hash jmod
+  ```
+  rm -rf jmods jlink
+  mkdir jmods
+
+  javac -d ./mods/ --module-source-path src $(find src -name "*.java")
+
+  jmod create jmods/com.domain.modulea.jmod --class-path mods/com.domain.modulea
+  jmod create jmods/com.domain.moduleb.jmod --class-path mods/com.domain.moduleb
+  
+  jmod hash --module-path jmods --hash-modules .*
+  
+  jlink --module-path $JAVA_HOME/jmods:jmods --add-modules com.domain.modulea --output jlink --launcher run=com.domain.modulea/com.domain.modulea.ClassName
+  ```
+- view hash with describe
+  > jmod describe jmods/com.domain.modulea.jmod
+#### Jar files vs Jmod files
+|jar files|jmod files|
+|-|-|
+|support modules|use for custom run time image|
+|use for running on a pre-installed JRE|can hold native libraries|
+||use for packaging on custom images|
