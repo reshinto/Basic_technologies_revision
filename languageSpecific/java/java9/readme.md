@@ -275,3 +275,70 @@ moduel module.name {
 
 - multi modular structure
   ![multi modular structure](../../../images/multiModularStructure.png)
+## Tools and Strategies
+### javac
+- `javac -d ./mods/ --module-source-path src $(find src -name "*.java")`
+- `javac -d ./mods/ --module com.domain.module --module-source-path src`
+- `javac -d ./mods/ --module-path mods --module com.domain.module --module-source-path src`
+- build with version
+  > `javac -d ./mods/ --module-source-path src --module-version 123.01 $(find src -name "*.java")`
+### Jar
+- a jar file that contains module-info at its root
+- a module is 1 to 1 with a jar file
+- build
+  ```bash
+  rm -rf bin
+  mkdir bin
+
+  javac -d ./mods/ --module-source-path src $(find src -name "*.java")
+  find src -name "*.java"
+
+  jar --create --file ./bin/com.domain.modulea.jar -C mods/com.domain.modulea .
+  jar --create --file ./bin/com.domain.moduleb.jar -C mods/com.domain.moduleb .
+  ```
+- build with versioning
+  ```bash
+  rm -rf bin
+  mkdir bin
+
+  javac -d ./mods/ --module-source-path src $(find src -name "*.java")
+  find src -name "*.java"
+
+  jar --create --file ./bin/com.domain.modulea.jar --module-version=123.02 -C mods/com.domain.modulea .
+  jar --create --file ./bin/com.domain.moduleb.jar -C mods/com.domain.moduleb .
+  ```
+- run
+  > java --module-path bin -m com.domain.modulea/com.domain.modulea.ClassName
+### Dependency checking tools
+- describe module
+  - describe modules used and their dependencies without running the program
+  > java --module-path mods/ --describe-module com.domain.modulea
+- list modules
+  - list all of the observable modules
+    - observable modules are modules that are available at run time
+    - but not necessarily the ones used by the application
+  > java --module-path mods/ --list-modules com.domain.modulea
+- show module resolution
+  - shows how modules are resolved before running the application
+  - will include both the JDK library modules and the application modules
+  - will also run the application
+  > java --module-path mods/ --show-module-resolution -m com.domain.modulea/com.domain.modulea.ClassName
+- dry run
+  - to make sure application will resolve all dependencies without actually running the app
+  - an error will occur if module does not exist
+  > java --module-path mods/ --dry-run -m com.domain.modulea/com.domain.modulea.ClassName
+- upgrade version at run time
+  - build first version
+    > javac -d ./mods/ --module-version 123.01 --module-source-path src $(find src -name "*.java")
+  - build second version
+    > javac -d ./mods2/ --module-version 123.02 --module com.domain.modulea --module-source-path src
+  - run with upgraded version
+    > java --upgrade-module-path mods2 --module-path mods -m com.domain.modulea/com.domain.modulea.ClassName
+#### Jdeps
+- a class dependency analyzer tool
+- check dependencies
+  - prints the dependencies between each module
+  > jdeps --module-path mods/ mods/com.domain.modulea
+- list jdeps
+  - print a summarized list of dependencies
+  > jdeps --list-deps --module-path mods/ mods/com.domain.modulea
