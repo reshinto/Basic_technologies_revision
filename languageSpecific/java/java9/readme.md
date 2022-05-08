@@ -100,6 +100,11 @@ module module.name {
   requires transitive other.module.name.b;  // add transitive key word
 }
 ```
+- from
+  ![without transition](../../../images/withoutTransition.png)
+- to
+  ![with transition](../../../images/withTransition.png)
+
 ## Rules of modularization
 - Firstly
   - cycles between modules (on compilation level) are prohibited
