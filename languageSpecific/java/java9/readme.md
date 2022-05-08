@@ -7,16 +7,46 @@
     - modular platform
     - smaller footprint
 - 5 pillars of modularity
-  - Encapulated
+  - Encapulated: stronger encapsulation
     - protection of a module's internals
-  - Interoperable
+  - Interoperable: reliable modularity
     - working with other modules
-  - Composable
+  - Composable: reliable modularity
     - modules can be combined with other modules
-  - Expandable
+  - Expandable: reliable modularity
     - modules can be scaled up
-  - Autonomous
+  - Autonomous: decomposable
     - modules work independently of other modules
+## What it is trying to solve
+### Java 8
+- limited in terms of expressing modularity beyond a single package
+- once a class is public, there is no further way to control which classes in other packages can see it
+  - its all or nothing
+- path of the class that is stored on disk is intertwined with the package hierarchy
+  - means that how you organize the package hierarchies must be aligned with the accessibility that you want to assign to your class
+- example
+  - 1 package example works fine
+    - all packages are inside the movement package
+    ![single package module](../../../images/singlePackageModule.png)
+  - multiple packages example will not compile
+    ![multiple package module](../../../images/multiPackagesModule.png)
+
+### Java 9 improvements
+- class ccessibility
+  - JPMS offers better controls to expose classes
+- classpath hell
+  - JPMS maintains class integrity
+  - can be verified by static analysis
+  - support for versioning
+  ![classpath hell](../../../images/classpathHell.png)
+  
+- controlling the system footprint
+  - a large chunk of the JDK libraries were delivered as 1 big JAR file `rt.jar`
+  - by java 8, it had grown to over 66 MB of line code
+  - typical apps will not use all 66 MB, so why make all of it available at runtime
+  - thus the `rt.jar` has been modularized
+    - libraries that used to eist in `rt.jar` have now been segmented into smaller `JMOD` files
+      - a new file format to package modules
 ## Example
 - require `module-info.java` file containing the module descriptor
 ```java
