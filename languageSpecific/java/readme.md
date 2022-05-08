@@ -359,9 +359,30 @@ System.out.printf("%1$td.%1$tm.%1$ty %n", date);  // 22.11.18
 
 ## Variable declaration
 - multi variables declaration
-```java
-double num1, num2, num3;
-```
+  ```java
+  double num1, num2, num3;
+  ```
+- type inference: starting from `java 10`
+  - use `var` key word
+  - type is derived from assigned value
+  ```java
+  var myVar = 5;  // data type becomes integer
+  ```
+- primitive numbers are always signed
+- `long` and `integer` methods support unsigned operations
+  ```java
+  int unsigned = Integer.parseUnsignedInt("3000000000");
+  System.out.println(unsigned);  // -1294967296
+
+  int result = Integer.divideUnsigned(unsigned, 2);
+  System.out.println(result);  // 1500000000
+
+  int unsigned2 = Integer.parseUnsignedInt("300");
+  System.out.println(unsigned2);  // 300
+
+  int result2 = Integer.divideUnsigned(unsigned2, 2);
+  System.out.println(result2);  // 150
+  ``
 
 [back to top](#table-of-contents)
 
@@ -379,16 +400,20 @@ final: constant value, value cannot be changed
 */
 
 // byte: -128 ~ 127, 8 bits
+// wrapper class: Byte
 byte byteName = 123;
 
 // short: -32768 ~ 32767, 16 bits
+// wrapper class: Short
 short shortName = 123;
 
-// int: -2147483648 ~ 2147483647, -2_147_483_648 ~ 2_147_483_647, 32 bits
+// int: -2^31 ~ 2^31 - 1, -2147483648 ~ 2147483647, -2_147_483_648 ~ 2_147_483_647, 32 bits
+// wrapper class: Integer
 int integerName; integerName = 123;
 int integerName2 = 123;  // default is visible within the same package
 
-// long: -9223372036854775808L ~ 9223372036854775807L, can use _ same as int, 64 bits
+// long: -2^63 ~ 2^63 - 1, -9223372036854775808L ~ 9223372036854775807L, can use _ same as int, 64 bits
+// wrapper class: Long
 long longName1 = 123l;  // 123
 long longName2 = 123L;  // 123
 long longName3 = 10_000;  // 10000, introduced in java 7, just makes it easier to read
@@ -400,10 +425,12 @@ long longName3 = 10_000;  // 10000, introduced in java 7, just makes it easier t
 - float, double
 ```java
 // float: 32 bits, 4 bytes
+// wrapper class: Float
 float float_name = 1.123f;  // 1.123, have 7 decimal digits
 float float_name = (float) 1.123;
 
 // double: 64 bits, 8 bytes
+// wrapper class: Double
 double double_name = 1.123d;  // 1.123, have 16 decimal digits
 double double_name = 1.123;
 
@@ -459,6 +486,7 @@ double inf = Double.NEGATIVE_INFINITY;  // -Infinty
 - characters
 ```java
 // character: 16 bits, 2 bytes, only 1 letter or symbol, must use single quotes ''
+// wrapper class: Character
 char charName1 = 'a';
 char charName2 = '\u0061';  // unicode character for the letter a
 
@@ -538,6 +566,7 @@ str3.equals(str4);  // true
 [back to top](#table-of-contents)
 
 ## Boolean
+- wrapper class: `Boolean`
 ```java
 boolean booleanName1 = true;
 boolean booleanName2 = false;
@@ -1724,6 +1753,29 @@ String str = Integer.toString(i);  // "1234"
 String s = "423";
 double d1 = Double.parseDouble(s);
 System.out.println(d1);  // 423.0
+```
+```
+String doubleValue = "156.5";
+
+// convert string to double
+Double doubleObj = Double.parseDouble(doubleValue);
+System.out.println(doubleObj);  // 156.5
+
+// convert double to byte
+byte byteValue = doubleObj.byteValue();
+System.out.println(byteValue);  // -100
+
+// convert double to int
+int intValue = doubleObj.intValue();
+System.out.println(intValue);  // 156
+
+// convert double to float
+float floatValue = doubleObj.floatValue();
+System.out.println(floatValue);  // 156.5
+
+// convert double to string
+var stringValue = doubleObj.toString();
+System.out.println(stringValue);  // "156.5"
 ```
 
 [back to top](#table-of-contents)
