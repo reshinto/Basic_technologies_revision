@@ -144,6 +144,50 @@ module module.name {
   exports package.name.b to other.module.name.a, other.module.name.c, ...;  // use the to key, can export to multiple packages
 }
 ```
+## Service dependencies
+![service dependencies](../../../images/serviceDependencies.png)
+
+- service provider
+  - has an interface where multiple types implements it
+  - in the `module-info.java` file
+    ```java
+    module module.name {
+      exports package.name.a;;
+      provides package.name.a.InterfaceName with  // interface
+               package.name.a.type.One;           // class that implements interface
+               package.name.a.type.Two;           // can provide multiple classes that implements the interface
+               ...
+    }
+    ```
+- service consumer
+  ```java
+  module module.name.b {
+    requires package.name.a;
+    uses package.name.a.InterfaceName;  // only interface is specified
+  }
+  ```
+  - service loader
+    - pluggable services framework
+    - binds service providers to consumers
+    - not new, but enhanced for JPMS
+    - does not replace dependency injection frameworks
+      - but can be used in apps that need to deliver functionality in a modular and interoperable way without using third party frameworks
+      - ideal for stand-alone jave SE apps
+    - example: a class that uses the service loader to obtain an instance to one of the interface implementations
+    ```java
+    import java.util.ServiceLoader;
+    import java.util.Optional;
+    import com.red30tech.chassis.api.InterfaceName;
+    ```
+    ```java
+    ServiceLoader<InterfaceName> serviceLoader = ServiceLoader.load(InterfaceName.class);
+
+    System.out.println("Found " + serviceLoader.stream().count() + " interface name configured");  // count depends on number of classes implemented with interface that are provided in the modular-info.java file
+
+    Optional<InterfaceName> optional = serviceLoader.findFirst();
+    optional.orElseThrow(() -> new RuntimeException("No service providers found"));
+    InterfaceName interfaceName = optional.get();
+    ```
 ## Rules of modularization
 - Firstly
   - cycles between modules (on compilation level) are prohibited
