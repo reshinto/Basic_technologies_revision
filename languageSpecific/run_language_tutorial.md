@@ -46,6 +46,9 @@
 > javac xxx.java
 ## java class will be created, run class file with java
 > java xxx
+## java 11 onwards, class will not be created, javac not required
+- compile and run java file
+> java xxx.java
 ## compile and run at the same time
 javac xxx.java && java xxx
 ## using package
