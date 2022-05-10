@@ -212,11 +212,30 @@ Run the app _____________|
   - plugin: compiler, goal: compile
   > mvn compiler:compile
 ### Packaging tools plugin
-- list of packaging tools plugin
+- list of packaging tools plugins
   - JAR plugin
     - creates JAR or Jave Archive files
   - others
     - ear, ejb, rar, war, app-client/acr, shade, source, jlink, jmod
-- eample of using a plugin and goal in the terminal
+- example of using a plugin and goal in the terminal
   - plugin: jar, goal: jar
   > mvn jar:jar
+### Reporting plugins
+- list of reporting plugins
+  - changelog plugin
+  - changes plugin
+  - checkstyle plugin
+  - doap plugin
+  - docck plugin
+  - javadoc plugin
+  - jdeps plugin
+  - jxr plugin
+  - linkcheck plugin
+  - pmd plugin
+  - project-info-reports plugin
+  - surefire-report plugin
+- example of using a plugin and goal in the terminal
+  - plugin: javadoc, goal: javadoc
+    - javadoc auto saves report in `target/site/apidocs/` directory
+    - launch the `index.html` file to view generated report
+  > mvn javadoc:javadoc
