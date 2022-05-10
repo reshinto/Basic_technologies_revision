@@ -192,3 +192,21 @@ Run the app _____________|
   - inheritance: used when projects share dependencies
 - proper indentation for `pom.xml` file
 - follow a standard layout where coordinates are listed first
+## Maven Plugins
+- a plugin is a collection of 1 or more goals
+- a goal is a unit of work in Maven
+  - can view goals of a plugin in the maven plugin website
+- Maven consists of several core plugins
+  - JAR plugin
+    - creates JAR or Jave Archive files
+  - Compiler plugin
+    - contains goals for compiling source code and unit tests
+  - Surefire plugin
+    - used for executing unit tests and generating reports
+- Maven also allows creating of custom plugins
+  - it can be written in multiple languages
+    - java, Groovy, Ruby, ...
+- [list of maven plugins url](http://maven.apache.org/plugins/index.html)
+- example of using a plugin and goal in the terminal
+  - compiler: plugin, goal: compile
+  > mvn compiler:compile
