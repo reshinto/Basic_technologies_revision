@@ -341,6 +341,44 @@
     </dependencies>
   </project>
   ```
+- using properties in parent POM example
+  ```xml
+  <properties>
+    <log4j.version>1.2.14</log4j.version>
+    <junit.version>3.8.1</junit.version>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${jaxen.version}</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  ```
+  - in child pom file example
+    - works fine if `enforcer` plugin is not added
+    ```xml
+    <dependencies>
+      <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+      </dependency>
+    </dependencies>
+    ```
+    - verify with
+      > mvn clean verify
 #### project relationships
 - Maven makes it easy to track down dependencies
 - example of external relationships are `Log4j` and `JUnit`
