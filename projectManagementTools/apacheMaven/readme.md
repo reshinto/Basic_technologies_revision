@@ -91,4 +91,8 @@ Run the app _____________|
   - `target/` folder with all the compiled code and jar file
 - in the package phase, it executes the JAR goal
 ### Maven Repository
-
+- central repository that contains open-source components
+- Maven creates a local repository at `~/.m2` location
+  - foreign dependencies are installed here
+  - it also includes your JAR file and `pom.xml` file for each install project
+  - [Maven repo search url address](https://search.maven.org/)
