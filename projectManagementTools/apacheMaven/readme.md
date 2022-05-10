@@ -196,17 +196,27 @@ Run the app _____________|
 - a plugin is a collection of 1 or more goals
 - a goal is a unit of work in Maven
   - can view goals of a plugin in the maven plugin website
-- Maven consists of several core plugins
-  - JAR plugin
-    - creates JAR or Jave Archive files
+### Core plugins
+- list of core plugins
   - Compiler plugin
     - contains goals for compiling source code and unit tests
   - Surefire plugin
     - used for executing unit tests and generating reports
+  - others
+    - clean, deploy, failsafe, install, resources, site, verifier
 - Maven also allows creating of custom plugins
   - it can be written in multiple languages
     - java, Groovy, Ruby, ...
 - [list of maven plugins url](http://maven.apache.org/plugins/index.html)
 - example of using a plugin and goal in the terminal
-  - compiler: plugin, goal: compile
+  - plugin: compiler, goal: compile
   > mvn compiler:compile
+### Packaging tools plugin
+- list of packaging tools plugin
+  - JAR plugin
+    - creates JAR or Jave Archive files
+  - others
+    - ear, ejb, rar, war, app-client/acr, shade, source, jlink, jmod
+- eample of using a plugin and goal in the terminal
+  - plugin: jar, goal: jar
+  > mvn jar:jar
