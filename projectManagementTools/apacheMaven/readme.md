@@ -245,4 +245,23 @@ Run the app _____________|
 - use help to find out more about a plugin
   - example: archetype
     > mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-archetype-plugin
-
+## Create a project with Maven
+### Sample program
+> mvn archetype:generate -DgroupId=com.projectname -DartifactId=appname -DarchetypeArtifactId=maven-archetype-quickstart -DInteractiveMode=false
+- View the full pom file contents
+  - in the same directory where the `pom.xml` file is located at
+    > mvn help:effective-pom
+- install the all dependencies and plugins
+  > mvn install
+  - if a compilation error were to occur due to old version issue, add the following into the `pom.xml` file, just above the `dependencies` tag
+    ```xml
+    <properties>
+      <maven.compiler.source>18</maven.compiler.source>
+      <maven.compiler.target>18</maven.compiler.target>
+    </properties>
+    ```
+- run the app
+  - `appname-1.0-SNAPSHOT` is correct if default version is used
+    > java -cp target/appname-1.0-SNAPSHOT.jar com.projectname.App
+  - `appname-0.0.1` is correct if `0.0.1` version is set
+  > java -cp target/appname-0.0.1.jar com.projectname.App
