@@ -69,23 +69,27 @@
   - information about inheritance
 - `build` category
   - add build related plugins
+  - `pluginManagement` tag is optional, also work without it
+    - it is normally used in a `parent POM`
   ```xml
   <project>
     ...
     <dependencies></dependencies>
     <build>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
-          <configuration>
-            <target>8</target>
-            <source>8</source>
-          </configuration>
-        </plugin>
-        ...
-      </plugins>
+      <pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.0</version>
+            <configuration>
+              <target>8</target>
+              <source>8</source>
+            </configuration>
+          </plugin>
+          ...
+        </plugins>
+      </pluginManagement>
     </build>
     ...
   </project>
@@ -110,6 +114,29 @@
     ...
   </project>
   ```
+- `distributionManagement` category is used for deploying
+  ```xml
+  <project>
+    ...
+    <distributionManagement>
+      <repository>
+        <id>internal.repo</id>
+        <name>internal repository name</name>
+        <url>hot to repository</url
+      </repository>
+    </distributionManagement>
+    ...
+  </project>
+  ```
+- `server` categpry is used to specify server definition
+  - can also configure it in the `settings.xml` fiel
+  ```xml
+  <server>
+    <id>internal repo</id>
+    <username>someusername</username>
+    <password>somepassword</password>
+  </server>
+  ```
 #### POM syntax
 - POM is documented in XML file
 - file is stored in base directory
@@ -128,7 +155,7 @@
   </project>
   ```
 #### POM properties
-```
+```xml
 <properties>
   <maven.compiler.source>11</maven.compiler.source>
   <maven.compiler.target>11</maven.compiler.target>
@@ -206,35 +233,49 @@
     - allow IDEs to have a common place to find information about a project
   - easy searching and filtering of project artifacts
 
-#### Maven Life Cycle
-```
-Generate a project <--------------
-     |                           |
-     v                           |
-Execute Maven                    |
-     |                           |
-     v                           |
-Install and build Maven artifact |
-     |                           |
-     v                           |
-Run the app _____________________|
-```
+#### Maven Life Cycles
+1. Default
+2. Clean
+3. Site
+- each cycle has a few phases
+- phases must be executed in order
+- phrases are made up of goals
+  - Goals
+    - plugin goals are bound to phase of lifecycle
+    - goals can be triggered individually
+    - e.g.: `mvn dependency:analyze`
 ##### default life cycle phases
+- main lifecycle
 1. Validate
     - validate the project is correct
-2. Compile
+2. Initialize
+3. Generate-sources
+4. Process-sources
+5. Generate-resources
+6. Process-resources
+7. Compile
     - compile the source of the project
-3. Test
+8. Process-classes
+9. Generate-test-sources
+10. Process-test-sources
+11. Generate-test-resources
+12. Process-test-resources
+13. Test-compile
+14. Process-test-classes
+15. Test
     - test the compiled source code using a unit testing framework
-4. Package
+16. Prepare-package
+17. Package
     - package the compiled code
-5. Integration-test
+18. Pre-integration-test
+19. Integration-test
     - deploy the package into an environment where integration tests can be run
-6. Verify
+20. Post-integration-test
+21. Verify
     - run any checks to verify the package is valid
-7. Install
+22. Install
     - install the package into the local repository
-8. Deploy
+23. Deploy
     - copies the final package to the remote repository
 - plugin goals can be attached to each lifecycle phase
 - maven executes the goals attached to each phase
@@ -242,6 +283,17 @@ Run the app _____________________|
 - when you run `mvn install`, multiple goals are executed
   - `target/` folder with all the compiled code and jar file
 - in the package phase, it executes the JAR goal
+##### clean life cycle phases
+- cleans project
+1. Pre-clean
+2. Clean
+3. Post-clean
+##### site life cycle phases
+- generates project documentation
+1. Pre-site
+2. site
+3. post-site
+4. site-deploy
 ### Maven Repository
 - central repository that contains open-source components
 - Maven creates a local repository at `~/.m2` location
