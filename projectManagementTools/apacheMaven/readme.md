@@ -103,3 +103,26 @@ Run the app _____________|
 - a common dependency in Maven is `junit`
 - dependencies are defined in the `pom.xml` file
   - `scope` tag identifies what part of the life cycle the dependency is going to be used in
+### pom.xml file
+#### POM Categories
+- the POM contains all of the information about a project
+- the file is stored with an XML extension
+- minimum categories required
+  ```xml
+  <project>
+    <groupId>com.projectname</groupId>
+    <artifactId>appname</artifactId>
+    <version>1.0</version>
+  </project>
+  ```
+- common categories
+  - project coordinates
+  - project's license
+  - list of developers and contributors to the project
+  - list of project dependencies
+  - name of project
+  - url associated with project
+  - packaging type
+  - scope of element
+  - information about inheritance
+#### POM syntax
