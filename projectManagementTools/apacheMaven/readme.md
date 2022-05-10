@@ -301,6 +301,12 @@
   - it also includes your JAR file and `pom.xml` file for each install project
   - [Maven repo search url address](https://search.maven.org/)
 ### Maven Dependency Management
+- check dependencies
+  - dependencies could be used but not declared
+  - unused dependencies will be found
+  > mvn dependency:analyze
+- check dependencies tree
+  > mvn dependency:tree
 - allows for code reuse
 - similar to using Java APIs
 - most programmers have used the Math API
