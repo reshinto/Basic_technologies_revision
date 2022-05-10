@@ -261,6 +261,8 @@ Run the app _____________|
     </properties>
     ```
 - run the app
+  - `-cp` flag is used for class search path
+    - it will search directories and look for `zip/jar` files
   - `appname-1.0-SNAPSHOT` is correct if default version is used
     > java -cp target/appname-1.0-SNAPSHOT.jar com.projectname.App
   - `appname-0.0.1` is correct if `0.0.1` version is set
