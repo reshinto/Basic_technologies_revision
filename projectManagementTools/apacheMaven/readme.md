@@ -311,12 +311,14 @@ Run the app _____________|
   - create `resources` folder in `main` folder
 - for `test` folder
   - create `resources` folder in `test`folder
-## Packing App
+## Packaging App
 - packaging information is stored in `pom.xml` file
   ```xml
   <packaging>jar</packaging>
   ```
 - default is `jar` if the type is omitted
 - run package
-  - also works with `mvn install` and `mvn test`
+  - also works with `mvn install`, `mvn test`
   > mvn package
+  - add `clean` optional command to remove issues with other Maven operations
+    > mvn clean package
