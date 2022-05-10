@@ -54,3 +54,41 @@
     - allow IDEs to have a common place to find information about a project
   - easy searching and filtering of project artifacts
 
+#### Maven Life Cycle
+```
+Generate a project <------
+     |                   |
+     v                   |
+Execute Maven            |
+     |                   |
+     v                   |
+Install a Maven artifact |
+     |                   |
+     v                   |
+Run the app _____________|
+```
+##### default life cycle phases
+1. Validate
+    - validate the project is correct
+2. Compile
+    - compile the source of the project
+3. Test
+    - test the compiled source code using a unit testing framework
+4. Package
+    - package the compiled code
+5. Integration-test
+    - deploy the package into an environment where integration tests can be run
+6. Verify
+    - run any checks to verify the package is valid
+7. Install
+    - install the package into the local repository
+8. Deploy
+    - copies the final package to the remote repository
+- plugin goals can be attached to each lifecycle phase
+- maven executes the goals attached to each phase
+- each phase has 0 or more goals bound to it
+- when you run `mvn install`, multiple goals are executed
+  - `target/` folder with all the compiled code and jar file
+- in the package phase, it executes the JAR goal
+### Maven Repository
+
