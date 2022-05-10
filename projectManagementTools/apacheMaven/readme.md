@@ -67,6 +67,49 @@
   - packaging type
   - scope of element
   - information about inheritance
+- `build` category
+  - add build related plugins
+  ```xml
+  <project>
+    ...
+    <dependencies></dependencies>
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.0</version>
+          <configuration>
+            <target>8</target>
+            <source>8</source>
+          </configuration>
+        </plugin>
+        ...
+      </plugins>
+    </build>
+    ...
+  </project>
+  ```
+- `reporting` category
+  - add reporting related plugins
+  ```xml
+  <project>
+    ...
+    <dependencies></dependencies>
+    <buid></build>
+    <reporting>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-report-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+        ...
+      </plugins>
+    </reporting>
+    ...
+  </project>
+  ```
 #### POM syntax
 - POM is documented in XML file
 - file is stored in base directory
@@ -112,6 +155,48 @@
     - properties allow you to leverage a version and reference it
   - aids in upgrades
     - can upgrade the property and it upgrades the rest for you
+#### Parent POM
+- a POM file that is stand-alone (no code associated with it)
+- creates a list of dependency versions and plugins versions that the subordinate projects can leverage
+- provides a way to control versions in 1 place so the subordinate projects don't have to specify the version, only the dependency
+- it can provide properties and repositories
+  - a tool use to manage versions and licenses
+    - because can provide a pre-approved list of dependencies and artifacts
+- similar concept is a `Reactor`
+  - it builds on the concept of a parent POM
+  - used to build a group of related projects via the use of Parent POM
+  - Maven commands are executed on the parent, and reactor executes the commands on each module or artifact in the reactor
+    - the dependencies, if exists are handled in the correct order
+  - building reactor although not hard, it is time consuming
+  - structure example
+    ```
+    root - pom
+         |_ module - POM
+         |_ module - POM
+         |_ module - POM
+    ```
+    - parent POM
+      ```xml
+      <project>
+        ...
+        <modules>
+          <module>module-name</module>
+        </modules>
+        ...
+      </project>
+      ```
+    - child POM
+      ```xml
+      <project>
+        ...
+        <parent>
+          <groupId>com.projectname</groupId>
+          <artifactId>appname</artifactId>
+          <version>1.0.0-SNAPSHOT</version>
+        </parent>
+        ...
+      </project>
+      ```
 #### features enabled by POM
 - includes
   - dependency management
@@ -123,16 +208,16 @@
 
 #### Maven Life Cycle
 ```
-Generate a project <------
-     |                   |
-     v                   |
-Execute Maven            |
-     |                   |
-     v                   |
-Install a Maven artifact |
-     |                   |
-     v                   |
-Run the app _____________|
+Generate a project <--------------
+     |                           |
+     v                           |
+Execute Maven                    |
+     |                           |
+     v                           |
+Install and build Maven artifact |
+     |                           |
+     v                           |
+Run the app _____________________|
 ```
 ##### default life cycle phases
 1. Validate
@@ -322,3 +407,5 @@ Run the app _____________|
   > mvn package
   - add `clean` optional command to remove issues with other Maven operations
     > mvn clean package
+  - add `site` optional command to generate `surefire` documentation for us
+    > `mvn clean package site`
