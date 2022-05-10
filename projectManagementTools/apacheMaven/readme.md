@@ -32,7 +32,7 @@
 ### POM file
 - must include
   - project description
-  - unique set of "coordinates"
+  - unique set of `coordinates`
     - highlighted by `*`
       - groupId
       - artifactId
@@ -42,9 +42,48 @@
   - project version
   - program authors and contributors
   - dependencies
+- POM file can be separated into multiple POM files
 
 ![POM structure](../../images/pomStructure.png)
 
+#### POM Categories
+- the POM contains all of the information about a project
+- the file is stored with an XML extension
+- minimum categories required
+  ```xml
+  <project>
+    <groupId>com.projectname</groupId>
+    <artifactId>appname</artifactId>
+    <version>1.0</version>
+  </project>
+  ```
+- common categories
+  - project coordinates
+  - project's license
+  - list of developers and contributors to the project
+  - list of project dependencies
+  - name of project
+  - url associated with project
+  - packaging type
+  - scope of element
+  - information about inheritance
+#### POM syntax
+- POM is documented in XML file
+- file is stored in base directory
+- syntax is similar to HTML file using `< >` tags
+- every open XML tag must have a closing XML tag
+- tags can be nested one inside the other
+- XML declaration is optional
+- all projects extend the super POM automatically
+- sample
+  ```xml
+  <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.projectname</groupId>
+    <artifactId>appname</artifactId>
+    <version>1.0</version>
+  </project>
+  ```
 #### features enabled by POM
 - includes
   - dependency management
@@ -100,29 +139,47 @@ Run the app _____________|
 - allows for code reuse
 - similar to using Java APIs
 - most programmers have used the Math API
-- a common dependency in Maven is `junit`
 - dependencies are defined in the `pom.xml` file
-  - `scope` tag identifies what part of the life cycle the dependency is going to be used in
-### pom.xml file
-#### POM Categories
-- the POM contains all of the information about a project
-- the file is stored with an XML extension
-- minimum categories required
+  - `<scope></scope>` tag identifies what part of the life cycle the dependency is going to be used in
+    - if scope tag is not included, it defaults to compile phase
+    - tests related must have the `<scope>test</scope>
+    - other scopes include
+      - `compile`
+        - the default scope
+      - `provided`
+        - used when JDK is expected to provide them
+      - `runtime`
+        - required for executing and testing, not compiling
+      - `test`
+        - not required during the normal operation of an app
+      - `system`
+        - similar to `provided`
+        - but must specify the explicit path to the JAR on the locals file system
+#### project dependencies
+- Maven supports internal and external dependencies
+- a common dependencies in Maven is `junit`, `log4j`, `jaxen`
+- sample
   ```xml
-  <project>
-    <groupId>com.projectname</groupId>
-    <artifactId>appname</artifactId>
-    <version>1.0</version>
+  <project ...>
+    ...
+    <dependencies>
+      <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.14</version>
+      </dependency>
+      <dependency>
+        <groupId>jaxen</groupId>
+        <artifactId>jaxen</artifactId>
+        <version>1.1.1</version>
+      </dependency>
+    </dependencies>
   </project>
   ```
-- common categories
-  - project coordinates
-  - project's license
-  - list of developers and contributors to the project
-  - list of project dependencies
-  - name of project
-  - url associated with project
-  - packaging type
-  - scope of element
-  - information about inheritance
-#### POM syntax
+#### project relationships
+- Maven makes it easy to track down dependencies
+- example of external relationships are `Log4j` and `JUnit`
+- Internal is where project-a depends on project-b
+- they are established using the Maven coordinates
+- relationships are decribed as dependencies
+- projects can inherit project relationships
