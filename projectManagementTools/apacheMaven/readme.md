@@ -267,3 +267,5 @@ Run the app _____________|
     > java -cp target/appname-1.0-SNAPSHOT.jar com.projectname.App
   - `appname-0.0.1` is correct if `0.0.1` version is set
   > java -cp target/appname-0.0.1.jar com.projectname.App
+### Web app
+> mvn archetype:generate -DgroupId=com.projectname -DartifactId=webappname -DarchetypeArtifactId=maven-archetype-webapp -DInteractiveMode=false
