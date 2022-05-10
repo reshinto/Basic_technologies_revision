@@ -269,3 +269,9 @@ Run the app _____________|
   > java -cp target/appname-0.0.1.jar com.projectname.App
 ### Web app
 > mvn archetype:generate -DgroupId=com.projectname -DartifactId=webappname -DarchetypeArtifactId=maven-archetype-webapp -DInteractiveMode=false
+## Unit testing with Maven
+- Maven provides built-in support for unit testing
+- JUnit is used to test app
+- `Test/` directory is automatically created with a test app
+- run test
+  > mvn test
