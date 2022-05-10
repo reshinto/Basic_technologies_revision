@@ -84,6 +84,34 @@
     <version>1.0</version>
   </project>
   ```
+#### POM properties
+```
+<properties>
+  <maven.compiler.source>11</maven.compiler.source>
+  <maven.compiler.target>11</maven.compiler.target>
+  <java.version>11</java.version>
+  <junit.version>5.2.0</junit.version>
+</properties>
+<dependencies>
+  <dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>${junit.version}</version>
+    <scope>test</scope>
+  </dependency>
+</dependencies>
+```
+- purpose
+  - reduces duplication
+    - often times when configuration POM, tend to put the same value for an item and properties
+      - properties help to reduce this
+  - streamlines configuration
+    - often used in conjunction with a `parent` POM
+  - helps keep items in sync
+    - such as versions of similar libraries
+    - properties allow you to leverage a version and reference it
+  - aids in upgrades
+    - can upgrade the property and it upgrades the rest for you
 #### features enabled by POM
 - includes
   - dependency management
