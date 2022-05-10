@@ -275,3 +275,11 @@ Run the app _____________|
 - `Test/` directory is automatically created with a test app
 - run test
   > mvn test
+## Add resources folder
+- add resources folder to add files for inputs
+  - can be `txt` files
+  - use `Scanner` library to read file in `resources` folder
+- for `main` folder
+  - create `resources` folder in `main` folder
+- for `test` folder
+  - create `resources` folder in `test`folder
