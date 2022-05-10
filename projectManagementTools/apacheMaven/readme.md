@@ -96,3 +96,10 @@ Run the app _____________|
   - foreign dependencies are installed here
   - it also includes your JAR file and `pom.xml` file for each install project
   - [Maven repo search url address](https://search.maven.org/)
+### Maven Dependency Management
+- allows for code reuse
+- similar to using Java APIs
+- most programmers have used the Math API
+- a common dependency in Maven is `junit`
+- dependencies are defined in the `pom.xml` file
+  - `scope` tag identifies what part of the life cycle the dependency is going to be used in
