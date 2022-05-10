@@ -239,3 +239,10 @@ Run the app _____________|
     - javadoc auto saves report in `target/site/apidocs/` directory
     - launch the `index.html` file to view generated report
   > mvn javadoc:javadoc
+### Tools plugins
+- list of tools plugins
+  - antrun, artifact, archetype, assembly, dependency, enforcer, gpg, help, invoker, jarsigner, jdeprscan, patch, pdf, plugin, release, remote-resources, scm, scm-publish, scripting, stage, toolchains, wrapper
+- use help to find out more about a plugin
+  - example: archetype
+    > mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-archetype-plugin
+
