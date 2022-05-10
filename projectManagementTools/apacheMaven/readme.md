@@ -392,6 +392,19 @@
 - they are established using the Maven coordinates
 - relationships are decribed as dependencies
 - projects can inherit project relationships
+#### transitive dependencies
+- it is a dependency of a dependency
+- provides a mechanism to only declare dependencies that you want
+  - thus you do not need to manage what dependencies is required from the dependencies that you need
+- rules
+  - when 2 versions of the same artifact are needed
+    - the closest to the actual project wins
+      - e.g: actual project <- A needs package abc version 1.0 <- B needs package abc version 1.2
+        - package abc vesion 1.0 wins
+    - if `dependencyManagement` tag is used
+      - the chosen version will be used
+    - if declaring in local dependency
+      - local overrides all other transitive dependencies 
 ### Best Practices
 - grouping common dependencies
 - can be done using multiple POM files
