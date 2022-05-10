@@ -183,3 +183,12 @@ Run the app _____________|
 - they are established using the Maven coordinates
 - relationships are decribed as dependencies
 - projects can inherit project relationships
+### Best Practices
+- grouping common dependencies
+- can be done using multiple POM files
+  - allows other projects to reuse POM file
+- choosing inheritance vs multi-module relationship
+  - multi-module: used when components are unrelated
+  - inheritance: used when projects share dependencies
+- proper indentation for `pom.xml` file
+- follow a standard layout where coordinates are listed first
