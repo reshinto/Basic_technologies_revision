@@ -343,7 +343,7 @@ node      node
 - `Gradle` - `Project` - `Task` - `Action`: `org.gradle.api.Action`
   - actual work performed during execution phase
   - gradle executes actions in order of declaration
-  - can also define toFirst and toLast actions
+  - can also define doFirst and doLast actions
 - ```
   Gradle - Project - Task - Action
              |
