@@ -197,6 +197,8 @@ gradle.properties
       ```
   - `gradle helloWorld` or `./gradlew helloWorld`
 ## Defining and configuring a task
+- view all available tasks
+  > gradle tasks --all
 ### Task purpose
 - defines executable unit of work
 - actions contain logic to be executed runtime
@@ -275,6 +277,40 @@ Typed Task
         dependsOn copyExample
       }
       ```
-
-
-
+### Task Execution Order
+```
+  dependsOn
+A -> B
+  -> C
+  dependsOn
+```
+- ensures that B and C is executed before A
+- does not explicitly define if B or C is executed first
+### Fined-Gradle Dependency Control
+```
+  dependsOn
+A -> B
+     | mustRunAfter
+     v
+  -> C
+  dependsOn
+```
+- use `mustRunAfter`, `shouldRunAfter`, or `finalizedBy`
+### Directed Acyclic Graph (DAG)
+```
+node      node
+ A    ->   B
+  graph edge
+```
+- at runtime, the gradle buils a directed acyclic graph for tasks in memory
+  - thus, runtime will know all the tasks participating in the build and their proper execution order
+- task is represented as node
+- task dependency is represented as graph edge
+- Gradle does not provide a built-in feature for visualizing the task graph of a project
+  - to emulate the task dependencies in action
+    > gradle taskname --dry-run
+  - can use the [gradle-task-tree](https://github.com/dorongold/gradle-task-tree) to render the tasks as a tree
+#### Circular Dependencies (Not allowed)
+- dependency cycles cannot be formed
+- gradle will fail build if detected
+- e.g.: task A cannot dependsOn task B, while task B cannot dependsOn task A at the same time
