@@ -102,3 +102,104 @@
     ```
 - run gradle wrapper instead of gradle on mac
   > ./gradlew helloWorld
+## Build file and conventions
+### Single project build
+- `src -> build.gradle`
+- characteristics
+  - resides in root directory of project
+  - contains all build logic
+  - can become hard to maintain
+### Multi module build
+```
+build.gradle -> module -> build.gradle
+             -> module -> build.gradle
+```
+- maintainable, highly cohesive build logic
+### Settings file in a build
+```
+build.gradle
+settings.gradle -> module
+                -> module
+```
+- characteristics
+  - resides in root directory of project hierarchy
+  - declares participating projects
+  - can change defaults
+    - e.g.: project name
+- Gradle auto derives project name from directory
+  > gradle projects
+  - output
+    ```
+    > Task :projects
+
+    ------------------------------------------------------------
+    Root project 'hello-world'
+    ------------------------------------------------------------
+
+    Root project 'hello-world'
+    No sub-projects
+
+    To see a list of the tasks of a project, run gradle <project-path>:tasks
+    For example, try running gradle :tasks
+
+    BUILD SUCCESSFUL in 1s
+    1 actionable task: 1 executed
+    ```
+  - modify project name
+    - create `settings.gradle` file with the following contents
+      ```gradle
+      rootProject.name = "starter-example"
+      ```
+    > gradle projects
+    - output
+      ```
+      > Task :projects
+
+      ------------------------------------------------------------
+      Root project 'starter-example'
+      ------------------------------------------------------------
+
+      Root project 'starter-example'
+      No sub-projects
+
+      To see a list of the tasks of a project, run gradle <project-path>:tasks
+      For example, try running gradle :tasks
+
+      BUILD SUCCESSFUL in 1s
+      1 actionable task: 1 executed
+      ```
+### Properties file in a build
+```
+build.gradle
+settings.gradle
+gradle.properties
+```
+- characteristics
+  - resides in root directory of project hierarchy or gradle user home directory
+  - preconfigures runtime behavior
+- create `gradle.properties` file with the following contents
+  - changing log level for a console output to info
+    ```gradle
+    org.gradle.logging.level = info
+    ```
+  - declare custom version of project
+    ```gradle
+    version = 1.0.0
+    ```
+  - retrieve variable from property
+    - in `build.gradle` file
+      ```gradle
+      task helloWorld {
+        doLast {
+          println "Hello World, version = " + version
+        }
+      }
+      ```
+  - `gradle helloWorld` or `./gradlew helloWorld`
+
+
+
+
+
+
+
