@@ -196,10 +196,85 @@ gradle.properties
       }
       ```
   - `gradle helloWorld` or `./gradlew helloWorld`
+## Defining and configuring a task
+### Task purpose
+- defines executable unit of work
+- actions contain logic to be executed runtime
+- general categorization: ad hoc tasks and tasks explicitly declaring a type
+### Ad Hoc Task
+```
+Default Task
+    ^
+    | extends
+Ad hoc Task
+```
+- characteristics
+  - implements one-off, simplistic action code by defining doFirst or doLast
+  - automatically extend DefaultTask without having to declare it
+- the `helloWorld` is an example of an `Ad Hock Task`
+  - it also has no explicity declare type `task helloWorld {` 
+### Task Declaring a type
+```
+Copy
+  ^
+  | extends
+Typed Task
+```
+- characteristics
+  - explicitly declares type
+    - e.g.:
+      ```gradle
+      task copyFiles(type: Copy) {
+        from "sourceFiles"
+        into "target"
+      }
+      ```
+  - does not necessarily need to define actions as they are already provided by type
+- real copy example
+  - in `build.gradle` file
+    - check for all `.bat` files from current directory and into nested directories
+    - then add them into test folder with their respective directories
+    ```gradle
+    task copyExample(type: Copy) {
+      from "."
+      into "test"
+      include "**/*bat"
+      includeEmptyDirs = false
+    }
+    ```
+- real copy and zip example
+  - in `build.gradle` file
+    ```gradle
+    task copyExample(type: Copy) {
+      from "."
+      into "test"
+      include "**/*bat"
+      includeEmptyDirs = false
+    }
+    
+    task createZip(type: Zip) {
+      from "test"
+      archiveFileName = "docs.zip"
+      destinationDirectory = file("test/dist")
+    }
+    ```
+    - need to run each task individually
+    - to enable it to run without running each task independently, use `dependsOn` key
+      ```gradle
+      task copyExample(type: Copy) {
+        from "."
+        into "test"
+        include "**/*bat"
+        includeEmptyDirs = false
+      }
 
-
-
-
+      task createZip(type: Zip) {
+        from "test"
+        archiveFileName = "docs.zip"
+        destinationDirectory = file("test/dist")
+        dependsOn copyExample
+      }
+      ```
 
 
 
