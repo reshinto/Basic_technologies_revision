@@ -318,6 +318,42 @@ node      node
 - dependency cycles cannot be formed
 - gradle will fail build if detected
 - e.g.: task A cannot dependsOn task B, while task B cannot dependsOn task A at the same time
+#### Domain Objects in Memory
+- each node represents the DAG in memory
+- tasks are just 1 example of domain object of a build
+- domain objects can be inspected and modified from the build script
+##### import domain objects
+- `Gradle`: `org.gradle.invocation.Gradle`
+  - represents invocation of the build
+  - every invocation of a greater build is represented by a domain object called `Gradle`
+    - this domain object has knowledge about the project hierarchy in a single project
+      - or multi project build provides pointers to the higher level properties of a build
+    - e.g.: the gradle user home directory, the used Gradle version can register callback logic to react to certain events in the build
+- `Gradle` - `Project`: `org.gradle.api.Project`
+  - represents a software component and provides API access to object hierarchy
+  - it serves as the main entry point of a build
+  - provides methods for walking the whole hierarchy of domain objects
+  - e.g.: can ask for the reference to the Gradle instance, register new tasks, or get a modified typical environmental properties like the build output directory
+- `Gradle` - `Project` - `Task`: `org.gradle.api.Task`
+  - represents unit of work with potential dependencies
+  - performs the actual work at runtime
+  - from the project, can register as many tasks as you like
+  - every task can declare task dependencies
+  - in most cases, tasks define at least 1 action
+- `Gradle` - `Project` - `Task` - `Action`: `org.gradle.api.Action`
+  - actual work performed during execution phase
+  - gradle executes actions in order of declaration
+  - can also define toFirst and toLast actions
+- ```
+  Gradle - Project - Task - Action
+             |
+             v
+          Plugin   org.gradle.api.Plugin
+  ```
+  - provides reusable logic for a project
+  - every plugin applied to a project is represented as a plugin domain object
+  - a plugin has full access to the project it works on
+    - thus can access other domain objects by name or by type and modify them as necessary
 ## Build lifecycle phases
 - every build performs 3 lifecycle phases
 1. Initialization Phase
@@ -438,7 +474,3 @@ node      node
         ```
       - run file as usual
         > gradle createZip
-
-
-
-
