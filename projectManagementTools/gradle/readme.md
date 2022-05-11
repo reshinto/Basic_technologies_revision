@@ -361,3 +361,84 @@ node      node
         }
       }
       ```
+## Plugins
+- avoid repetitive code
+- make build logic more maintainable
+- provide reusable functionality across projects
+### 2 types of plugins
+1. Script Plugins
+    ```
+                 includes
+    build.gradle -> publishing.gradle
+                 -> deployment.gradle
+                 includes
+    ```
+    - same syntax, just another build script that can be included in the main `build.gradle` file
+    - primary reason for wanting to use it is to split up build logic and make it more maintainable
+    - example
+      - create a `archiving.gradle` file
+        - add the usual code from `build.gradle`
+        ```gradle
+        task copyExample(type: Copy) {
+          from "."
+          into "test"
+          include "**/*bat"
+          includeEmptyDirs = false
+        }
+
+        task createZip(type: Zip) {
+          from "test"
+          archiveFileName = "docs.zip"
+          destinationDirectory = file("test/dist")
+          dependsOn copyExample
+        }
+        ```
+      - create a `build.gradle` file
+        - implement script plugin with the `apply` key word
+        ```gradle
+        apply from: "archiving.gradle"
+        ```
+      - run file as usual
+        > gradle createZip
+2. Binary Plugins
+    ```
+                 includes
+    build.gradle -> gradle core plugin
+                 -> community plugin
+                 includes
+    ```
+    - implemented as classes
+    - bundled as JAR files
+    - can reuse the functionality across multiple self-contained software projects
+      - these software projects usually live in different version control repositories
+    - example
+      - create a `archiving.gradle` file
+        - add the usual code from `build.gradle`
+        - use the `apply` key word
+        - delete the `archiveFileName` and `destionationDirectory` as they are provided by the `base` plugin, thus no longer required
+        ```gradle
+        apply plugin: "base"
+        
+        task copyExample(type: Copy) {
+          from "."
+          into "test"
+          include "**/*bat"
+          includeEmptyDirs = false
+        }
+
+        task createZip(type: Zip) {
+          from "test"
+          dependsOn copyExample
+        }
+        ```
+      - create a `build.gradle` file
+        - implement script plugin with the `apply` key word
+        ```gradle
+        apply from: "archiving.gradle"
+        ```
+      - run file as usual
+        > gradle createZip
+
+
+
+
