@@ -103,6 +103,10 @@
 - run gradle wrapper instead of gradle on mac
   > ./gradlew helloWorld
 ## Build file and conventions
+### Build Execution under the Hood
+- evaluates instructions in build scripts
+- creates and configures tasks
+- executes tasks in correct order
 ### Single project build
 - `src -> build.gradle`
 - characteristics
@@ -314,3 +318,46 @@ node      node
 - dependency cycles cannot be formed
 - gradle will fail build if detected
 - e.g.: task A cannot dependsOn task B, while task B cannot dependsOn task A at the same time
+## Build lifecycle phases
+- every build performs 3 lifecycle phases
+1. Initialization Phase
+    - evaluates settings file and sets up build
+    - file contains the information about the projects that should participate in the build
+    - settings file can exist for a single and multi project builds
+2. Configuration Phase
+    - evaluates build scripts and runs configuration logic
+    - each project can define a distinct build script but doesn't have to
+    - all code in build script will be exercised
+    - during configuration phase, task actions are not executed
+      - tasks are only configured
+    - configuration counts as assigning values to properties or calling task methods exposed by its API
+    - make sure that code defined does not necessarily execute expensive logic as it would affect the performance
+    - example in `build.gradle` file
+      - always outide of `doFirst` and `doLast` actions
+      - executed during configuration phase
+      ```gradle
+      // configuration code
+      
+      task helloWorld {
+        // configuration code
+        
+        doFirst {}
+        doLast {}
+      }
+      ```
+3. Execution Phase
+    - executes task actions in correct order
+      - it looks at the directed acyclic graph that was built in memory and executes every task action in the the correct order
+    - example in `build.gradle` file
+      - always inside of `doFirst` and `doLast` actions
+      - executed during execution phase
+      ```gradle
+      task helloWorld {
+        doFirst {
+          // execution code
+        }
+        doLast {
+          // execution code
+        }
+      }
+      ```
