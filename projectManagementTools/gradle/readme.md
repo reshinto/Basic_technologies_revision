@@ -73,3 +73,32 @@
       BUILD SUCCESSFUL in 823ms
       1 actionable task: 1 executed
       ```
+## Gradle wrapper
+- it is a set of files checked into SCM alongside source code
+- standardizes compatible gradle version for a project
+- automatically downloads the gradle distribution with defined version
+### disadvantages of not using gradle wrapper
+- gradle API can include breaking changes in between major versions
+- maintaining multiple gradle installations on a developer machine is not convenient
+### benefits
+- developers do not need to install gradle runtime
+- developers can check out project source code and build right away
+- wrapper works the same way on continuous integration servers
+### terminal command
+> gradle wrapper
+- creates files and directories
+  - gradle directory
+  - gradlew
+  - gradlew.bat
+- view properties created
+  > cat gradle/wrapper/gradle-wrapper.properties
+  - output
+    ```
+    distributionBase=GRADLE_USER_HOME
+    distributionPath=wrapper/dists
+    distributionUrl=https\://services.gradle.org/distributions/gradle-7.4.2-bin.zip
+    zipStoreBase=GRADLE_USER_HOME
+    zipStorePath=wrapper/dists 
+    ```
+- run gradle wrapper instead of gradle on mac
+  > ./gradlew helloWorld
