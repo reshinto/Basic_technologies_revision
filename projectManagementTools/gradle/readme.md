@@ -501,7 +501,10 @@ node      node
   // basic requirement
   plugins {
     id 'java'
+    id 'application'
   }
+  
+  version = "1.0.0"
 
   java {
     sourceCompatibility = JavaVersion.VERSION_11
@@ -512,6 +515,20 @@ node      node
     //enable compilation in a separate daemon process
     options.fork = true
   }
+  
+  jar {
+    // use preset jar file name
+    archiveBaseName = "newName"
+  }
+  
+  application {
+    mainClass = "com.domain.appname.Main"
+  }
+  
+  javadoc {
+    options.header = "appname"
+    options.verbose()  // to print logs
+  }
   ```
 - run wrapper
   > gradle wrapper
@@ -519,5 +536,27 @@ node      node
   > ./gradlew compileJava --console=verbose
 - copies files from `src/main_resources` into `build` directory using task `processResources`
   > ./gradlew processResources --console=verbose
-- combine both `compileJave` task and `processResources` with `classes`
+- combine both `compileJava` task and `processResources` with `classes`
   > ./gradlew classes --console=verbose
+- package jar file
+  > ./gradlew jar
+- run application
+  > ./gradlew run
+  - run with args
+    > ./gradlew run --args="add 1 2"
+- install application to allow running without java
+  > ./gradlew installDist
+  - run application
+    > ./build/install/appname/bin/appname
+    - run with args
+      > ./build/install/appname/bin/appname add 1 2
+- zip application
+  - single bundle
+    > ./gradlew distZip
+  - multi bundle
+    > ./gradlew distZip distTar
+- run `javadoc`
+  > ./gradlew javadoc
+    - output in `build/docs/` directory
+  - open docs
+    > open build/docs/javadoc/index.html
