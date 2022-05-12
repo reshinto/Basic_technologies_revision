@@ -453,7 +453,14 @@ node      node
         - use the `apply` key word
         - delete the `archiveFileName` and `destionationDirectory` as they are provided by the `base` plugin, thus no longer required
         ```gradle
+        // single plugin
         apply plugin: "base"
+        
+        // multi plugins
+        plugins {
+          id 'java'
+        }
+
         
         task copyExample(type: Copy) {
           from "."
@@ -474,3 +481,43 @@ node      node
         ```
       - run file as usual
         > gradle createZip
+## Build a java project
+### Using Gradle Java Plugin
+- standard source code directories
+  ```
+  src/main/java       -> contains the production source code
+  src/main/resources  -> contains resource files needed at runtime
+  src/test/java       -> contains test source code
+  src/test/resources  -> contains resource files needed at test execution time
+  build.gradle
+  ```
+- build output directories
+  ```
+  build/classes       -> contains compiles class files
+  build/libs          -> contains generated JAR file
+  ```
+- `build.gradle`
+  ```gradle
+  // basic requirement
+  plugins {
+    id 'java'
+  }
+
+  java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+  }
+
+  tasks.withType(JavaCompile) {
+    //enable compilation in a separate daemon process
+    options.fork = true
+  }
+  ```
+- run wrapper
+  > gradle wrapper
+- `src/main/java` can be compiled using the task `compileJava`
+  > ./gradlew compileJava --console=verbose
+- copies files from `src/main_resources` into `build` directory using task `processResources`
+  > ./gradlew processResources --console=verbose
+- combine both `compileJave` task and `processResources` with `classes`
+  > ./gradlew classes --console=verbose
