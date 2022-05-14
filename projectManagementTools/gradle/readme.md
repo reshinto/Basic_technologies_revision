@@ -717,3 +717,57 @@ node      node
     > ./gradlew projects
   - compile and copy resources, this will check if build works
     > ./gradlew classes
+#### Publishing libraries
+- library needs to be published to a binary repository
+- a published library can be identified by its coordinates (GAV)
+- the Maven Publish plugin automates the publishing process
+- `api/build.gradle`
+  - publish to a local folder
+    ```gradle
+    plugins {
+      id 'maven-publish'
+    }
+
+    publishing {
+      publications {
+        maven(MavenPublication) {
+          groupId = 'org.domainname'
+          artifactId = 'appname'
+          from components.java
+        }
+      }
+      repositories {
+        maven {
+          url = "$rootProject.buildDir/m2repo"
+        }
+      }
+    }
+    ```
+  - publish to a cloud binary repository
+    ```gradle
+    plugins {
+      id 'maven-publish'
+    }
+
+    publishing {
+      publications {
+        maven(MavenPublication) {
+          groupId = 'org.domainname'
+          artifactId = 'appname'
+          from components.java
+        }
+      }
+      repositories {
+        maven {
+          url = 'http://localhost:8082/artifactory/libs-release-local/'
+          credentials {
+            username = 'admin'
+            password = 'admin_123'
+          }
+        }
+      }
+    }
+    ```
+  - run `publish` task in the root directory
+    - works for multi-project builds
+    > ./gradlew publish
