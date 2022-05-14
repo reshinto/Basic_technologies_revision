@@ -771,3 +771,63 @@ node      node
   - run `publish` task in the root directory
     - works for multi-project builds
     > ./gradlew publish
+### Testing a Java Project
+- JUnit is the established standard test framework in the Java ecosystem
+- importing into code
+  ```java
+  import org.junit.jupiter.api.Test;
+  ```
+#### Declaring JUnit dependencies
+- Test dependency configurations
+  - JUnit dependencies need to be declared with the correct configurations
+  - configuration will only work on the test code
+  - the dependencies declared with this configuration won't be bundled when shipping the app
+    - will use the test runtime instead
+  ```
+  testImplementation -> Needed for compilation and text execution
+  testRuntime -> Only needed for test execution
+  ```
+  - example `build.gradle` at root directory
+    ```gradle
+    plugins {
+      id 'java'
+      id 'application'
+    }
+    
+    version = '1.0.0'
+
+    java {
+      sourceCompatibility = JavaVersion.VERSION_11
+      targetCompatibility = JavaVersion.VERSION_11
+    }
+    
+    application {
+      mainClass = 'com.domainname.appname.Main'
+    }
+
+    repositories {
+      mavenCentral()
+    }
+
+    dependencies {
+      implementation 'commons-cli:commons-cli:1.4'
+      testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+      testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    }
+    
+    test {
+      useJUnitPlatform()  // basic requirement to work
+
+      testLogging {  // change logging behavior
+        events 'started', 'skipped', 'failed'  // show on console the test events
+      }
+    }
+    ```
+    - compile tests with `compileTestJava` task
+      > ./gradlew compileTestJava
+    - run unit test
+      > ./gradlew test
+    - open test report
+      > open build/reports/tests/test/index.html
+    - open xml test report
+      > open build/test-results/test/TEST-com.linkedinlearning.calculator.CalculatorTest.xml
