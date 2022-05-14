@@ -820,6 +820,7 @@ node      node
 
       testLogging {  // change logging behavior
         events 'started', 'skipped', 'failed'  // show on console the test events
+        exceptionFormat 'full'  // gives a deeper hint on what is actually wrong
       }
     }
     ```
