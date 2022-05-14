@@ -560,3 +560,96 @@ node      node
     - output in `build/docs/` directory
   - open docs
     > open build/docs/javadoc/index.html
+### Dependency Management
+- within gradle project, can define a dependency on libraries in Maven Central or any other binary repository
+- at build time, gradle's dependency management engine downloads its artifacts
+  - stores them in the local cache for reuse
+  - adds them to the class path of the project
+- gradle calls the scope of a dependency a configuration
+  - can be very specific about the scope of a dependency
+    - e.g.: can express that the dependency is only needed at runtime, but not for compilation process
+- another type of dependency is `project dependency`
+  - when application logic becomes complex
+    - will want to separate it based on functional boundaries, modules, or components
+  - a module, all can use other modules
+    - each of it are modeled as a gradle project
+    - referred to as `multi-project built`
+- when a project is ready to ship
+  - will want to produce a library or distribution
+  - common practice to publish those artifacts to a binary repository for consumption by other developers or end users
+  - gradle supports publishing java libraries to Maven repositories
+#### Dependency management in Java
+- java ecosystem offers a mature set of reusable functionality
+- the most popular libraries are available on Maven Central
+  - it is a centrally hosted binary repository
+#### Declaring a dependency on an external library
+- need to know 3 aspects
+  1. dependency coordinates which is the Group, Artifact, Version (GAV) you want to consume
+      ```
+      Group:Artifact:Version
+      ```
+      - e.g.:
+        ```
+        commons-cli:commons-cli:1.4
+        ```
+  2. to consume the dependency, need to declare the repository using the `repositories` method in `build.gradle` file
+      ```gradle
+      plugins {
+        id 'java'
+        id 'application'
+      }
+
+      java {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+      }
+
+      jar {
+        archiveBaseName = "newName"
+      }
+
+      application {
+        mainClass = "com.domain.appname.Main"
+      }
+      
+      // allows gradle to know where to resolve the dependency from
+      repositories {
+        mavenCentral()
+      }
+      ```
+  3. define the GAV of the dependency by using the `dependencies` method with `implementation` scope
+      - after adding the dependencies, you can import it in the java code 
+      ```gradle
+      plugins {
+        id 'java'
+        id 'application'
+      }
+
+      java {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+      }
+
+      jar {
+        archiveBaseName = "newName"
+      }
+
+      application {
+        mainClass = "com.domain.appname.Main"
+      }
+      
+      repositories {
+        mavenCentral()
+      }
+      
+      dependencies {
+        implementation "commons-cli:commons-cli:1.4"
+      }
+      ```
+      - to test if dependencies are working, install and run them
+        - installation
+          > ./gradlew installDist
+        - run
+          > ./build/install/appname/bin/appname
+          - run with args
+            > ./build/install/appname/bin/appname --operation functionname --value value1 --value2 value2
