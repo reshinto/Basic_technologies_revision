@@ -573,7 +573,7 @@ node      node
     - will want to separate it based on functional boundaries, modules, or components
   - a module, all can use other modules
     - each of it are modeled as a gradle project
-    - referred to as `multi-project built`
+    - referred to as `multi-project build`
 - when a project is ready to ship
   - will want to produce a library or distribution
   - common practice to publish those artifacts to a binary repository for consumption by other developers or end users
@@ -653,7 +653,7 @@ node      node
           > ./build/install/appname/bin/appname
           - run with args
             > ./build/install/appname/bin/appname --operation functionname --value value1 --value2 value2
-#### dependency tree
+#### Dependency tree
 - over time, the number of dependencies will grow
 - declared dependencies oftentimes pull in transitive dependencies
 - result in a large tree of dependencies to manage
@@ -661,3 +661,59 @@ node      node
   > ./gradlew dependencies
 - use `dependencyInsight` task to find out why the dependency is needed and where it is coming from
   > ./gradlew -q dependencyInsight --dependency commons-cli
+#### Multi-project builds
+- projects with a lot of code easily become hard to maintain
+- breaking up a project into components increases cohesion and makes it more manageable
+- gradle can model each of the components with a project instance, `multi-project build`
+- sample multi-project structure
+  ```
+  api/src/main/java/com/domainname/appname/Appname.java
+  app/src/main/java/com/domainname/appname/Main.java
+  app/build.gradle
+  build.gradle
+  settings.gradle
+  ```
+  - `app/build.gradle`
+    ```gradle
+    plugins {
+      id 'application'
+    }
+
+    application {
+      mainClass = 'com.domainname.appname.Main'
+    }
+
+    repositories {
+      mavenCentral()
+    }
+
+    dependencies {
+      implementation project(':api')
+      implementation 'commons-cli:commons-cli:1.4'
+    }
+    ```
+  - `settings.gradle`
+    ```gradle
+    rootProject.name = 'appname'
+
+    include ':api', ':app'
+    ```
+  - `build.gradle`
+    ```gradle
+    allprojects {
+      version = '1.0.0'
+    }
+
+    subprojects {
+      apply plugin: 'java'
+
+      java {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+      }
+    }
+    ```
+  - check projects taking part of the build using the `projects` task
+    > ./gradlew projects
+  - compile and copy resources, this will check if build works
+    > ./gradlew classes
