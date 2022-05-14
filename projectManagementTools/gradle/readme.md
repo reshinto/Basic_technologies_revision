@@ -653,3 +653,11 @@ node      node
           > ./build/install/appname/bin/appname
           - run with args
             > ./build/install/appname/bin/appname --operation functionname --value value1 --value2 value2
+#### dependency tree
+- over time, the number of dependencies will grow
+- declared dependencies oftentimes pull in transitive dependencies
+- result in a large tree of dependencies to manage
+- check dependency tree
+  > ./gradlew dependencies
+- use `dependencyInsight` task to find out why the dependency is needed and where it is coming from
+  > ./gradlew -q dependencyInsight --dependency commons-cli
