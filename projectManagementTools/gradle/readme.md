@@ -832,3 +832,67 @@ node      node
       > open build/reports/tests/test/index.html
     - open xml test report
       > open build/test-results/test/TEST-com.linkedinlearning.calculator.CalculatorTest.xml
+### Building with docker
+- `build.gradle`
+  ```gradle
+  buildscript {
+    repositories {
+      maven {
+        url "https://plugins.gradle.org/m2/"
+      }
+    }
+
+    dependencies {
+      classpath 'com.bmuschko:gradle-docker-plugin:7.3.0'
+    }
+  }
+
+  apply plugin: 'java'
+  apply plugin: 'application'
+  apply plugin: 'com.bmuschko.docker-java-application'
+
+  import com.bmuschko.gradle.docker.tasks.container.*
+  import com.bmuschko.gradle.docker.tasks.image.*
+
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
+
+  group = 'com.dockerapp'
+  version = '1.0-SNAPSHOT'
+
+  mainClassName = "com.dockerapp.App"
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    testImplementation 'junit:junit:4.12'
+  }
+
+  docker {
+    javaApplication {
+      baseImage = 'openjdk:latest'
+    }
+  }
+
+  task createContainer(type: DockerCreateContainer) {
+    dependsOn dockerBuildImage
+    targetImageId dockerBuildImage.getImageId()
+  }
+
+  task startContainer(type: DockerStartContainer) {
+    dependsOn createContainer
+    targetContainerId createContainer.getContainerId()
+  }
+  ```
+- build and run app normally
+  > ./gradlew build run
+- build docker image
+  > ./gradlew dockerBuildImage
+- create docker container
+  > ./gradlew createContainer
+- start docker container
+  > ./gradlew startContainer
+- check docker output
+  > docker container logs containerId
