@@ -483,12 +483,38 @@
     </properties>
     ```
 - run the app
-  - `-cp` flag is used for class search path
-    - it will search directories and look for `zip/jar` files
-  - `appname-1.0-SNAPSHOT` is correct if default version is used
-    > java -cp target/appname-1.0-SNAPSHOT.jar com.projectname.App
-  - `appname-0.0.1` is correct if `0.0.1` version is set
-  > java -cp target/appname-0.0.1.jar com.projectname.App
+  - method 1
+    - `-cp` flag is used for class search path
+      - it will search directories and look for `zip/jar` files
+    - `appname-1.0-SNAPSHOT` is correct if default version is used
+      > java -cp target/appname-1.0-SNAPSHOT.jar com.projectname.App
+    - `appname-0.0.1` is correct if `0.0.1` version is set
+    > java -cp target/appname-0.0.1.jar com.projectname.App
+  - method 2
+    - add manifest plugin
+      ```xml
+      <project>
+        ...
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-jar-plugin</artifactId>
+              <version>3.0.2</version>
+              <configuration>
+                <archive>
+                  <manifest>
+                    <mainClass>com.domainname.appname.Main</mainClass>
+                  </manifest>
+                </archive>
+              </configuration>
+            </plugin>
+          </plugins>
+        </build>
+        ...
+      </project>
+      ```
+    > java -jar target/appname-1.0-SNAPSHOT.jar
 ### Web app
 > mvn archetype:generate -DgroupId=com.projectname -DartifactId=webappname -DarchetypeArtifactId=maven-archetype-webapp -DInteractiveMode=false
 ## Unit testing with Maven
