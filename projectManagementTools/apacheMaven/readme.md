@@ -491,7 +491,7 @@
     - `appname-0.0.1` is correct if `0.0.1` version is set
     > java -cp target/appname-0.0.1.jar com.projectname.App
   - method 2
-    - add manifest plugin
+    - add `maven-jar-plugin`
       ```xml
       <project>
         ...
@@ -515,6 +515,27 @@
       </project>
       ```
     > java -jar target/appname-1.0-SNAPSHOT.jar
+  - method 3
+    - add `exec-maven-plugin`
+      ```xml
+      <project>
+        ...
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>exec-maven-plugin</artifactId>
+              <version>1.5.0</version>
+              <configuration>
+                <mainClass>com.dockerapp.App</mainClass>
+              </configuration>
+            </plugin>
+          </plugins>
+        </build>
+        ...
+      </project>
+      ```
+    > mvn clean package exec:java
 ### Web app
 > mvn archetype:generate -DgroupId=com.projectname -DartifactId=webappname -DarchetypeArtifactId=maven-archetype-webapp -DInteractiveMode=false
 ## Unit testing with Maven
