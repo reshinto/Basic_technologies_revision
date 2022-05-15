@@ -536,6 +536,81 @@
       </project>
       ```
     > mvn clean package exec:java
+  - method 4
+    - run with docker using maven
+      ```xml
+      <project>
+        ...
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-jar-plugin</artifactId>
+              <version>3.0.2</version>
+              <configuration>
+                <archive>
+                  <manifest>
+                    <mainClass>com.domainname.appname.Main</mainClass>
+                  </manifest>
+                </archive>
+              </configuration>
+            </plugin>
+          </plugins>
+        </build>
+          <profiles>
+            <profile>
+              <id>docker</id>
+              <build>
+                <plugins>
+                  <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.20.1</version>
+                    <configuration>
+                      <images>
+                        <image>
+                          <name>hellojava</name>
+                          <build>
+                            <from>openjdk:latest</from>
+                            <assembly>
+                              <descriptorRef>artifact</descriptorRef>
+                            </assembly>
+                            <cmd>java -jar maven/${project.name}-${project.version}.jar</cmd>
+                          </build>
+                          <run>
+                            <wait>
+                              <log>Hello World!</log>
+                            </wait>
+                          </run>
+                        </image>
+                      </images>
+                    </configuration>
+                    <executions>
+                      <execution>
+                        <id>docker:build</id>
+                        <phase>package</phase>
+                        <goals>
+                          <goal>build</goal>
+                        </goals>
+                      </execution>
+                      <execution>
+                        <id>docker:start</id>
+                        <phase>install</phase>
+                        <goals>
+                          <goal>run</goal>
+                          <goal>logs</goal>
+                        </goals>
+                      </execution>
+                    </executions>
+                  </plugin>
+                </plugins>
+              </build>
+            </profile>
+          </profiles>
+        ...
+      </project>
+      ```
+    > mvn install -Pdocker
 ### Web app
 > mvn archetype:generate -DgroupId=com.projectname -DartifactId=webappname -DarchetypeArtifactId=maven-archetype-webapp -DInteractiveMode=false
 ## Unit testing with Maven
