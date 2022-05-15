@@ -611,7 +611,7 @@
       </project>
       ```
     - packaging
-      - mvn package -Pdocker
+      > mvn package -Pdocker
     - package and run 
       > mvn install -Pdocker
 ### Web app
