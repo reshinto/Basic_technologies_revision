@@ -610,7 +610,10 @@
         ...
       </project>
       ```
-    > mvn install -Pdocker
+    - packaging
+      - mvn package -Pdocker
+    - package and run 
+      > mvn install -Pdocker
 ### Web app
 > mvn archetype:generate -DgroupId=com.projectname -DartifactId=webappname -DarchetypeArtifactId=maven-archetype-webapp -DInteractiveMode=false
 ## Unit testing with Maven
