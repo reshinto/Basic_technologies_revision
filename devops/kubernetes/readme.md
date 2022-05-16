@@ -677,3 +677,62 @@
                 name: secretname
                 key: secretkeyname
   ```
+### running jobs
+#### simple jobs
+- view jobs
+  > kubectl get jobs
+- need to have the following example
+  - create job
+  ```yaml
+  apiVersion: batch/v1
+  kind: Job
+  metadata:
+    name: finalcountdown
+  spec:
+    template:
+      metadata:
+        name: finalcountdown
+      spec:
+        containers:
+        - name: counter
+          image: busybox
+          command:
+           - bin/sh
+           - -c
+           - "for i in 9 8 7 6 5 4 3 2 1 ; do echo $i ; done"
+        restartPolicy: Never #could also be Always or OnFailure
+  ```
+#### cron jobs
+- view cron jobs
+  >  kubectl get cronjob
+- need to have the following example
+  - create job
+  ```yaml
+  apiVersion: batch/v1beta1
+  kind: CronJob
+  metadata:
+    name: hellocron
+  spec:
+    schedule: "*/1 * * * *" #Runs every minute (cron syntax) or @hourly.
+    jobTemplate:
+      spec:
+        template:
+          spec:
+            containers:
+            - name: hellocron
+              image: busybox
+              args:
+              - /bin/sh
+              - -c
+              - date; echo Hello from your Kubernetes cluster
+            restartPolicy: OnFailure #could also be Always or Never
+    suspend: false #Set to true if you want to suspend in the future
+  ```
+  - this is create a new job each time it runs
+    - view the new job with
+      > kubectl get jobs
+- edit cronjob
+  > kubectl edit cronjobs/cronjobname
+- pause/stop a cronjob
+  - edit cronjob
+  - modify `suspend: false` to `suspend: true`
