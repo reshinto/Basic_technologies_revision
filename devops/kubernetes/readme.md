@@ -986,3 +986,12 @@
   ```
 #### view stateful sets
 > kubectl get statefulsets
+### namespaces
+- add `-n` flag followed by the namespacename when deploying a resource to a specific namespace
+  - adding the flag will make the resource exist in the namespace
+#### view namespaces
+> kubectl get namespaces
+#### create namespace
+> kubectl create namespace namespacename
+#### delete namespace
+> kubectl delete namespace namespacename
