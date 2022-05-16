@@ -397,11 +397,11 @@
 ### expose deployment as a service
 > kubectl expose deployment appname --type=NodePort
 ### view deployments
-> kubectl get deployment
+> kubectl get deployments
 ### introspect a deployment
 > kubectl get deployment/helloworld -o yaml
 ### view services
-> kubectl get service
+> kubectl get services
 ### introspect a service
 > kubectl get service/helloworld -o yaml
 ### view pods
@@ -418,6 +418,10 @@
   - using `notin` operator
     - e.g.: search for release version not in 1.0 to 2.0
       > kubectl get pods -l "release-version notin (1.0,2.0)"
+- get pod details with `describe`
+  > kubectl describe po/podname
+### view replicaSets
+> kubectl get rs
 ### Modifying labels after deployment
 - pods
   - add or modify label
