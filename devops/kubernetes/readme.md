@@ -287,3 +287,12 @@
   > brew install minikube
   - verify installation
     > minikube version
+## Commands
+### verify if cluster is up and running
+> kubectl get nodes
+### see what is in the cluster
+> kubectl get all
+### deploy app
+> kubectl create -f filename.yaml
+### expose deployment as a service
+> kubectl expose deployment appname --type=NodePort
