@@ -25,3 +25,10 @@
 > minikube start -p aged --kubernetes-version=v1.16.1
 ### Delete all of the minikube clusters
 > minikube delete --all
+### Deploy applications
+- deploy app
+  > kubectl create -f filename.yaml
+- expose deployment as a service
+  > kubectl expose deployment appname --type=NodePort
+- access service
+  > minikube service appname
