@@ -173,5 +173,55 @@
     - all containers in the Pod have exited and at least 1 container has failed and returned a non 0 exit status
   - `CrashLoopBackOff`
     - where a container fails to start, and Kubernetes tries repeatedly to restart the Pod
-
-
+### Controllers
+- pods are the basic building blocks in kubernets
+  - but we should not use them by themselves and should use `controllers` instead
+- benefits of controllers
+  - `application reliability`: where multiple instances of an application running prevent problems if 1 or more instance fails
+  - `scaling`: when the pods experience a high volume requests, kubernetes allows scaling up of the pods, allowing for a better user experience
+  - `load balancing`: where having multiple versions of a pod running allow traffic to flow to different pods and doesn't overload 1 single pod or a node
+- types of controllers
+  - ReplicaSets
+    - ensures that the specified number of replicas for a pod are running at all times
+    - if the number of pods is less than what the Replicaset expects, for example when a pod crashed, it will start up a new pod
+    - however, it can't be declared by itself as it requires deployment to do so
+  - Deployments
+    - provides a declarative updates for pods and ReplicaSets
+      - it means that you can describe the desired state of a deployment in a `yml` file
+        - the deployment controller will align the actual state to match
+    - it can be defined to create new or replace existing ReplicaSets
+    - most applications are packages deployments, thus creating deployments are frequent
+    - it manages ReplicaSet, which manages a pod
+    - benefit is that it can automatically support a role-back mechanism
+    - a new ReplicaSet is created each time a new deployment config is deployed, but it also keeps the old ReplicaSet
+      - thus allows easy roll back to old state if something didn't work correctly
+    - ReplicaSets and Deployments controller were under the deprecated Replication Controller
+    - use cases
+      - `pod management` running a ReplicaSet allows us to deploy a number of pods and check their satus as a single unit
+      - scaling a ReplicaSet scales out the pods, and allows for the deployment to handle more traffic
+      - `pause and resume`
+        - used with larger changesets
+        - pause deployment, make changes, resume deployment
+        - while a deployment is paused, it means that only updates are paused, but traffic will still get passed to the existing ReplicaSet
+      - `status` to check the health of pods and identify issues
+  - DaemonSets
+    - ensure all nodes run a copy of a specific pod
+    - as nodes are added or removed from the cluster, it will add or remove the required pods
+    - deleting a DaemonSet will also clean up all the pods that it created
+  - Jobs
+    - it is a supervisor process for pods carrying out batch processes to completion
+    - as the pod completes successfully, the job tracks information about the completion state of the pod
+    - use to run individual processes that need to run once and complete successfully
+    - typically, jobs are run as a cron job to run a specific process at a specific time and repeat at another time
+  - Services
+    - it provides network connectivity to 1 or more pods in the cluster
+    - when a service is created, it designed a unique IP address that never changes through the lifetime of the service
+    - Pods are then configured to talk to the service and can rely on the service IP on any requests that might be sent to the pod
+    - it is an important concept because they allow 1 set of pods to communicate with another set of pods in an easy way
+    - it is best practice to use a service when trying to get 2 deployments to talk to each other
+    - types of services
+      - internal services, where an IP (cluster IP) is only reachable from within the cluster
+      - external services, where services running web servers, or publicly accessible pods, are exposed through an external endpoint
+        - these endpoints are available on each node through a specific port (NodePort)
+      - load balancer, for use cases when you want to expose your application to the public internet
+        - only used when using kubernetes in a cloud environment backed by a cloud provider
