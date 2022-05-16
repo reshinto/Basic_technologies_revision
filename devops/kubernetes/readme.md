@@ -293,6 +293,8 @@
 ### see what is in the cluster
 > kubectl get all
 ### create deployment, service, pod
+- use `--record` flag to record the rollout history
+  - currently deprecated and will be removed in the future
 > kubectl create -f filename.yaml
 - pod yaml file example
   ```yaml
@@ -385,6 +387,9 @@
     selector:
       app: helloworld
   ```
+### update deployment
+- update an image
+  > kubectl set image deployment/deploymentname containername=newimagename
 ### deletion
 - delete a deployment
   > kubectl delete deploy deploymentname
@@ -428,3 +433,9 @@
     > kubectl label po/podname app=newlabelname --overwrite
   - delete label using `-`
     > kubectl label pod/podname labelname- 
+### view rollout history
+> kubectl rollout history deployment/deploymentname
+### revert changes
+> kubectl rollout undo deployment/deploymentname
+- revert to a specific revision number with `--to-revision` flag
+  > kubectl rollout undo deployment/deploymentname --to-revision=revisionnumber
