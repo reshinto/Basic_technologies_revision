@@ -292,8 +292,24 @@
 > kubectl get nodes
 ### see what is in the cluster
 > kubectl get all
-### create deployment or create service
+### create deployment, service, pod
 > kubectl create -f filename.yaml
+- pod yaml file example
+  ```yaml
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: helloworld
+    labels:
+      env: production
+      author: karthequian
+      application_type: ui
+      release-version: "1.0"
+  spec:
+    containers:
+    - name: helloworld
+      image: karthequian/helloworld:latest
+  ```
 - deployment yaml file example
   ```yaml
   # Helloworld application- just the deployment
@@ -374,6 +390,8 @@
   > kubectl delete deploy deploymentname
 - delete a service
   > kubectl delete svc servicename
+- delete a pod
+  > kubectl delete pod podname
 ### expose deployment as a service
 > kubectl expose deployment appname --type=NodePort
 ### view deployments
@@ -384,3 +402,13 @@
 > kubectl get service
 ### introspect a service
 > kubectl get service/helloworld -o yaml
+### view pods
+> kubectl get pods
+- view with labels using `show-labels` tag
+  > kubectl get pods --show-labels
+### Modifying labels at runtime
+- pods
+  - add or modify label
+    > kubectl label po/podname app=newlabelname --overwrite
+  - delete label using `-`
+  > kubectl label pod/podname labelname-
