@@ -127,3 +127,51 @@
 - worker nodes can be exposed to the internvet via `load balancer`
 - traffic coming into the Nodes are handled by `Kube-proxy`
   - this is how end-users talk to kubernetes application
+
+### Nodes and Pods
+#### Node
+- it serves as a worker machine is a kubernetes cluster
+- it can be a physical computer or a virtual machine
+- requirements
+  - each node must have a `kubelet` running
+  - container tooling like Docker
+  - a kube-proxy process running
+  - a process like `Supervisord` so that it can restart components
+- recommendation
+  - if using Kubernetes in a production like setting, recommended to have at least a 3 Node cluster
+#### Tool: Minikube
+- a lightweight kubernetes implementation that creates a VM on local machine and deploys a simple cluser containing only 1 node
+#### Pods
+- it is a simplest unit that you can interact with
+- can create, deploy, and delete pods
+- it represents 1 running process in the cluster
+- inside a Pod
+  - docker application container
+  - storage resources
+  - a unique network IP
+  - options that govern how the container should run
+  - in some scenarios
+    - can have multiple docker containers running in a Pod
+      - but a Pod represents 1 single unit of deployment, which is a single instance of an application in Kubernetes that is tightly coupled and shared resources
+- designed to be ephemeral, disposable entities
+- don't need to create Pods just by themselves in a production application
+  - only do that when need to test whether the underlying containers actually work
+- Pods don't self-heal
+  - it a Pod dies, it will not be reschedules
+  - if a Pod is exited from a Node because of lack of resources, it will not be restarted on different healthier Nodes
+- always use higher-level constructs
+  - it manages and adds stability to Pods, called controllers
+  - thus user a controller like a deployment and don't use a Pod directly
+- Pod States
+  - `Pending`
+    - Pod has been accepted by the Kubernete system, but a container has not been created yet
+  - `Running`
+    - where a Pod has been scheduled on a Node, and all of its containers are created, and at least 1 container is in a running state
+  - `Succeeded`
+    - all containers in the Pod have exited with an exit status of 0, indicating successful execution and will not be restarted
+  - `Failed`
+    - all containers in the Pod have exited and at least 1 container has failed and returned a non 0 exit status
+  - `CrashLoopBackOff`
+    - where a container fails to start, and Kubernetes tries repeatedly to restart the Pod
+
+
