@@ -287,6 +287,152 @@
   > brew install minikube
   - verify installation
     > minikube version
+## Yaml file
+### application health checks
+#### readinessProbe
+- detects when a container can accept traffic
+- good readinessProd example
+  ```yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: helloworld-deployment-with-probe
+  spec:
+    selector:
+      matchLabels:
+        app: helloworld
+    replicas: 1 # tells deployment to run 1 pods matching the template
+    template: # create pods using pod definition in this template
+      metadata:
+        labels:
+          app: helloworld
+      spec:
+        containers:
+        - name: helloworld
+          image: karthequian/helloworld:latest
+          ports:
+          - containerPort: 80
+          readinessProbe:
+            # length of time to wait for a pod to initialize
+            # after pod startup, before applying health checking
+            initialDelaySeconds: 5
+            # Amount of time to wait before timing out
+            timeoutSeconds: 1
+            # Probe for http
+            httpGet:
+              # Path to probe
+              path: /
+              # Port to probe
+              port: 80
+  ```
+- bad readinessProd example
+  ```yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: helloworld-deployment-with-bad-readiness-probe
+  spec:
+    selector:
+      matchLabels:
+        app: helloworld
+    replicas: 1 # tells deployment to run 1 pods matching the template
+    template: # create pods using pod definition in this template
+      metadata:
+        labels:
+          app: helloworld
+      spec:
+        containers:
+        - name: helloworld
+          image: karthequian/helloworld:latest
+          ports:
+          - containerPort: 80
+          readinessProbe:
+            # length of time to wait for a pod to initialize
+            # after pod startup, before applying health checking
+            initialDelaySeconds: 5
+            # Amount of time to wait before timing out
+            timeoutSeconds: 1
+            # Probe for http
+            httpGet:
+              # Path to probe
+              path: /
+              # Port to probe
+              port: 90
+  ```
+#### livenessProbe
+- checks whether the container is alive and running
+- good livenessProbe example
+  ```yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: helloworld-deployment-with-probe
+  spec:
+    selector:
+      matchLabels:
+        app: helloworld
+    replicas: 1 # tells deployment to run 1 pods matching the template
+    template: # create pods using pod definition in this template
+      metadata:
+        labels:
+          app: helloworld
+      spec:
+        containers:
+        - name: helloworld
+          image: karthequian/helloworld:latest
+          ports:
+          - containerPort: 80
+          livenessProbe:
+            # length of time to wait for a pod to initialize
+            # after pod startup, before applying health checking
+            initialDelaySeconds: 5
+            # Amount of time to wait before timing out
+            timeoutSeconds: 1
+            # Probe for http
+            httpGet:
+              # Path to probe
+              path: /
+              # Port to probe
+              port: 80
+  ```
+- bad livenessProbe example
+  ```yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: helloworld-deployment-with-bad-liveness-probe
+  spec:
+    selector:
+      matchLabels:
+        app: helloworld
+    replicas: 1 # tells deployment to run 1 pods matching the template
+    template: # create pods using pod definition in this template
+      metadata:
+        labels:
+          app: helloworld
+      spec:
+        containers:
+        - name: helloworld
+          image: karthequian/helloworld:latest
+          ports:
+          - containerPort: 80
+          livenessProbe:
+            # length of time to wait for a pod to initialize
+            # after pod startup, before applying health checking
+            initialDelaySeconds: 5
+            # How often (in seconds) to perform the probe.
+            periodSeconds: 5
+            # Amount of time to wait before timing out
+            timeoutSeconds: 1
+            # Kubernetes will try failureThreshold times before giving up and restarting the Pod
+            failureThreshold: 2
+            # Probe for http
+            httpGet:
+              # Path to probe
+              path: /
+              # Port to probe
+              port: 90
+  ```
 ## Commands
 ### verify if cluster is up and running
 > kubectl get nodes
