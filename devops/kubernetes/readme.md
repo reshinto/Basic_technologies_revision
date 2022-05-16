@@ -253,3 +253,28 @@
 - `Default` namespace created when kubernete is launched
 - objects placed in `default` namespace at start
 - newer applications install their resources in a different namespace
+### Kubelet and Kube-proxy
+#### Kubelet
+- it is the kubernetes node agent that runs on each node
+- roles
+  - communicates with API server to see if pods have been assigned to nodes
+  - executes pod containers via a container engine
+  - mounts and runs pod volumes and secrets
+  - executes health checks to identify pod/node status
+- it works via `Podspec` which is a YML file that describes a pod
+  - it takes a set of Podspec that are provided by the kube-api server and ensures that the containers described in those Podspecs are running and healthy
+- it only manages containers that were created by the API server
+  - does not manages any container running on the node
+- we can manage kubelet without an API server by using a HTTP endpoint or a file
+#### Kube-proxy: the network proxy
+- a process that runs on all worker nodes
+- it reflects services as defined on node, and can do simple network stream or round-robin forwarding across a set of backends
+- service cluster IPs and ports are currently found through Docker --link compatible environment variables specifying ports opened by the service proxy
+- has 3 modes
+  1. User space mode (most common)
+  2. Iptables mode
+  3. Ipvs mode (alpha feature)
+  - why modes are important
+    - services defined against the API server: kube-proxy watches the API server for the addition and removal of services
+    - for each new service, kube-proxy opens a randomly chosen port on the local node
+    - connections made to the chosen port are proxied to 1 of the corresponding backend pods
