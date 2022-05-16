@@ -403,10 +403,14 @@
 > kubectl expose deployment appname --type=NodePort
 ### view deployments
 > kubectl get deployments
+- get deployment details with `describe`
+  > kubectl describe deployment deploymentname
 ### introspect a deployment
 > kubectl get deployment/helloworld -o yaml
 ### view services
 > kubectl get services
+- get service details with `describe`
+  > kubectl describe service servicename
 ### introspect a service
 > kubectl get service/helloworld -o yaml
 ### view pods
@@ -424,9 +428,20 @@
     - e.g.: search for release version not in 1.0 to 2.0
       > kubectl get pods -l "release-version notin (1.0,2.0)"
 - get pod details with `describe`
-  > kubectl describe po/podname
+  - method 1
+    > kubectl describe po/podname
+  - method 2
+    > kubectl describe pod podname
+- get pod logs
+  > kubectl logs podname
+- enter the pod
+  > kubectl exec podname -it /bin/bash
+  - enter the pod for a specific container
+    > kubectl exec podname -it -c containername /bin/bash
 ### view replicaSets
 > kubectl get rs
+- get replicatSets details with `describe`
+  > kubectl describe rs replicasetname
 ### Modifying labels after deployment
 - pods
   - add or modify label
