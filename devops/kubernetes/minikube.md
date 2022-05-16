@@ -9,6 +9,8 @@
 > minikube status
 ### Start cluster
 > minikube start
+- on local, use virtual box instead of docker driver
+  > minikube start --driver=virtualbox
 - verify if cluster is up and running
   > kubectl get nodes
 ### Pause cluster
@@ -32,3 +34,5 @@
   > kubectl expose deployment appname --type=NodePort
 - access service
   > minikube service appname
+### List all services
+> minikube service list
