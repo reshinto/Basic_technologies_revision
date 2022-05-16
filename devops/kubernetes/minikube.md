@@ -23,6 +23,13 @@
 > minikube config set memory 16384
 ### Browse the catalog of easily installed Kubernetes services
 > minikube addons list
+#### Enable addon
+> minikube addons enable addonname
+#### Disable addon
+> minikube addons disable addonname
+#### Run addon
+- dashboard addon example
+  > minikube dashboard
 ### Create a second cluster running an older Kubernetes release
 > minikube start -p aged --kubernetes-version=v1.16.1
 ### Delete all of the minikube clusters
