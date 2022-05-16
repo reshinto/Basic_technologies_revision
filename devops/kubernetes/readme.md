@@ -369,6 +369,11 @@
     selector:
       app: helloworld
   ```
+### deletion
+- delete a deployment
+  > kubectl delete deploy deploymentname
+- delete a service
+  > kubectl delete svc servicename
 ### expose deployment as a service
 > kubectl expose deployment appname --type=NodePort
 ### view deployments
