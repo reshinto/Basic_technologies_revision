@@ -11,6 +11,13 @@
   - this means no more `golden handcuffs` and opens up opportunities to have hybrid cloud scenarios for those migrating towards the cloud
 - since kubernetes is a container platform, you can use `Docker` containers or other container platforms (e.g.: rkt) to develop and build applications
   - then use Kubernetes to run these applications on your infrastructure
+- other major player in container orchestration other than Kubernetes
+  - e.g.: Docker Swarm, Rancher, Mesos
+  - Cloud Specific technologies
+    - e.g.: Amazon EC2 Container service, Google Anthos
+
+![Orchestrator Guidelines](../../images/orchestratorGuidelines.png)
+
 ## Features
 ### Multi-host container scheduling
 - handled by Kube-scheduler
