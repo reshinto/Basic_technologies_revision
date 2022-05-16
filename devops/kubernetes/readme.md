@@ -736,3 +736,253 @@
 - pause/stop a cronjob
   - edit cronjob
   - modify `suspend: false` to `suspend: true`
+### daemonset
+- need create the following example
+  ```yaml
+  apiVersion: apps/v1
+  kind: DaemonSet
+  metadata:
+    name: example-daemonset
+    namespace: default
+    labels:
+      k8s-app: example-daemonset
+  spec:
+    selector:
+      matchLabels:
+        name: example-daemonset
+    template:
+      metadata:
+        labels:
+          name: example-daemonset
+      spec:
+        #nodeSelector: minikube # Specify if you want to run on specific nodes
+        containers:
+        - name: example-daemonset
+          image: busybox
+          args:
+          - /bin/sh
+          - -c
+          - date; sleep 1000
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+        terminationGracePeriodSeconds: 30
+  ```
+- set infra as development
+  - if DaemonSet is not running, it means that there isn't any development nodes running
+    - the Node Selector watches for the `infra=development` label and only runs on nodes with that label
+  ```yaml
+  apiVersion: apps/v1
+  kind: DaemonSet
+  metadata:
+    name: example-daemonset2
+    namespace: default
+    labels:
+      k8s-app: example-daemonset2
+  spec:
+    selector:
+      matchLabels:
+        name: example-daemonset2
+    template:
+      metadata:
+        labels:
+          name: example-daemonset2
+      spec:
+        containers:
+        - name: example-daemonset2
+          image: busybox
+          args:
+          - /bin/sh
+          - -c
+          - date; sleep 1000
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+        terminationGracePeriodSeconds: 30
+        nodeSelector: 
+          infra: "development"
+  ```
+- set infra as production
+  - if DaemonSet is not running, it means that there isn't any production nodes running
+    - the Node Selector watches for the `infra=production` label and only runs on nodes with that label
+  ```yaml
+  apiVersion: apps/v1
+  kind: DaemonSet
+  metadata:
+    name: prod-daemonset
+    namespace: default
+    labels:
+      k8s-app: prod-daemonset
+  spec:
+    selector:
+      matchLabels:
+        name: prod-daemonset
+    template:
+      metadata:
+        labels:
+          name: prod-daemonset
+      spec:
+        containers:
+        - name: prod-daemonset
+          image: busybox
+          args:
+          - /bin/sh
+          - -c
+          - date; sleep 1000
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+        terminationGracePeriodSeconds: 30
+        nodeSelector: 
+          infra: "production"
+  ```
+#### view daemonsets
+> kubectl get daemonsets
+### stateful set
+- example
+  ```yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: zk-hs
+    labels:
+      app: zk
+  spec:
+    ports:
+    - port: 2888
+      name: server
+    - port: 3888
+      name: leader-election
+    clusterIP: None
+    selector:
+      app: zk
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: zk-cs
+    labels:
+      app: zk
+  spec:
+    ports:
+    - port: 2181
+      name: client
+    selector:
+      app: zk
+  ---
+  apiVersion: policy/v1beta1
+  kind: PodDisruptionBudget
+  metadata:
+    name: zk-pdb
+  spec:
+    selector:
+      matchLabels:
+        app: zk
+    maxUnavailable: 1
+  ---
+  apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    name: zk
+  spec:
+    selector:
+      matchLabels:
+        app: zk
+    serviceName: zk-hs
+    replicas: 3
+    updateStrategy:
+      type: RollingUpdate
+    podManagementPolicy: OrderedReady
+    template:
+      metadata:
+        labels:
+          app: zk
+      spec:
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: "app"
+                      operator: In
+                      values:
+                      - zk
+                topologyKey: "kubernetes.io/hostname"
+        containers:
+        - name: kubernetes-zookeeper
+          imagePullPolicy: Always
+          image: "k8s.gcr.io/kubernetes-zookeeper:1.0-3.4.10"
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "0.5"
+          ports:
+          - containerPort: 2181
+            name: client
+          - containerPort: 2888
+            name: server
+          - containerPort: 3888
+            name: leader-election
+          command:
+          - sh
+          - -c
+          - "start-zookeeper \
+            --servers=3 \
+            --data_dir=/var/lib/zookeeper/data \
+            --data_log_dir=/var/lib/zookeeper/data/log \
+            --conf_dir=/opt/zookeeper/conf \
+            --client_port=2181 \
+            --election_port=3888 \
+            --server_port=2888 \
+            --tick_time=2000 \
+            --init_limit=10 \
+            --sync_limit=5 \
+            --heap=512M \
+            --max_client_cnxns=60 \
+            --snap_retain_count=3 \
+            --purge_interval=12 \
+            --max_session_timeout=40000 \
+            --min_session_timeout=4000 \
+            --log_level=INFO"
+          readinessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - "zookeeper-ready 2181"
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+              - sh
+              - -c
+              - "zookeeper-ready 2181"
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+          volumeMounts:
+          - name: datadir
+            mountPath: /var/lib/zookeeper
+        securityContext:
+          runAsUser: 1000
+          fsGroup: 1000
+    volumeClaimTemplates:
+    - metadata:
+        name: datadir
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 10Gi
+  ```
+#### view stateful sets
+> kubectl get statefulsets
