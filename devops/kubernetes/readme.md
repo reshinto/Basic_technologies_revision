@@ -392,6 +392,8 @@
   > kubectl delete svc servicename
 - delete a pod
   > kubectl delete pod podname
+  - delete pods via label
+    > kubectl delete pods -l labelkey=labelvalue
 ### expose deployment as a service
 > kubectl expose deployment appname --type=NodePort
 ### view deployments
@@ -404,11 +406,21 @@
 > kubectl get service/helloworld -o yaml
 ### view pods
 > kubectl get pods
-- view with labels using `show-labels` tag
+- show labels using `--show-labels` flag
   > kubectl get pods --show-labels
-### Modifying labels at runtime
+- get filtered list of pods via labels with `--selector` or `-l` flag
+  > kubectl get pods --selector labelkey=labelvalue
+  - using multi labels
+    > kubectl get pods --selector labelkey1=labelvalue1,labelkey2=labelvalue2
+  - using `in` operator
+    - e.g.: search for release version between 1.0 to 2.0
+      > kubectl get pods -l "release-version in (1.0,2.0)"
+  - using `notin` operator
+    - e.g.: search for release version not in 1.0 to 2.0
+      > kubectl get pods -l "release-version notin (1.0,2.0)"
+### Modifying labels after deployment
 - pods
   - add or modify label
     > kubectl label po/podname app=newlabelname --overwrite
   - delete label using `-`
-  > kubectl label pod/podname labelname-
+    > kubectl label pod/podname labelname- 
