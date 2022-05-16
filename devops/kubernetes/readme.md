@@ -588,6 +588,8 @@
 > kubectl get rs
 - get replicatSets details with `describe`
   > kubectl describe rs replicasetname
+- scale replicas
+  > kubectl scale -n namespacename deployment deploymentname --replicas=numberofreplicas
 ### Modifying labels after deployment
 - pods
   - add or modify label
@@ -600,3 +602,39 @@
 > kubectl rollout undo deployment/deploymentname
 - revert to a specific revision number with `--to-revision` flag
   > kubectl rollout undo deployment/deploymentname --to-revision=revisionnumber
+### configmap
+#### create configmap
+- this will pass the `configmapkeyname=debug` to the actual container as an environment variable
+  >  kubectl create configmap configmapname --from-literal=configmapkeyname=debug
+- must have a yaml file similar to the following
+  ```yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: logreader-dynamic
+    labels:
+      app: logreader-dynamic
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: logreader-dynamic
+    template:
+      metadata:
+        labels:
+          app: logreader-dynamic
+      spec:
+        containers:
+        - name: logreader
+          image: karthequian/reader:latest
+          env:
+          - name: configmapkeyname
+            valueFrom:
+              configMapKeyRef:
+                name: configmapname #Read from a configmap called log-level
+                key: configmapkeyname  #Read the key called log_level
+  ```
+#### view configmap
+> kubectl get configmaps
+#### introspect a configmap
+> kubectl get configmap/configmapname -o yaml
