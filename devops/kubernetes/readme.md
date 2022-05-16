@@ -225,3 +225,31 @@
         - these endpoints are available on each node through a specific port (NodePort)
       - load balancer, for use cases when you want to expose your application to the public internet
         - only used when using kubernetes in a cloud environment backed by a cloud provider
+### Labels, Selectors, and Namespaces
+#### Labels
+- they are key value pairs that are attached to object like pods, services, and deployments
+- for users of kubernetes to identify attributes for objects
+- typically used to organize clusters in some meaningful way
+- can be added at deployment time or later on and changed at any time
+- examples
+  - `release: stable`, `release: canary`
+  - `environemnt: dev`, `environemnt: qa`, `environemnt: production`
+  - `tier: frontend`, `tier: backend`, `tier: cache`
+- labels used with selectors gives a powerl feature
+  - label selectors allow identification of a set of objects
+#### Selectors
+1. Equality-based Selectors
+    - `=` 2 labels or values of labels should be equal
+    - `!=` the values of the labels should not be equal
+2. Set-based Selectors
+    - `IN` a value should be inside a set of defined values
+    - `NOTIN` a value should not be in a set of defined values
+    - `EXISTS` determines whether a label exists or not
+#### Namespaces
+- great for large enterprises
+- allows teams to access resources with accountability
+- great way to divide cluster resources between users
+- provides scope for names-must be unique in the namespace
+- `Default` namespace created when kubernete is launched
+- objects placed in `default` namespace at start
+- newer applications install their resources in a different namespace
