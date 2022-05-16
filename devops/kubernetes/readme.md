@@ -68,3 +68,62 @@
 - secrets are mounted as data volumes or environment variables
 - it is specific to a single namespace
   - thus they aren't shared across all applications
+## Kubernetes: basics
+### Kubernetes cluster architecture
+
+![Kubernetes Cluster Architecture](../../images/kubernetesClusterArchitecture.png)
+
+#### master node
+- responsible for overall management of the Kubernetes cluster
+- has 3 components that takes care of communication, scheduling, and controllers
+  1. API Server
+      - allows you to interact with the Kubernetes PAI
+      - its the front end of the Kubernetes control plane
+  2. Scheduler
+      - it watches created `Pods` who do not have a Node design yet
+      - designs the `Pod` to run on a specific Node
+  3. Controller Manager
+      - it runs controllers
+        - they are background threads that run tasks in a cluster
+      - has a bunch of different roles compiled into a single binary
+        - roles include
+          - Node Controller: responsible for the worker states
+          - Replication Controller: responsible for maintaining the correct number of Pods for the replicater controllers
+          - End-Point Controller: joins services and Pods together
+          - Service account and Token Controller: handle access management
+#### etcd
+- a simple distributed key value store
+- Kubernetes uses it as a database, and stores all cluster data here
+  - store informatione examples
+    - job scheduling info, pod details, stage information, etc.
+#### kubectl
+- interact with `master node` with `kubectl`
+- it is the command line interface for kubernetes
+- has a `kubeconfig` config file
+  - has server information
+  - has authentication information to access the API server
+#### worker nodes
+- are nodes where the applications operate
+- `kubelet` process
+  - it communicates with the master node
+  - it is an agent that communicates with the API server to see if `Pods` have been designed to the Nodes
+  - it executes `Pod` containers via the `container engine`
+  - it mounts and runt `Pod` volume and secrets
+  - it is aware of `Pod` of Node states and responds back to the `Master`
+- kubernetes is a container orchestrator
+  - expectation is that you have a container native platform running on the `worker nodes`
+    - this is where `Docker` is used to work together with `Kubelet` to run containers on the Node
+- `kube-proxy`
+  - it is the network proxy and load balancer for the service on a single worker node
+  - it handles the network routing for TCP and UDP Packlets, and performs connection forwarding
+- `Docker` daemon
+  - allows running of `containers`
+    - containers of an application are tightly coupled together in a `Pod`
+      - `Pod` is a the smallest unit that can be scheduled as a deployment in Kubernetes
+      - this group of containers share storage, Linux name space, IP addresses
+      - it is also co-located and share resources that are always scheduled together
+      - once `Pods` have been deployed and running, the `kubelet` process communicates with the `pods` to check on state and health
+        - `kube-proxy` will route any packets to the Pods from other resources that might want communication
+- worker nodes can be exposed to the internvet via `load balancer`
+- traffic coming into the Nodes are handled by `Kube-proxy`
+  - this is how end-users talk to kubernetes application
