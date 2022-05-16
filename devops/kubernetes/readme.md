@@ -278,6 +278,107 @@
     - services defined against the API server: kube-proxy watches the API server for the addition and removal of services
     - for each new service, kube-proxy opens a randomly chosen port on the local node
     - connections made to the chosen port are proxied to 1 of the corresponding backend pods
+## Authentication and Authorization
+### 2 kinds of users
+1. Normal users
+    - humans interacting with the system
+2. Service accounts
+    - accounts managed by the K8s API
+### Information that defines a User
+- username: a string to indentify the end user
+- UID: an indentifier that is more consistent or unique than username
+- group: a string that associates users with a set of commonly grouped users
+  - used later by the authorization module
+- extra fields: a map of strings that hold additional information that might be used by the authorization system
+### Definitions
+- Authentication: does a user have access to the system
+- Authorization: can the user perform an action in the system
+### Popular Authentication Modules
+#### Client Certificate Authentication
+- client certificate authentication enabled by passing the `--client-ca-file=FILENAME` option to the API server
+- referenced file must contain 1 or more certificate authorities to validate client certificates
+- the common name of a client certificate is used as the username for the request
+#### Static token files (static password file)
+- Token File Example
+- use `--token-auth-file=FILE_WITH_TOKENS` option on the command line
+- token file is a CSV file with 4 columns: token, username, user UID, followed by optional group names
+  - e.g.: token,user,uid,"group1, group2,group3"
+#### OpenID Connect
+- if you already have Open ID or Active Directory in your org, take a look at OpenID Connect tokens
+#### Webhook tokens
+- the kube-apiserver calls out to a service defined by you to tell it whether a token is valid or not
+- used commonly in scenarios where you want to integrate Kubernetes with a remote authentication service
+### Popular Authorization Modules
+#### ABAC: Attribute-based access control
+- e.g. 1:
+  ```json
+  {
+    "apiVersion": "abac.authorization.kubernetes.io/v1beta1",
+    "kind": "Policy",
+    "spec": {
+      "user": "karthik",
+      "namespace": "*",
+      "resource": "*",
+      "apiGroup": "*"
+    }
+  }
+  ```
+- e.g. 2:
+  ```json
+  {
+    "apiVersion": "abac.authorization.kubernetes.io/v1beta1",
+    "kind": "Policy",
+    "spec": {
+      "user": "carisa",
+      "namespace": "*",
+      "resource": "*",
+      "apiGroup": "*",
+      "readonly": true
+    }
+  }
+  ```
+#### RBAC: Role-based access control
+- does a user have a role that can perform a specific action?
+- lots of application want to use RBAC
+  - keep it turned on even if you don't use it directly
+- e.g.:
+  ```yaml
+  kind: Role
+  apiVersion: rbac.authorization.k8s.io/v1
+  metadata:
+    namespace: default
+    name: pod-reader
+  rules:
+  - apiGroups: [""] # "" indicates the core API group
+    resources: ["pods"]
+    verbs: ["get", "watch", "list"]
+  ```
+- RoleBinding or ClusterRoleBinding
+  ```
+  get   <-                                                ->  User
+            Pod-reader Role  <-  Pod-reader Role Binding  ->  Group
+  list  <-                                                ->  Service Account
+  ```
+  - e.g.:
+    ```
+    kind: RoleBinding
+    apiVersion: brace.authorization.k8s.io/v1
+    Metadata:
+      name: read-pods
+      Namespace: default
+    subjects:
+      kind: User
+      name: karthik
+      apiGroup: rbac.authroization.k8s.io
+    roleRef:
+      kind: Role
+      name: pod-reader
+      apiGroup: rbac.authorization.k8s.io
+    ```
+#### Webhook Authorization Mode
+- the kube-apiserver calls out to a service defined by you to tell it whether a specific action can be performed
+  - it sends the token and the action the token is trying to perform
+- this method works great when trying to integrate with a 3rd party authorization system, or if you want a complex set of rules
 ## Installation
 - Install `kubectl`
   > brew install kubectl
