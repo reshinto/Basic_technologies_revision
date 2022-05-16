@@ -278,3 +278,12 @@
     - services defined against the API server: kube-proxy watches the API server for the addition and removal of services
     - for each new service, kube-proxy opens a randomly chosen port on the local node
     - connections made to the chosen port are proxied to 1 of the corresponding backend pods
+## Installation
+- Install `kubectl`
+  > brew install kubectl
+  - verify installation
+    > kubectl version --client
+- Install `minikube`
+  > brew install minikube
+  - verify installation
+    > minikube version
