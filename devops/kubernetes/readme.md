@@ -638,3 +638,42 @@
 > kubectl get configmaps
 #### introspect a configmap
 > kubectl get configmap/configmapname -o yaml
+### handling application secrets
+#### create a secret
+> kubectl create secret generic secretname --from-literal=secretkeyname=secretkeyvalue
+#### view secret list
+> kubectl get secrets
+- view a specific secret
+  > kubectl get secret secretname
+- introspect secret
+  - the secret key value is encoded in the base 64 format
+  > kubectl get secret secretname -o yaml
+- get secret key value in applications example
+  - after deployment, secret key value can be retrieved via logs
+  ```yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: secretreader
+    labels:
+      name: secretreader
+  spec:
+    replicas: 1
+    selector:
+      matchLabels: 
+        name: secretreader
+    template:
+      metadata:
+        labels:
+          name: secretreader
+      spec:
+        containers:
+        - name: secretreader
+          image: karthequian/secretreader:latest
+          env:
+          - name: secretkeyname
+            valueFrom:
+              secretKeyRef:
+                name: secretname
+                key: secretkeyname
+  ```
