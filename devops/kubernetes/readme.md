@@ -1,1 +1,13 @@
-# Kubernetes
+# Kubernetes (K8s, Hubernetes)
+- it is an open-source platform started by google, designed to automate the deployment, scaling, and operation of containers
+- the goal of the platform is to foster an ecosystem of components and tools that relieve the burden of running applications in public and private clouds
+- in google
+  - all infrastructure relies on containers and generates more than 2 billion container deployments a week
+  - all powered by an internal platform called `Borg`
+    - Borg was the predecessor to Kubernetes
+- by using Kubernetes in your infrastructure
+  - it gives you a platform to schedule and run containers on clusters of your machines
+  - it runs on bare metal, virtual machines, private datacenter and public cloud
+  - this means no more `golden handcuffs` and opens up opportunities to have hybrid cloud scenarios for those migrating towards the cloud
+- since kubernetes is a container platform, you can use `Docker` containers or other container platforms (e.g.: rkt) to develop and build applications
+  - then use Kubernetes to run these applications on your infrastructure
