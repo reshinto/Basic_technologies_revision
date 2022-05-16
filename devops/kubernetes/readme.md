@@ -187,7 +187,7 @@
     - however, it can't be declared by itself as it requires deployment to do so
   - Deployments
     - provides a declarative updates for pods and ReplicaSets
-      - it means that you can describe the desired state of a deployment in a `yml` file
+      - it means that you can describe the desired state of a deployment in a `yaml` file
         - the deployment controller will align the actual state to match
     - it can be defined to create new or replace existing ReplicaSets
     - most applications are packages deployments, thus creating deployments are frequent
@@ -261,7 +261,7 @@
   - executes pod containers via a container engine
   - mounts and runs pod volumes and secrets
   - executes health checks to identify pod/node status
-- it works via `Podspec` which is a YML file that describes a pod
+- it works via `Podspec` which is a YAML file that describes a pod
   - it takes a set of Podspec that are provided by the kube-api server and ensures that the containers described in those Podspecs are running and healthy
 - it only manages containers that were created by the API server
   - does not manages any container running on the node
@@ -292,7 +292,90 @@
 > kubectl get nodes
 ### see what is in the cluster
 > kubectl get all
-### deploy app
+### create deployment or create service
 > kubectl create -f filename.yaml
+- deployment yaml file example
+  ```yaml
+  # Helloworld application- just the deployment
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: helloworld-deployment
+  spec:
+    selector:
+      matchLabels:
+        app: helloworld
+    replicas: 1 # tells deployment to run 1 pods matching the template
+    template: # create pods using pod definition in this template
+      metadata:
+        labels:
+          app: helloworld
+      spec:
+        containers:
+        - name: helloworld
+          image: karthequian/helloworld:latest
+          ports:
+          - containerPort: 80
+  ```
+- service yaml file example
+  ```yaml
+  # Helloworld service for nodeports
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: helloworld-service
+  spec:
+    type: NodePort
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: helloworld
+  ```
+- multiple files together (e.g.: deployment and service)
+  - use `---` to separate different files
+  ```yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: helloworld-all-deployment
+  spec:
+    selector:
+      matchLabels:
+        app: helloworld
+    replicas: 1 # tells deployment to run 1 pods matching the template
+    template: # create pods using pod definition in this template
+      metadata:
+        labels:
+          app: helloworld
+      spec:
+        containers:
+        - name: helloworld
+          image: karthequian/helloworld:latest
+          ports:
+          - containerPort: 80
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: helloworld-all-service
+  spec:
+    type: NodePort
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      app: helloworld
+  ```
 ### expose deployment as a service
 > kubectl expose deployment appname --type=NodePort
+### view deployments
+> kubectl get deployment
+### introspect a deployment
+> kubectl get deployment/helloworld -o yaml
+### view services
+> kubectl get service
+### introspect a service
+> kubectl get service/helloworld -o yaml
