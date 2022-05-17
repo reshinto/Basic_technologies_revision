@@ -251,6 +251,7 @@ _____      | tempValue = 10     |      |                    |      _____
     ```
 ## Escaping references
 - returning of reference variables that allows outsiders to modify value which is not expected
+- we should avoid escaping references in order to prevent people from accidentally having access to variables that they shouldn't be able to change
 - bad example
   ```java
   import java.util.Map;
