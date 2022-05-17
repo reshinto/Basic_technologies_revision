@@ -154,3 +154,61 @@ _____      | tempValue = 10     |      |                    |      _____
                  |    3 ----> String Four      |
                  -------------------------------
   ```
+## Values and References
+- passing values
+  ```java
+  public class Main {
+    public static void main(String[] args) {
+      int localValue = 5;
+      calculate(localValue);
+      System.out.println(localValue);  // 5
+    }
+    public static void calculate(int calValue) {
+      calValue = calValue * 100;
+    }
+  }
+  ```
+- passing references
+  ```java
+  public class Main {
+    public static void main(String[] args) {
+      Customer c = new Customer("Sally");
+      renameCustomer(c);
+      System.out.println(c.getName());  // Diane
+    }
+    public static void renameCustomer(Customer cust) {
+      cust.setName("Diane");
+    }
+  }
+  ```
+  ```
+  Customer c = new Customer("Sally");
+  
+  stack     heap
+  _____     _______________________________
+  | c-|-----|-> Customer                  |
+  -----     |     name-----> String Sally |
+            -------------------------------
+  ```
+  ```
+  cust.setName("Diane");
+  
+  stack     heap
+  ________     _______________________________
+  | cust-|-----|->                           |
+  | c----|-----|-> Customer --> String Diane |
+  --------     |     name       String Sally |
+               -------------------------------
+  ```
+  ```
+  System.out.println(c.getName());
+  
+  stack     heap
+  ________     _______________________________
+  | c----|-----|-> Customer --> String Diane |
+  --------     |     name       String Sally |
+               -------------------------------
+  ```
+  - after java changes the pointer from the name in the Customer object to the new string
+    - the original string object is no longer referenced from anywhere
+    - thus, it can be garbage collected at some point in the future
