@@ -253,6 +253,9 @@ _____      | tempValue = 10     |      |                    |      _____
 - returning of reference variables that allows outsiders to modify value which is not expected
 - bad example
   ```java
+  import java.util.Map;
+  import java.util.HashMap;
+    
   public class CustomerRecords {
     private Map<String, Customer> records;
     
@@ -288,6 +291,7 @@ _____      | tempValue = 10     |      |                    |      _____
     ```java
     import java.util.Iterator;
     import java.util.Map;
+    import java.util.HashMap;
     
     public class CustomerRecords implements Iterable<Customer> {
       private Map<String, Customer> records;
@@ -359,6 +363,7 @@ _____      | tempValue = 10     |      |                    |      _____
   - solution 3: best solution, return an immutable collection
     ```java
     import java.util.Map;
+    import java.util.HashMap;
     import java.util.Collections;
     
     public class CustomerRecords implements Iterable<Customer> {
