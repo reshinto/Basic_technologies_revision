@@ -323,7 +323,6 @@ _____      | tempValue = 10     |      |                    |      _____
     ```
   - solution 2: better solution, return a new instance of the collection
     ```java
-    import java.util.Iterator;
     import java.util.Map;
     import java.util.HashMap;
     
@@ -359,7 +358,6 @@ _____      | tempValue = 10     |      |                    |      _____
     ```
   - solution 3: best solution, return an immutable collection
     ```java
-    import java.util.Iterator;
     import java.util.Map;
     import java.util.Collections;
     
