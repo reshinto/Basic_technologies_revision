@@ -397,3 +397,51 @@ _____      | tempValue = 10     |      |                    |      _____
       }
     }
     ```
+## Garbage Collection
+- garbage collector cannot be modified
+  - however, we need to write code that avoids memory leaks
+  - or learn how to monitor the app's memory usage and effectiveness of the garbage collector
+    - this helps to detect and correct potential memory leaks
+- problem about the `stack` is that its scope is tight and is based on code blocks `{...}`
+  - often we want an object to live for a longer period of time than its enclosing scope
+    - which is when we want to share objects between code blocks
+### String pools
+- unlike other languages, in java, all objects are stored in the `heap` without giving the developers a choice
+  - reason is due to 1 of the design goals of java during the mid 1990s
+    - to simiplify choices and where possible, to provide a single, clean way of doing things
+  - in modern JVM, it is more efficient and clever, as it is able to detech an object being created is not going to be shared (doesn't go outside the code block in which its created), thus creating it on the stack
+- example
+  - reason for the following example is because java will see that the 2nd string object has identical value to the first string, thus there was no need to create a new string object in the `heap`
+  - there is no harm in both of the stack variables pointing to the same object on the `heap` because strings are immutable
+  - thus although in the code, we think that 2 string objects were created, however, there is only 1 in reality
+  ```java
+  public class Main {
+    public static void main(String[] args) {
+      String one = "hello";
+      String two = "hello";
+
+      if (one == two) {  // comparing the references
+        System.out.println("they are the same object");  // this will get printed
+      } else {
+        System.out.println("they are not the same object");
+      }
+      
+      String three = new String("hello");
+      if (one == three) {
+        System.out.println("they are the same object");
+      } else {
+        System.out.println("they are not the same object");  // this will get printed
+      }
+
+      String four = new String("hello").intern();
+      if (one == four) {
+        System.out.println("they are the same object");  // this will get printed
+      } else {
+        System.out.println("they are not the same object");
+      }
+    }
+  }
+  ```
+- Basically, JVM optimizes the creation of objects
+  - it sometimes places objects on the stack
+  - with strings, it might not create duplicate objects
