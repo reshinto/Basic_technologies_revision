@@ -357,3 +357,39 @@ _____      | tempValue = 10     |      |                    |      _____
       }
     }
     ```
+  - solution 3: best solution, return an immutable collection
+    ```java
+    import java.util.Iterator;
+    import java.util.Map;
+    import java.util.Collections;
+    
+    public class CustomerRecords implements Iterable<Customer> {
+      private Map<String, Customer> records;
+
+      public CustomerRecords() {
+        this.records = new HashMap<String, Customer>();
+      }
+
+      public void addCustomer(Customer c) {
+        this.records.put(c.getName(), c);
+      }
+      
+      public Map<String, Customer> getCustomers() {
+        return Collections.unmodifiableMap(this.records);
+      }
+    }
+    
+    public class Main {
+      public static void main(String[] args) {
+        CustomerRecords records = new CustomerRecords();
+
+        records.addCustomer(new Customer("John"));
+        records.addCustomer(new Customer("Simon"));
+
+        records.getCustomers().clear();  // this will raise an error during runtime
+        for (Customer next: records.getCustomers().values()) {
+          System.out.println(next);
+        }
+      }
+    }
+    ```
