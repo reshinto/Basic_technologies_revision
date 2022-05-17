@@ -212,3 +212,40 @@ _____      | tempValue = 10     |      |                    |      _____
   - after java changes the pointer from the name in the Customer object to the new string
     - the original string object is no longer referenced from anywhere
     - thus, it can be garbage collected at some point in the future
+- final keyword
+  - once it has been assigned, it can never be altered
+  - closest thing to a constant
+  ```java
+  // method 1
+  final Customer c = new Customer("John");
+  
+  // method 2: due to this, it is different from a traditional constant value from other programming languages
+  final Customer c;
+  c = new Customer("John");
+  
+  // this is allowed because java does not have const correctness
+  c.setName("Peter");  // modifying values inside the same object is allowed
+  
+  c = new Customer("Susan");  // this will raise a compile error, final keyword prevents the change of reference to the object in the Heap
+  ```
+  - it does not prevent the following side effect due to lack of const correctness
+    ```java
+    public class Main {
+      public static void main(String[] args) {
+        final Customer c = new Customer("John");
+        System.out.println(c.getName());  // John
+        System.out.println(c.getName());  // XXX
+      }
+    }
+    
+    public class Customer {
+      public Customer(String name) {
+        this.name = name;
+      }
+      public String getName() {
+        String temp = this.name;
+        this.name = "XXX";
+        return temp;
+      }
+    }
+    ```
