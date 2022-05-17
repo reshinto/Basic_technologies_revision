@@ -249,3 +249,111 @@ _____      | tempValue = 10     |      |                    |      _____
       }
     }
     ```
+## Escaping references
+- returning of reference variables that allows outsiders to modify value which is not expected
+- bad example
+  ```java
+  public class CustomerRecords {
+    private Map<String, Customer> records;
+    
+    public CustomerRecords() {
+      this.records = new HashMap<String, Customer>();
+    }
+    
+    public void addCustomer(Customer c) {
+      this.records.put(c.getName(), c);
+    }
+    
+    public Map<String, Customer> getCustomers() {
+      return this.records;  // this is the escaping reference
+    }
+  }
+  
+  public class Main {
+    public static void main(String[] args) {
+      CustomerRecords records = new CustomerRecords();
+      
+      records.addCustomer(new Customer("John"));
+      records.addCustomer(new Customer("Simon"));
+      
+      records.getCustomers().clear();  // not what you wanted to allow
+
+      for (Customer next: records.getCustomers().values()) {  // data will be empty
+        System.out.println(next);
+      }
+    }
+  }
+  ```
+  - solution 1: make `CustomerRecords` as an iterable class and provide an iterator to the objects that we want to be able to iterate through
+    ```java
+    import java.util.Iterator;
+    import java.util.Map;
+    
+    public class CustomerRecords implements Iterable<Customer> {
+      private Map<String, Customer> records;
+
+      public CustomerRecords() {
+        this.records = new HashMap<String, Customer>();
+      }
+
+      public void addCustomer(Customer c) {
+        this.records.put(c.getName(), c);
+      }
+      
+      @Override
+      public Iterator<Customer> iterator() {
+        return records.values().iterator();
+      }
+    }
+    
+    public class Main {
+      public static void main(String[] args) {
+        CustomerRecords records = new CustomerRecords();
+
+        records.addCustomer(new Customer("John"));
+        records.addCustomer(new Customer("Simon"));
+
+        records.iterator().remove();  // this method is available thus is not the best solution
+        
+        for (Customer next: records) {  // data will be empty
+          System.out.println(next);
+        }
+      }
+    }
+    ```
+  - solution 2: better solution, return a new instance of the collection
+    ```java
+    import java.util.Iterator;
+    import java.util.Map;
+    import java.util.HashMap;
+    
+    public class CustomerRecords implements Iterable<Customer> {
+      private Map<String, Customer> records;
+
+      public CustomerRecords() {
+        this.records = new HashMap<String, Customer>();
+      }
+
+      public void addCustomer(Customer c) {
+        this.records.put(c.getName(), c);
+      }
+      
+      public Map<String, Customer> getCustomers() {
+        return new HashMap<String, Customer>(this.records);
+      }
+    }
+    
+    public class Main {
+      public static void main(String[] args) {
+        CustomerRecords records = new CustomerRecords();
+
+        records.addCustomer(new Customer("John"));
+        records.addCustomer(new Customer("Simon"));
+
+        records.getCustomers().clear();  // this will only remove the copied version
+        for (Customer next: records.getCustomers().values()) {  // get a new copy with the data
+          System.out.println(next);  // work fine
+        }
+      }
+    }
+    ```
