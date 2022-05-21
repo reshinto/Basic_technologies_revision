@@ -477,3 +477,72 @@ _____      | tempValue = 10     |      |                    |      _____
       - objects that are not freed continue to consume memory
         - this will result in more memory being used over time
         - computer will start to slow down, and eventually crash
+### gc and finalize methods
+```java
+public class Customer {
+  private String name;
+
+  public Customer(String name) {
+    this.name = name;
+  }
+  
+  // this method gets called when garbage collection is occurring
+  public void finalize() {
+    System.out.println("Object is being garbage collected");
+  }
+}
+
+public class Main {
+  public static void main(String[] args) {
+    Runtime runtime = Runtime.getRuntime();
+
+    long availableBytes = runtime.freeMemory();
+    System.out.println("Total memory: " + availableBytes / 1024 + "kb");
+
+    for (int i=0; i<1000000; i++) {
+      // these are instantly availabel for garbage collection
+      // because as soon as the loop is closed, the object is no longer referenced by a variable on the stack
+      Customer customer = new Customer("Customer " + i);
+    }
+
+    availableBytes = runtime.freeMemory();
+    System.out.println("Total memory before gc: " + availableBytes / 1024 + "kb");
+
+    // suggest garbage collection to run, but no guarantee
+    // it might appear to have run
+    System.gc();
+
+    availableBytes = runtime.freeMemory();
+    System.out.println("Total memory after gc: " + availableBytes / 1024 + "kb");
+  }
+}
+```
+- the `gc` method suggests that the JVM runs the garbage collection process
+  - although it tells the JVM to run the garbage collection, there's no guarantee that the JVM will do it
+  - usually it is not a good idea to run the `gc` command
+    - during garbage collection process
+      - it will temporarily stop all threads in app from running
+      - while garbage collection takes place, the app is temporarily suspended
+        - it won't resume until garbage collection is complete
+      - garbage collection should be quick and infrequent
+- the `finalize` method
+  - it is the process when an object is actually garbage collected
+    - it would physically removes the object from the heap, rather than making becomes eligible for garbage collection
+  - seems to be useful, but is actually pretty useless
+  - because we won't know if it will definitely and when it would run
+  - what we should never do is to close an open resource in the `finalize` method
+    - because you will never know when the resource is going to get closed
+  - basically if the garbage collection didn't run, the `finalize` method will not be called
+  - good use case of `finalize` method is to check if all resources has been closed
+    ```java
+    public class File() {
+      public void closeFile() {
+        file.close();
+      }
+      public void finalize() {
+        if (file.isOpen()) {
+          logger.warn("Resource was not closed")
+        }
+      }
+    }
+    ```
