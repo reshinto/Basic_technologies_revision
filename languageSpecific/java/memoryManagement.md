@@ -573,3 +573,28 @@ public class Main {
 - thus garbage collector doesn't really collect any garbage
   - it actually collects the objects which are not eligible for garbage collection
   - this means that the garbage collection process is faster than bulk garbage
+- `generational garbage collection` helps to avoid the app from becoming frozen during the garbage collection process
+- most objects in Java live for a very short period of time
+  - if an object survives 1 garbage collection, its more likely to live forever
+- its faster to collect when there's a lot of garbage, when there are fewer objects that are surviving
+- thus, `generational garbage collection` is a way of organizing the heap
+- the heap is organized into 2 sections
+  1. young generation
+      - also know as `minor collection`
+      - typically smaller
+        - but can be trimmed
+      - new objects are created in the young generation space
+      - the young generation will fill up quite quickly as its small
+      - when full, the garbage collection takes place, but only on the young generation
+      - because most objects don't survive for long
+        - the young generation which is full of new objects is probably mostly garbage
+        - thus the process to garbage collect young generation should be very quick
+        - as a result, we will not notice the app freezing while this takes place
+      - all surviving objects are then copied to the old generation
+        - this frees up the younger generation for new objects to be added
+  2. old generation
+      - also known as `major collection`
+      - garbage collection also runs on the old generation
+        - but only if it's needed
+      - it would be a lot slower, as it's much bigger block of memory to sweep
+      - there will be many objects still alive, so the sweep will take longer and the moving of all surviving objects into a contiguous part of the memory will take longer
