@@ -550,3 +550,26 @@ public class Main {
 - it is when an object is referenced on the stack even though it will never be used again
 - it is where you have written code, or a 3rd party library that you are using contains code that somehow keeps an object live even though you are never going to use it again
   - it should be garbage, but java never considers it as such because it's referenced from somewhere on the stack
+### Generational Garbage Collection
+- modern garbage collectors uses a clever mechanism to remove objects from the heap which are no longer reachable
+- rather than searching for all the objects to remove, instead, it looks for all the objects that need to be retained and rescues them
+- algorithm is `mark and sweep`
+  - its a 2 stage process
+    1. marking stage
+        - the program's execution is first paused
+          - also refers to as a `stop the world event`
+          - all threads in the app are paused
+          - the garbage collector then checks every single live reference
+            - done by looking at every variable on the stack and follows its reference
+            - the object that it finds at the end of the reference is marked as being alive
+              - then it follows any other references that the object has and also marks those as being alive
+           
+        - marking cannot work properly if there are any threads still executing
+    2. sweeping stage
+        - once all objects that are referenced are marked for keeping, a full scan of the heap takes place, and the stages of all of the objects is checked
+          - the memory occupied by those objects not marked can be freed up
+          - objects that are being kept, are moved into a single contiguous block of memory
+            - this stops the heap from becoming fragmented over time and makes it easier and quicker for the virtual machine to find memory to allocate to future objects
+- thus garbage collector doesn't really collect any garbage
+  - it actually collects the objects which are not eligible for garbage collection
+  - this means that the garbage collection process is faster than bulk garbage
