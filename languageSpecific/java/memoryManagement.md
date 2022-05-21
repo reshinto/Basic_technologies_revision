@@ -445,3 +445,35 @@ _____      | tempValue = 10     |      |                    |      _____
 - Basically, JVM optimizes the creation of objects
   - it sometimes places objects on the stack
   - with strings, it might not create duplicate objects
+### Garbage eligibility
+- in java, once an object is no longer needed, it gets removed automatically
+  - java avoids memory leaks by
+    - running on a virtual machine
+      - when calling the `new` keyword in Java to create a new object
+        - memory is not being taken from the Operating System
+        - memory is acquired by the virtual machine
+          - the virtual machine is another computer program written in C
+            - the C program will control the request for memory for objects from the OS and controls the freeing of memory when objects are no longer needed
+    - adopting a Garbage Collection strategy
+      - it was invested in 1959 with the LISP programming language
+      - idea of garbage collection is that programmers ask for objects to be allocated on the heap
+        - but do not need to free them when they are finished
+        - instead, an automatic process analyzes the heap and aims to work out which objects are no longer needed
+          - any unneeded objects can be deleted
+        - it follows a rule
+          - any object on the heap which cannot be reached through a reference from the stack is eligible for garbage collection
+            ![Garbage collection 1](../../images/garbageCollection1.png)
+            
+            ![Garbage collection 2](../../images/garbageCollection2.png)
+            
+            ![Garbage collection 3](../../images/garbageCollection3.png)
+          
+- in C, C++ or similar languages, programmer have to indicate that the object is no longer required with the `free()` function
+  - in visual basic, need to set object equal to null to clear the reference of the object
+  - not doing so will cause the memory that is being used to store the object to be never released
+    - it will still remain even when the program finishes running
+    - only way is to restart the computer in order to free the memory
+    - this is referred to as `memory leak`
+      - objects that are not freed continue to consume memory
+        - this will result in more memory being used over time
+        - computer will start to slow down, and eventually crash
