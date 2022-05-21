@@ -546,3 +546,7 @@ public class Main {
       }
     }
     ```
+### Soft leaks
+- it is when an object is referenced on the stack even though it will never be used again
+- it is where you have written code, or a 3rd party library that you are using contains code that somehow keeps an object live even though you are never going to use it again
+  - it should be garbage, but java never considers it as such because it's referenced from somewhere on the stack
