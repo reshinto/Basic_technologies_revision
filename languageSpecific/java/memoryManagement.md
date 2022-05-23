@@ -658,3 +658,9 @@ public class Main {
   - there will be some performance impact each time the heap needs to increase its memory from starting size to total size
   - thus setting heap size to the mimum that the app normally needs is goo in performance critical circumstances
   - if running a server app where there won't be other apps competing with the memory of the machine, setting the max and starting heap sizes to be the same is ok
+### PermGen size
+- not valid for java 8 and above
+- `K` for kb, `M` for mb, `G` for gb
+- `-XX:MaxPermSize` set the size of the PermGen
+  - example
+    > -XX:MaxPermSize=256M 
