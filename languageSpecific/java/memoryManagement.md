@@ -678,3 +678,34 @@ public class Main {
 - use this option when app crashes with an `out of memory error`
 - `-XX:HeapDumpOnOutOfMemory` creates a heap dump file
   - we can then load this file into the Apache Memory Analyzer to find out what went wrong
+### Choosing a garbage collector
+- Oracle Virtual Machine has 3 types of collector
+  1. Serial
+      - uses a single thread to perform all the garbage collection work
+      - take note that during garbage collection, the app is paused
+        - so it doesn't matter how many threads are in the app
+        - whether its single threaded or multi threaded, all threads will be on hold while garbage collector runs
+      - the garbage collector will need to compete with other apps for processing time
+      - serial collector is the best choice for a single processor computer and for apps with small amounts of data
+      - select option with `-XX:+UseSerialGC`
+  2. Parallel
+      - it will perform garbage collections on the young generation
+        - which are called minor collections in parallel
+        - this means that it will have multiple threads all performing the garbage collection process
+      - it is an useful option if have multiple processors on the computer, or processors that are able to process multiple threads at the same time
+      - the option is good for larger data sets as it gives better performance that the `serial` collector
+      - the collector is sometimes called the `throughput` collector
+      - select option with `-XX:+UseParallelGC`
+  3. Mostly Concurrent
+      - performs most of its work concurrently
+      - it is the closest that we can get to a real-time garbage collection
+      - this is where it pauses the app to do the marking of objects, then resumes the app while the sweep phase takes place
+      - basially the `stop the world` part of the garbage collection process is minimized
+      - there are 2 Mostly Concurrent collectors to choose from
+        1. Mark Sweep Collector
+            > -XX:+UseConcMarkSweepGC
+        2. G One Collector
+            > -XX+UseG1GC
+- which garbage collector is used on the computer by default?
+  - java makes the choice based on the hardware
+  - can find out by running `-XX:+PrintCommandLineFlags` to find out which is default
