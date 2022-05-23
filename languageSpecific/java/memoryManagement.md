@@ -664,3 +664,13 @@ public class Main {
 - `-XX:MaxPermSize` set the size of the PermGen
   - example
     > -XX:MaxPermSize=256M 
+### Garbage collection and generation sizes
+- `k` for kb, `m` for mb, `g` for gb
+- useful if want to monitor how often garbage collection is taking place in the app
+- `-verbose:gc` print to the console when a garbage collection takes place
+- `-Xmn` set the size of the young generation
+  - example
+    > -Xmn256m
+  - this options sets the total and initial size of the young generation at the same time
+    - thus the overall and initial heap size needs to be sufficiently greater than the young generation size
+  - Oracle recommends that the size of the young generation should be between half and a quarter of the overall heap size
