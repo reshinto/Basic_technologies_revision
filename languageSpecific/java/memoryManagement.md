@@ -598,3 +598,42 @@ public class Main {
         - but only if it's needed
       - it would be a lot slower, as it's much bigger block of memory to sweep
       - there will be many objects still alive, so the sweep will take longer and the moving of all surviving objects into a contiguous part of the memory will take longer
+### PermGen and Metaspace
+- Java 6
+  - there is a further part of the heap called `PermGen` (Permanent Generation)
+    - objects in the PermGen will survive forever
+    - the PermGen is never garbage collected
+      - thus is PermGen runs out of space, app will crash
+        - an error message `ran out of PermGen space` will occur
+        - this means that the app has too many classes or internalized strings
+          - this is not caused by memory leaks or faults in the code
+          - only way to avoid PermGen errors is to increase the size of the allocated memory for PermGen within the Heap
+      - in a server, each time an app is redeploy, a new metadata of all the classes will be created
+        - the old data will also remain but never referred to and never get cleared out
+        - this means that if redeployment is done too many times, eventually it will run out of PermGen space
+      - solution is to always stop and restart the server after redeployment
+    - 2 types of object that goes into PermGen
+      - internalized strings
+        - strings which are placed into a pool for reuse
+      - new class creation
+        - the metadata for that class is placed in the PermGen
+          - it is some memory needed to store information about the class
+        - it is not the instance of the class
+          - an object for that is created in the heap
+- java 7
+  - internalized strings are no longer stored in the PermGen
+  - internalized strings are stored in the Heap
+    - thus allowing it to be garbage collected
+
+![Java 7 and 8 PermGen](../../images/java6And7PermGen.png)
+
+- java 8
+  - PermGen is removed from the Heap, a new separate `MetaSpace` is created where the field classes are placed
+  - `MetaSpace` is not part of the heap, it is allocated out of the computer's native memory
+    - so maximum available space for the MetaSpace is the total available system memory for the computer
+    - there is now an option to cap the maximum size for the MetaSpace
+      - if there is no cap, the JVM will just grow the MetaSpace as it needs to
+    - when classes are no longer creatable, the meta data related to those classes is then removed
+      - everytime a server is redeployed, the old class meta data in the MetaSpace will get removed
+
+![Java 8 MetaSpace](../../images/java8MetaSpace.png)
