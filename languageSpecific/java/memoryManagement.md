@@ -674,3 +674,7 @@ public class Main {
   - this options sets the total and initial size of the young generation at the same time
     - thus the overall and initial heap size needs to be sufficiently greater than the young generation size
   - Oracle recommends that the size of the young generation should be between half and a quarter of the overall heap size
+### Generating heap dumps
+- use this option when app crashes with an `out of memory error`
+- `-XX:HeapDumpOnOutOfMemory` creates a heap dump file
+  - we can then load this file into the Apache Memory Analyzer to find out what went wrong
