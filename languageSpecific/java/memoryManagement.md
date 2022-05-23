@@ -637,3 +637,24 @@ public class Main {
       - everytime a server is redeployed, the old class meta data in the MetaSpace will get removed
 
 ![Java 8 MetaSpace](../../images/java8MetaSpace.png)
+
+## Tuning the Virtual Machine
+- it is by providing command line arguments to the Java Runtime so that 1 or more non default settings is applied to the app
+### Heap Size
+- `k` for kb, `m` for mb, `g` for gb
+- arguments that start with `X` are non standard arguments
+  - this means that they are not guaranteed to be implemented on every runtime
+- `-Xmx` set the maximum heap size
+  - example
+    > -Xmx512m
+  - useful in assiting the detection of potential memory leaks
+  - might want to set a low maximum heap size to test whether the app will run satisfactorily in a memory constrained environment
+  - default heap size can be found via the javadocs
+    - in java 8, the default heap size is usually a quarter of the computer's total memory
+    - on a client or a server, max default heap size is 256 mb
+      - the total heap size will not be allocated when app starts
+      - the default starting size is `1/64` of the total memory of the computer, with a min initial size of 8 mb
+- `-Xms` set the starting heap size
+  - there will be some performance impact each time the heap needs to increase its memory from starting size to total size
+  - thus setting heap size to the mimum that the app normally needs is goo in performance critical circumstances
+  - if running a server app where there won't be other apps competing with the memory of the machine, setting the max and starting heap sizes to be the same is ok
