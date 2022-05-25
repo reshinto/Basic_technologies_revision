@@ -9,6 +9,8 @@
     - and how fast it can execute that series of instructions
 #### parallel
 - breaking the tasks for them to be executed simultaneously by different processors
+  - accomplish a single task faster
+  - accomplish more tasks in a given time
 - the processors has to coordinate with each other as they might be dependent on each other
   - does not necessarily means speed will become twice as fast
     - if a separate task B requires task A but task A is still processing even though task B is completed
