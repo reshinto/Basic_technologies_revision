@@ -48,3 +48,33 @@
       - the opposite of `SIMD`
       - each processing unit independently executes its own separate series of instructions
         - however, all of those processors are operating on the same single stream of data
+      - `MISD` doesn't make much practical sense, thus its not a commonly used architecture
+    - Multiple Instruction Multiple Data (MIMD)
+      
+      ![MIMD](../../images/mimd.png)
+      
+      - every processing unit can be operating on a different set of data
+      - it is the most commonly used architecture
+      - can find it in multicore PCs, network clusters, supercomputers
+      - can be further subdivided into 2 parallel programming models
+        - Single Program Multiple Data (SPMD)
+        
+          ![SPMD](../../images/spmd.png)
+          
+          - multiple processing units are executing a copy of the same single program simultaneously
+            - but each can use different data
+          - different from `SIMD` because although each processor is executing the same program
+            - they do not have to be executing the same instruction at the same time
+            - the processors can run asynchronously
+            - the program usually includes conditional logic that allows different tasks within the program to only execute specific parts of the overall program
+          - it is the most common style of parallel programming
+        - Multiple Program Multiple Data (MPMD)
+        
+          ![MPMD](../../images/mpmd.png)
+        
+          - each processors is executing a different program
+          - processors can be executing different, independent programs at the same time while also be operating on different data
+          - typically in this model, 1 processing node will be selected as the host or manager
+            - which runs 1 program that farms out data to the other nodes running a 2nd program
+            - those other nodes do their work and return their results to the manager
+          - it is not as common as `SPMD` but can be useful for some applications that lend themselves to functional decomposition
