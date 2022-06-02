@@ -70,7 +70,7 @@
           - it is the most common style of parallel programming
         - Multiple Program Multiple Data (MPMD)
         
-          ![MPMD](../../images/multiplePgrogramMultipleData.png)
+          ![MPMD](../../images/multipleProgramMultipleData.png)
         
           - each processors is executing a different program
           - processors can be executing different, independent programs at the same time while also be operating on different data
