@@ -78,3 +78,63 @@
             - which runs 1 program that farms out data to the other nodes running a 2nd program
             - those other nodes do their work and return their results to the manager
           - it is not as common as `SPMD` but can be useful for some applications that lend themselves to functional decomposition
+### Shared vs distributed memory
+- accessing memory needs to be fast enough to get the instructions and data required in order to be able to make use of more processors
+- computer memory usually operates at a much slower speed than processors
+- when 1 processor is reading or writing to memory, it often prevents any other processors from accessing the same memory element
+  
+  ![Memory and processor](../../images/memoryProcessor.png)
+
+- there are 2 main memory architectures that exists for parallel computing
+  1. shared memory
+      - all processors have access to the same memory as part of a global address space
+      - although each processor operates independently
+        - if 1 processor changes a memory location, all of the other processor operates will see that change
+      - the term shared memory does not mean all data exists on the same physical device
+        - it could be spread across a cluster of systems
+        - the key is that both of the processors see everything that happens in the shared memory space
+        - the shared memory architectures have the advantage of being easier for programming in regards to memory
+          - because its easier to share data between different parts of a parallel program
+        - disadvantage is that they don't often scale well
+          - adding more processors to a shared memory system will increase traffic on the shared memory bus
+          - shared memory puts responsibility on the programmer to synchronize memory accesses to ensure correct behavior
+        - often classified into 1 of 2 categories, which are based on how the processors are connected to memory and how quickly they can access it
+          - Uniform memory access (UMA)
+            - all of the processors have equal access to the memory
+              - means that they can access it equally fast
+            - several types of UMA architectures
+              - most common is `symmetric multiprocessing system` (SMP)
+                
+                ![Symmetric Multiprocessing](../../images/smp.png)
+                
+                - has 2 or more identical processors which are connected to a single shared memory often through a system bus
+                - in modern multicore processors, each of the processing cores are treated as a separate processor
+                - in most modern processors, each core has its own cache
+                  - it is a small and very fast piece of memory that only it can see and it uses it to store data that it's frequently working with
+                  - however, caches introduces the challenge that if 1 processor copies a value from the shared main memory, then makes a change to it in its local cache
+                    - that change needs to be updated back in the shared memory before another processor reads the old value, which is no longer current
+                    - this issue is called `cache coherency`
+                    - handled by the hardware in multicore processors
+          - Non-uniform memory access (NUMA)
+          
+            ![Non-uniform memory access](../../images/numa.png)
+          
+            - often made by physically connecting multiple `SMP` systems together
+            - the access is nonuniform because some processors will have quicker access to certain parts of memory than others
+            - it takes longer to access things over the bus
+            - overall, every processor can still see everything in memory
+  2. distributed memory
+
+      ![Distributed Memory](../../images/distibutedMemory.png)
+
+      - in a distributed memory system, each processor has its own local memory with its own address space
+      - concept of a global address space doesn't exist
+      - all the processors are connected through some sort of network, which can be as simple as `Ethernet`
+      - each processor operates independently
+        - if it makes changes to its local memory, that change is not automatically reflected in the memory of other processors
+        - it is up to the programmers to explicitly define how and when data is communicated between the nodes in a distributed system
+          - this is a disadvantage
+      - advatange of a distributed memory architecture is that its scalable
+        - when more processors are added to the system, memory also increases
+        - it makes it cost effector to use commodity, of the shelf computers and networking equipment to build large distributed memory systems
+      - most supercomputers use some form of distributed memory architecture or a hybrid of distributed and shared memory
