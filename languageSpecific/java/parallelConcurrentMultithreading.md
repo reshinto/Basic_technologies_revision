@@ -59,7 +59,7 @@
       - can be further subdivided into 2 parallel programming models
         - Single Program Multiple Data (SPMD)
         
-          ![SPMD](../../images/spmd.png)
+          ![SPMD](../../images/singpleProgramMultipleData.png)
           
           - multiple processing units are executing a copy of the same single program simultaneously
             - but each can use different data
@@ -70,7 +70,7 @@
           - it is the most common style of parallel programming
         - Multiple Program Multiple Data (MPMD)
         
-          ![MPMD](../../images/mpmd.png)
+          ![MPMD](../../images/muttiplePgrogramMultipleData.png)
         
           - each processors is executing a different program
           - processors can be executing different, independent programs at the same time while also be operating on different data
