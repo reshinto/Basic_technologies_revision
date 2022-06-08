@@ -8,7 +8,7 @@
   - runs on Java Virtual Machine (JVM)
     - each java app executes within its own instance of the JVM
     - the operating system treats that JVM instance as a separate, independent process
-    - thus if multiple java apps were run at the same time, they will each execute in a separate JVM process with they own independent memory space
+    - thus if multiple java apps were run at the same time, they will each execute in a separate JVM process with their own independent memory space
   - incorporates a garbage collector
   - derives its syntax from C++
 ## Table of Contents
