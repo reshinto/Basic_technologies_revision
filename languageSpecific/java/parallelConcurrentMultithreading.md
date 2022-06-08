@@ -138,3 +138,50 @@
         - when more processors are added to the system, memory also increases
         - it makes it cost effector to use commodity, of the shelf computers and networking equipment to build large distributed memory systems
       - most supercomputers use some form of distributed memory architecture or a hybrid of distributed and shared memory
+## Threads and Processes
+### Threads vs process
+
+![Threads and Process](../../images/threadsAndProcess.png)
+
+- the concept of 2 people doing the same thing such as cooking
+  - each person is a thread, while the cooking is the process
+  - both person work independently contributing to the cooking process
+  - both have direct access to the same cookbooks containing cooking instructions data
+  - the ingredients being used represents the data and variables being manipulated
+  - however, this will cause problems if there are poor coordination between the people (threads)
+- process
+  - it is the instance of the program executing when an application runs on a computer
+  - the process consists of the program's code, data, and information about its state
+  - each process is independent and has its own separate address space in memory
+  - a computer can have hundreds of active processes at once
+    - the operating system's job is to manage all of these
+  - sharing resources between separate processes is not as easy as sharing between threads in the same process
+    - because every process exists in its own address space
+    - example
+      - 2 kitchens (processes), 2 person (thread) in each kitchen, working on different recipes (program)
+        - each kitchen have their own ingredients and you can't access the ingredients from a different kitchen
+    - there are ways to communicate and share data between processes, but requires more work than communicating between threads
+- threads
+  - within every process, there are 1 or more smaller sub elements called `threads`
+    - these are similar to a tiny processes
+  - each thread
+    - is an independent path of execution through the program
+    - a different sequence of instructions
+    - can only exist as part of a process
+  - threads are the basic units that the operating system manages
+  - it allocates time on the processor to execute them
+  - threads that belong to the same process share the processes address space
+    - it gives them access to the same resources in memory including the program's executable code and data
+- communication between processes
+  - e.g.:
+    - use system provided Inter-Process Communication (IPC) mechanisms like Sockets and pipes
+    - allocating special inter-process shared memory space
+    - using remote procedure calls
+- writing parallel programs that use multiple processes working together towards a common goal or using multiple threads within a single process
+  - which to use depends on what you are doing and the environment it's running
+    - because implementation of threads and processes differs between operating systems and programming languages
+    - if the application is going to be distributed across multiple computers, it would be better to separate processes for it
+    - but as a rule of thumb, if can structure the program to take advantage of multiple threads, stick to using threads than using multiple processes
+      - because threads are considered lightweight compared to processes, which are more resource intensive
+      - a thread requires less overhead to create and terminate than a process
+      - using multiple threads is usally faster for an operating system to switch between executing threads from the same process than to switch between different processes
