@@ -185,3 +185,49 @@
       - because threads are considered lightweight compared to processes, which are more resource intensive
       - a thread requires less overhead to create and terminate than a process
       - using multiple threads is usally faster for an operating system to switch between executing threads from the same process than to switch between different processes
+### Concurrent vs Parallel execution
+- just because a program is structured to have multiple threads or processes does not mean they'll necessarily execute in parallel
+
+|Concurrency|Parallelism|
+|-|-|
+|Program Structure|Simultaneous Execution|
+|Dealing with multiple things at once|Doing multiple things at once|
+
+#### Concurrency
+- it refers to the ability of an algorithm or program to be broken into parts that can run independently of each other
+  - they are order independent
+  - e.g.: in a salad recipe, chopping lettuce, cucumbers, tomatoes etc can be done concurrently by different people and the order is not important
+- Concurrent Execution
+  - single processor
+    
+    ![Single Processor Concurrent Execution](../../images/singleProcessorConcurrentExecution.png)
+
+    - only 1 task can be executed at any instant in time
+    - different tasks will be swap and take turns to be executed
+    - if tasks are swapped frequently
+      - it creates the illusion that it is executing simultaneously on the single processor, but is not true parallel execution
+- Concurrent programming is useful for I/O dependent tasks like graphical user interfaces
+  - when user clicks a button to execute an operation
+  - to avoid locking up the user interface until it is completed
+    - we can run the operation in a spearate concurrent thread
+      - thus leaving the thread that's running the UI free to accept new inputs
+#### Parallel
+![Multi Processor Parallel Execution](../../images/multiProcessorParallelExecution.png)
+
+- requires parallel hardware in order to execute in parallel
+  - types of parallel hardward
+    - Multi-Core Processors
+      - used mostly in desktop computers and cellphones
+    - Graphics Processing Unit
+      - contains hundreds or thousands of specialized cores working in parallel to make amazing graphics
+    - Computer Cluster
+          - distribute their processing across multiple systems
+- programs may not always benefit from parallel execution
+  - e.g.: software drivers that handles I/O devices (mouse, keyboard, hard drive)
+    - they are managed by the operating system as independent things that get executed
+    - in a multi-core system, the execution of those drivers might get split amongst the available processors
+    - however, since I/O operations occur infrequently, relative to the speed at which computer operates, nothing is gain from parallel execution
+    - thus it can run on a single processor without any difference
+- parallel processing becomes useful for computationally intensive tasks
+  - such as calculating the result of multiplying 2 matrices together
+  - when large math operations can be devided into independent subparts, executing those parts in parallel on separate processors can speed things up
