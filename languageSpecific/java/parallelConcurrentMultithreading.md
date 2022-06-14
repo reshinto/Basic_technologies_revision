@@ -231,3 +231,55 @@
 - parallel processing becomes useful for computationally intensive tasks
   - such as calculating the result of multiplying 2 matrices together
   - when large math operations can be devided into independent subparts, executing those parts in parallel on separate processors can speed things up
+### Execution Scheduling
+- threads don't execute when they want to
+- the Operating System includes a scheduler that controls when different threads and processes get their turn to execute on the CPU
+- the `scheduler` makes it possible for multiple programs to run concurrently on a single processor
+  - when a process is created and ready to run, it gets loaded into memory and placed in the ready queue
+  
+    ![Scheduler Ready Queue](../../images/schedulerReadyQueue.png)
+
+  
+  - the scheduler cycles through the ready processes so that they get a chance to execute on the processor
+  
+    ![Scheduler Cycle Ready Queue](../../images/schedulerCycleReadyQueue.png)
+  
+    - if there are multiple processors, the OS will schedule processors to run on each of them to make the most use of the additional resources
+    
+      ![Scheduler Cycle Ready Queue Multi Processors](../../images/schedulerCycleReadyQueueMultiProcessors.png)
+    
+    - a process will run until it finishes, then the scheduler will assign another process to execute on that processor
+    
+      ![Scheduler Process Ends](../../images/schedulerProcessEnds.gif)
+    
+    - or a process might get blocked and have to wait for an I/O event
+    
+      ![Scheduler IO Queue](../../images/schedulerIOQueue.gif)
+    
+      - in this case, it will go into a separate I/O waiting queue so that another process can run
+    - or scheduler might determine that a process has spent its fair share of time on the processor and swap it out for another process from the ready queue, also referred to as `context switch`
+      
+      ![Scheduler Context Switch](../../images/schedulerContextSwitch.gif)
+      
+      - the OS has to save the state or context of the process that was running so that it can be resumed later
+      - then it has to load the context of the new process that is about to run
+      - `context switches` are not instantaneous
+        - it takes time to save and restore the registers and memory state
+        - thus the scheduler needs a strategy for how frequently it switches between processes
+          - `Scheduling Algorithms`
+            - First come, first served
+            - Shortest job next
+            - Priority
+            - Shortest remaining time
+            - Round-robin
+            - Multiple level queues
+          - `Preemptive Algorithms`
+            - a running low priority task might pause or preempt when a higher prioty task enters the ready state
+          - `Non-preemptive Algorithms`
+            - once a process enters the ready state, it'll be allowed to run for its allotted time
+- Which scheduling algorithm is used by the OS depends which of the following scheduling goals is required
+  - maximize throughput
+  - maximize fairness
+  - minimize wait time
+  - minimize latency
+- we might not have any control over when the parts of the program gets executed as it is often handled under the hood by the OS
