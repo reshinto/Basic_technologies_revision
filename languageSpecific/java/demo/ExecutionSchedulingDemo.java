@@ -1,6 +1,6 @@
 /**
  * Two threads chopping vegetables
-* uses java 11
+ * uses java 11
  * run command: javac ExecutionSchedulingDemo.java && java ExecutionSchedulingDemo
  */
 
