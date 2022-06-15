@@ -35,3 +35,15 @@
 |if app is focused on a bigger number of users|if the amount of users is not large|if don't want to use SSR, but need to improve loading time and SEO|
 |if app needs authorization to be accessed||if app has more static content on the first page|
 |if app doesn't have a lot of content used for SEO|||
+
+## Frameworks
+- React can be used for all 3 types
+
+|Client Side Rendering|Server Side Rendering|Pre-rendering / Static Site Generation|
+|-|-|-|
+|React|Jinja2 on Django|NextJS (React)|
+|Angular|Jinja2 on Flask|Gatsby|
+|Vue|Embedded JavaScript templates on ExpressJS|Hugo|
+|jQuery|React on ExpressJS||
+||Ruby on Rails||
+||ASP.NET CORE||
