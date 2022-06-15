@@ -36,7 +36,7 @@
 |if app needs authorization to be accessed||if app has more static content on the first page|
 |if app doesn't have a lot of content used for SEO|||
 
-## Frameworks
+## Frameworks / Libraries
 - React can be used for all 3 types
 
 |Client Side Rendering|Server Side Rendering|Pre-rendering / Static Site Generation|
