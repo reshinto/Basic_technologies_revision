@@ -1140,6 +1140,7 @@ static double addValues(String s1, String s2, String s3) {
 
 // declaration
 Map<String, String> map = new HashMap<>();
+// Map<Integer, Boolean> map = new HashMap<>();
 
 // add key value pair
 map.put("jp", "Japan");
@@ -1149,6 +1150,9 @@ System.out.println(map);  // { jp=Japan, sg=Singapore, usa=United States }
 
 // get value with key
 map.get("jp");  // "Japan"
+
+// check if key exists
+map.containsKey("kr");  // false
 
 // remove key value pair with key
 map.remove("sg");  // { jp=Japan, usa=United States }
