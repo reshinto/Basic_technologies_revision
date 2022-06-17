@@ -1133,12 +1133,19 @@ static double addValues(String s1, String s2, String s3) {
 - Hash Tables, Dictionaries, Objects
 ```java
 // Map: it is an interface used to store data in key-value pair
-// import java.util.Map;  // must import
+import java.util.Map;  // must import
 
 // HashMap: it is the implementation class of the Map interface
-// import java.util.HashMap;  // must import
+import java.util.HashMap;  // must import
 
-// declaration
+// Set: it is an interface used to store data in value without duplicates
+import java.util.Set;
+
+// HashSet: It is the implementation class of the Set interface
+import java.util.HashSet;
+```
+```java
+// declaration of maps
 Map<String, String> map = new HashMap<>();
 // Map<Integer, Boolean> map = new HashMap<>();
 
@@ -1160,6 +1167,31 @@ map.remove("sg");  // { jp=Japan, usa=United States }
 // get a set of keys
 // import java.util.Set;  // must import
 Set<String> keys = map.keySet();  // [ usa, jp ]
+
+
+// declaration of sets
+Set<Integer> numbers = new HashSet<Integer>();
+
+// add value
+numbers.add(1);
+
+// check if value exists
+numbers.contains(1);  // true
+
+// Check if a HashSet is empty
+numbers.isEmpty();
+
+// Find the size of a HashSet
+numbers.size();
+
+// Remove an element from a HashSet (The remove() method returns false if the element does not exist in the HashSet)
+boolean isRemoved = numbers.remove(10);
+
+// Remove all elements matching a given predicate
+numbers.removeIf(num -> num % 2 == 0);
+
+// Remove all elements from HashSet (clear it completely)
+numbers.clear();
 ```
 
 [back to top](#table-of-contents)
