@@ -526,8 +526,13 @@ String stringName2 = "multi-line " +
 
 
 // get character of string with index
-char indexChar = stringName1.charAt(0);  // 's'
+char charName = stringName1.charAt(0);  // 's'
 
+// get character code
+int charCode = (int) charName;  // 115
+
+// get character code difference
+System.out.println('b' - 'a');  // 98 - 97 = 1
 
 // modify string cases
 String stringName3 = stringName1.toUpperCase();  // "STRING"
