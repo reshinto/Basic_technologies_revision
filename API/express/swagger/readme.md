@@ -17,6 +17,7 @@ app.listen(port, () => {
 });
 ```
 ## Setup basic Swagger options
+> npm i swagger-ui-express swagger-jsdoc
 ```javascript
 const express = require("express");
 const app = express();
