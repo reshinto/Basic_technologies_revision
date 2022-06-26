@@ -711,6 +711,158 @@ function App() {
 
 export default App;
 ```
+### useTransition
+- Returns a stateful value for the pending state of the transition, and a function to start it
+  - `startTransition` lets you mark updates in the provided callback as transitions
+  - `isPending` indicates when a transition is active to show a pending state
+  - Updates in a transition yield to more urgent updates such as clicks
+  - Updates in a transitions will not show a fallback for re-suspended content
+    - This allows the user to continue interacting with the current content while rendering the update
+- Original code
+```javascript
+import { useState, useMemo } from "react";
+
+function ProductList({ products }) {
+  return (
+    <ul>
+      {products.map((product) => (
+        <li>{product}</li>
+      ))}
+    </ul>
+  );
+}
+
+export default function App() {
+  const [filterTerm, setFilterTerm] = useState("");
+
+  const dummyProducts = useMemo(() => {
+    const products = [];
+    for (let i = 0; i < 10000; i++) {
+      products.push(`Product ${i + 1}`);
+    }
+    return products;
+  }, []);
+
+  const filteredProducts = useMemo(() => {
+    if (!filterTerm) {
+      return dummyProducts;
+    }
+    return dummyProducts.filter((product) => product.includes(filterTerm));
+  }, [dummyProducts, filterTerm]);
+
+  const updateFilterHandler = (event) => {
+    setFilterTerm(event.target.value);
+  };
+
+  return (
+    <div id="app">
+      <input type="text" onChange={updateFilterHandler} />
+      <ProductList products={filteredProducts} />
+    </div>
+  );
+}
+```
+- using the hook
+```javascript
+import { useState, useMemo, useTransition } from "react";
+import "./styles.css";
+
+function ProductList({ products }) {
+  return (
+    <ul>
+      {products.map((product) => (
+        <li>{product}</li>
+      ))}
+    </ul>
+  );
+}
+
+export default function App() {
+  const [isPending, startTransition] = useTransition();
+  const [filterTerm, setFilterTerm] = useState("");
+
+  const dummyProducts = useMemo(() => {
+    const products = [];
+    for (let i = 0; i < 10000; i++) {
+      products.push(`Product ${i + 1}`);
+    }
+    return products;
+  }, []);
+
+  const filteredProducts = useMemo(() => {
+    if (!filterTerm) {
+      return dummyProducts;
+    }
+    return dummyProducts.filter((product) => product.includes(filterTerm));
+  }, [dummyProducts, filterTerm]);
+
+  const updateFilterHandler = (event) => {
+    startTransition(() => {
+      setFilterTerm(event.target.value);
+    });
+  };
+
+  return (
+    <div id="app">
+      <input type="text" onChange={updateFilterHandler} />
+      {isPending && <p style={{ color: "red" }}>Updating List...</p>}
+      <ProductList products={filteredProducts} />
+    </div>
+  );
+}
+```
+### useDeferredValue
+- accepts a value and returns a new copy of the value that will defer to more urgent updates
+- If the current render is the result of an urgent update
+  - like user input, React will return the previous value and then render the new value after the urgent render has completed
+- useDeferredValue only defers the value that you pass to it
+  - If you want to prevent a child component from re-rendering during an urgent update, you must also memoize that component with React.memo or React.useMemo
+- Original code refer to useTransition original code example
+- using the hook
+```javascript
+import { useState, useMemo, useDeferredValue } from "react";
+
+function ProductList({ products }) {
+  const deferredProducts = useDeferredValue(products);
+  return (
+    <ul>
+      {deferredProducts.map((product) => (
+        <li>{product}</li>
+      ))}
+    </ul>
+  );
+}
+
+export default function App() {
+  const [filterTerm, setFilterTerm] = useState("");
+
+  const dummyProducts = useMemo(() => {
+    const products = [];
+    for (let i = 0; i < 10000; i++) {
+      products.push(`Product ${i + 1}`);
+    }
+    return products;
+  }, []);
+
+  const filteredProducts = useMemo(() => {
+    if (!filterTerm) {
+      return dummyProducts;
+    }
+    return dummyProducts.filter((product) => product.includes(filterTerm));
+  }, [dummyProducts, filterTerm]);
+
+  const updateFilterHandler = (event) => {
+    setFilterTerm(event.target.value);
+  };
+
+  return (
+    <div id="app">
+      <input type="text" onChange={updateFilterHandler} />
+      <ProductList products={filteredProducts} />
+    </div>
+  );
+}
+```
 ### Custom Hooks
 #### useDebugValue
 - used to display a label for custom hooks in React DevTools
