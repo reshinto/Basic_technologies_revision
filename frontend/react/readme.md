@@ -863,6 +863,26 @@ export default function App() {
   );
 }
 ```
+### useId (React 18)
+- a hook for generating unique IDs that are stable across the server and client, while avoiding hydration mismatches
+- is not for generating keys in a list
+  - Keys should be generated from your data
+- example
+```javascript
+import React, { useId } from "react";
+
+function Checkbox() {
+  const id = useId();
+  return (
+    <>
+      <label htmlFor={id}>Do you like React?</label>
+      <input id={id} type="checkbox" name="react"/>
+    </>
+  );
+};
+
+export default Checkbox;
+```
 ### Custom Hooks
 #### useDebugValue
 - used to display a label for custom hooks in React DevTools
