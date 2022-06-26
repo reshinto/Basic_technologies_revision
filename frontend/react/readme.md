@@ -711,7 +711,7 @@ function App() {
 
 export default App;
 ```
-### useTransition
+### useTransition (React 18)
 - Returns a stateful value for the pending state of the transition, and a function to start it
   - `startTransition` lets you mark updates in the provided callback as transitions
   - `isPending` indicates when a transition is active to show a pending state
@@ -811,7 +811,7 @@ export default function App() {
   );
 }
 ```
-### useDeferredValue
+### useDeferredValue (React 18)
 - accepts a value and returns a new copy of the value that will defer to more urgent updates
 - If the current render is the result of an urgent update
   - like user input, React will return the previous value and then render the new value after the urgent render has completed
