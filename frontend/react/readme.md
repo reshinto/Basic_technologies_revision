@@ -116,7 +116,7 @@ export default function App() {
   return (<input onChange={handleChange("name1")} value={state.name1} />);
 }
 ```
-### Batch state updates
+### Batch state updates (not required in React 18)
 - wrong way
 ```javascript
 import React, {useState} from "react";
