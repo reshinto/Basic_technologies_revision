@@ -1,0 +1,1 @@
+web: gunicorn -k unicorn.workers.UvicornWorker src.main:app -t 300 -b 0.0.0.0:8080
