@@ -65,7 +65,7 @@ app.listen(port, () => {
 ```
 - verify at `http://localhost:5000/api-docs/`
 - result
-  ![Basic Swagger Setup](../../../images/basicSwaggerSetup.png)
+  ![Basic Swagger Setup](https://github.com/reshinto/Basic_technologies_revision/blob/master/images/basicSwaggerSetup.png)
 
 ### Add route infos into Swagger
 ```javascript
@@ -136,5 +136,5 @@ app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
 ```
-![Swagger Route Example](../../../images/swaggerRouteExample.png)
-![Swagger Route Content Example](../../../images/swaggerRouteContentExample.png)
+![Swagger Route Example](https://github.com/reshinto/Basic_technologies_revision/blob/master/images/swaggerRouteExample.png)
+![Swagger Route Content Example](https://github.com/reshinto/Basic_technologies_revision/blob/master/images/swaggerRouteContentExample.png)
