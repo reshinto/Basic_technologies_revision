@@ -285,7 +285,7 @@ const fib = (n) => {
 ```
 ```javascript
 function fib(n, startFromZero) {
-  if (n === 0 || n === 1) return startFromZero ? 0 : n;
+  if (n <= 1) return startFromZero ? 0 : n;
   let first = 0;
   let second = 1;
 
