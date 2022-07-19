@@ -7,14 +7,28 @@ input: node1 -> node2 -> node3 -> node4 -> node5 -> node6
 output: node1 <- node2 <- node3 <- node4 <- node5 <- node6
 ```
 ```javascript
+// version 1
 function reverseList(head) {
   if (!head || !head.next) {
     return head;
   }
   newFirstNode = reverseList(head.next);
+  // set next node for the returned node value
   head.next.next = head;
   head.next = null;
   return newFirstNode;
+}
+
+// version 2
+function reverseList(head) {
+  if (!head || !head.next) {
+    return head;
+  }
+  const nextNode = head.next;
+  newCurrentNode = reverseList(nextNode);
+  nextNode.next = head;
+  head.next = null;
+  return newCurrentNode;
 }
 ```
 - supporting code
