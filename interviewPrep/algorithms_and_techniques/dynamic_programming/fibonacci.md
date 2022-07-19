@@ -283,3 +283,24 @@ const fib = (n) => {
   // change to return n > 1 ? lastTwo[1] : lastTwo[0]; if fib starts with 0
 }
 ```
+```javascript
+function fib(n, startFromZero) {
+  if (n === 0 || n === 1) return startFromZero ? 0 : n;
+  let first = 0;
+  let second = 1;
+
+  for (let i=2 + (startFromZero ? 1 : 0); i<=n; i++) {
+    const sum = first + second;
+    first = second;
+    second = sum;
+  }
+  return second;
+}
+
+for (let i=0; i<8; i++) {
+  console.log(i, fib(i, true));  // 0, 0, 1, 1, 2, 3, 5, 8
+}
+for (let i=0; i<8; i++) {
+  console.log(i, fib(i));  // 0, 1, 1, 2, 3, 5, 8, 13
+}
+```
