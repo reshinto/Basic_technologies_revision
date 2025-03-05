@@ -31,10 +31,10 @@ It is the study of vectors and linear functions.
       - it is common to encode categorical variables to make them easier to work with
 4. Linear Regression
     - Used for predicting numerical values in simple regression problems
-    - the most common way of solving linear regression is via the least squares optimization that is solved using matrix factorization methods from linear regression
+    - the most common way of solving linear regression is via the least squares optimization which is solved using matrix factorization methods from linear regression
 5. Regularization
     - Overfitting is 1 of the greatest obstacles in ML
-    - When a model is too close a fit for the available data to the point that i does not perform well with any new or outside data
+    - When a model is too close a fit for the available data to the point that it does not perform well with any new or outside data
     - It is a concept from Linear algebra that is used to prevent the model from overfitting
     - Simple models are models that have smaller coefficient values
     - It is a technique that is often used to encourage a model to minimize the size of coefficients while it's being fit on data
@@ -61,8 +61,12 @@ It is the study of vectors and linear functions.
 ### Vector
 ![Vectors](../images/vectors.png)
 - The 2 most important characteristics of vectors
+
 ![Vectors Characteristics](../images/vectorCharacteristics.png)
   1. Dimensionality
       - the number of elements in a vector
   2. Orientation
       - whether the vector is in column orientation standing up tall, or row orientation laying flat and wide
+- Vector Examples
+
+![Vector Examples](../images/vectorExamples.png)
