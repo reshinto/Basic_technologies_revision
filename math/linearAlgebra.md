@@ -59,6 +59,7 @@ It is the study of vectors and linear functions.
 - e.g.: weight, temperature, blood pressure
   - they are represented by numbers such as 200 pounds, 55 Fahrenheit, or 120 by 80
 ### Vector
+![Vectors](../images/vectors.png)
 - a simple example to understand a vector
   - Imagine a moving car, it has a measure called velocity
   - it has both a quantity and a direction
