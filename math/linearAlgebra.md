@@ -1,1 +1,55 @@
 # Linear Algebra
+It is the study of vectors and linear functions.
+- Explanation 1:
+  - It is a branch of mathematics that lets you concisely describe coordinates and interactions of planes in higher dimensions and perform operations on them.
+- Explanation 2:
+  - Linear algebra is a branch of mathematics that deals with vectors (quantities with both magnitude and direction), matrices (rectangular arrays of numbers), and linear transformations (functions that preserve addition and scalar multiplication).
+- Explain like I am 5
+  - Imagine you have a bunch of LEGO blocks. Each block is like a number, and you can stack them in different ways. If you line them up in rows and columns, that’s like a matrix. If you push or stretch them in a certain direction, that’s like a transformation. Linear algebra helps us understand how things change when we add, move, or stretch these blocks in a straight and predictable way. It’s like playing with numbers in an organized way.
+- it is 1 of the main building blocks of machine learning
+## Applications in Machine Learning
+1. Data set and Date Files
+    - We fit the model on a data set in ML
+    - This data set is either a matrix or a vector
+    - e.g.: our model could be a fitness-related model that predicts the quality of sleep
+2. Images and Photographs
+    - Computer vision application
+      - you cannot send an image to a model and expect it to understand
+      - each image is made of pixels that are colored squares of varying intensities
+      - a black and white image is a single-pixel
+      - a colored image has 3-pixel values for RGB
+      - all images are stored as a matrix
+      - each operation (e.g.: cropping, scaling, et cetera) that is performed on the image is described using the notation and operations of linear algebra 
+3. Data Preparation
+    - dimensionality reduction
+      - usually, we come across data that is made up of thousands of variables and our model becomes extremely complicated
+      - this is when dimensionality reduction comes into play
+      - data sets are represented as matrices and then we can use matrix factorization methods to reduce it into its constituent parts
+    - 1 hot encoding
+      - it is used when working with categorical data
+        - such as class labels for classification problems or categorical input variables
+      - it is common to encode categorical variables to make them easier to work with
+4. Linear Regression
+    - Used for predicting numerical values in simple regression problems
+    - the most common way of solving linear regression is via the least squares optimization that is solved using matrix factorization methods from linear regression
+5. Regularization
+    - Overfitting is 1 of the greatest obstacles in ML
+    - When a model is too close a fit for the available data to the point that i does not perform well with any new or outside data
+    - It is a concept from Linear algebra that is used to prevent the model from overfitting
+    - Simple models are models that have smaller coefficient values
+    - It is a technique that is often used to encourage a model to minimize the size of coeeficients while it's being fit on data
+6. Principal Component Analysis (PCA)
+    - modeling data with many features is challenging and it's hard to know which features of data are relevant and which are not
+    - 1 of the methods for automatic reducing the number of columns of a data set is principle component analysis
+    - this method is used in ML to create projections of high dimensional data for both visualization and for training models
+    - The core of PCA method is a metric factorization method
+7. Latent Semantic Analysis (LSA)
+    - it is a form of data preparation used in natural language processing, a subfield of ML for working with text data
+    - in this case, documents are usually represented as a large matrices of word occurrences
+    - then we can apply matrix factorization methods to them in order to be able to easily compare, query, and use them as the basis for the ML model
+8. Recommender Systems
+    - They are used each time you buy something on Amazon or a similar shop and you get recommendations of products based on your previous purchases
+9. Deep Learning (DL)
+    - it is a specific subfield of ML
+    - Scaled up to multiple dimensions, DL methods work with vectors, matrices, and tensors of inputs and coefficients
+## Vectors
