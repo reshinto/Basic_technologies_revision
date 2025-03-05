@@ -97,6 +97,91 @@ vectorAsArray = np.array([1, 2, 3, 4, 5])
 # the outer brackets just group all elements together in one object as an additional set of brackets indicates a row
 rowVector = np.array([[1, 2, 3, 4, 5]])
 
-# it has only one column and five rows
+# It has only one column and five rows
 columnVector = np.array([[1], [2], [3], [4], [5]])
 ```
+
+### Vector addition
+![Vector Addition](../images/vectorAddition.png)
+  - To add two vectors, add each corresponding element.
+  - We cannot add a three-dimensional vector with a four-dimensional vector
+- dimensions don't match error example
+```python
+import numpy as np
+
+a = np.array([20, 40, 60])
+b = np.array(10, 20, 30)
+c = np.array([5, 10, 15, 20])
+
+a + b  # array([30, 60, 90])
+
+a + c  # ValueError: operands could not be broadcast together with shapes (3,) (4,)
+```
+
+![Vector Addition 2](../images/vectorAddition2.png)
+- To add two vectors, you have to place the vectors such that the tail of one vector is at the head of the other vector.
+- The sum vector traverses from the tail of the first vector to the head of the second
+### Vector Subtraction
+![Vector Subtraction](../images/vectorSubtraction.png)
+  - We cannot subtract a three-dimensional vector with a four-dimensional vector
+- dimensions don't match error example
+```python
+import numpy as np
+
+a = np.array([20, 40, 60])
+b = np.array(10, 20, 30)
+c = np.array([5, 10, 15, 20])
+
+a - b  # array([10, 20, 30])
+
+a - c  # ValueError: operands could not be broadcast together with shapes (3,) (4,)
+```
+
+![Vector Subtraction 2](../images/vectorSubtraction2.png)
+- To subtract vectors, you have to up the two vectors such that their tails are at the same coordinate.
+- The difference vector is the line that goes from the head of the negative vector to the head of the positive vector.
+### Vector Multiplication
+- example
+```python
+import numpy as np
+
+a = np.array([20, 40, 60])
+b = np.array(10, 20, 30)
+c = np.array([5, 10, 15, 20])
+
+a * b  # array([200, 800, 1000])
+```
+### Vector Division
+```python
+import numpy as np
+
+a = np.array([20, 40, 60])
+b = np.array(10, 20, 30)
+c = np.array([5, 10, 15, 20])
+
+a / b  # array([2., 2., 2.])
+```
+### Vector Scalar multiplication
+- multiply each vector element by the scalar
+- example
+```python
+import numpy as np
+
+scalar = 2
+
+list_a = [10, 11, 12, 13, 14, 15]
+
+list_as_array = np.array(list_a)  # [10 11 12 13 14 15]
+
+scalar * list_a  # this is wrong, value is [10, 11, 12, 13, 14, 15, 10, 11, 12, 13, 14, 15]
+
+scalar * list_as_array  # array([20, 22, 24, 26, 28, 30])
+```
+
+![Scalar Vector Multiplication](../images/vectorScalarMultiplication.png)
+- we have four possible cases that depend on whether the scalar is
+  - greater than 1
+  - between 1 and 0
+  - exactly 0
+  - or negative
+    - Only in the case when the scalar is negative, the direction of the vector will change
