@@ -5,7 +5,7 @@ It is the study of vectors and linear functions.
 - Explanation 2:
   - Linear algebra is a branch of mathematics that deals with vectors (quantities with both magnitude and direction), matrices (rectangular arrays of numbers), and linear transformations (functions that preserve addition and scalar multiplication).
 - Explain like I am 5
-  - Imagine you have a bunch of LEGO blocks. Each block is like a number, and you can stack them in different ways. If you line them up in rows and columns, that’s like a matrix. If you push or stretch them in a certain direction, that’s like a transformation. Linear algebra helps us understand how things change when we add, move, or stretch these blocks in a straight and predictable way. It’s like playing with numbers in an organized way.
+  - Imagine you have a bunch of LEGO blocks. Each block is like a number, and you can stack them differently. If you line them up in rows and columns, that’s like a matrix. If you push or stretch them in a certain direction, that’s like a transformation. Linear algebra helps us understand how things change when we add, move, or pull these blocks in a straight and predictable way. It’s like playing with numbers in an organized way.
 - it is 1 of the main building blocks of machine learning
 ## Applications in Machine Learning
 1. Data set and Date Files
@@ -37,19 +37,39 @@ It is the study of vectors and linear functions.
     - When a model is too close a fit for the available data to the point that i does not perform well with any new or outside data
     - It is a concept from Linear algebra that is used to prevent the model from overfitting
     - Simple models are models that have smaller coefficient values
-    - It is a technique that is often used to encourage a model to minimize the size of coeeficients while it's being fit on data
+    - It is a technique that is often used to encourage a model to minimize the size of coefficients while it's being fit on data
 6. Principal Component Analysis (PCA)
     - modeling data with many features is challenging and it's hard to know which features of data are relevant and which are not
-    - 1 of the methods for automatic reducing the number of columns of a data set is principle component analysis
-    - this method is used in ML to create projections of high dimensional data for both visualization and for training models
-    - The core of PCA method is a metric factorization method
+    - 1 of the methods for automatically reducing the number of columns of a data set is principle component analysis
+    - this method is used in ML to create projections of high dimensional data for both visualization and training models
+    - The core of the PCA method is a metric factorization method
 7. Latent Semantic Analysis (LSA)
     - it is a form of data preparation used in natural language processing, a subfield of ML for working with text data
-    - in this case, documents are usually represented as a large matrices of word occurrences
-    - then we can apply matrix factorization methods to them in order to be able to easily compare, query, and use them as the basis for the ML model
+    - in this case, documents are usually represented as a large matrix of word occurrences
+    - then we can apply matrix factorization methods to them to be able to easily compare, query, and use them as the basis for the ML model
 8. Recommender Systems
     - They are used each time you buy something on Amazon or a similar shop and you get recommendations of products based on your previous purchases
 9. Deep Learning (DL)
     - it is a specific subfield of ML
     - Scaled up to multiple dimensions, DL methods work with vectors, matrices, and tensors of inputs and coefficients
 ## Vectors
+### Scalar
+- it is just a number
+- we denote a scalar with a lower-case symbol, such as a or b
+- e.g.: weight, temperature, blood pressure
+  - they are represented by numbers such as 200 pounds, 55 Fahrenheit, or 120 by 80
+### Vector
+- a simple example to understand a vector
+  - Imagine a moving car, it has a measure called velocity
+  - it has both a quantity and a direction
+  - such elements are called vectors as opposed to scalars
+  - e.g.: the price of a car, which has a magnitude only
+- definition
+  - denote vectors with lowercase, bolded roman letters, such as `a` and `b`
+  - some texts use italics or print an arrow on top
+  - by definition, a vector is an ordered list of numbers
+- The 2 most important characteristics of vectors
+  1. Dimensionality
+      - the number of elements in a vector
+  2. Orientation
+      - whether the vector is in column orientation standing up tall, or row orientation laying flat and wide
