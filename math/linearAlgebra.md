@@ -60,16 +60,8 @@ It is the study of vectors and linear functions.
   - they are represented by numbers such as 200 pounds, 55 Fahrenheit, or 120 by 80
 ### Vector
 ![Vectors](../images/vectors.png)
-- a simple example to understand a vector
-  - Imagine a moving car, it has a measure called velocity
-  - it has both a quantity and a direction
-  - such elements are called vectors as opposed to scalars
-  - e.g.: the price of a car, which has a magnitude only
-- definition
-  - denote vectors with lowercase, bolded roman letters, such as `a` and `b`
-  - some texts use italics or print an arrow on top
-  - by definition, a vector is an ordered list of numbers
 - The 2 most important characteristics of vectors
+![Vectors Characteristics](../images/vectorCharacteristics.png)
   1. Dimensionality
       - the number of elements in a vector
   2. Orientation
