@@ -65,8 +65,38 @@ It is the study of vectors and linear functions.
 ![Vectors Characteristics](../images/vectorCharacteristics.png)
   1. Dimensionality
       - the number of elements in a vector
+      - it is called `length` or the `shape` of the vector in python
   2. Orientation
       - whether the vector is in column orientation standing up tall, or row orientation laying flat and wide
 - Vector Examples
 
-![Vector Examples](../images/vectorExamples.png)
+![Vector Example](../images/vectorExample.png)
+  - Orientation usually doesn't matter, but when performing arithmetic operations it is extremely important
+    - wrong orientation leads to unexpected results or even errors
+
+![Vector Example 2](../images/vectorExample2.png)
+  - If they're row-oriented, then they are written as with `t` where t indicates the transpose operation which converts a column vector into a row vector.
+
+![Vector Graph](../images/vectorGraph.png)
+  - the red arrow v is the vector
+  - a and b are scalars denoting the magnitude of v in horizontal and vertical directions.
+  - The algebraic interpretation of a vector is an ordered list of numbers.
+  - The geometric interpretation of a vector is a line that has a specific length and direction also called an angle.
+  - It is computed relative to the positive X-axis.
+  - The two points of a vector are called the tail, where the vector starts, and the head which has the arrow tip, where it ends.
+
+- Vector Representation in python
+```python
+# Many linear algebra operations don't work on Python lists, we create vectors as NumPy arrays called ND (N-dimensional) arrays
+vectorAsList = [1, 2, 3, 4, 5]
+
+# This array is an orientation-less array meaning it's neither a row nor a column vector
+vectorAsArray = np.array([1, 2, 3, 4, 5])
+
+# In NumPy, we indicate orientation with brackets
+# the outer brackets just group all elements together in one object as an additional set of brackets indicates a row
+rowVector = np.array([[1, 2, 3, 4, 5]])
+
+# it has only one column and five rows
+columnVector = np.array([[1], [2], [3], [4], [5]])
+```
