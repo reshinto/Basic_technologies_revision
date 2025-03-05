@@ -105,7 +105,7 @@ columnVector = np.array([[1], [2], [3], [4], [5]])
 ![Vector Addition](../images/vectorAddition.png)
   - To add two vectors, add each corresponding element.
   - We cannot add a three-dimensional vector with a four-dimensional vector
-- dimensions don't match error example
+- dimensions don't match the error example
 ```python
 import numpy as np
 
@@ -123,8 +123,8 @@ a + c  # ValueError: operands could not be broadcast together with shapes (3,) (
 - The sum vector traverses from the tail of the first vector to the head of the second
 ### Vector Subtraction
 ![Vector Subtraction](../images/vectorSubtraction.png)
-  - We cannot subtract a three-dimensional vector with a four-dimensional vector
-- dimensions don't match error example
+  - We cannot subtract a three-dimensional vector from a four-dimensional vector
+- dimensions don't match the error example
 ```python
 import numpy as np
 
@@ -173,7 +173,7 @@ list_a = [10, 11, 12, 13, 14, 15]
 
 list_as_array = np.array(list_a)  # [10 11 12 13 14 15]
 
-scalar * list_a  # this is wrong, value is [10, 11, 12, 13, 14, 15, 10, 11, 12, 13, 14, 15]
+scalar * list_a  # This is wrong, value is [10, 11, 12, 13, 14, 15, 10, 11, 12, 13, 14, 15]
 
 scalar * list_as_array  # array([20, 22, 24, 26, 28, 30])
 ```
