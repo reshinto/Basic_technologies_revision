@@ -197,3 +197,47 @@ scalar * list_as_array  # array([20, 22, 24, 26, 28, 30])
 ![Coordinate System 2](../images/coordinateSystem2.png)
 
 ![Coordinate System 3](../images/coordinateSystem3.png)
+
+## Vector Projections and Basis
+### Dot Product of Vectors
+- it is widely used in ML, in many operations and algorithms
+- 3 different ways it can be represented with symbols
+  ![Dot Product of Vectors](../images/dotProductOfVectors.png)
+
+- Dot notation
+  - the dot product of 2 vectors is calculated by multiplying their corresponding elements by each other and then summing them all
+  - it is a single number that provides information about the relationship between 2 vectors
+  - It could be represented with the following formula, where a and b are vectors of the same dimensionality and ai represents the ith element of a
+    ![Dot Notation Formula](../images/dotNotationFormula.png)
+    ![Dot Notation Formula Example](../images/dotNotationFormulaExample.png)
+
+```python
+import numpy as np
+
+a = np.array([1, 2, 3, 4, 5])
+b = np.array([6, 7, 8, 9, 10])
+
+np.dot(a, b)  # 130
+```
+- Basic Properties of Dot Product
+  - The dot product is a commutative operation, meaning if vectors switch places, the dot product stays the same
+    - `a . b = b . a`
+  - the dot product is distributive over addition, meaning the following formula applies
+    - `a(b + c) = a . b + a . c`
+
+```python
+import numpy as np
+
+a = np.array([1, 2, 3, 4, 5])
+b = np.array([6, 7, 8, 9, 10])
+
+np.dot(a, b)  # 130
+
+c = np.array([11, 12, 13, 14, 15])
+
+np.dot(b, a)  # 130
+
+first_result = np.dot(a, b + c)  # 335
+
+second_result = np.dot(a, b) + np.dot(a, c)  # 335
+```
