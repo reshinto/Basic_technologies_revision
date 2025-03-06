@@ -185,3 +185,15 @@ scalar * list_as_array  # array([20, 22, 24, 26, 28, 30])
   - exactly 0
   - or negative
     - Only in the case when the scalar is negative, the direction of the vector will change
+### Cartesian Coordinate System
+![Coordinate System](../images/coordinateSystem.png)
+- we can locate a point by its combination of numbers
+- it is important because it describes where a certain position is located in a 2-dimensional area
+- Coordinates have 2 numbers (x-coordinate and y-coordinate)
+- The x-axis runs left and right, the y-axis runs up and down
+- The axes x and y meet at (0, 0) coordinate at the center which is called the origin
+- A point is denoted by its distance along the x-axis followed by its distance along the y-axis
+
+![Coordinate System 2](../images/coordinateSystem2.png)
+
+![Coordinate System 3](../images/coordinateSystem3.png)
