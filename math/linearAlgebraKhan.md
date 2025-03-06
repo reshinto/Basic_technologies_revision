@@ -1,4 +1,4 @@
-# Linear Algebra
+# Vectors
 ## Vector intro for linear algebra
 ### **What is a Vector?**
 - A vector has both **magnitude** (size) and **direction**.
@@ -42,3 +42,47 @@
 ### **Extending Vectors to Higher Dimensions**
 - Linear algebra allows working with vectors in **3D, 4D, or even higher dimensions**.
 - While we can visualize up to 3D, **mathematical notation** helps work with higher dimensions.
+
+## Real coordinate spaces
+### **What is R² (Two-Dimensional Real Coordinate Space)?**
+- **Notation:** R² (or **ℝ²**) represents **two-dimensional real coordinate space**.
+- **Meaning:** It includes **all possible ordered pairs (x, y) of real numbers**.
+- **Example:**
+  - A vector **(3,4)** belongs to **R²**.
+  - A vector **(4,3)** is different from **(3,4)** because order matters.
+- **Visual Representation:**
+  - Vectors in R² can be represented as **arrows** in a **2D coordinate plane**.
+  - Example: The vector **(4,3)** moves 4 units right and 3 units up.
+
+### **What is a Tuple?**
+- A **tuple** is an **ordered list of numbers**.
+- A **2-tuple** is an **ordered pair (x, y)**.
+- In R², all numbers in the tuple must be **real numbers** (no imaginary numbers).
+- Example:
+  - (3,4) and (-3,-4) are both in **R²**.
+  - (i, 2) is **not** in R² because **i** is imaginary.
+
+### **What is R³ (Three-Dimensional Real Coordinate Space)?**
+- **Notation:** R³ (or **ℝ³**) represents **three-dimensional real coordinate space**.
+- **Meaning:** It includes **all possible ordered triplets (x, y, z) of real numbers**.
+- **Example:**
+  - A vector **(2, -1, 4)** belongs to **R³**.
+  - A vector **(-1, 5, 3)** is also in R³.
+- **Visual Representation:**
+  - Vectors in R³ can be drawn in a **3D coordinate system** with **x, y, and z** axes.
+
+### **What is Rⁿ (Higher-Dimensional Real Coordinate Space)?**
+- **Notation:** Rⁿ (or **ℝⁿ**) represents **n-dimensional real coordinate space**.
+- **Meaning:** It includes **all possible ordered n-tuples (x₁, x₂, ..., xₙ) of real numbers**.
+- **Example:**
+  - A **4D vector (1,2,3,4)** is in **R⁴**.
+  - A **100D vector (x₁, x₂, ..., x₁₀₀)** is in **R¹⁰⁰**.
+- **Visualization:** 
+  - **R³ is easy to visualize**.
+  - **R⁴ and beyond cannot be visualized**, but can be represented **mathematically**.
+
+### **What is NOT in Rⁿ?**
+- A **vector with fewer dimensions** is not in a higher-dimensional space:
+  - Example: (3,4) is in **R²**, but not in **R³**.
+- A **vector with imaginary numbers** is not in **Rⁿ**:
+  - Example: (i, 2, 3) is **not in R³** because **i is imaginary**.
