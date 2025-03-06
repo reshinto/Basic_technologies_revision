@@ -241,3 +241,18 @@ first_result = np.dot(a, b + c)  # 335
 
 second_result = np.dot(a, b) + np.dot(a, c)  # 335
 ```
+### Scalar and Vector Projection
+- it is an important part of ML because it makes mathematical operations and applying ML models easier
+- Magnitude of a Vector
+  ![Magnitude of a Vector](../images/magnitudeOfAVector.png)
+  - it computes using the standard Euclidean distance formula
+    ![Standard Euclidean Distance Formula](../images/standardEuclideanDistanceFormula.png)
+    - Vector magnitude is indicated using double vertical bars around the vector `||x||`
+
+```python
+import numpy as np
+
+x = np.array([1,2,3,4,5])
+
+np.linalg.norm(x)  # np.float64(7.416198487095663)
+```
