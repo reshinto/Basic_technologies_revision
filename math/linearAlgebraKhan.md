@@ -86,3 +86,43 @@
   - Example: (3,4) is in **R²**, but not in **R³**.
 - A **vector with imaginary numbers** is not in **Rⁿ**:
   - Example: (i, 2, 3) is **not in R³** because **i is imaginary**.
+
+## Adding vectors algebraically & graphically
+![Adding Vectors Graph](../images/addingVectorsGraph.png)
+
+### **1. Definition of Vector Addition**
+- Given two 2D vectors, **a** and **b**, we define their sum by **adding corresponding components**:
+  - If **a = (6, -2)** and **b = (-4, 4)**:
+    - First component: **6 + (-4) = 2**
+    - Second component: **-2 + 4 = 2**
+  - So, **a + b = (2,2)**.
+
+### **2. Visual Representation of Vector Addition**
+- Vectors are represented as **arrows** on the coordinate plane.
+- **Magnitude** (length of the arrow) and **direction** define a vector.
+- A vector can be **moved** if its magnitude and direction remain unchanged.
+
+### **3. Step-by-Step Visual Addition of Vectors**
+- **Draw vector a** starting from the origin.
+- **Draw vector b** starting from the origin (or at the head of vector a).
+- The **resultant vector (sum)** is the vector that starts at the origin and ends at the tip of the second vector.
+
+### **4. The "Tip-to-Tail" Method**
+- To add **a + b**:
+  1. Start with **vector a** from the origin.
+  2. Place **vector b** at the head of **vector a**.
+  3. Draw the **resultant vector** from the origin to the tip of **b**.
+- The same works for **b + a**, proving that **vector addition is commutative**.
+
+### **5. Commutative Property of Vector Addition**
+- **a + b = b + a**:
+  - **Numerically**, adding components in any order gives the same result.
+  - **Visually**, switching the order of the vectors still results in the same resultant vector.
+
+### **6. Conceptual Understanding**
+- Vector addition represents **combined movement or shift** in space.
+- It applies to:
+  - **Displacement** (movement in space).
+  - **Velocity** (combining speeds in different directions).
+  - **Acceleration** (combining forces acting on an object).
+- The sum represents the **overall effect** of two vectors combined.
