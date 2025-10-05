@@ -16,23 +16,23 @@
 ### Acyclic Graph
 - a graph that has no cycles
 ### Cyclic Graph
-![cyclicGraph](../../images/cyclicGraph.png)
+![cyclicGraph](../../../images/cyclicGraph.png)
 - a graph that has at least 1 cycle
 - if you are traversing through the graph, and going down connections, and found yourself revisiting a connection that you have previously visited just by following the path of 3 edges
   - then that means there's a cycle in the graph
 ## Directed Graph
-![directedGraph](../../images/directedGraph.png)
+![directedGraph](../../../images/directedGraph.png)
 - a graph that whose edges are directed
   - meaning that they can only be traversed in 1 direction, which is specified
 - for e.g. a graph of airports and flights would likely be directed
   - since a flight specifically goes from 1 airport to another (has a direction)
     - without necessarily implying the presence of a flight in the opposite direction
 ## Undirected Graph
-![undirectedGraph](../../images/undirectedGraph.png)
+![undirectedGraph](../../../images/undirectedGraph.png)
 - a graph whose edges are undirected, meaning that they can be traversed in both directions
 - e.g. a graph of friends would likely be undirected, since friendship is by nature bidirectional
 ## Connected Graph
-![connectedGraph](../../images/connectedGraph.png)
+![connectedGraph](../../../images/connectedGraph.png)
 - a graph is connected if for every pair of vertices in the graph there's a path of 1 or more edges connecting the given vertices
 - in the case of a directed graph, the graph is
   - strongly connected if there are bidirectional connections between the vertices of every pair of vertices
@@ -40,7 +40,7 @@
   - weakly connected if there are connections (but not necessarily bidirectional ones) between the vertices of every pair of vertices
 ## Disconnected Graph
 - a graph that isn't connected is said to be disconnected
-![disconnectedGraph](../../images/disconnectedGraph.png)
+![disconnectedGraph](../../../images/disconnectedGraph.png)
 ## standard operations and complexities
 ### Storing a graph: O(V + E) space
 - storing V vertices (nodes)
