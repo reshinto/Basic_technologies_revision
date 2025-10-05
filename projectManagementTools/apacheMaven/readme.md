@@ -1,4 +1,5 @@
 # Apache Maven
+
 - standard definition
   - a software project management and comprehension tool
   - based on the concept of a Project Object Model (POM)
@@ -14,12 +15,16 @@
   - Maven allows for easy modifications to the project
   - Maven simplifies the declaration of project dependencies
   - it uses a POM file
+
 ## Installation
+
 - install with brew
   > brew install maven
 - check maven version
   > mvn -version
+
 ## Project Object Model (POM)
+
 - it has a set of standards, a project lifecycle, a dependency management system, and logic for executing plugin at defined phases in a lifecycle
 - projects are set up with default behaviors
 - source code must be in the `src/main/` folder
@@ -30,6 +35,7 @@
 ![maven project structure](../../images/mavenProjectStructure.png)
 
 ### POM file
+
 - must include
   - project description
   - unique set of `coordinates`
@@ -47,6 +53,7 @@
 ![POM structure](../../images/pomStructure.png)
 
 #### POM Categories
+
 - the POM contains all of the information about a project
 - the file is stored with an XML extension
 - minimum categories required
@@ -137,7 +144,9 @@
     <password>somepassword</password>
   </server>
   ```
+
 #### POM syntax
+
 - POM is documented in XML file
 - file is stored in base directory
 - syntax is similar to HTML file using `< >` tags
@@ -154,7 +163,9 @@
     <version>1.0</version>
   </project>
   ```
+
 #### POM properties
+
 ```xml
 <properties>
   <maven.compiler.source>11</maven.compiler.source>
@@ -171,6 +182,7 @@
   </dependency>
 </dependencies>
 ```
+
 - purpose
   - reduces duplication
     - often times when configuration POM, tend to put the same value for an item and properties
@@ -182,7 +194,9 @@
     - properties allow you to leverage a version and reference it
   - aids in upgrades
     - can upgrade the property and it upgrades the rest for you
+
 #### Parent POM
+
 - a POM file that is stand-alone (no code associated with it)
 - creates a list of dependency versions and plugins versions that the subordinate projects can leverage
 - provides a way to control versions in 1 place so the subordinate projects don't have to specify the version, only the dependency
@@ -224,7 +238,9 @@
         ...
       </project>
       ```
+
 #### features enabled by POM
+
 - includes
   - dependency management
   - access to remote repositories
@@ -234,9 +250,11 @@
   - easy searching and filtering of project artifacts
 
 #### Maven Life Cycles
+
 1. Default
 2. Clean
 3. Site
+
 - each cycle has a few phases
 - phases must be executed in order
 - phrases are made up of goals
@@ -244,17 +262,20 @@
     - plugin goals are bound to phase of lifecycle
     - goals can be triggered individually
     - e.g.: `mvn dependency:analyze`
+
 ##### default life cycle phases
+
 - main lifecycle
+
 1. Validate
-    - validate the project is correct
+   - validate the project is correct
 2. Initialize
 3. Generate-sources
 4. Process-sources
 5. Generate-resources
 6. Process-resources
 7. Compile
-    - compile the source of the project
+   - compile the source of the project
 8. Process-classes
 9. Generate-test-sources
 10. Process-test-sources
@@ -277,34 +298,45 @@
     - install the package into the local repository
 23. Deploy
     - copies the final package to the remote repository
+
 - plugin goals can be attached to each lifecycle phase
 - maven executes the goals attached to each phase
 - each phase has 0 or more goals bound to it
 - when you run `mvn install`, multiple goals are executed
   - `target/` folder with all the compiled code and jar file
 - in the package phase, it executes the JAR goal
+
 ##### clean life cycle phases
+
 - cleans project
+
 1. Pre-clean
 2. Clean
 3. Post-clean
+
 ##### site life cycle phases
+
 - generates project documentation
+
 1. Pre-site
 2. site
 3. post-site
 4. site-deploy
+
 ### Maven Repository
+
 - central repository that contains open-source components
 - Maven creates a local repository at `~/.m2` location
   - foreign dependencies are installed here
   - it also includes your JAR file and `pom.xml` file for each install project
   - [Maven repo search url address](https://search.maven.org/)
+
 ### Maven Dependency Management
+
 - check dependencies
   - dependencies could be used but not declared
   - unused dependencies will be found
-  > mvn dependency:analyze
+    > mvn dependency:analyze
 - check dependencies tree
   > mvn dependency:tree
 - allows for code reuse
@@ -326,7 +358,9 @@
       - `system`
         - similar to `provided`
         - but must specify the explicit path to the JAR on the locals file system
+
 #### project dependencies
+
 - Maven supports internal and external dependencies
 - a common dependencies in Maven is `junit`, `log4j`, `jaxen`
 - sample
@@ -385,27 +419,33 @@
     ```
     - verify with
       > mvn clean verify
+
 #### project relationships
+
 - Maven makes it easy to track down dependencies
 - example of external relationships are `Log4j` and `JUnit`
 - Internal is where project-a depends on project-b
 - they are established using the Maven coordinates
-- relationships are decribed as dependencies
+- relationships are described as dependencies
 - projects can inherit project relationships
+
 #### transitive dependencies
+
 - it is a dependency of a dependency
 - provides a mechanism to only declare dependencies that you want
   - thus you do not need to manage what dependencies is required from the dependencies that you need
 - rules
   - when 2 versions of the same artifact are needed
     - the closest to the actual project wins
-      - e.g: actual project <- A needs package abc version 1.0 <- B needs package abc version 1.2
+      - e.g: actual project `<-` A needs package abc version 1.0 `<-` B needs package abc version 1.2
         - package abc vesion 1.0 wins
     - if `dependencyManagement` tag is used
       - the chosen version will be used
     - if declaring in local dependency
-      - local overrides all other transitive dependencies 
+      - local overrides all other transitive dependencies
+
 ### Best Practices
+
 - grouping common dependencies
 - can be done using multiple POM files
   - allows other projects to reuse POM file
@@ -414,11 +454,15 @@
   - inheritance: used when projects share dependencies
 - proper indentation for `pom.xml` file
 - follow a standard layout where coordinates are listed first
+
 ## Maven Plugins
+
 - a plugin is a collection of 1 or more goals
 - a goal is a unit of work in Maven
   - can view goals of a plugin in the maven plugin website
+
 ### Core plugins
+
 - list of core plugins
   - Compiler plugin
     - contains goals for compiling source code and unit tests
@@ -432,8 +476,10 @@
 - [list of maven plugins url](http://maven.apache.org/plugins/index.html)
 - example of using a plugin and goal in the terminal
   - plugin: compiler, goal: compile
-  > mvn compiler:compile
+    > mvn compiler:compile
+
 ### Packaging tools plugin
+
 - list of packaging tools plugins
   - JAR plugin
     - creates JAR or Jave Archive files
@@ -441,8 +487,10 @@
     - ear, ejb, rar, war, app-client/acr, shade, source, jlink, jmod
 - example of using a plugin and goal in the terminal
   - plugin: jar, goal: jar
-  > mvn jar:jar
+    > mvn jar:jar
+
 ### Reporting plugins
+
 - list of reporting plugins
   - changelog plugin
   - changes plugin
@@ -460,16 +508,22 @@
   - plugin: javadoc, goal: javadoc
     - javadoc auto saves report in `target/site/apidocs/` directory
     - launch the `index.html` file to view generated report
-  > mvn javadoc:javadoc
+      > mvn javadoc:javadoc
+
 ### Tools plugins
+
 - list of tools plugins
   - antrun, artifact, archetype, assembly, dependency, enforcer, gpg, help, invoker, jarsigner, jdeprscan, patch, pdf, plugin, release, remote-resources, scm, scm-publish, scripting, stage, toolchains, wrapper
 - use help to find out more about a plugin
   - example: archetype
     > mvn help:describe -DgroupId=org.apache.maven.plugins -DartifactId=maven-archetype-plugin
+
 ## Create a project with Maven
+
 ### Sample program
+
 > mvn archetype:generate -DgroupId=com.projectname -DartifactId=appname -DarchetypeArtifactId=maven-archetype-quickstart -DInteractiveMode=false
+
 - View the full pom file contents
   - in the same directory where the `pom.xml` file is located at
     > mvn help:effective-pom
@@ -489,7 +543,7 @@
     - `appname-1.0-SNAPSHOT` is correct if default version is used
       > java -cp target/appname-1.0-SNAPSHOT.jar com.projectname.App
     - `appname-0.0.1` is correct if `0.0.1` version is set
-    > java -cp target/appname-0.0.1.jar com.projectname.App
+      > java -cp target/appname-0.0.1.jar com.projectname.App
   - method 2
     - add `maven-jar-plugin`
       ```xml
@@ -514,7 +568,7 @@
         ...
       </project>
       ```
-    > java -jar target/appname-1.0-SNAPSHOT.jar
+      > java -jar target/appname-1.0-SNAPSHOT.jar
   - method 3
     - add `exec-maven-plugin`
       ```xml
@@ -535,7 +589,7 @@
         ...
       </project>
       ```
-    > mvn clean package exec:java
+      > mvn clean package exec:java
   - method 4
     - run with docker using maven
       ```xml
@@ -612,17 +666,23 @@
       ```
     - packaging
       > mvn package -Pdocker
-    - package and run 
+    - package and run
       > mvn install -Pdocker
+
 ### Web app
+
 > mvn archetype:generate -DgroupId=com.projectname -DartifactId=webappname -DarchetypeArtifactId=maven-archetype-webapp -DInteractiveMode=false
+
 ## Unit testing with Maven
+
 - Maven provides built-in support for unit testing
 - JUnit is used to test app
 - `Test/` directory is automatically created with a test app
 - run test
   > mvn test
+
 ## Add resources folder
+
 - add resources folder to add files for inputs
   - can be `txt` files
   - use `Scanner` library to read file in `resources` folder
@@ -630,7 +690,9 @@
   - create `resources` folder in `main` folder
 - for `test` folder
   - create `resources` folder in `test`folder
+
 ## Packaging App
+
 - packaging information is stored in `pom.xml` file
   ```xml
   <packaging>jar</packaging>
@@ -638,7 +700,7 @@
 - default is `jar` if the type is omitted
 - run package
   - also works with `mvn install`, `mvn test`
-  > mvn package
+    > mvn package
   - add `clean` optional command to remove issues with other Maven operations
     > mvn clean package
   - add `site` optional command to generate `surefire` documentation for us
