@@ -1,4 +1,5 @@
 # XML (eXtensible Markup Language)
+
 - became a W3C recommendation or standard in 1998
 - it is a tag-based syntax, similar to HTML
   - XML is NOT a replacement for HTML
@@ -13,13 +14,17 @@
     - AJAX: asynchronous JavaScript and XML, XML is the X in AJAX
     - Web services: using APIs over the web
       - XML can be used to exchange data over the web
+
 ## What is XML used for
+
 - used to structure and describe information
 - purpose is to take in information and apply structure and meaning to it
 - it was intended to be used over the internet
 - used to exchange data between disparate systems that may have never been intended to talk with each other
   - e.g.: using XML to bridge the gap between a very old computer system to a new application so as to allow data to be accessed by newer systems
+
 ## XML related technologies
+
 - technologies that make working with XML to solve certain problems easier and more productive
 - e.g.:
   - `XPath`: eXtensible Path Language
@@ -42,7 +47,9 @@
   - `Xpointer` and `XLink`
     - create links between and within XML documents
     - similar to link tag in HTML, but more powerful
+
 ## Describing Data with XML
+
 - raw data
   ```
   Joe Marini
@@ -61,16 +68,19 @@
     <email>joe@joe.com</email>
   </BusinessCard>
   ```
+
 ## Pros and Cons of XML
-|pros|cons|
-|-|-|
-|`XML keeps content separate from presentation.` You can take the data that your app uses & store it separately from how its's presented to users|`XML is not suitable for very large data sets.` might not be efficient if storing MB of data|
-|`XML is an open format that can be read by many apps.` Many apps also have ability to output XML|`Some formats like JSON might be better for storing data`|
-|`XML can be used on both the client and the server.`|`Some data types like images aren't represented well.` Can try to encode images and insert into XML documents but can get ugly quickly|
-|`XML has widespread support in multiple languages and runtimes.`|`XML can quickly become difficult to read when complex`|
-|`XML makes it possible for disparate systems to exchange data.`||
+
+| pros                                                                                                                                             | cons                                                                                                                                   |
+| ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `XML keeps content separate from presentation.` You can take the data that your app uses & store it separately from how its's presented to users | `XML is not suitable for very large data sets.` might not be efficient if storing MB of data                                           |
+| `XML is an open format that can be read by many apps.` Many apps also have ability to output XML                                                 | `Some formats like JSON might be better for storing data`                                                                              |
+| `XML can be used on both the client and the server.`                                                                                             | `Some data types like images aren't represented well.` Can try to encode images and insert into XML documents but can get ugly quickly |
+| `XML has widespread support in multiple languages and runtimes.`                                                                                 | `XML can quickly become difficult to read when complex`                                                                                |
+| `XML makes it possible for disparate systems to exchange data.`                                                                                  |                                                                                                                                        |
 
 ## Types of XML Content
+
 - XML Document Declaration
   - it is optional, but W3C recommends it
   - it identifies the file as XML document
@@ -82,6 +92,7 @@
   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   ```
 - Elements (Tags) and Attributes
+
   - `Elements` must have valid names
     - can begin with underscore `_` or letter
       - followed by letters, digits, periods, hyphens, underscores
@@ -91,25 +102,31 @@
       - can be followed by digits, letters, hypens, periods, underscores
     - attributes that begin with "xml" are reserved
     - attributes appear only once on a given element
+
   ```xml
   <element attribute="value">
   ```
+
   - valid tag names
+
     ```xml
     <_Element1>
-    
+
     <My.Element>
-      
+
     <My-Element_Name>
     ```
+
   - invalid tag names
+
     ```xml
     <1Tag> <!-- can't begin with a number -->
-    
+
     <#Elem&ent> <!-- invalid characters in name -->
-      
+
     <XmL> <!-- the string "xml" is reserved -->
     ```
+
 - Comments
   - can go almost anywhere except
     - inside element brackets
@@ -132,7 +149,7 @@
   - the actual contents of CDATA sections are not parsed by XML parser
     - it skips the internal content and doesn't try to figure what kind of data might be in there
   - typically used to contain unescaped textual data (characters that aren't legal within parsed XML)
-    - e.g.: &, <, >
+    - e.g.: `&, <, >`
   ```xml
   <![CDATA[This is unparsed text & data]]>
   ```
@@ -183,19 +200,22 @@
     ```
 
 ## View Groups, Root View, Parent
-* contains Child groups
-* these child groups are Siblings of each other
+
+- contains Child groups
+- these child groups are Siblings of each other
+
 ### Linear Layout
-* <LinearLayout attributeNames <TextView attributeNames /> /LinearLayound>
-* align Views in a linear layout vertically or horizontally: TextView, ImageView
-* Attribute names for <LinearLayout> /LinearLayout>
-    #### xmlns:android="http://schemas.android.com/apk/res/android"
+
+- `<LinearLayout attributeNames <TextView attributeNames /> /LinearLayound>`
+- align Views in a linear layout vertically or horizontally: TextView, ImageView
+- Attribute names for `<LinearLayout> /LinearLayout>`
+  #### xmlns:android="http://schemas.android.com/apk/res/android"
         * this is used to specify that all of these attributes here belong to android
         * Must add XML namespace declaration in opening tag of root view of XML file
-    #### orientation
+  #### orientation
         * android:orientation="vertical"
         * android:orientation="horizontal"
-    #### Size
+  #### Size
         * wrap_content
             * android:layout_width="wrap_content"
             * android:layout_height="wrap_content"
@@ -203,35 +223,41 @@
             * use this to match device size
             * android:layout_width="match_parent"
             * android:layout_height="match_parent"
+
 ### Relative Layout
-* can position children relative to the parent
-* can position children relative to other children views
-* Attribute names for <RelativeLayout> </RelativeLayout>
-    * same as LinearLayout, except orientation is not included
-    #### xmlns:android="http://schemas.android.com/apk/res/android"
-    #### Size
-* child attribute names
-    * use android:layout_alignParentTop="true"
-    * use android:layout_alignParentBottom="true"
-    * use android:layout_alignParentLeft="true"
-    * use android:layout_alignParentRight="true"
-    * use android:layout_centerHorizontal="true"
-    * use android:padding="xxdp"
-    * Assign view ID names
-        * android:id="@+id/textView_A"
-            * + is required when declaring id name for the first time
-            * textView_A is the id name
-    * positioning children relative to other views
-        * android:layout_toLeftOf="@id/textView_A"
-        * android:layout_above="@id/textView_A"
+
+- can position children relative to the parent
+- can position children relative to other children views
+- Attribute names for <RelativeLayout> </RelativeLayout>
+  - same as LinearLayout, except orientation is not included
+  #### xmlns:android="http://schemas.android.com/apk/res/android"
+  #### Size
+- child attribute names
+  - use android:layout_alignParentTop="true"
+  - use android:layout_alignParentBottom="true"
+  - use android:layout_alignParentLeft="true"
+  - use android:layout_alignParentRight="true"
+  - use android:layout_centerHorizontal="true"
+  - use android:padding="xxdp"
+  - Assign view ID names
+    - android:id="@+id/textView_A"
+      - - is required when declaring id name for the first time
+      - textView_A is the id name
+  - positioning children relative to other views
+    - android:layout_toLeftOf="@id/textView_A"
+    - android:layout_above="@id/textView_A"
 
 ## XML element (tags)
-* TextView, ImageView, Button
-* e.g.: <TextView attributeNames/>
+
+- TextView, ImageView, Button
+- e.g.: <TextView attributeNames/>
 
 ## Attribute names, these must be inside the XML element tags
-* e.g.: android:text, android:textColor, android:background, android:layout_width, etc.
+
+- e.g.: android:text, android:textColor, android:background, android:layout_width, etc.
+
 ### Attribute names for <TextView attributeNames/>
+
     * android:text="Hello World!"
     #### colors
         * limited colors
@@ -294,7 +320,9 @@
         * android:layout_marginRight="8dp"
         * android:layout_marginTop="8dp"
         * android:layout_marginBottom="8dp"
+
 ### Attribute names for <ImageView attributeNames/>
+
     * android:src="@drawable/cake"
         * @ symbol is used to say we're referencing a resource in the Android app
         * src is the source
@@ -315,11 +343,12 @@
             * creates a FULL BLEED IMAGE with edge to edge look without white borders
 
 ## Density-Independent Pixels (dp)
-* Pixels are the number of squares that mades the resolution of the device
-* better device have more pixels in the same amount of space
-* the number of pixedls in a fixed space is known as the SCREEN'S PIXEL DENSITY
-    * e.g.: a button that takes up 2 pixels by 2 pixels, device size is standard
-    * More pixels = higher resolution = button size will shrink (become smaller)
-    * Therefore, to make button size the same size despite the changes in resolution
-    * need to use dp
-* Recommended to make touch target 48dp minimum (translates to 9mm in physical size)
+
+- Pixels are the number of squares that mades the resolution of the device
+- better device have more pixels in the same amount of space
+- the number of pixedls in a fixed space is known as the SCREEN'S PIXEL DENSITY
+  - e.g.: a button that takes up 2 pixels by 2 pixels, device size is standard
+  - More pixels = higher resolution = button size will shrink (become smaller)
+  - Therefore, to make button size the same size despite the changes in resolution
+  - need to use dp
+- Recommended to make touch target 48dp minimum (translates to 9mm in physical size)
