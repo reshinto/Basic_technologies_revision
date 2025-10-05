@@ -1,0 +1,35 @@
+interface Bird {
+  fly(): void;
+}
+
+class Duck implements Bird {
+  quack() {
+    console.log("I can quack");
+  }
+
+  fly() {
+    console.log("I can fly");
+  }
+}
+
+class Penguin implements Bird {
+  fly() {
+    throw new Error("Cannot fly");
+  }
+
+  swim() {
+    console.log("I can swim");
+  }
+}
+
+// this violates the Liskov Substitution Principle
+// as not every bird can fly
+function makeBirdFly(bird: Bird) {
+  bird.fly();
+}
+
+const duck = new Duck();
+const penguin = new Penguin();
+
+makeBirdFly(duck);
+makeBirdFly(penguin); // throws an error as penguin can't fly
