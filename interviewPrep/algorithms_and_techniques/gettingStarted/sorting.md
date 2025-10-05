@@ -1,4 +1,5 @@
 # Sorting
+
 - `stable sorting algorithm` means that when two elements have the same value, their relative order is maintained
   - e.g. if we are sorting a hand of cards, and we have a Seven of Hearts before a Seven of Spades in the initial hand
     - after a stable sort, the Seven of Hearts is still before the Seven of Spades because their values are the same
@@ -9,25 +10,25 @@
   - Additional memory cannot be avoided (as swapping two elements involve additional memory)
     - but they should be something like a temporary variable that uses very little additional memory
 
-|Algorithm|Best Time|Average Time|Worst Time|Space|
-|-|-|-|-|-|
-|Bubble Sort|Ω(n^2)|θ(n^2)|O(n^2)|O(1)|
-|Selection Sort|Ω(n^2)|θ(n^2)|O(n^2)|O(1)|
-|Revised Bubble Sort|Ω(n)|θ(n^2)|O(n^2)|O(1)|
-|Insertion Sort|Ω(n)|θ(n^2)|O(n^2)|O(1)|
-|Quick Sort|Ω(n log(n))|θ(n log(n))|O(n^2)|O(log(n))|
-|Tree Sort|Ω(n log(n))|θ(n log(n))|O(n^2)|O(n)|
-|Bucket Sort|Ω(n + k)|θ(n + k)|O(n^2)|O(n)|
-|Heap Sort|Ω(n log(n))|θ(n log(n))|O(n log(n))|O(1)|
-|Merge Sort|Ω(n log(n))|θ(n log(n))|O(n log(n))|O(n)|
-|Shell Sort|Ω(n)|θ(n log(n))|O(n log(n))|O(1)|
-|Cube Sort|Ω(n)|θ(n log(n))|O(n log(n))|O(n)|
-|Tim Sort|Ω(n)|θ(n log(n))|O(n log(n))|O(n)|
-|Radix Sort|Ω(nk)|θ(nk)|O(nk)|O(n + k)|
-|Count Sort|Ω(n + k)|θ(n + k)|O(n + k)|O(k)|
-
+| Algorithm           | Best Time   | Average Time | Worst Time  | Space     |
+| ------------------- | ----------- | ------------ | ----------- | --------- |
+| Bubble Sort         | Ω(n^2)      | θ(n^2)       | O(n^2)      | O(1)      |
+| Selection Sort      | Ω(n^2)      | θ(n^2)       | O(n^2)      | O(1)      |
+| Revised Bubble Sort | Ω(n)        | θ(n^2)       | O(n^2)      | O(1)      |
+| Insertion Sort      | Ω(n)        | θ(n^2)       | O(n^2)      | O(1)      |
+| Quick Sort          | Ω(n log(n)) | θ(n log(n))  | O(n^2)      | O(log(n)) |
+| Tree Sort           | Ω(n log(n)) | θ(n log(n))  | O(n^2)      | O(n)      |
+| Bucket Sort         | Ω(n + k)    | θ(n + k)     | O(n^2)      | O(n)      |
+| Heap Sort           | Ω(n log(n)) | θ(n log(n))  | O(n log(n)) | O(1)      |
+| Merge Sort          | Ω(n log(n)) | θ(n log(n))  | O(n log(n)) | O(n)      |
+| Shell Sort          | Ω(n)        | θ(n log(n))  | O(n log(n)) | O(1)      |
+| Cube Sort           | Ω(n)        | θ(n log(n))  | O(n log(n)) | O(n)      |
+| Tim Sort            | Ω(n)        | θ(n log(n))  | O(n log(n)) | O(n)      |
+| Radix Sort          | Ω(nk)       | θ(nk)        | O(nk)       | O(n + k)  |
+| Count Sort          | Ω(n + k)    | θ(n + k)     | O(n + k)    | O(k)      |
 
 ## Insertion Sort
+
 - idea of an insertion sort is initially, only the first item is considered sorted
   - Then, for each item in the sequence, we "insert" that item into the sorted list by swapping that item with the item before it
   - until the item before it is smaller than the current item
@@ -42,12 +43,16 @@
 ![insertionSort](../images/insertionSort.gif)
 
 ### JavaScript
+
 ```javascript
 function sortList(unsortedList) {
-  for (let i=0; i<unsortedList.length; i++) {
+  for (let i = 0; i < unsortedList.length; i++) {
     let current = i;
     while (current > 0 && unsortedList[current] < unsortedList[current - 1]) {
-      [unsortedList[current], unsortedList[current - 1]] = [unsortedList[current - 1], unsortedList[current]];
+      [unsortedList[current], unsortedList[current - 1]] = [
+        unsortedList[current - 1],
+        unsortedList[current],
+      ];
       current--;
     }
   }
@@ -57,6 +62,7 @@ const test = [5, 3, 1, 2, 4];
 const result = sortList(test);
 console.log(test);
 ```
+
 ```
 input: [5, 3, 1, 2, 4]
 
@@ -92,12 +98,16 @@ current = 0, end loop
 
 output: [1, 2, 3, 4, 5]
 ```
+
 ### time space complexity
+
 - For each n item in the list, the time complexity to insert it into the sorted list is `O(i)`
   - where i is the index of that item
 - Overall, the time complexity is `O(n * (n - 1) / 2)`
   - which is equivalent to `O(n^2)`
+
 ## Selection Sort
+
 - during each cycle, we find the smallest item from the unsorted pile and add it to the sorted pile
 - To find the smallest element in the unsorted pile
   - have a temporary variable keeping track of the index to the smallest element
@@ -112,17 +122,21 @@ output: [1, 2, 3, 4, 5]
 ![selectionSort](../images/selectionSort.gif)
 
 ### JavaScript
+
 ```javascript
 function sortList(unsortedList) {
   const n = unsortedList.length;
-  for (let i=0; i<n; i++) {
+  for (let i = 0; i < n; i++) {
     let minIndex = i;
-    for (let j=i; j<n; j++) {
+    for (let j = i; j < n; j++) {
       if (unsortedList[j] < unsortedList[minIndex]) {
         minIndex = j;
       }
     }
-    [unsortedList[i], unsortedList[minIndex]] = [unsortedList[minIndex], unsortedList[i]]
+    [unsortedList[i], unsortedList[minIndex]] = [
+      unsortedList[minIndex],
+      unsortedList[i],
+    ];
   }
   return unsortedList;
 }
@@ -131,6 +145,7 @@ const test = [5, 3, 1, 2, 4];
 const result = sortList(test);
 console.log(test);
 ```
+
 ```
 input: [5, 3, 1, 2, 4]
 
@@ -179,12 +194,16 @@ end loop
 
 output: [1, 2, 3, 4, 5]
 ```
+
 ### time space complexity
+
 - For each n item in the list, the time complexity to find the smallest item in the unsorted pile is `O(n - i)`
   - where i is the index of that item
 - Overall, the time complexity is `O(n * (n + 1) / 2)`
   - which is equivalent to `O(n^2)`
+
 ## Bubble Sort
+
 - idea of bubble sort is for each pass, we use a pointer to point at the first element of the list
   - For each cycle, we compare it to the next element in the list
   - and swap them if the current item is greater
@@ -202,14 +221,18 @@ output: [1, 2, 3, 4, 5]
 ![bubbleSort](../images/bubbleSort.gif)
 
 ### JavaScript
+
 ```javascript
 function sortList(unsortedList) {
   const n = unsortedList.length;
-  for (let i=n-1; i>=0; i--) {
+  for (let i = n - 1; i >= 0; i--) {
     let swapped = false;
-    for (let j=0; j<i; j++) {
+    for (let j = 0; j < i; j++) {
       if (unsortedList[j] > unsortedList[j + 1]) {
-        [unsortedList[j], unsortedList[j+1]] = [unsortedList[j+1], unsortedList[j]];
+        [unsortedList[j], unsortedList[j + 1]] = [
+          unsortedList[j + 1],
+          unsortedList[j],
+        ];
         swapped = true;
       }
     }
@@ -222,6 +245,7 @@ const test = [5, 3, 1, 2, 4];
 const result = sortList(test);
 console.log(test);
 ```
+
 ```
 input: [5, 3, 1, 2, 4]
 
@@ -260,10 +284,14 @@ since swapped is false, end outer loop and return sorted array
 
 output: [1, 2, 3, 4, 5]
 ```
+
 ### time space complexity
+
 - time complexity of this algorithm is `O(n^2)`
   - because it is essentially two loops
+
 ## Merge Sort
+
 - idea of a merge sort is divide and conquer
   - We divide the array into two almost equally
     - sort them (usually another merge sort)
@@ -275,10 +303,10 @@ output: [1, 2, 3, 4, 5]
 - Assume the sorting of the divided list is stable, the overall algorithm is stable
   - because if an element appears before another element with the same value, there are two situations
     1. If they are in the same list
-        - the first element is before the second one in that list
-        - and the first one will be inserted first
+       - the first element is before the second one in that list
+       - and the first one will be inserted first
     2. If they are in different lists
-        - the first element will be inserted first if two elements are equal
+       - the first element will be inserted first if two elements are equal
 - Note that the base case, where only one element exists in the list is stable
   - because there are no 2 elements of the same size, so merge sort is stable
 - merge sort is not in-place because of the usage of additional arrays
@@ -291,7 +319,9 @@ output: [1, 2, 3, 4, 5]
 ![mergeSort](../images/mergeSort.gif)
 
 ### JavaScript
+
 #### Recursion
+
 ```javascript
 function merge(leftList, rightList, midIndex, n) {
   const result = [];
@@ -327,9 +357,10 @@ function sortList(unsortedList) {
 }
 
 const test = [5, 3, 1, 2, 4];
-const result = sortList(test)
-console.log(result)
+const result = sortList(test);
+console.log(result);
 ```
+
 ```
 input: [5, 3, 1, 2, 4]
 
@@ -471,10 +502,13 @@ return [1, 2, 3, 4, 5]
 
 output: [1, 2, 3, 4, 5]
 ```
+
 #### Iterative
+
 - also known as bottom up merge sort
   - we treat each element of the array as n sub arrays
   - then iteratively merge these sub array back and forth between two buffers
+
 ```javascript
 function merge(left, right, leftLimit, rightLimit, sorted, buffer) {
   let i = left;
@@ -506,8 +540,7 @@ function sortList(unsortedList) {
   let buffer = new Array(n);
 
   for (let size = 1; size < n; size *= 2) {
-    for (let leftStart = 0; leftStart < n; leftStart += 2*size) {
-
+    for (let leftStart = 0; leftStart < n; leftStart += 2 * size) {
       //Get the two sub arrays
       let left = leftStart;
       let right = Math.min(left + size, n);
@@ -526,9 +559,10 @@ function sortList(unsortedList) {
 }
 
 const test = [5, 3, 1, 2, 4];
-const result = sortList(test)
-console.log(result)
+const result = sortList(test);
+console.log(result);
 ```
+
 ```
 input: [5, 3, 1, 2, 4]
 
@@ -715,12 +749,16 @@ new sorted array = [1, 2, 3, 4, 5], new buffer array values [1, 2, 3, 5, 4] are 
 
 output: [1, 2, 3, 4, 5]
 ```
+
 ### time space complexity
+
 - overall time complexity is `O(nlog(n))`
   - because for each item in the list
     - it is merged a number of times equal to the number of divisions to make to divide the list to a size of one
       - which is `O(log(n))` times
+
 ## Quick Sort
+
 - idea of quick sort is We select an arbitrary element in the list (known as the "pivot")
   - we swap the elements in the list into two sides
     - a side where all the elements are smaller than the pivot
@@ -728,11 +766,11 @@ output: [1, 2, 3, 4, 5]
   - After grouping them this way, we swap the pivot with the first element of the side that is larger or equal to the pivot
   - This way, each element to the left of the pivot is smaller than the pivot
     - and each element on the right is larger or equal to pivot
-   - Then we just need to sort the left interval and the right interval (using the same method), then the list would be sorted
+  - Then we just need to sort the left interval and the right interval (using the same method), then the list would be sorted
 - how would it grouped together?
   - for the interval that we are sorting, we have a pointer point before the start and at the end (including the pivot)
-  - For each swap, we move the start pointer until we find an element >= to the pivot (after the initial index)
-    - and move the end pointer until we find an element <= to the pivot (before the initial index)
+  - For each swap, we move the start pointer until we find an element `>=` to the pivot (after the initial index)
+    - and move the end pointer until we find an element `<=` to the pivot (before the initial index)
   - Then we can swap those two elements and restart the process
   - If those two pointers meet, we stop and then we can swap the pivot and the meeting point
 - algorithm is not stable, as each swap skips a lot of values
@@ -750,6 +788,7 @@ output: [1, 2, 3, 4, 5]
 ![quickSort](../images/quickSort.gif)
 
 ### JavaScript
+
 ```javascript
 function sortListInterval(unsortedList, start, end) {
   if (end - start <= 1) return undefined;
@@ -766,9 +805,15 @@ function sortListInterval(unsortedList, start, end) {
     if (startPointer === endPointer) {
       break;
     }
-    [unsortedList[startPointer], unsortedList[endPointer]] = [unsortedList[endPointer], unsortedList[startPointer]];
+    [unsortedList[startPointer], unsortedList[endPointer]] = [
+      unsortedList[endPointer],
+      unsortedList[startPointer],
+    ];
   }
-  [unsortedList[startPointer], unsortedList[end - 1]] = [unsortedList[end - 1], unsortedList[startPointer]];
+  [unsortedList[startPointer], unsortedList[end - 1]] = [
+    unsortedList[end - 1],
+    unsortedList[startPointer],
+  ];
   sortListInterval(unsortedList, start, startPointer);
   sortListInterval(unsortedList, startPointer + 1, end);
 }
@@ -779,9 +824,10 @@ function sortList(unsortedList) {
 }
 
 const test = [5, 3, 1, 2, 4];
-const result = sortList(test)
-console.log(test)
+const result = sortList(test);
+console.log(test);
 ```
+
 ```
 input: [5, 3, 1, 2, 4]
 
@@ -870,7 +916,9 @@ end - start = 5 - 4 = 1 <= 1, true, return undefined
 
 output: [1, 2, 3, 4, 5]
 ```
+
 ### time space complexity
+
 - The time complexity of quick sort is a bit complicated
 - On average, where the list is divided somewhere near the center each time, the time complexity is `O(nlog(n))`
 - However, in the worst case scenario, each interval to sort is one less than the current interval
@@ -879,26 +927,42 @@ output: [1, 2, 3, 4, 5]
       - if you choose an end point as your pivot and the list is already sorted, it will reach this time complexity
       - Otherwise, the chance of this happening is very low
 - uses recursion as its core logic, and the minimum recursion layers is equal to `log(n)`
+
 ## Heap sort
+
 - utilizes a heap and pull the elements from the heap and order them
 - is unstable, and can be done in-place
+
 ### time space complexity
+
 - It has a time complexity of `O(nlog(n))`
+
 ## Tree sort
+
 - utilizes a binary search tree that is built from the list, so we can iterate through it
 - can be stable, but is not in-place
+
 ### time space complexity
+
 - It has a time complexity of `O(nlog(n))` (if balanced)
+
 ## Bucket sort
+
 - can use if there are a lot of integers to be sorted, but the range of these integers are very small
 - uses an array, with the index being the entries from the list and the value being the number of times a number has appeared in the list
+
 ### time space complexity
+
 - has a worst time complexity of `O(n^2)`
 - has a space complexity of `O(m)`, where m is the range of the integers
+
 ## Built-in sorting
+
 - most modern programming language have a built-in sorting function
 - in an interview, it is sufficient to just use these built-in ones
+
 ### Python
+
 ```python
 unsorted = [5, 3, 1, 2, 4]
 
@@ -910,11 +974,13 @@ unsorted1 = [5, 3, 1, 2, 4]
 unsorted1.sort()
 print(unsorted1)  # [1, 2, 3, 4, 5]
 ```
+
 ### Javascript
+
 ```javascript
 const unsorted = [5, 3, 1, 2, 4];
 
 const result = unsorted.sort();
-console.log(unsorted);  // [1, 2, 3, 4, 5]
-console.log(result);  // [1, 2, 3, 4, 5]
+console.log(unsorted); // [1, 2, 3, 4, 5]
+console.log(result); // [1, 2, 3, 4, 5]
 ```
