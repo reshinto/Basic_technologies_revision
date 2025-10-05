@@ -113,8 +113,8 @@
 * ```git push -u origin <branchName>``` -u is required when pushing the branch for the FIRST time
 ### Repositioning commits to the latest
 * ```git rebase master``` when this is called at branch, it will reposition the branch commits to the latest master commits
-![rebaseMaster](./images/rebaseMaster.png)
+![rebaseMaster](../images/rebaseMaster.png)
 * ```git rebase <branchName>``` when this is called at master, it will merge the branch commits as new commits
-![rebaseBranch](./images/rebaseBranch.png)
+![rebaseBranch](../images/rebaseBranch.png)
 * AFTER rebasing, must do a ```git push -f```
   * do NOT do just ```git push```
