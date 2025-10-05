@@ -28,8 +28,7 @@
   - where h is the height of the tree
   - Ideally, h is proportional to the log of the size of the tree
 
-![bstInsertion](../../images/bstInsertion.png
-)
+![bstInsertion](../../images/bstInsertion.png)
 
 ## Deletion (Optional)
 - Deleting an element from a BST doesn't show up often in interview questions
