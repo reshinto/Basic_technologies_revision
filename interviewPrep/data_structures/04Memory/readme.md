@@ -26,10 +26,10 @@
   - ```foobar = 1```
   - what happens under the hood is where the program is going to store this variable, the number 1 in a memory slot or series of memory slots that is free in the memory canvas
   - if the value requires more than 1 memory slots to be stored, it will store them back to back
-![singleValueMemory](../../images/singleValueMemory.png)
+![singleValueMemory](../../../images/singleValueMemory.png)
 - e.g.: storing a list of fixed-width 32 bit integer value to a variable
   - ```foobar = [1, 2]```
-![listValueMemory](../../images/listValueMemory.png)
+![listValueMemory](../../../images/listValueMemory.png)
 - the computer can access any of the memory slots very quickly with the memory address
 ## Binary Digit (Bit)
 - it is a fundamental unit of information in Computer Science that represents a state with 1 of 2 values
@@ -65,4 +65,4 @@
   - allows you to not have to store specific data at a memory slot
   - but instead point to another memory slot that stores that data
 - e.g.: store memory slot 16 at memory slot 2
-![pointer](../../images/pointer.png)
+![pointer](../../../images/pointer.png)
