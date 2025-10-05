@@ -1,6 +1,9 @@
 # Regular Expression
+
 ## General rules
-* Character classes
+
+- Character classes
+
 ```
 .         any character except newline
 \w\d\s    word, digit, whitespace
@@ -9,17 +12,23 @@
 [^abc]    not a, b, or c
 [a-g]     character between a & g
 ```
-* Anchors
+
+- Anchors
+
 ```
 ^abc$     start / end of the string
 \b\B      word, not-word boundary
 ```
-* Escaped characters
+
+- Escaped characters
+
 ```
 \.\*\\    escaped special characters
 \t\n\r    tab, linefeed, carriage return
 ```
-* Groups & Lookaround
+
+- Groups & Lookaround
+
 ```
 (abc)     capture group
 \1        backreference to group #1
@@ -27,7 +36,9 @@
 (?=abc)   positive lookahead
 (?!abc)   negative lookahead
 ```
-* Quantifiers & Alternation
+
+- Quantifiers & Alternation
+
 ```
 a*a+a?    0 or more, 1 or more, 0 or 1
 a{5}a{2,} exactly five, two or more
@@ -35,13 +46,16 @@ a{1,3}    between one & three
 a+?a{2,}? match as few as possible
 ab|cd     match ab or cd
 ```
+
 ## Javascript
+
 ### From https://github.com/DevLawrence/regex-cheatsheet/blob/master/regex.js
+
 ```javascript
 let regex;
 
 /* matching a specific string */
-regex = /hello/;  ////looks for the string between the forward slashes (case-sensitive)... matches "hello", "hello123", "123hello123", "123hello"; doesn't match for "hell0", "Hello" 
+regex = /hello/;  ////looks for the string between the forward slashes (case-sensitive)... matches "hello", "hello123", "123hello123", "123hello"; doesn't match for "hell0", "Hello"
 regex = /hello/i;  //looks for the string between the forward slashes (case-insensitive)... matches "hello", "HelLo", "123HelLO"
 regex = /hello/g;  //looks for multiple occurrences of string between the forward slashes...
 
@@ -87,7 +101,7 @@ regex = /ab+c/; // matches one or more repetitions of "b" (matches "abc", "abbbb
 regex = /^[A-Z]\w*/; // matches "H", "Hello", but not "hey"
 regex = /\w*s$/; // matches "cats", "dogs", "avocados", but not "javascript"
 
-/* matching word boundaries 
+/* matching word boundaries
 positions of word boundaries:
 1. before the first character in string (if first character is a word character)
 2. after the last character in the string, if the last character is a word character
@@ -129,9 +143,12 @@ regex.exec("hello"); // returns result array, null otherwise
 ```
 
 ## Python
+
 ### From https://github.com/tartley/python-regex-cheatsheet/blob/master/cheatsheet.rst
-* Python 2.7 Regular Expressions
-==============================
+
+- # Python 2.7 Regular Expressions
+
+```
 Non-special chars match themselves. Exceptions are special characters::
 
     \       Escape special char or start a sequence.
@@ -253,3 +270,4 @@ MatchObjects (returned from ``match()`` and ``search()``)::
     .lastgroup string, Name of last matched capturing group
     .re        regex, As passed to search() or match()
     .string    string, "
+```
