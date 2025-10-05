@@ -1,16 +1,16 @@
-# c# summary notes
-### C# vs .NET
-* C# is a programming language
+# cSharp summary notes
+### CSharp vs .NET
+* CSharp is a programming language
 * .NET is a framework
   * It consists of a run-time environment (CLR) and a class library that we use for building applications
 ### Common Language Runtime (CLR)
-* When you compile an application, C# compiler compiles your code to IL (Intermediate Language) code
-* IL code is platform agnostics, which makes it possible to a take a C# program on a different computer with different hardware architecture and operating system and run it
+* When you compile an application, CSharp compiler compiles your code to IL (Intermediate Language) code
+* IL code is platform agnostics, which makes it possible to a take a CSharp program on a different computer with different hardware architecture and operating system and run it
   * For this to happen, we need CLR
-* When you run a C# application, CLR compiles the IL code into the native machine code for the computer on which it is running
+* When you run a CSharp application, CLR compiles the IL code into the native machine code for the computer on which it is running
   * This process is called Just-in-time Compilation (JIT)
 ### Architecture of .NET Applications
-* In terms of architecture, an application written with C# consists of building blocks called classes
+* In terms of architecture, an application written with CSharp consists of building blocks called classes
   * A class is a container for data (attributes) and methods (functions)
     * Attributes represent the state of the application
     * Methods include code
@@ -33,7 +33,7 @@
 1. type
     * Struct (structure) is a value type
       * All primitive types are structures (int, char, bool, etc.)
-      ```c#
+      ```cSharp
       // example 1
       // since a and b are value types, they are independent of each other
       int a = 10;
@@ -57,7 +57,7 @@
       ```
     * Class is a reference type
       * Non primitive types are classes (Arrays, Strings, etc.)
-      ```c#
+      ```cSharp
       // example 1
       // since array1 & array2 is a reference of the heap, when either 1 is modified, the rest will be affected
       int[] array1 = new int[3] {1, 2, 3};
