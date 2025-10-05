@@ -2,47 +2,47 @@
 ## Starting and Stopping the MySQL Server
 ### View server status
 - linux
-> sudo service mysql status
+> `sudo service mysql status`
 - mac
-> brew services list
+> `brew services list`
 ### Start MySQL Server
 - linux
-> sudo service mysql start
+> `sudo service mysql start`
 - mac
-> brew services start mysql
+> `brew services start mysql`
 ### Stop MySQL Server
 - linux
-> sudo service mysql stop
+> `sudo service mysql stop`
 - mac
-> brew services stop mysql
+> `brew services stop mysql`
 ## To create MySQL database and users, follow these steps:
 1. At the command line, log in to MySQL as the root user:
-> mysql -u root -p
+> `mysql -u root -p`
 2. List all users
-> SELECT host, user FROM mysql.user;
+> `SELECT host, user FROM mysql.user;`
 3. Create new user within the MySQL shell
-> CREATE USER 'newuser'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+> `CREATE USER 'newuser'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';`
 4. Grant privileges
     * To grant ALL privileges
-        > GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
+        > `GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';`
 5. Reload privilegers for changes to take effect
-> FLUSH PRIVILEGES;
+> `FLUSH PRIVILEGES;`
 6. Logout
-> quit
+> `quit`
 7. Relog in to new user
-> mysql -u [username] -p
+> `mysql -u [username] -p`
 8. Run SQL file
 - from terminal (ignore sudo if not required)
-> sudo mysql < sqlscript.sql
+> `sudo mysql < sqlscript.sql`
 - from mysql
-> source path/sqlscript.sql;
+> `source path/sqlscript.sql;`
 ## Connect app to mysql
 1. Set native password
     1. ```mysql -u root -p```
     2. ```ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';```
 ## Connect app to docker mysql
 1. run docker container if not runned
-    > docker run --name=mysql-docker -e MYSQL_ROOT_PASSWORD=password -d -p 3306:3306 mysql
+    > `docker run --name=mysql-docker -e MYSQL_ROOT_PASSWORD=password -d -p 3306:3306 mysql`
 2. Set native password
     - ```docker exec -it mysql-docker mysql -u root -ppassword -e "ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';"``` or ```mysql -h 127.0.0.1 -u root -ppassword -e "ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';"``` (needs mysql-client)
 3. Set host as ```127.0.0.1``` in the app
@@ -57,42 +57,42 @@
 * ALL PRIVILEGES- as we saw previously, this would allow a MySQL user full access to a designated database (or if no database is selected, global access across the system)
 ### Grant permissions
 * GRANT OPTION- allows them to grant or remove other users' privileges
-> GRANT type_of_permission ON database_name.table_name TO ‘username’@'localhost’;
+> `GRANT type_of_permission ON database_name.table_name TO ‘username’@'localhost’;`
 * Review a user’s current permissions
-> SHOW GRANTS username;
+> `SHOW GRANTS username;`
 * Delete a user
-> DROP USER ‘username’@‘localhost’;
+> `DROP USER ‘username’@‘localhost’;`
 ### Revoke permission
-> REVOKE type_of_permission ON database_name.table_name FROM ‘username’@‘localhost’;
+> `REVOKE type_of_permission ON database_name.table_name FROM ‘username’@‘localhost’;`
 ## Change password
-> mysqladmin -u myUsername password 'yourNewPassword'
+> `mysqladmin -u myUsername password 'yourNewPassword'`
 ## Enable use of Authentication via password for nodejs with MySql
 * At MySql command line
 1. ALTER USER 'username'@'localhost' IDENTIFIED BY 'your new password';
 2. ALTER USER 'username'@'localhost' IDENTIFIED WITH mysql_native_password BY 'your new password';
 * if the above is done, need to login with host
   * normally hostname = localhost
-> mysql -u [username] -h [hostname] -p
+> `mysql -u [username] -h [hostname] -p`
 ## Change MySql default settings
 * View SQL mode values
-> SELECT @@sql_mode;
+> `SELECT @@sql_mode;`
 * Adding only one mode to sql_mode without removing existing ones:
-> SET sql_mode=(SELECT CONCAT(@@sql_mode,',<mode_to_add>'));
+> `SET sql_mode=(SELECT CONCAT(@@sql_mode,',<mode_to_add>'));`
 * Removing only a specific mode from sql_mode without removing others:
-> SET sql_mode=(SELECT REPLACE(@@sql_mode,'<mode_to_remove>',''));
+> `SET sql_mode=(SELECT REPLACE(@@sql_mode,'<mode_to_remove>',''));`
 * example: disable MySql "only_full_group_by" mode
-> SET sql_mode=(SELECT REPLACE(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''));
+> `SET sql_mode=(SELECT REPLACE(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''));`
 * List all databases
-> show databases;
+> `show databases;`
 * Create database
-> CREATE DATABASE dbname;
+> `CREATE DATABASE dbname;`
 * Use database
-> USE dbname;
+> `USE dbname;`
 * Delete database
-> DROP DATABASE dbname;
+> `DROP DATABASE dbname;`
 ## Data types
 ### Comments
-#### Singe line
+#### Single line
 ```mysql
 # comment 1
 -- comment 2
@@ -456,7 +456,7 @@ ALTER TABLE tablename DROP COLUMN columnname1;
 ```
 ## NodeJS configuration
 - install mysql with promise support
-> yarn add promise-mysql
+> `yarn add promise-mysql`
 ```javascript
 import mysql from "promise-mysql";
 
