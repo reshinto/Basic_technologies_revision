@@ -1,36 +1,40 @@
 # Node Depths
 
-  The distance between a node in a Binary Tree and the tree's root is called the
-  node's depth.
-  
-  Write a function that takes in a Binary Tree and returns the sum of its nodes'
-  depths.
-  
-  Each BinaryTree node has an integer value, a
-  left child node, and a right child node. Children
-  nodes can either be BinaryTree nodes themselves or
-  None / null
-  
-  Sample Input
-  ```
-    tree =    1
-           /     \
-          2       3
-        /   \   /   \
-       4     5 6     7
-     /   \
-    8     9
-  ```
-  Sample Output
-  16
-  ```
-  // The depth of the node with value 2 is 1.
-  // The depth of the node with value 3 is 1.
-  // The depth of the node with value 4 is 2.
-  // The depth of the node with value 5 is 2.
-  // Etc..
-  // Summing all of these depths yields 16.
-  ```
+The distance between a node in a Binary Tree and the tree's root is called the
+node's depth.
+
+Write a function that takes in a Binary Tree and returns the sum of its nodes'
+depths.
+
+Each BinaryTree node has an integer value, a
+left child node, and a right child node. Children
+nodes can either be BinaryTree nodes themselves or
+None / null
+
+Sample Input
+
+```
+  tree =    1
+         /     \
+        2       3
+      /   \   /   \
+     4     5 6     7
+   /   \
+  8     9
+```
+
+Sample Output
+16
+
+```
+// The depth of the node with value 2 is 1.
+// The depth of the node with value 3 is 1.
+// The depth of the node with value 4 is 2.
+// The depth of the node with value 5 is 2.
+// Etc..
+// Summing all of these depths yields 16.
+```
+
 ```python
 # This is the class of the input binary tree.
 class BinaryTree:
@@ -38,8 +42,8 @@ class BinaryTree:
     self.value = value
     self.left = None
     self.right = None
-        
-    
+
+
 # solution 1
 def nodeDepths(root):
   # Write your code here.
@@ -54,8 +58,8 @@ def nodeDepths(root):
     s.append({"node": node.left, "d": d+1})
     sum += d
   return sum
-  
-  
+
+
 # solution 2
 def nodeDepths(root):
   # Write your code here.
@@ -70,8 +74,8 @@ def nodeDepths(root):
       s.append({"node": node.left, "d": d+1})
     sum += d
   return sum
-  
- 
+
+
 # solution 3
 def nodeDepths(root):
   # Write your code here.
@@ -83,6 +87,7 @@ def getDepth(current, depth):
     return 0
   return depth + getDepth(current.left, depth+1) + getDepth(current.right, depth+1)
 ```
+
 ```javascript
 // This is the class of the input binary tree.
 class BinaryTree {
@@ -103,7 +108,11 @@ function getDepths(current, depth) {
   if (!current) {
     return 0;
   }
-  return depth + getDepths(current.left, depth+1) + getDepths(current.right, depth+1)
+  return (
+    depth +
+    getDepths(current.left, depth + 1) +
+    getDepths(current.right, depth + 1)
+  );
 }
 
 // solution 2
@@ -116,9 +125,9 @@ function nodeDepths(root) {
     if (!node) {
       continue;
     }
-    sum += d
-    s.push({node: node.right, d: d+1});
-    s.push({node: node.left, d: d+1});
+    sum += d;
+    s.push({node: node.right, d: d + 1});
+    s.push({node: node.left, d: d + 1});
   }
   return sum;
 }

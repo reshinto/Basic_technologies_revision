@@ -14,7 +14,7 @@ https://firebase.google.com/
 
 ## Get Started
 
-1. Click on "Functions" `->` click "Get Started" button
+1. Click on "Functions" -> click "Get Started" button
 2. Install firebase tools
 
 ```
@@ -58,8 +58,8 @@ firebase serve
 
 ## Create database
 
-1. click on "Database" `->` click on "Create database" button
-2. select "Start in test mode" `->` select region for cloud firebase location `->` click "Done"
+1. click on "Database" -> click on "Create database" button
+2. select "Start in test mode" -> select region for cloud firebase locatoin -> click "Done"
 
 ## Create collection (similar to table)
 
@@ -79,7 +79,7 @@ admin.initializeApp();
 // Read
 exports.getData = functions.https.onRequest((req, res) => {
   if (req.method !== "GET") {
-    return res.status(400).json({ error: "Invalid request method!" });
+    return res.status(400).json({error: "Invalid request method!"});
   }
   admin
     .firestore()
@@ -101,7 +101,7 @@ exports.getData = functions.https.onRequest((req, res) => {
 // Create
 exports.createData = functions.https.onRequest((req, res) => {
   if (req.method !== "POST") {
-    return res.status(400).json({ error: "Invalid request method!" });
+    return res.status(400).json({error: "Invalid request method!"});
   }
   const newData = req.body;
   admin
@@ -109,10 +109,10 @@ exports.createData = functions.https.onRequest((req, res) => {
     .collection("nameOfCollection")
     .add(newData)
     .then((data) => {
-      return res.json({ message: `Document ${data.id} created successfully!` });
+      return res.json({message: `Document ${data.id} created successfully!`});
     })
     .catch((err) => {
-      res.status(500).json({ error: "New project category creation failed!" });
+      res.status(500).json({error: "New project category creation failed!"});
       console.error(err);
     });
 });
@@ -153,10 +153,10 @@ app.post("/data", (req, res) => {
     .collection("nameOfCollection")
     .add(newData)
     .then((data) => {
-      return res.json({ message: `Document ${data.id} created successfully!` });
+      return res.json({message: `Document ${data.id} created successfully!`});
     })
     .catch((err) => {
-      res.status(500).json({ error: "New document creation failed!" });
+      res.status(500).json({error: "New document creation failed!"});
       console.error(err);
     });
 });
@@ -172,10 +172,10 @@ exports.api = functions.https.onRequest(app);
 1. click on "Authentication"
 2. under "Users" tab, click on "Set up sign-in method" button
 3. For default, enable the Email/Password, then click "Save" button
-4. Go to project Overview `->` click on "Project settings"
+4. Go to project Overview -> click on "Project settings"
 5. under "Your apps", click on `</>`
-6. Create a new web app if none is available, enter app name `->` click on "Register app"
-7. Copy the config settings and save it in a `.env` file
+6. Create a new web app if none is available, enter app name -> click on "Register app"
+7. Copy the config settings and save it in a .env file
 
 ```
 api_key = "zfdbzdfbz"
@@ -245,7 +245,7 @@ app.post("/signup", (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      return res.status(500).json({ error: err.code });
+      return res.status(500).json({error: err.code});
     });
 });
 ```

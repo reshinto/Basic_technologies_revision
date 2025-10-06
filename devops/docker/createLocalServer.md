@@ -1,5 +1,7 @@
 # Create local ubuntu server to be used on vscode
+
 ## Dockerfile
+
 ```
 FROM ubuntu:20.04
 
@@ -18,15 +20,25 @@ WORKDIR /usr/src
 
 ENTRYPOINT ["/bin/bash"]
 ```
+
 ## Build image
+
 > docker build -t server .
+
 ## Create container
+
 > docker run -d -t -p 1234:1234 --name=local server
+
 ## Copy repo into container directory
+
 > docker cp folder local:/
+
 ## Open bash
+
 > docker exec -it local bash
+
 ## Open in vscode
+
 1. Open vscode
 2. Click on the bottom-left green icon (open a remote window)
 3. Click on the "Remote Containers: Attach to Running Container

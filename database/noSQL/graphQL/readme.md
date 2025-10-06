@@ -1,9 +1,12 @@
 # GraphQL
+
 - created at Facebook in 2012
 - it is a declarative data fetching specification & query language
   - used to get data from server to client
 - can use many languages to build a graph server
+
 ## Benefits of using GraphQL
+
 - it defines the shape of the desired data and calls for it once
   - this helps to avoid multiple rest calls and the performance problems of over and under fetching
 - it is backward compatible and version-free
@@ -13,14 +16,21 @@
   - so that one don't have to set up everything from scratch & use it as part of the existing setup
 - it is language agnostic
   - can implement GraphQL solutions in a range of different languages
+
 ## Syntax
+
 ### writing comments
+
 ```graphql
 # comment
 ```
+
 ### Queries
+
 #### Basic queries
+
 - graphql query
+
 ```graphql
 // method 1: similar to anonymous function
 {
@@ -43,7 +53,9 @@ query SomeUniqueName {
   }
 }
 ```
+
 - json result
+
 ```json
 {
   "data": {
@@ -53,7 +65,9 @@ query SomeUniqueName {
   }
 }
 ```
+
 #### Variable definitions
+
 ```graphql
 query SomeUniqueName($myVariable: String!) {
   organization(login: $myVariable) {
@@ -61,12 +75,15 @@ query SomeUniqueName($myVariable: String!) {
   }
 }
 ```
+
 - query variables
+
 ```
 {
   "myVariable": "facebook"
 }
 ```
+
 ```json
 {
   "data": {
@@ -76,7 +93,9 @@ query SomeUniqueName($myVariable: String!) {
   }
 }
 ```
+
 #### Multiple fields
+
 ```graphql
 {
   viewer {
@@ -87,6 +106,7 @@ query SomeUniqueName($myVariable: String!) {
   }
 }
 ```
+
 ```json
 {
   "data": {
@@ -99,9 +119,12 @@ query SomeUniqueName($myVariable: String!) {
   }
 }
 ```
+
 #### Parsing argument
+
 - when parsing argument value, must use double quotes
 - single argument
+
 ```graphql
 {
   repositoryOwner(login: "myusername") {
@@ -110,6 +133,7 @@ query SomeUniqueName($myVariable: String!) {
   }
 }
 ```
+
 ```json
 {
   "data": {
@@ -120,7 +144,9 @@ query SomeUniqueName($myVariable: String!) {
   }
 }
 ```
+
 - multiple arguments
+
 ```graphql
 {
   repository(name: "graphql", owner: "facebook") {
@@ -128,6 +154,7 @@ query SomeUniqueName($myVariable: String!) {
   }
 }
 ```
+
 ```json
 {
   "data": {
@@ -137,8 +164,11 @@ query SomeUniqueName($myVariable: String!) {
   }
 }
 ```
+
 #### Required argument
+
 - if missing an error will be shown
+
 ```graphql
 {
   repository(name: "graphql") {
@@ -146,14 +176,12 @@ query SomeUniqueName($myVariable: String!) {
   }
 }
 ```
+
 ```json
 {
   "errors": [
     {
-      "path": [
-        "query",
-        "repository"
-      ],
+      "path": ["query", "repository"],
       "extensions": {
         "code": "missingRequiredArguments",
         "className": "Field",
@@ -171,18 +199,26 @@ query SomeUniqueName($myVariable: String!) {
   ]
 }
 ```
+
 #### Aliases
+
 - not using aliases with conflicting arguments will result with an error
+
 ```graphql
 {
   repository(name: "graphql", owner: "facebook") {
-    id description homepageUrl
+    id
+    description
+    homepageUrl
   }
   repository(name: "react", owner: "facebook") {
-    id description homepageUrl
+    id
+    description
+    homepageUrl
   }
 }
 ```
+
 ```json
 {
   "errors": [
@@ -208,7 +244,9 @@ query SomeUniqueName($myVariable: String!) {
   ]
 }
 ```
+
 - Use Aliases to solve the error
+
 ```graphql
 {
   graphqlProject: repository(name: "graphql", owner: "facebook") {
@@ -223,6 +261,7 @@ query SomeUniqueName($myVariable: String!) {
   }
 }
 ```
+
 ```json
 {
   "data": {
@@ -239,8 +278,11 @@ query SomeUniqueName($myVariable: String!) {
   }
 }
 ```
+
 #### Fragments
+
 - they are reusable sets of fields that can be included in queries as needed to prevent repetition
+
 ```graphql
 {
   graphqlProject: repository(name: "graphql", owner: "facebook") {
@@ -257,6 +299,7 @@ fragment repoFields on Repository {
   homepageUrl
 }
 ```
+
 ```json
 {
   "data": {
@@ -273,7 +316,9 @@ fragment repoFields on Repository {
   }
 }
 ```
+
 #### Nested fields
+
 ```graphql
 {
   viewer {
@@ -293,6 +338,7 @@ fragment repoFields on Repository {
   }
 }
 ```
+
 ```json
 {
   "data": {
@@ -328,7 +374,9 @@ fragment repoFields on Repository {
   }
 }
 ```
+
 #### Multiple nested fields
+
 ```graphql
 {
   repository(owner: "github", name: "opensource.guide") {
@@ -359,6 +407,7 @@ fragment repoFields on Repository {
   }
 }
 ```
+
 ```json
 {
   "data": {
@@ -419,8 +468,11 @@ fragment repoFields on Repository {
   }
 }
 ```
+
 #### Pagination
+
 - first, last, states can be used to filter the data
+
 ```graphql
 # (first: 5)
 # (last: 3)
@@ -440,6 +492,7 @@ fragment repoFields on Repository {
   }
 }
 ```
+
 ```json
 {
   "data": {
@@ -488,13 +541,17 @@ fragment repoFields on Repository {
   }
 }
 ```
+
 ### Mutations
+
 - Data modifications are made with mutations
 - Similar to PUT or DELETE in REST
 - data is sent as a payload
 - GraphQL changes the dataset behind the schema
 - API defines which mutations are allowed
+
 #### Create mutations
+
 ```graphql
 mutation NewComment($input: AddCommentInput!) {
   addComment(input: $input) {
@@ -505,7 +562,9 @@ mutation NewComment($input: AddCommentInput!) {
   }
 }
 ```
+
 - query variables
+
 ```
 {
   "input": {
@@ -515,7 +574,9 @@ mutation NewComment($input: AddCommentInput!) {
   }
 }
 ```
+
 - json result (shows that a new comment has been added to the issue of the repository)
+
 ```json
 {
   "data": {
@@ -528,11 +589,15 @@ mutation NewComment($input: AddCommentInput!) {
   }
 }
 ```
+
 ## Schemas
+
 - the way the fields are setup in graphQL is determined by the schemas
 - it provides sll the object types used in the data
   - it also specifies the types for all the values
+
 ### Input Types
+
 - Integer
 - Float
 - String
@@ -541,7 +606,9 @@ mutation NewComment($input: AddCommentInput!) {
 - Enum
 - List
 - Object
-### Query ```__schema```
+
+### Query `__schema`
+
 ```graphql
 {
   __schema {
@@ -556,6 +623,7 @@ mutation NewComment($input: AddCommentInput!) {
   }
 }
 ```
+
 ```json
 {
   "data": {
@@ -583,7 +651,9 @@ mutation NewComment($input: AddCommentInput!) {
   }
 }
 ```
+
 - sample schema in the docs
+
 ```
 marketplaceCategories(
 excludeEmpty: Boolean
@@ -615,7 +685,9 @@ withFreeTrialsOnly: Boolean = false
 ): MarketplaceListingConnection!
 Look up Marketplace listings
 ```
-### Query ```__type```
+
+### Query `__type`
+
 ```graphql
 {
   __type(name: "Repository") {
@@ -625,6 +697,7 @@ Look up Marketplace listings
   }
 }
 ```
+
 ```json
 {
   "data": {

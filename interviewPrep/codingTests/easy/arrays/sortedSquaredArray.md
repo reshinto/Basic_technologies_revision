@@ -1,14 +1,14 @@
 # Sorted Squared Array
 
-  Write a function that takes in a non-empty array of integers that are sorted
-  in ascending order and returns a new array of the same length with the squares
-  of the original integers also sorted in ascending order.
-  
-  Sample Input
-  ```array = [1, 2, 3, 5, 6, 8, 9]```
-  Sample Output
-  ```[1, 4, 9, 25, 36, 64, 81]```
-  
+Write a function that takes in a non-empty array of integers that are sorted
+in ascending order and returns a new array of the same length with the squares
+of the original integers also sorted in ascending order.
+
+Sample Input
+`array = [1, 2, 3, 5, 6, 8, 9]`
+Sample Output
+`[1, 4, 9, 25, 36, 64, 81]`
+
 ```python
 def sortedSquaredArray(array):
   # Write your code here.
@@ -16,8 +16,8 @@ def sortedSquaredArray(array):
   for v in array:
     newArr.append(v**2)
     return sorted(newArr)
-   
-   
+
+
 def sortedSquaredArray(array):
   # Write your code here.
   newArr = [0 for _ in array]
@@ -32,14 +32,15 @@ def sortedSquaredArray(array):
       rightIdx -= 1
   return newArr
 ```
+
 ```javascript
 function sortedSquaredArray(array) {
   // Write your code here.
   const newArray = [];
   for (let v of array) {
-    newArray.push((v)**2);
+    newArray.push(v ** 2);
   }
-  return newArray.sort((a, b) => a - b)
+  return newArray.sort((a, b) => a - b);
 }
 
 function sortedSquaredArray(array) {
@@ -47,7 +48,7 @@ function sortedSquaredArray(array) {
   let leftIdx = 0;
   let rightIdx = array.length - 1;
   const newArr = new Array(array.length);
-  for (let i=array.length-1; i>=0; i--) {
+  for (let i = array.length - 1; i >= 0; i--) {
     let left = Math.abs(array[leftIdx]);
     let right = Math.abs(array[rightIdx]);
     if (left > right) {

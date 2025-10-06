@@ -1,6 +1,8 @@
 # Test-Driven Development (TDD)
+
 - Writing tests for production code before writing the actual code
 - simple example: writing failing test first before writing the logic
+
 ```javascript
 function inchesToCentimeters(x) {}
 
@@ -9,7 +11,9 @@ test(inchesToCentimeters(5) === 12.7);
 test(inchesToCentimeters(27) === 68.58);
 test(inchesToCentimeters(196) === 497.84);
 ```
+
 ## Advantages of TDD
+
 - Ensures code quality
 - Forces us to clarify our thinking
 - Improves communication between developers
@@ -22,43 +26,50 @@ test(inchesToCentimeters(196) === 497.84);
   - Forces to split up large chunks of code into smaller, more testable chunks (thus makes code loosely coupled)
 - Allows developers to make worry-free changes
   - if all the test passes, then everything is okay
+
 ## Disadvantages of TDD
+
 - Takes longer at first
 - TDD is not always a favorite with management
 - Need to be careful of writing bad tests
+
 ## Basic TDD cycle
+
 1. Write a failing test
 2. Write the code but only enough to make the failing code test pass
 3. Refactor the code written
+
 ## Criteria for a good test
+
 1. Readable
-    - Test should be even more readable than the code they cover
-    - it should answer "What's the actual behavior?", "What's the expected behavior?", "Why?"
+   - Test should be even more readable than the code they cover
+   - it should answer "What's the actual behavior?", "What's the expected behavior?", "Why?"
 2. Isolated
-    - Test in 1 test cannot affect the results of the other tests
+   - Test in 1 test cannot affect the results of the other tests
 3. Thorough
-    - Test must cover both generic expected inputs & unexpected or edge case inputs
+   - Test must cover both generic expected inputs & unexpected or edge case inputs
 4. Explicit
-    - All the information required to reproduce the results of the test, must be readily accessible to anyone
-    - There should be no shared state between components, nothing hidden, everything involved in getting to the final result should be clear & obvious
+   - All the information required to reproduce the results of the test, must be readily accessible to anyone
+   - There should be no shared state between components, nothing hidden, everything involved in getting to the final result should be clear & obvious
+
 ## 3 types of tests
+
 1. Unit Tests: test very specific, low level pieces of functionality (end users won't really notice or think about directly)
-    - Need to have 3 things: A testing environment / test runner, A testing framework, An assertion library
-    - tools:
-      - Mocha: serves as a test runner and a testing framework
-      - Chai: serves as an assertion library
-      - Jasmine: serves all
-      - Jest: serves all
+   - Need to have 3 things: A testing environment / test runner, A testing framework, An assertion library
+   - tools:
+     - Mocha: serves as a test runner and a testing framework
+     - Chai: serves as an assertion library
+     - Jasmine: serves all
+     - Jest: serves all
 2. Integration Tests: ensures that the individual pieces of the application work together correctly (e.g. testing if app communicates correctly with a database or api)
-    - tools:
-      - Mocha & Chai
-      - Sinon js:
-        - use for creating test doubles
-        - provides different functions for creating mocks, stubs, and other test doubles that allow effective integration tests
-        - help to verify how something works in isolation
-      - Supertest: allows us to run integration tests on our node server without actually starting up the server
-        - this is helpful because waiting for a server to start up can dramatically slow down our development
-        - it allows us to query our server and get results as if the server was actually running
+   - tools:
+     - Mocha & Chai
+     - Sinon js:
+       - use for creating test doubles
+       - provides different functions for creating mocks, stubs, and other test doubles that allow effective integration tests
+       - help to verify how something works in isolation
+     - Supertest: allows us to run integration tests on our node server without actually starting up the server
+       - this is helpful because waiting for a server to start up can dramatically slow down our development
+       - it allows us to query our server and get results as if the server was actually running
 3. End-to-End (E2E) Tests: ensure the entire app works as seen from the viewpoint of a user
-    - tools: [selenium](https://www.selenium.dev/documentation/en/), [puppeteer](https://github.com/puppeteer/puppeteer), [cypress](https://www.cypress.io/)
-    
+   - tools: [selenium](https://www.selenium.dev/documentation/en/), [puppeteer](https://github.com/puppeteer/puppeteer), [cypress](https://www.cypress.io/)

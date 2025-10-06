@@ -1,16 +1,20 @@
 # Machine Learning Basics
+
 ## data collection
+
 - primary objective is to identify and gather data we intend to use for machine learning
   - check data accuracy
 
 ## data exploration
+
 - the process of describing, visualizing, and analyzing data in order to better understand it
-allows us to answer questions such as
+  allows us to answer questions such as
   - how many rows and columns are in the data
   - what type of data do we have
   - are there missing, inconsistent or duplicate values in the data
 
 ## data preparation
+
 - the process of making sure that our data (by modifying it) is suitable for the machine learning approach that we choose to use
   - check for missing data (changes in data, human error, bias, lack of reliable input)
   - normalizing data: ensures that values share a common property
@@ -32,6 +36,7 @@ allows us to answer questions such as
       - also known as feature projection
 
 ## modeling
+
 - involves choosing and applying the appropriate machine learning approach that works well with the data we have and solves the problem that we intend to solve
   - in supervised ML: objective is to build a model that maps a given input (which we call the independent variables) to the given output (which we call the dependent variable)
     - depending on the nature of the dependent variable, problem can be either be called Classification or Regression
@@ -43,6 +48,7 @@ allows us to answer questions such as
     - descision tree, Naive Bayes, neural networks, k-nearest neighbors, support vector machines
 
 ## evaluation
+
 - after training a ML model, important to see how well suited it is to the problem at hand
 - in order to get an unbiased evaluation of the performance of our model, we must train the model with a different dataset (training data, and test data) from the one we use to evaluate it
 

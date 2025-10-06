@@ -1,0 +1,44 @@
+# Windows Example
+
+```
+[tox]
+envlist = default
+isolated_build = True
+skip-missing-interpreter = True
+skipsdist=True
+
+[testenv]
+deps =
+    -rrequirements.txt
+    -rtest-requirements.txt
+whitelist_externals =
+    bash
+    cmd
+    copy
+commands =
+    cmd /c "copy .env.example .env"
+    pre-commit install -f --hook-type pre-commit
+    pre-commit install --hook-type commit-msg
+    cmd /c "copy .\.hooks\pre-commit .git\hooks\pre-commit"
+    cmd /c "copy .\.hooks\commit-msg .git\hooks\commit-msg"
+
+[testenv:run]
+skip_install = true
+commands =
+    uvicorn src.map:app --reload --header server:app-api --port 8080
+
+[testenv:test]
+skip_install = true
+commands =
+    pylint app --exit-zero
+    pytest
+    coverage report
+
+[testenv:test-all]
+skip_install = true
+commands =
+    pylint app --exit-zero
+    pytest
+    ./postman/run-api-tests.sh $0 $1 $2 {posargs}
+    coverage report
+```

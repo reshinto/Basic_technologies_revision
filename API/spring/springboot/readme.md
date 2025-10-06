@@ -1,27 +1,40 @@
 # Springboot guide
+
 ## Install springboot
-1. method 1: ```brew install springboot```
-2. method 2: ```curl -s "https://get.sdkman.io" | bash```
-    - ```source "$HOME/.sdkman/bin/sdkman-init.sh"```
-    - Install springboot
-      - ```sdk install springboot```
+
+1. method 1: `brew install springboot`
+2. method 2: `curl -s "https://get.sdkman.io" | bash`
+   - `source "$HOME/.sdkman/bin/sdkman-init.sh"`
+   - Install springboot
+     - `sdk install springboot`
+
 ## Create new project
+
 - get list of avaliable dependencies
-  - ```spring init --list```
+  - `spring init --list`
 - create a new web dependency project using maven
-  - ```spring init --dependencies web --build maven --groupId groupName --artifactId projectName --name projectName saveAsThisFolderName```
-  - ```spring init -d web --build maven -g groupName -a projectName -n projectName saveAsThisFolderName```
-  - ```spring init -d web,data-jdbc,postgresql --build maven -g groupName -a projectName -n projectName saveAsThisFolderName```
+  - `spring init --dependencies web --build maven --groupId groupName --artifactId projectName --name projectName saveAsThisFolderName`
+  - `spring init -d web --build maven -g groupName -a projectName -n projectName saveAsThisFolderName`
+  - `spring init -d web,data-jdbc,postgresql --build maven -g groupName -a projectName -n projectName saveAsThisFolderName`
+
 ## Inside the project
+
 ### pom.xml
+
 - similar to the package.json file for JavaScript
 - contains the parent library which is spring boot and the list of dependencies installed
+
 ### src/main/resources/application.properties
+
 - file to configure all the properties for the app and for environment specific properties
 - it will be used when connected to a real database
+
 ### src/main/resources/static/ && src/main/resources/templates/
+
 - these are for web development related files such as html, css, javascript
+
 ### default code in the src/main/java/.../appname/AppName.java
+
 ```java
 package com.example.demoapi;
 
@@ -35,9 +48,13 @@ public class DemoApiApplication {
   }
 }
 ```
+
 ## create a simple class model that creates tables in the database
+
 ### e.g.: src/java/.../appname/classname/ModelName.java
+
 - this will enable database to auto create a table and sequence related to this file
+
 ```java
 package com.example.demoapi.student;
 
@@ -64,7 +81,7 @@ public class Student {
   private LocalDate dob;
   @Transient  // helps to auto calculate age
   private Integer age;
-  
+
   public Student() {
   }
 
@@ -129,9 +146,13 @@ public class Student {
   }
 }
 ```
+
 ## create a service to link the database to the controller
+
 ### e.g.: src/main/java/.../appname/classname/ClassNameService.java
+
 - gain data access by querying in the database
+
 ```java
 package com.example.demoapi.student;
 
@@ -162,7 +183,7 @@ public class StudentService {
   public List<Student> getStudents() {
     return studentRepository.findAll();
   }
-	
+
   public void addNewStudent(Student student) {
     // Optional<Student> studentOptional = studentRepository.findStudentByEmail((student.getEmail()));
     // if (studentOptional.isPresent()) {
@@ -189,7 +210,7 @@ public class StudentService {
     }
     studentRepository.deleteById(studentId);
   }
-	
+
   // used for put request, allows us to not have to implement JPQL query
   // thus can use the setters from the entity to check if update is possible
   // and to use setters to auto update the entity in the database
@@ -214,7 +235,9 @@ public class StudentService {
   }
 }
 ```
+
 ### create tests e.g.: src/test/java/.../appname/classname/ClassNameServiceTest.java
+
 ```java
 package com.example.demoapi.student;
 
@@ -370,7 +393,9 @@ public class StudentServiceTest {
 
 }
 ```
+
 - might be required to add in pom.xml to support custom exception imports for tests
+
 ```xml
 <dependency>
   <groupId>javax</groupId>
@@ -378,8 +403,11 @@ public class StudentServiceTest {
   <version>8.0.1</version>
 </dependency>
 ```
+
 ## create and enable restful framework by creating a class controller and linking it with the service
+
 ### e.g.: src/main/java/.../appname/classname/ClassNameController.java
+
 ```java
 package com.example.demoapi.student;
 
@@ -412,13 +440,13 @@ public class StudentController {
   public List<Student> getStudents() {
     return studentService.getStudents();
   }
-  
+
   // enable post request http://localhost:8080/api/v1/student
   @PostMapping
   public void registerNewStudent(@RequestBody Student student) {  // @RequestBody enable retrieve payload from body
     studentService.addNewStudent(student);
   }
-  
+
   // enable delete request http://localhost:8080/api/v1/student/delete/1
   @DeleteMapping(path = "delete/{studentId}")
   public void deleteStudent(@PathVariable("studentId") Long studentId) {  // @PathVariable enable retrieve parameter from path
@@ -433,8 +461,11 @@ public class StudentController {
   }
 }
 ```
+
 ## setup environment settings to connect to postgresql in src/main/resources/application.properties
+
 ### spring.jpa.hibernate.ddl-auto values
+
 - create
   - Hibernate first drops existing tables, then creates new tables
 - create-drop
@@ -454,6 +485,7 @@ public class StudentController {
   - this value effectively turns off the DDL generation
   - it's common practice for DBAs to review migration scripts for database changes
     - particularly if your database is shared across multiple services and applications
+
 ```
 spring.datasource.url=jdbc:postgresql://localhost:5432/databaseName
 spring.datasource.username=
@@ -466,8 +498,11 @@ spring.jpa.properties.hibernate.format_sql=true
 // allow display of error message in the response during an error
 server.error.include-message=always
 ```
+
 ### setup environments for unit tests and use H2 database src/test/resources/application.properties
+
 - paste h2 database dependency into the pom.xml file
+
 ```xml
 <dependency>
   <groupId>com.h2database</groupId>
@@ -475,7 +510,9 @@ server.error.include-message=always
   <scope>test</scope>
 </dependency>
 ```
+
 - in the application.properties file
+
 ```
 spring.datasource.url=jdbc:h2://mem:db;DB_CLOSE_DELAY=-1
 spring.datasource.username=sa
@@ -486,7 +523,9 @@ spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.dialet=org.hibernate.dialect.PostgreSQLDialect
 spring.jpa.properties.hibernate.format_sql=true
 ```
+
 ## create an interface that is responsible for data access src/main/java/.../appname/classname/ClassNameRepository.java
+
 ```java
 package com.example.demoapi.student;
 
@@ -511,8 +550,11 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
   Boolean selectExistsEmail(String email);
 }
 ```
+
 ### unit test for interface src/test/java/.../appname/classname/ClassNameRepositoryTest.java
+
 - Not using the test configurations (not recommended)
+
 ```java
 package com.example.demoapi.student;
 
@@ -533,7 +575,7 @@ public class StudentRepositoryTest {
 
   @Autowired
   private StudentRepository underTest;
-  
+
   @AfterEach
   void tearDown() {
     underTest.deleteAll();
@@ -566,7 +608,9 @@ public class StudentRepositoryTest {
   }
 }
 ```
+
 - using the test configuration (recommended)
+
 ```java
 package com.example.demoapi.student;
 
@@ -588,7 +632,7 @@ public class StudentRepositoryTest {
 
   @Autowired
   private StudentRepository underTest;
-  
+
   @AfterEach
   void tearDown() {
     underTest.deleteAll();
@@ -621,7 +665,9 @@ public class StudentRepositoryTest {
   }
 }
 ```
+
 ## create a config file that seeds the table contents src/main/java/.../appname/classname/ClassNameConfig.java
+
 ```java
 package com.example.demoapi.student;
 
@@ -648,8 +694,11 @@ public class StudentConfig {
   }
 }
 ```
+
 ## Create custom error exception handlers
+
 ### src/main/java/.../appname/classname/exception/TypeNameException.java
+
 ```java
 package com.example.demoapi.student.exception;
 
@@ -663,7 +712,9 @@ public class BadRequestException extends RuntimeException {
   }
 }
 ```
+
 ### src/main/java/.../appname/classname/exception/TypeNameException.java
+
 ```java
 package com.example.demoapi.student.exception;
 

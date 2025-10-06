@@ -1,4 +1,5 @@
 # Two Number Sum
+
 Write a function that takes in a non-empty array of distinct integers and an
 integer representing a target sum. If any two numbers in the input array sum
 up to the target sum, the function should return them in an array, in any
@@ -13,10 +14,10 @@ You can assume that there will be at most one pair of numbers summing up to
 the target sum.
 
 Sample Input
-```array = [3, 5, -4, 8, 11, 1, -1, 6]```
-```targetSum = 10```
+`array = [3, 5, -4, 8, 11, 1, -1, 6]`
+`targetSum = 10`
 Sample Output
-```[-1, 11]```
+`[-1, 11]`
 
 ```python
 # solution 1
@@ -42,8 +43,8 @@ def twoNumberSum(array, targetSum):
       return [potentialNum, num]
     nums[num] = True
   return []
-  
- 
+
+
 # solution 3
 def twoNumberSum(array, targetSum):
   # Write your code here.
@@ -60,13 +61,14 @@ def twoNumberSum(array, targetSum):
       right -= 1
   return []
 ```
+
 ```javascript
 // solution 1
 function twoNumberSum(array, targetSum) {
   // Write your code here.
-  for (let i=0; i<array.length-1; i++) {
+  for (let i = 0; i < array.length - 1; i++) {
     const firstNum = array[i];
-    for (let j=i+1; j<array.length; j++) {
+    for (let j = i + 1; j < array.length; j++) {
       const secondNum = array[j];
       if (firstNum + secondNum === targetSum) {
         return [firstNum, secondNum];
@@ -80,7 +82,7 @@ function twoNumberSum(array, targetSum) {
 function twoNumberSum(array, targetSum) {
   // Write your code here.
   const nums = {};
-  for (let i=0; i<array.length; i++) {
+  for (let i = 0; i < array.length; i++) {
     let potentialNum = targetSum - array[i];
     if (nums[potentialNum]) {
       return [potentialNum, array[i]];
@@ -93,18 +95,16 @@ function twoNumberSum(array, targetSum) {
 // solution 3
 function twoNumberSum(array, targetSum) {
   // Write your code here.
-  array.sort((a,b) => a - b);
+  array.sort((a, b) => a - b);
   let left = 0;
   let right = array.length - 1;
   while (left < right) {
     let currentSum = array[left] + array[right];
     if (currentSum === targetSum) {
       return [array[left], array[right]];
-    }
-    else if (currentSum < targetSum) {
+    } else if (currentSum < targetSum) {
       left++;
-    }
-    else if (currentSum > targetSum) {
+    } else if (currentSum > targetSum) {
       right--;
     }
   }

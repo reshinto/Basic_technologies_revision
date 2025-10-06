@@ -1,8 +1,10 @@
 # Selection Sort
+
 Sample Input
-```array = [8, 5, 2, 9, 5, 6, 3]```
+`array = [8, 5, 2, 9, 5, 6, 3]`
 Sample Output
-```[2, 3, 5, 5, 6, 8, 9]```
+`[2, 3, 5, 5, 6, 8, 9]`
+
 ```python
 def selectionSort(array):
   # Write your code here.
@@ -15,12 +17,13 @@ def selectionSort(array):
     array[selected], array[i] = array[i], array[selected]
   return array
 ```
+
 ```javascript
 function selectionSort(array) {
   // Write your code here.
-  for (let i=0; i<array.length; i++) {
+  for (let i = 0; i < array.length; i++) {
     let smallestIdx = i;
-    for (let j=i+1; j<array.length; j++) {
+    for (let j = i + 1; j < array.length; j++) {
       if (array[j] < array[smallestIdx]) {
         smallestIdx = j;
       }

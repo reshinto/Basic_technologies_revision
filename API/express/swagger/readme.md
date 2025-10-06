@@ -1,6 +1,9 @@
 # Add Swagger to Express
+
 ## Default express app
+
 > npm i express
+
 ```javascript
 const express = require("express");
 const app = express();
@@ -20,8 +23,11 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 ```
+
 ## Setup basic Swagger options
+
 > npm i swagger-ui-express swagger-jsdoc
+
 ```javascript
 const express = require("express");
 const app = express();
@@ -63,11 +69,13 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 ```
+
 - verify at `http://localhost:5000/api-docs/`
 - result
   ![Basic Swagger Setup](../../../images/basicSwaggerSetup.png)
 
 ### Add route infos into Swagger
+
 ```javascript
 const express = require("express");
 const app = express();
@@ -84,13 +92,13 @@ const swaggerOptions = {
       title: "Customer API",
       description: "Customer API Information",
       contact: {
-        name: "Amazing Developer"
+        name: "Amazing Developer",
       },
-      servers: ["http://localhost:5000"]
-    }
+      servers: ["http://localhost:5000"],
+    },
   },
   // ['.routes/*.js']
-  apis: ["app.js"]
+  apis: ["app.js"],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
@@ -136,5 +144,6 @@ app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
 ```
+
 ![Swagger Route Example](../../../images/swaggerRouteExample.png)
 ![Swagger Route Content Example](../../../images/swaggerRouteContentExample.png)

@@ -1,8 +1,11 @@
 # Action in redux
+
 ## action without redux-thunk
+
 ### no arguments (synchronous)
+
 ```javascript
-import * as actionTypes from "./types";  // import to prevent manual type declaration
+import * as actionTypes from "./types"; // import to prevent manual type declaration
 
 export const resetAction = () => {
   return {
@@ -10,7 +13,9 @@ export const resetAction = () => {
   };
 };
 ```
+
 ### have argument to set value (synchronous)
+
 ```javascript
 import * as actionTypes from "./types";
 
@@ -21,9 +26,13 @@ export const setAction = (value) => {
   };
 };
 ```
+
 ## action with redux-thunk
+
 ### no arguments (asynchronous)
+
 - fetch
+
 ```javascript
 import * as actionTypes from "./types";
 
@@ -41,7 +50,9 @@ export const getAction = () => async (dispatch, getState) => {
   }
 };
 ```
+
 - axios
+
 ```javascript
 import axios from "axios";
 import * as actionTypes from "../types";
@@ -61,8 +72,11 @@ export const getAction = () => (dispatch, state) => {
     }
 };
 ```
+
 ### have argument to set value (asynchronous)
+
 - fetch post
+
 ```javascript
 import * as actionTypes from "./types";
 
@@ -76,7 +90,7 @@ export const postAction = (value, token) => async (dispatch, getState) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      "Authorization": token,  // only required if needs token for authentication
+      Authorization: token, // only required if needs token for authentication
     },
     body: JSON.stringify(postData),
   };
@@ -92,7 +106,9 @@ export const postAction = (value, token) => async (dispatch, getState) => {
   }
 };
 ```
+
 - axios post
+
 ```javascript
 import axios from "axios";
 import * as actionTypes from "../types";
@@ -122,7 +138,9 @@ export const postAction = (value, token) => (dispatch, getState) => {
     });
 };
 ```
+
 - fetch put
+
 ```javascript
 import * as actionTypes from "../types";
 
@@ -147,10 +165,12 @@ export const editData = (id, somethingToEdit) => async (dispatch) => {
     });
   } catch (error) {
     doSomething(error);
-  };
+  }
 };
 ```
+
 - axios put
+
 ```javascript
 import axios from "axios";
 import * as actionTypes from "../types";
@@ -170,18 +190,20 @@ export const editData = (id, somethingToEdit) => (dispatch, getState) => {
   }
   axios
     .put(`${URL}/${id}`, {id, somethingToEdit}, config)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: actionTypes.EDIT_DATA,
-        payload: res.data
+        payload: res.data,
       });
     })
-    .catch(error => {
+    .catch((error) => {
       doSomething(error);
     });
 };
 ```
+
 - fetch delete
+
 ```javascript
 import * as actionTypes from "../types";
 
@@ -191,8 +213,8 @@ export const deleteData = (data_id) => async (dispatch, getState) => {
   const config = {
     method: "DELETE",
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   };
   const token = getState().reducer.token;
   if (token) {
@@ -208,7 +230,9 @@ export const deleteData = (data_id) => async (dispatch, getState) => {
   }
 };
 ```
+
 - axios delete
+
 ```javascript
 import axios from "axios";
 import * as actionTypes from "../types";
@@ -237,51 +261,58 @@ export const deleteData = (data_id) => (dispatch, getState) => {
     });
 };
 ```
+
 ## refactored actions
+
 ### reusable api call
+
 - fetch
+
 ```javascript
 // data is an object
-const fetchCall = (url, method, data, actionType) => async (dispatch, getState) => {
-  const getToken = getState().reducer.token;  // modify this to get stored token
-  const config = {
-    method,
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "Authorization": getToken ? `Bearer ${getToken}` : "",
-    },
-    body: JSON.stringify(data),
+const fetchCall =
+  (url, method, data, actionType) => async (dispatch, getState) => {
+    const getToken = getState().reducer.token; // modify this to get stored token
+    const config = {
+      method,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: getToken ? `Bearer ${getToken}` : "",
+      },
+      body: JSON.stringify(data),
+    };
+    try {
+      const res = await fetch(`${url}`, config);
+      const _data = await res.json();
+      dispatch({
+        type: actionType,
+        payload: _data,
+      });
+    } catch (error) {
+      doSomething(error);
+    }
   };
-  try {
-    const res = await fetch(`${url}`, config);
-    const _data = await res.json();
-    dispatch({
-      type: actionType,
-      payload: _data,
-    });
-  } catch (error) {
-    doSomething(error);
-  };
-};
 ```
+
 - axios
+
 ```javascript
 import axios from "axios";
 
 // data is an object
 const axiosCall = (url, method, data, actionType) => (dispatch, getState) => {
-  const getToken = getState().reducer.token;  // modify this to get stored token
-  axios({ 
-    method, 
-    url, 
+  const getToken = getState().reducer.token; // modify this to get stored token
+  axios({
+    method,
+    url,
     data,
-    headers: { 
+    headers: {
       "Content-Type": "application/json",
-      "Authorization": getToken ? `Bearer ${getToken}` : "",
-    }
+      Authorization: getToken ? `Bearer ${getToken}` : "",
+    },
   })
-    .then(res => {
+    .then((res) => {
       if (res.status !== 200 && res.status !== 201 && res.status !== 204) {
         throw new Error(`Something went wrong with ${methodName}`);
       }
@@ -290,12 +321,14 @@ const axiosCall = (url, method, data, actionType) => (dispatch, getState) => {
         payload: res.data,
       });
     })
-    .catch(error => {
+    .catch((error) => {
       doSomething(error);
     });
 };
 ```
+
 - using refactored api calls
+
 ```javascript
 import * as actionTypes from "./actionTypes";
 
@@ -315,7 +348,9 @@ export postData = (data) => {
   axiosCall(`${URL}`, "POST", {data}, actionTypes.GET_DATA);
 };
 ```
+
 - fetch v2
+
 ```javascript
 /**
  * setup config for api request
@@ -332,14 +367,14 @@ const setupConfig = (method, getState, bodyData, restHeaders) => {
   const config = {
     method,
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      Accept: "application/json",
+      "Content-Type": "application/json",
       ...restHeaders,
     },
     body: bodyData,
   };
   // modify reducer if different
-  let token = '';
+  let token = "";
   if (getState().authReducer) {
     token = getState().authReducer.token;
   }
@@ -377,7 +412,7 @@ export default function fetchCall(
   method,
   actionType,
   bodyData,
-  restHeaders,
+  restHeaders
 ) {
   return async (dispatch, getState) => {
     const URL = enableCORS(url);

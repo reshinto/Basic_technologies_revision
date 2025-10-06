@@ -1,0 +1,21 @@
+# Don't Repeat Yourself (DRY)
+
+- It usually means refactoring code by taking something done several times and turning it into a loop or a function
+  - DRY code is easy to change, because you only have to make any change in one place
+- `Easy to change` doesn’t just mean clean code
+  - if you can’t figure out what a variable is for or what a function does based on its name
+    - then it’s harder to change it later, when you might not remember exactly how your code works
+      - or when somebody else is trying to change your code
+- Using descriptive variable names make it easier to understand what the variable contains and in turn make it easier to use or change later on
+- A good starting naming convention for your variables and functions would be:
+  - singular words for variables containing values
+    - i.e: fruit, firstName, favoriteColor
+  - plural words for variables containing objects or arrays
+    - i.e: fruits, names, myColors
+  - a description for variables containing functions
+    - ie: logFruits, findPerson, getFavoriteColor
+- Conclusion
+  - Whenever you finish writing some code, you should always look back to see if there is any way you can DRY it up, including:
+    - using descriptive variable names
+    - taking repetitive bits of code
+    - extracting them into a function or loop

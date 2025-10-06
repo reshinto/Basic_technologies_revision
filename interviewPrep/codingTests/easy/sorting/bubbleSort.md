@@ -1,8 +1,10 @@
 # Bubble Sort
+
 Sample Input
-```array = [8, 5, 2, 9, 5, 6, 3]```
+`array = [8, 5, 2, 9, 5, 6, 3]`
 Sample Output
-```[2, 3, 5, 5, 6, 8, 9]```
+`[2, 3, 5, 5, 6, 8, 9]`
+
 ```python
 def bubbleSort(array):
   # Write your code here.
@@ -19,6 +21,7 @@ def bubbleSort(array):
     counter += 1
   return array
 ```
+
 ```javascript
 function bubbleSort(array) {
   // Write your code here.
@@ -28,9 +31,9 @@ function bubbleSort(array) {
     isSorted = true;
     for (let i = 0; i < array.length - 1 - counter; i++) {
       const v1 = array[i];
-      const v2 = array[i+1];
+      const v2 = array[i + 1];
       if (v1 > v2) {
-        [array[i], array[i+1]] = [array[i+1], array[i]];
+        [array[i], array[i + 1]] = [array[i + 1], array[i]];
         isSorted = false;
       }
     }

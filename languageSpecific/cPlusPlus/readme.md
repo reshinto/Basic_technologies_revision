@@ -1,4 +1,5 @@
 # C++
+
 - taken from https://github.com/mortennobel/cpp-cheatsheet
 
 ## Preprocessor
@@ -304,15 +305,15 @@ x = make_shared<int>(12);   // Allocate value 12 on heap
 shared_ptr<int> y = x;      // Copy shared_ptr, implicit changes reference count to 2.
 cout << *y;                 // Dereference y to print '12'
 if (y.get() == x.get()) {   // Raw pointers (here x == y)
-    cout << "Same";  
-}  
+    cout << "Same";
+}
 y.reset();                  // Eliminate one owner of object
-if (y.get() != x.get()) { 
-    cout << "Different";  
-}  
+if (y.get() != x.get()) {
+    cout << "Different";
+}
 if (y == nullptr) {         // Can compare against nullptr (here returns true)
-    cout << "Empty";  
-}  
+    cout << "Empty";
+}
 y = make_shared<int>(15);   // Assign new value
 cout << *y;                 // Dereference x to print '15'
 cout << *x;                 // Dereference x to print '12'
@@ -373,7 +374,6 @@ ostream& operator<<(ostream& o, const T& x) {return o << ...;}
 ```
 
 ## `fstream.h`, `fstream` (File I/O works like `cin`, `cout` as above)
-
 
 ```cpp
 #include <fstream>          // Include filestream (std namespace)
@@ -498,12 +498,13 @@ reverse(a.begin(), a.end()); // Reverse vector or deque
 ```
 
 ## `chrono` (Time related library)
+
 ```cpp
 #include <chrono>         // Include chrono
 using namespace std::chrono; // Use namespace
 auto from =               // Get current time_point
   high_resolution_clock::now();
-// ... do some work       
+// ... do some work
 auto to =                 // Get current time_point
   high_resolution_clock::now();
 using ms =                // Define ms as floating point duration
@@ -514,9 +515,10 @@ cout << duration_cast<ms>(to - from)
 ```
 
 ## `thread` (Multi-threading library)
+
 ```cpp
 #include <thread>         // Include thread
-unsigned c = 
+unsigned c =
   hardware_concurrency(); // Hardware threads (or 0 for unknown)
 auto lambdaFn = [](){     // Lambda function used for thread body
     cout << "Hello multithreading";
@@ -532,15 +534,15 @@ const char* sharedMes              // Shared resource
 auto pingPongFn =                  // thread body (lambda). Print someone else's message
   [&](const char* mes){
     while (true){
-      unique_lock<mutex> lock(mut);// locks the mutex 
-      do {                
-        cond.wait(lock, [&](){     // wait for condition to be true (unlocks while waiting which allows other threads to modify)        
+      unique_lock<mutex> lock(mut);// locks the mutex
+      do {
+        cond.wait(lock, [&](){     // wait for condition to be true (unlocks while waiting which allows other threads to modify)
           return sharedMes != mes; // statement for when to continue
         });
       } while (sharedMes == mes);  // prevents spurious wakeup
       cout << sharedMes << endl;
-      sharedMes = mes;       
-      lock.unlock();               // no need to have lock on notify 
+      sharedMes = mes;
+      lock.unlock();               // no need to have lock on notify
       cond.notify_all();           // notify all condition has changed
     }
   };
@@ -551,6 +553,7 @@ thread t3(pingPongFn, "boing");
 ```
 
 ## `future` (thread support library)
+
 ```cpp
 #include <future>         // Include future
 function<int(int)> fib =  // Create lambda function
@@ -558,11 +561,11 @@ function<int(int)> fib =  // Create lambda function
     if (i <= 1){
       return 1;
     }
-    return fib(i-1) 
+    return fib(i-1)
          + fib(i-2);
   };
 future<int> fut =         // result of async function
   async(launch::async, fib, 4); // start async function in other thread
-// do some other work 
+// do some other work
 cout << fut.get();        // get result of async function. Wait if needed.
 ```
