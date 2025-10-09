@@ -20,6 +20,10 @@
   - middle is the list of properties
   - bottom is the methods the class has
 
+## Flowchart Symbols
+
+![flowchart symbols](../images/flowchartSymbols.png)
+
 ## Access modifiers
 
 - `+` public
